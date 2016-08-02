@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * Created by Administrator on 2016/8/1.
@@ -23,7 +25,15 @@ public class StatusBarCompat {
         {
             if (statusColor != INVALID_VAL)
             {
-                activity.getWindow().setStatusBarColor(statusColor);
+                Window window = activity.getWindow();
+
+                if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){//兼容5.0
+                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                }else{
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);//兼容含5.1以上
+                }
+                window.setStatusBarColor(Color.TRANSPARENT);
+                window.setNavigationBarColor(Color.TRANSPARENT);
             }
             return;
         }

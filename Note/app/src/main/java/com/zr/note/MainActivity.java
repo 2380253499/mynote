@@ -1,6 +1,7 @@
 package com.zr.note;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,20 +14,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.zr.note.tools.StatusBarCompat;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initSystemBar();
+
        /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }*/
+//        initSystemBar();
 
+        StatusBarCompat.compat(this);
         setContentView(R.layout.activity_main);
-//        StatusBarCompat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
-
+//        initSystemBar();
         drawerLayout= (DrawerLayout) findViewById(R.id.drawerlayout);
 //        setDrawlayout();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void initSystemBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT&&Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
 
 //            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -69,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
+            StatusBarCompat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
         }
     }
 
