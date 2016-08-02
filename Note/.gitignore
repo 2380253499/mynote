@@ -2,6 +2,7 @@
 .gradle/
 .idea/
 gradle/
+/build
 /build.gradle
 gradle.properties
 gradlew
