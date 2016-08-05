@@ -1,8 +1,6 @@
 package com.zr.note;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -11,97 +9,56 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.zr.note.activity.Main3Activity;
+import com.zr.note.tools.MyToast;
 import com.zr.note.tools.StatusBarCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }*/
-//        initSystemBar();
-
-        StatusBarCompat.compat(this);
+        StatusBarCompat.compat(this);//改变状态栏核心代码
         setContentView(R.layout.activity_main);
-//        initSystemBar();
         drawerLayout= (DrawerLayout) findViewById(R.id.drawerlayout);
-//        setDrawlayout();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setSubtitle("Subtitle");
+        toolbar.setTitle("setTitle");
         setSupportActionBar(toolbar);
+        toolbar.getNavigationIcon();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(this);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                startActivity(new Intent(MainActivity.this,Main3Activity.class));
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
         });
     }
-    public void setDrawlayout(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-                //将侧边栏顶部延伸至status bar
-               drawerLayout.setFitsSystemWindows(true);
-                //将主页面顶部延伸至status bar;虽默认为false,但经测试,DrawerLayout需显示设置
-//                drawerLayout.setClipToPadding(false);
-            }
-        }
-    }
-    private void initSystemBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT&&Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//            window.setNavigationBarColor(Color.TRANSPARENT);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
-            StatusBarCompat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            MyToast.showToast(this,"item");
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
