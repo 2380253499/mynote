@@ -1,11 +1,36 @@
 package com.zr.note.tools;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.view.View;
 
 /**
  * Created by paveld on 3/6/14.
  */
 public class FastBlur {
+    public static void blur(Bitmap bkg, View view,float radi) {
+        long startMs = System.currentTimeMillis();
+        float scaleFactor = 1;
+        float radius = radi;
+//        if (downScale.isChecked()) {
+//            scaleFactor = 8;
+//            radius = 2;
+//        }
+
+        Bitmap overlay = Bitmap.createBitmap((int) (view.getMeasuredWidth() / scaleFactor),
+                (int) (view.getMeasuredHeight() / scaleFactor), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(overlay);
+        canvas.translate(-view.getLeft() / scaleFactor, -view.getTop() / scaleFactor);
+        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+        Paint paint = new Paint();
+        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+        canvas.drawBitmap(bkg, 0, 0, paint);
+
+//        overlay = FastBlur.doBlur(overlay, (int) radius, true);
+//        view.setBackground(new BitmapDrawable(getResources(), overlay));
+//        statusText.setText(System.currentTimeMillis() - startMs + "ms");
+    }
 
     public static Bitmap doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
 

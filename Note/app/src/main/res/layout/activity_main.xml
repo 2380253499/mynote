@@ -41,11 +41,11 @@
 
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>
-<fragment
-    android:name="com.zr.note.BlankFragment"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    tools:layout="@layout/fragment_blank"
-    android:layout_gravity="start"
-    />
+    <fragment
+        android:name="com.zr.note.BlankFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_blank"
+        android:layout_gravity="start"
+        />
 </android.support.v4.widget.DrawerLayout>
