@@ -1,4 +1,4 @@
-package com.zr.note.activity;
+package com.zr.note.main.activity;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.ActionBar;
