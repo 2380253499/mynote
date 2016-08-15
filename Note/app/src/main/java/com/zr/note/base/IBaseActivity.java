@@ -1,5 +1,6 @@
 package com.zr.note.base;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -12,5 +13,8 @@ public class IBaseActivity extends AppCompatActivity {
     }
     protected void showLToast(String toast){
         Toast.makeText(this,toast,Toast.LENGTH_LONG).show();
+    }
+    protected void SActivity(Class clazz){
+        startActivity(new Intent(this,clazz));
     }
 }

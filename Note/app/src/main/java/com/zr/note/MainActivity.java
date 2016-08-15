@@ -9,13 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import com.zr.note.activity.Main3Activity;
+import com.zr.note.main.activity.Main3Activity;
 import com.zr.note.tools.MyToast;
 import com.zr.note.tools.StatusBarCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private DrawerLayout drawerLayout;
+    private TextView tv_a1,tv_a2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +26,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout= (DrawerLayout) findViewById(R.id.drawerlayout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.setSubtitle("Subtitle");
-        toolbar.setTitle("setTitle");
+        toolbar.setTitle("setTitle11");
         setSupportActionBar(toolbar);
         toolbar.getNavigationIcon();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(this);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .setAction("Action", null).show();*/
             }
         });
+        tv_a1= (TextView) findViewById(R.id.tv_a1);
+        tv_a2= (TextView) findViewById(R.id.tv_a2);
+
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

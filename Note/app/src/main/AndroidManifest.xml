@@ -21,17 +21,17 @@
         <activity android:name=".Main2Activity">
         </activity>
         <activity
-            android:name=".activity.FullscreenActivity"
+            android:name=".main.activity.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme">
         </activity>
         <activity
-            android:name=".activity.ScrollingActivity"
+            android:name=".main.activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".activity.Main3Activity">
+        <activity android:name=".main.activity.Main3Activity">
         </activity>
     </application>
 

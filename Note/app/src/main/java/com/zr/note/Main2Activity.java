@@ -9,11 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import com.fivehundredpx.android.blur.BlurringView;
-
 public class Main2Activity extends AppCompatActivity {
     private RelativeLayout drawerLayout;
-    private BlurringView blurring_view;
     private View baseView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
