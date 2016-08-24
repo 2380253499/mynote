@@ -66,13 +66,14 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        StatusBarCompat.compat(getActivity(), getResources().getColor(R.color.colorPrimaryDark));
         return inflater.inflate(R.layout.fragment_blank, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StatusBarCompat.compat(getActivity(), getResources().getColor(R.color.colorPrimaryDark));
+//        StatusBarCompat.compat(getActivity(), getResources().getColor(R.color.colorPrimaryDark));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

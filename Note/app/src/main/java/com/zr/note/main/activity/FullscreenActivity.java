@@ -1,6 +1,7 @@
 package com.zr.note.main.activity;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,7 +68,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+//            hide();
         }
     };
     /**
@@ -88,7 +89,9 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.darkorange));
+        }
         setContentView(R.layout.activity_fullscreen);
 
         mVisible = true;
@@ -117,12 +120,13 @@ public class FullscreenActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+//        delayedHide(100);
     }
 
     private void toggle() {
+        show();
         if (mVisible) {
-            hide();
+//            hide();
         } else {
             show();
         }

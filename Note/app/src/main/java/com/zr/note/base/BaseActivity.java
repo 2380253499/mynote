@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.zr.note.R;
 import com.zr.note.tools.ClickUtils;
-import com.zr.note.tools.StatusBarCompat;
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -39,9 +38,9 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
 
     private void setColorPrimaryDark() {
         if(colorPrimaryDark==-1){
-            StatusBarCompat.compat(this);
+//            StatusBarCompat.compat(this);
         }else{
-            StatusBarCompat.compat(this,colorPrimaryDark);
+//            StatusBarCompat.compat(this, colorPrimaryDark);
         }
     }
     protected void setPrimaryDark(int colorId){

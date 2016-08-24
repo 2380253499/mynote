@@ -7,7 +7,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zr.note.Main2Activity;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.main.biz.imp.MainImp;
@@ -51,7 +50,7 @@ public class MainActivity extends BaseActivity<MainView,MainImp>{
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                startActivity(new Intent(MainActivity.this,FullscreenActivity.class));
             break;
         }
     }

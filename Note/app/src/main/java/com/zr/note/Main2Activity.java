@@ -9,16 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import com.zr.note.tools.StatusBarCompat;
-
 public class Main2Activity extends AppCompatActivity {
     private RelativeLayout drawerLayout;
     private View baseView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.compat(this);//改变状态栏核心代码
-        initSystemBar();
+//        StatusBarCompat.compat(this);//改变状态栏核心代码
+//        initSystemBar();
 //        baseView=getLayoutInflater().inflate(R.layout.activity_main2,null);
         setContentView(R.layout.activity_main2);
         initView();
