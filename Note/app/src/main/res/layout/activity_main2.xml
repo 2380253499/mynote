@@ -1,39 +1,79 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#FFFFFFFF"
-             tools:context=".MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:toggle="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#FFFFFFFF"
+              android:orientation="vertical"
+              tools:context=".main.activity.MainActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false">
-
-        <RelativeLayout
-            android:background="#FF02ADEA"
-            android:id="@+id/blurred_view"
-            android:layout_width="600dp"
-            android:layout_height="600dp"
-            android:layout_gravity="center"
-            android:clipChildren="false">
-
-            <ImageView
-                android:id="@+id/image0"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_centerInParent="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/aa"/>
-        </RelativeLayout>
-    </FrameLayout>
-    <LinearLayout
+    <ImageView
+        android:id="@+id/image0"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/aa"/>
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="adn"
+        />
+    <!--<com.dd.CircularProgressButton
+        android:id="@+id/circularButton1"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:textColor="@color/cpb_white"
+        android:textSize="18sp"
+        app:cpb_cornerRadius="8dp"
+        app:cpb_colorIndicator="@color/colorPrimaryDark"
+        app:cpb_textIdle="登录"
+        app:cpb_textComplete="登录"
+        app:cpb_selectorComplete="@color/colorPrimaryDark"
+        app:cpb_selectorIdle="@color/colorPrimaryDark"
+        />-->
+    <com.kyleduo.switchbutton.SwitchButton
+        style="@style/SwitchButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"
+        app:kswTextOff="无效"
+        app:kswTextOn="有效"
+        app:kswThumbDrawable="@drawable/ios_thumb_selector"
+        app:kswThumbMarginBottom="-10dp"
+        app:kswThumbMarginLeft="-6dp"
+        app:kswThumbMarginRight="-5dp"
+        app:kswThumbMarginTop="-5dp"
+        android:checked="false"
+        />
 
-    </LinearLayout>
-
-
-</FrameLayout>
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:switchMinWidth="50dp"
+        app:buttonTint="@drawable/ios_thumb_selector"
+        android:drawableTint="@drawable/ios_thumb_selector"
+        android:textOn="开"
+        android:textOff="关"
+        app:showText="false"
+        />
+   <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:checked="false"
+        android:textOn="打开"
+        android:textOff="关闭"
+        android:switchMinWidth="80dp"
+        android:minHeight="40dp"
+        />
+    <com.zcw.togglebutton.ToggleButton
+        android:layout_width="80dp"
+        toggle:borderWidth="2dp"
+        android:textOff="关闭"
+        android:textOn="打开"
+        android:layout_height="30dp" >
+    </com.zcw.togglebutton.ToggleButton>
+</LinearLayout>

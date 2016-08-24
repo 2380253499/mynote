@@ -9,16 +9,42 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import com.zr.note.tools.StatusBarCompat;
+
 public class Main2Activity extends AppCompatActivity {
     private RelativeLayout drawerLayout;
     private View baseView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.compat(this);//改变状态栏核心代码
         initSystemBar();
 //        baseView=getLayoutInflater().inflate(R.layout.activity_main2,null);
         setContentView(R.layout.activity_main2);
-        drawerLayout= (RelativeLayout) findViewById(R.id.blurred_view);
+        initView();
+    }
+
+    private void initView() {
+       /* //bt=findViewById(R.id.bt);
+        final CircularProgressButton circularButton1 = (CircularProgressButton) findViewById(R.id.circularButton1);
+        circularButton1.setIndeterminateProgressMode(true);
+        circularButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (circularButton1.getProgress() == 0) {
+                    circularButton1.setProgress(50);
+                } else {
+                    circularButton1.setProgress(100);
+                    circularButton1.setProgress(0);
+                }
+            }
+        });
+        circularButton1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                circularButton1.setProgress(100);
+            }
+        },3000);*/
     }
 
     private void initSystemBar() {

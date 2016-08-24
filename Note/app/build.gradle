@@ -19,6 +19,11 @@ android {
             keyPassword "zhongrui"
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
     buildTypes {
         debug {
             signingConfig signingConfigs.release
@@ -31,8 +36,12 @@ android {
 }
 
 dependencies {
-        compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
+    compile(name: 'library2', ext: 'aar')
+    compile(name: 'ToggleButtonLib', ext: 'aar')
+    compile(name: 'library', ext: 'aar')
+
 }
