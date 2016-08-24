@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zr.note.R;
+import com.zr.note.tools.ClickUtils;
 import com.zr.note.tools.StatusBarCompat;
 
 /**
@@ -18,7 +19,7 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
     protected abstract int setContentView();
     protected abstract void initView();
     protected abstract void initData();
-
+    protected abstract void viewOnClick(View v);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,13 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
     }
     protected void setPrimaryDark(int colorId){
         colorPrimaryDark=colorId;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(!ClickUtils.isFastClick(v)){
+            viewOnClick(v);
+        }
     }
 
     @Override

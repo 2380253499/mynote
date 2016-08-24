@@ -1,9 +1,13 @@
 package com.zr.note.main.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import android.widget.TextView;
 
+import com.zr.note.Main2Activity;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.main.biz.imp.MainImp;
@@ -12,6 +16,7 @@ import com.zr.note.main.view.MainView;
 public class MainActivity extends BaseActivity<MainView,MainImp>{
     private DrawerLayout drawerLayout;
     private TextView tv_a1,tv_a2;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +31,29 @@ public class MainActivity extends BaseActivity<MainView,MainImp>{
 
     @Override
     protected void initView() {
-
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+        /*fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+            }
+        });*/
     }
 
     @Override
     protected void initData() {
 
+    }
+    @Override
+    protected void viewOnClick(View v) {
+        switch (v.getId()){
+            case R.id.fab:
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+            break;
+        }
     }
 
     @Override
