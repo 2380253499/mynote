@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zr.note.tools.StatusBarCompatForKitKat;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +64,7 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        StatusBarCompatForKitKat.compat(getActivity(), getResources().getColor(R.color.colorPrimaryDark));
+//        StatusBarCompatForKitKat.compat(getActivity(), getResources().getColor(R.color.colorPrimaryDark));
         return inflater.inflate(R.layout.fragment_blank, container, false);
     }
 

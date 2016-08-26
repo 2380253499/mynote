@@ -1,35 +1,379 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".main.activity.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:orientation="vertical"
     >
-
-    <ImageView
+    <!--<ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/aa"/>
-    <TextView
-        android:id="@+id/tv_a1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="android1"
-        android:gravity="center"
-        />
-    <TextView
-        android:id="@+id/tv_a2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="android2"
-        android:gravity="bottom"
-        android:background="@color/brown"
-        />
-</LinearLayout>
+        android:src="@drawable/aa"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_a1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:id="@+id/tv_a2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/violet"
+                android:gravity="center"
+                android:text="android1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/brown"
+                android:gravity="bottom"
+                android:text="android2"
+                />
+        </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

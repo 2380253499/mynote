@@ -1,50 +1,105 @@
 package com.zr.note.base;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.zr.note.R;
+import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.ClickUtils;
 
 /**
  * Created by Administrator on 2016/8/4.
  */
 public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity implements View.OnClickListener{
-    private int colorPrimaryDark=-1;
+    /****************************Toolbar*************************/
     private Toolbar toolbar;
+    private boolean showNavigationIcon =true;
+    private int navigationIcon =-1;
+    private int logIcon=-1;
+    private Drawable logIconDrawble;
+    private int titleId=-1;
+    private String titleString;
+    private int subTitleId=-1;
+    private String subTitleString;
+    private MyOnClickListener myOnClickListener;
+    /************************************************************/
     protected B mBiz;
     protected abstract B initImp();
     protected abstract int setContentView();
+    protected abstract void setToolbarStyle();
     protected abstract void initView();
     protected abstract void initData();
     protected abstract void viewOnClick(View v);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setColorPrimaryDark();
+        setColorPrimaryDark();//兼容4.4
         setContentView(setContentView());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setToolBarStyle();
+        setToolbarStyle();
         setSupportActionBar(toolbar);
+        setToolBar();
         mBiz=initImp();
         initView();
         initData();
     }
 
-    private void setToolBarStyle() {
-
+    private void setToolBar() {
+        if(navigationIcon !=-1){
+            getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else{
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
+        }
+        if(logIcon!=-1){
+            getSupportActionBar().setLogo(logIcon);
+        }else if(logIconDrawble!=null){
+            getSupportActionBar().setLogo(logIconDrawble);
+        }
+        if(titleId!=-1){
+            getSupportActionBar().setTitle(titleId);
+        }else if(titleString!=null){
+            getSupportActionBar().setTitle(titleString);
+        }
+        if(subTitleId != -1) {
+            getSupportActionBar().setSubtitle(subTitleId);
+        }else if(subTitleString!=null){
+            getSupportActionBar().setSubtitle(subTitleString);
+        }
     }
 
     private void setColorPrimaryDark() {
-        if(colorPrimaryDark==-1){
-//            StatusBarCompat.compat(this);
-        }else{
-//            StatusBarCompat.compat(this, colorPrimaryDark);
-        }
+//        StatusBarCompatForKitKat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
     }
-    protected void setPrimaryDark(int colorId){
-        colorPrimaryDark=colorId;
+    protected void setNavigationIcon(int backIcon){
+        this.navigationIcon =backIcon;
+    }
+    protected void setHideNavigationIcon(){
+        showNavigationIcon =false;
+    }
+    protected void setLogIcon(int logIcon){
+        this.logIcon=logIcon;
+    }
+    protected void setLogIcon(Drawable logIconDrawble){
+        this.logIconDrawble=logIconDrawble;
+    }
+    protected void setToolbarTitle(int titleId){
+        this.titleId=titleId;
+    }
+    protected void setToolbarTitle(String titleString){
+        this.titleString=titleString;
+    }
+    protected void setToolbarSubTitle(int subTitleId){
+        this.subTitleId=subTitleId;
+    }
+    protected void setToolbarSubTitle(String subTitleString){
+        this.subTitleString=subTitleString;
+    }
+    protected Toolbar getToolbar(){
+        return toolbar;
     }
 
     @Override
@@ -53,7 +108,16 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
             viewOnClick(v);
         }
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId=item.getItemId();
+        switch (itemId){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onResume() {
         super.onResume();

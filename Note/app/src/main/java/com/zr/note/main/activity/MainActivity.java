@@ -1,7 +1,6 @@
 package com.zr.note.main.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
+import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.main.biz.imp.MainImp;
 import com.zr.note.main.view.MainView;
 
@@ -18,18 +18,18 @@ public class MainActivity extends BaseActivity<MainView,MainImp>{
     private FloatingActionButton fab;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-//        setPrimaryDark(R.color.colorPrimaryDark2);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected int setContentView() {
         return R.layout.activity_main;
     }
 
     @Override
     protected void initView() {
+        getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                showToastS("onNoDoubleClick");
+            }
+        });
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         /*fab.setOnClickListener(new View.OnClickListener() {
@@ -41,19 +41,26 @@ public class MainActivity extends BaseActivity<MainView,MainImp>{
             }
         });*/
     }
-
+    @Override
+    protected void setToolbarStyle() {
+        setToolbarTitle("Note");
+        setToolbarSubTitle("SubNote");
+        setNavigationIcon(R.drawable.ic_launcher);
+    }
     @Override
     protected void initData() {
 
     }
     @Override
     protected void viewOnClick(View v) {
+        showToastS("onNoDoubleClick"+v.getId());
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(MainActivity.this,FullscreenActivity.class));
+                startActivity(new Intent(MainActivity.this,SActivity.class));
             break;
         }
     }
+
 
     @Override
     protected MainImp initImp() {
