@@ -29,4 +29,10 @@ public class IBaseActivity extends AppCompatActivity {
         intent.setClass(this,clazz);
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mIntent=null;
+    }
 }

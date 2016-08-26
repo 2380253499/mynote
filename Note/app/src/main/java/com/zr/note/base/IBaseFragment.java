@@ -25,4 +25,10 @@ public class IBaseFragment extends Fragment {
         intent.setClass(getActivity(),clazz);
         startActivity(intent);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fIntent=null;
+    }
 }
