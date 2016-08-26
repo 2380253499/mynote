@@ -3,6 +3,7 @@ package com.zr.note.base;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -28,9 +29,11 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
     protected abstract B initImp();
     protected abstract int setContentView();
     protected abstract void setToolbarStyle();
+    protected abstract int setOptionsMenu();
     protected abstract void initView();
     protected abstract void initData();
     protected abstract void viewOnClick(View v);
+    protected abstract void menuOnClick(int itemId);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,15 +108,32 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
             viewOnClick(v);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(setOptionsMenu()!=0){
+            getMenuInflater().inflate(setOptionsMenu(), menu);
+        }
+        return true;
+    }
+
+    private void onMenuClick(int itemId) {
+        if(!ClickUtils.isFastClickById(itemId)){
+            menuOnClick(itemId);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId=item.getItemId();
-        switch (itemId){
-            case android.R.id.home:
-                finish();
-                break;
+        if(itemId==android.R.id.home){
+            finish();
+            return true;
+        }else{
+            onMenuClick(itemId);
+            return true;
         }
-        return super.onOptionsItemSelected(item);
+//        return super.onOptionsItemSelected(item);
     }
 
     @Override

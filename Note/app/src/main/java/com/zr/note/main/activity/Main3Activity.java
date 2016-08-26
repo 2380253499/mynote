@@ -27,6 +27,14 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
         tv2= (TextView) findViewById(R.id.tv2);
         tv.setOnClickListener(this);
         tv2.setOnClickListener(this);
+        /*fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+            }
+        });*/
     }
 
     int i,j;
@@ -59,6 +67,11 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void show() {
 
     }
 }

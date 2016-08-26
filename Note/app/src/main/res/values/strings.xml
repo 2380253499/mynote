@@ -99,4 +99,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_s">SActivity</string>
+    <string name="main_memo">备忘录</string>
+    <string name="main_datalist">列表</string>
 </resources>

@@ -25,6 +25,22 @@ public class ClickUtils {
         }
         return true;
     }
+
+    public synchronized static boolean isFastClickById(int itemId){
+        return isFastClickById(itemId,1500);
+    }
+    public synchronized static boolean isFastClickById(int itemId,int time){
+        if(sLastClickTime==null){
+            sLastClickTime=new SparseLongArray();
+        }
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        if(currentTime-sLastClickTime.get(itemId)>time){
+            sLastClickTime.put(itemId,currentTime);
+            return false;
+        }
+        return true;
+    }
+
     public static void clearLastClickTime(){
         sLastClickTime=null;
     }
