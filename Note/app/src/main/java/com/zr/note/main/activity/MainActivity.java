@@ -12,7 +12,7 @@ import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.main.biz.imp.MainImp;
 import com.zr.note.main.view.MainView;
 
-public class MainActivity extends BaseActivity<MainView,MainImp>{
+public class MainActivity extends BaseActivity<MainView,MainImp>implements MainView{
     private DrawerLayout drawerLayout;
     private TextView tv_a1,tv_a2;
     private FloatingActionButton fab;
@@ -66,6 +66,12 @@ public class MainActivity extends BaseActivity<MainView,MainImp>{
     protected MainImp initImp() {
         return new MainImp();
     }
+
+    @Override
+    public void show() {
+
+    }
+
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

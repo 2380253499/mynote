@@ -7,13 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.zr.note.R;
-import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.ClickUtils;
 
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity implements View.OnClickListener{
+public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> extends IBaseActivity implements BaseView,View.OnClickListener{
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -24,7 +23,6 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
     private String titleString;
     private int subTitleId=-1;
     private String subTitleString;
-    private MyOnClickListener myOnClickListener;
     /************************************************************/
     protected B mBiz;
     protected abstract B initImp();
@@ -46,7 +44,6 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
         initView();
         initData();
     }
-
     private void setToolBar() {
         if(navigationIcon !=-1){
             getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
@@ -117,6 +114,20 @@ public abstract class BaseActivity<V,B extends BaseBiz<V>> extends IBaseActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+    @Override
+    public void showMsg(String msg) {
+
     }
     @Override
     protected void onResume() {
