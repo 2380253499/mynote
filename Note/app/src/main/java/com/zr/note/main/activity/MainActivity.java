@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity<MainView,MainImp>implements MainV
 
     @Override
     protected int setOptionsMenu() {
-        return 0;
+        return R.menu.menu_main;
     }
 
     @Override

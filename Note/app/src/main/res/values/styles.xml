@@ -63,6 +63,8 @@
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorText</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
     </style>
 
 </resources>

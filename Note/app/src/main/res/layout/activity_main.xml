@@ -76,7 +76,7 @@
             android:id="@+id/ll_bottom"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/c_F8F8F8"
             android:gravity="center"
@@ -87,17 +87,17 @@
                 android:orientation="horizontal"
                 >
                 <RadioButton
-                    android:drawableTop="@drawable/main_data_normal3"
-                    android:text="@string/main_datalist"
+                    android:drawableTop="@drawable/main_data_normal"
+                    android:text="@string/main_data_list"
                     style="@style/radio_main"/>
                 <RadioButton
-                    android:drawableTop="@drawable/main_data_normal3"
-                    android:text="@string/main_memo"
+                    android:drawableTop="@drawable/memo_normal"
+                    android:text="@string/main_data_memo"
                     style="@style/radio_main"
                     />
                 <RadioButton
-                    android:drawableTop="@drawable/main_data_normal3"
-                    android:text="@string/main_datalist"
+                    android:drawableTop="@drawable/consumption_normal"
+                    android:text="@string/main_data_consumption"
                     style="@style/radio_main"
                     />
             </RadioGroup>
