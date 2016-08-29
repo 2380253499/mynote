@@ -158,6 +158,7 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
     protected void onDestroy() {
         super.onDestroy();
         mBiz.detach();
+        ClickUtils.clearLastClickTime();
     }
 
 }
