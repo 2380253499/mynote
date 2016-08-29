@@ -31,7 +31,11 @@ public class ClickUtils {
     }
     public synchronized static boolean isFastClickById(int itemId,int time){
         if(sLastClickTime==null){
-            sLastClickTime=new SparseLongArray();
+            synchronized (ClickUtils.class){
+                if(sLastClickTime==null){
+                    sLastClickTime=new SparseLongArray();
+                }
+            }
         }
         long currentTime = Calendar.getInstance().getTimeInMillis();
         if(currentTime-sLastClickTime.get(itemId)>time){
