@@ -10,9 +10,9 @@ import com.zr.note.tools.ClickUtils;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <V extends BaseView,B extends BaseBiz<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
-    protected B fBiz;
-    protected abstract B initImp();
+public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
+    protected P mPresenter;
+    protected abstract P initPresenter();
     protected abstract int setContentView();
     protected abstract void initView();
     protected abstract void initData();
@@ -25,7 +25,7 @@ public abstract class BaseFragment <V extends BaseView,B extends BaseBiz<V>> ext
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fBiz=initImp();
+        mPresenter= initPresenter();
         initView();
         initData();
     }
@@ -55,11 +55,13 @@ public abstract class BaseFragment <V extends BaseView,B extends BaseBiz<V>> ext
     @Override
     public void onResume() {
         super.onResume();
-        fBiz.attach((V) this);
+        mPresenter.attach((V) this);
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
-        fBiz.detach();
+        if(mPresenter!=null){
+            mPresenter.detach();
+        }
     }
 }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
-import com.zr.note.main.biz.imp.MainImp;
+import com.zr.note.main.contract.imp.MainImp;
 import com.zr.note.main.view.MainView;
 
 public class MainActivity extends BaseActivity<MainView,MainImp>implements MainView{
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity<MainView,MainImp>implements MainV
 
 
     @Override
-    protected MainImp initImp() {
+    protected MainImp initPresenter() {
         return new MainImp();
     }
 

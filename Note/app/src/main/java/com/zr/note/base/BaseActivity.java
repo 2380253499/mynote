@@ -13,7 +13,7 @@ import com.zr.note.tools.ClickUtils;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> extends IBaseActivity implements BaseView,View.OnClickListener{
+public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends IBaseActivity implements BaseView,View.OnClickListener{
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -25,8 +25,8 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
     private int subTitleId=-1;
     private String subTitleString;
     /************************************************************/
-    protected B mBiz;
-    protected abstract B initImp();
+    protected P mPresenter;
+    protected abstract P initPresenter();
     protected abstract int setContentView();
     protected abstract void setToolbarStyle();
     protected abstract int setOptionsMenu();
@@ -43,7 +43,7 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
         setToolbarStyle();
         setSupportActionBar(toolbar);
         setToolBar();
-        mBiz=initImp();
+        mPresenter= initPresenter();
         initView();
         initData();
     }
@@ -147,17 +147,19 @@ public abstract class BaseActivity<V extends BaseView,B extends BaseBiz<V>> exte
     }
     @Override
     public void showMsg(String msg) {
-
+        showToastS(msg);
     }
     @Override
     protected void onResume() {
         super.onResume();
-        mBiz.attach((V) this);
+        mPresenter.attach((V) this);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBiz.detach();
+        if(mPresenter!=null){
+            mPresenter.detach();
+        }
         ClickUtils.clearLastClickTime();
     }
 

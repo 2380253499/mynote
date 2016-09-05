@@ -6,18 +6,17 @@ import android.os.Looper;
 /**
  * Created by Administrator on 2016/8/16.
  */
-public abstract class BaseBiz<V> {
+public abstract class BasePresenter<V extends BaseView> implements IPresenter<V> {
     protected V mView;
     protected Handler mHandler;
 
-    public BaseBiz() {
+    public BasePresenter() {
         this.mHandler =new Handler(Looper.getMainLooper());
     }
-
-    protected void attach(V view){
+    public void attach(V view){
         mView=view;
     }
-    protected void detach(){
+    public void detach(){
         mView=null;
     }
 }

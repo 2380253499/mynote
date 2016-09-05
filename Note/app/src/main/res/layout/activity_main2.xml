@@ -63,11 +63,12 @@
    <Switch
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:checked="false"
+        android:checked="true"
         android:textOn="打开"
         android:textOff="关闭"
         android:switchMinWidth="80dp"
         android:minHeight="40dp"
+        android:showText="true"
         />
     <com.zcw.togglebutton.ToggleButton
         android:layout_width="80dp"

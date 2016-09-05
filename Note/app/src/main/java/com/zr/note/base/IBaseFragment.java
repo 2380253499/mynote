@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 public class IBaseFragment extends Fragment {
-    protected Intent fIntent;
+    protected Intent mIntent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fIntent=new Intent();
+        mIntent =new Intent();
     }
     protected void showToastS(String toast){
         Toast.makeText(getActivity(), toast, Toast.LENGTH_SHORT).show();
@@ -29,6 +29,6 @@ public class IBaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        fIntent=null;
+        mIntent =null;
     }
 }
