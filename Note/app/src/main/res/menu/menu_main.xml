@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".main.activity.MainActivity">
+      tools:context=".ui.main.activity.MainActivity">
     <item
         android:title="点击筛选"
         android:id="@+id/action_settings"

@@ -1,4 +1,4 @@
-package com.zr.note.main.activity;
+package com.zr.note.ui.main.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

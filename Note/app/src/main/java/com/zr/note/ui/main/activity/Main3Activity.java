@@ -1,4 +1,4 @@
-package com.zr.note.main.activity;
+package com.zr.note.ui.main.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zr.note.R;
-import com.zr.note.main.view.MainView;
+import com.zr.note.ui.main.view.MainView;
 import com.zr.note.tools.ClickUtils;
 import com.zr.note.tools.MyToast;
 
