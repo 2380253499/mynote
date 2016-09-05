@@ -86,19 +86,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <RadioButton
-                    android:drawableTop="@drawable/main_data_normal"
+                <com.zr.note.base.customview.MyRadioButton
+                    app:my_compound_top="true"
+                    app:my_radio_normal="@drawable/main_data_normal"
+                    app:my_radio_checked="@drawable/main_data_selector"
+                    app:my_radio_checked_color="@color/c_icon"
                     android:text="@string/main_data_list"
                     style="@style/radio_main"/>
-                <RadioButton
-                    android:drawableTop="@drawable/memo_normal"
+                <com.zr.note.base.customview.MyRadioButton
+                    app:my_compound_top="true"
                     android:text="@string/main_data_memo"
                     style="@style/radio_main"
+                    app:my_radio_normal="@drawable/memo_normal"
+                    app:my_radio_checked="@drawable/memo_selector"
+                    app:my_radio_checked_color="@color/c_icon"
                     />
-                <RadioButton
-                    android:drawableTop="@drawable/consumption_normal"
+                <com.zr.note.base.customview.MyRadioButton
+                    app:my_compound_top="true"
                     android:text="@string/main_data_consumption"
                     style="@style/radio_main"
+                    app:my_radio_normal="@drawable/consumption_normal"
+                    app:my_radio_checked="@drawable/consumption_selector"
+                    app:my_radio_checked_color="@color/c_icon"
                     />
             </RadioGroup>
         </LinearLayout>

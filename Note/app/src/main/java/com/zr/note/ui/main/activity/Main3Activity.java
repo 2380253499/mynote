@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zr.note.R;
-import com.zr.note.ui.main.view.MainView;
 import com.zr.note.tools.ClickUtils;
 import com.zr.note.tools.MyToast;
 
-public class Main3Activity extends AppCompatActivity implements View.OnClickListener,MainView {
+public class Main3Activity extends AppCompatActivity implements View.OnClickListener {
     View baseView;
     TextView tv,tv2;
     @Override
@@ -55,23 +54,4 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void showMsg(String msg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void show() {
-
-    }
 }

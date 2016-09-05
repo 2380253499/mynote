@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyCheckBox">
+        <attr name="my_checkbox_normal" format="reference"/>
+        <attr name="my_checkbox_checked" format="reference"/>
+        <attr name="my_checkbox_normal_color" format="color"/>
+        <attr name="my_checkbox_checked_color" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="MyRadioButton">
+        <attr name="my_radio_normal" format="reference"/>
+        <attr name="my_radio_checked" format="reference"/>
+        <attr name="my_radio_normal_color" format="color"/>
+        <attr name="my_radio_checked_color" format="color"/>
+        <attr name="my_compound_top" format="boolean"/>
+        <attr name="my_compound_bottom" format="boolean"/>
+        <attr name="my_compound_left" format="boolean"/>
+        <attr name="my_compound_right" format="boolean"/>
+    </declare-styleable>
+</resources>

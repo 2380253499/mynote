@@ -13,6 +13,7 @@ import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.ui.main.contract.MainContract;
 import com.zr.note.ui.main.contract.imp.MainImp;
+import com.zr.note.view.MyPopupwindow;
 
 public class MainActivity extends BaseActivity<MainContract.View,MainContract.Presenter>implements MainContract.View{
     private DrawerLayout drawerLayout;
@@ -69,7 +70,8 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
     protected void menuOnClick(int itemId) {
         switch (itemId){
             case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SActivity.class));
+//                startActivity(new Intent(MainActivity.this, SActivity.class));
+                MyPopupwindow popupwindow=new MyPopupwindow(this,R.layout.content_main);
                 break;
         }
     }
