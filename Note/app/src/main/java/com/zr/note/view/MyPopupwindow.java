@@ -24,13 +24,33 @@ public class MyPopupwindow extends PopupWindow{
         context=ctx;
         setPopupwindow(contentView);
     }
+    public MyPopupwindow(Context ctx,int contentView,int width,int height) {
+        context=ctx;
+        View view = LayoutInflater.from(ctx).inflate(contentView, null);
+        setPopupwindow(view,width,height);
+    }
+    public MyPopupwindow(Context ctx,View contentView,int width,int height) {
+        context=ctx;
+        setPopupwindow(contentView,width,height);
+    }
     private void setPopupwindow(View contentView) {
+        setPopupwindow(contentView,-1,-1);
+    }
+    private void setPopupwindow(View contentView,int width,int height) {
         setBackground();
         setOutsideTouchable(true);
         setFocusable(true);
         setContentView(contentView);
-        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        if(width==-1){
+            setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        }else{
+            setWidth(width);
+        }
+        if(height==-1){
+            setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        }else{
+            setHeight(height);
+        }
         setOnDismissListener(getOnDismissListener());
     }
 
@@ -39,7 +59,7 @@ public class MyPopupwindow extends PopupWindow{
         ColorDrawable cd = new ColorDrawable(0x000000);
         this.setBackgroundDrawable(cd);
         WindowManager.LayoutParams lp=((Activity)context).getWindow().getAttributes();
-        lp.alpha = 0.9f;
+        lp.alpha = 0.7f;
         ((Activity)context).getWindow().setAttributes(lp);
     }
     private void onDismissBackground(){

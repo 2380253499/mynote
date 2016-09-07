@@ -2,13 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:background="@drawable/conversation_options_bg"
-        android:gravity="center"
+              android:gravity="center_vertical"
     >
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="显示账号"
+        android:layout_height="wrap_content"
+        android:src="@drawable/triangle"
+        android:layout_gravity="right"
+        android:layout_marginRight="12dp"
         />
+    <com.zr.note.base.customview.MyLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:my_ll_border_color="@color/black_overlay"
+        app:my_ll_solid="@color/aquamarine"
+        app:my_ll_border_width="2px"
+        app:my_ll_corner_radius="14dp"
+        >
+        <TextView
+            android:drawableLeft="@drawable/option_add"
+            android:text="创建时间↑"
+            style="@style/main_popu_options"
+            />
+        <TextView
+            android:drawableLeft="@drawable/option_add"
+            style="@style/main_popu_options"
+            android:text="修改时间↑"
+            />
+        <TextView
+            android:drawableLeft="@drawable/option_add"
+            style="@style/main_popu_options"
+            android:text="显示全部"
+            />
+        <TextView
+            android:drawableLeft="@drawable/option_add"
+            style="@style/main_popu_options"
+            android:text="显示账号"
+            />
+        <TextView
+            android:drawableLeft="@drawable/option_add"
+            style="@style/main_popu_options"
+            android:text="显示备忘"
+            />
+    </com.zr.note.base.customview.MyLinearLayout>
+
 </LinearLayout>

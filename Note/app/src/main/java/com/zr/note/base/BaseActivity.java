@@ -118,7 +118,7 @@ public abstract class BaseActivity<V extends BaseView, P extends IPresenter<V>> 
     }
 
     private void onMenuClick(int itemId) {
-        if(!ClickUtils.isFastClickById(itemId)){
+        if(!ClickUtils.isFastClickById(itemId,900)){
             menuOnClick(itemId);
         }
     }
