@@ -1,6 +1,5 @@
 package com.zr.note.ui.main.activity;
 
-import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +14,8 @@ import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.main.contract.MainContract;
 import com.zr.note.ui.main.contract.imp.MainImp;
 import com.zr.note.view.MyPopupwindow;
+
+import org.joda.time.LocalDate;
 
 public class MainActivity extends BaseActivity<MainContract.View,MainContract.Presenter>implements MainContract.View{
     private DrawerLayout drawerLayout;
@@ -62,7 +63,22 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(MainActivity.this,SActivity.class));
+//                startActivity(new Intent(MainActivity.this,SActivity.class));
+                LocalDate a=new LocalDate();
+                a.withDayOfMonth(1);
+                a.withDayOfMonth(1).plusWeeks(0);
+                a.withDayOfMonth(1).plusWeeks(1);
+                a.withDayOfMonth(1).plusWeeks(4);
+                a.withDayOfMonth(1).plusWeeks(5);
+                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfWeek();
+                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfMonth();
+                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getMonthOfYear();//
+                int monthOfYear = a.getMonthOfYear();
+                a.getWeekOfWeekyear();
+                a.getWeekyear();
+                a.getMonthOfYear();//
+                a.getDayOfWeek();
+                showToastS("" + monthOfYear);
             break;
         }
     }
