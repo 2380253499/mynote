@@ -17,6 +17,9 @@ import com.zr.note.view.MyPopupwindow;
 
 import org.joda.time.LocalDate;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class MainActivity extends BaseActivity<MainContract.View,MainContract.Presenter>implements MainContract.View{
     private DrawerLayout drawerLayout;
     private CollapsingToolbarLayout ctl_layout;
@@ -59,20 +62,45 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
     protected void initData() {
 
     }
+    private String[] getStartAndEndTime() {
+        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.getTime();
+        String start=dateFormater.format(cal.getTime());
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        String end=dateFormater.format(cal.getTime());
+        return new String[]{start,end};
+    }
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.fab:
+                getStartAndEndTime();
 //                startActivity(new Intent(MainActivity.this,SActivity.class));
-                LocalDate a=new LocalDate();
-                a.withDayOfMonth(1);
+                LocalDate today = LocalDate.now();
+                today.minusDays(today.getMonthOfYear());
+                today.dayOfMonth();
+                today.getDayOfMonth();
+                today.withDayOfMonth(today.getMonthOfYear());
+//                today.get(DateTimeFieldType.millisOfDay());
+                LocalDate a=new LocalDate(2017,01,02);
+                a.getDayOfMonth();
+                a.size();
+                a.getDayOfYear();
                 a.withDayOfMonth(1).plusWeeks(0);
                 a.withDayOfMonth(1).plusWeeks(1);
                 a.withDayOfMonth(1).plusWeeks(4);
                 a.withDayOfMonth(1).plusWeeks(5);
+                a.withDayOfWeek(7);
+                LocalDate localDate = a.withDayOfMonth(1).withDayOfWeek(7);
+                localDate.getDayOfWeek();
+                localDate.getDayOfMonth();
+                int dayOfYear = localDate.getDayOfYear();
                 new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfWeek();
                 new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfMonth();
                 new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getMonthOfYear();//
+                new LocalDate(a.withDayOfMonth(1).plusWeeks(4).withDayOfWeek(7)).getMonthOfYear();//
                 int monthOfYear = a.getMonthOfYear();
                 a.getWeekOfWeekyear();
                 a.getWeekyear();
