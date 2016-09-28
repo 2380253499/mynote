@@ -16,8 +16,8 @@ public class OKHttpUtils {
     /**
      * get异步请求
      */
-    public static void getAsyn(String url, ResultCallback oKHttpCallback) {
-        callback = oKHttpCallback;
+    public static void getAsyn(String url, ResultCallback resultCallback) {
+        callback = resultCallback;
         OKHttpManager.getAsyn(url, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -34,21 +34,21 @@ public class OKHttpUtils {
      * post异步请求
      * @param url
      * @param object 实体(参数)
-     * @param oKHttpCallback 用于接口回调
+     * @param resultCallback 用于接口回调
      */
-    public static void postAsyn(String url, Object object, ResultCallback oKHttpCallback) {
+    public static void postAsyn(String url, Object object, ResultCallback resultCallback) {
         String json = GsonUtils.getGson().toJson(object);
         LogUtils.Log(json);
-        postAsyn(url, json, oKHttpCallback);
+        postAsyn(url, json, resultCallback);
     }
     /***
      * post异步请求
      * @param url
      * @param json json对象(参数)
-     * @param oKHttpCallback 用于接口回调
+     * @param resultCallback 用于接口回调
      */
-    public static void postAsyn(String url, String json, ResultCallback oKHttpCallback) {
-        callback = oKHttpCallback;
+    public static void postAsyn(String url, String json, ResultCallback resultCallback) {
+        callback = resultCallback;
         OKHttpManager.postAsyn(url, json, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -65,10 +65,10 @@ public class OKHttpUtils {
      * post异步请求
      * @param url
      * @param map 参数
-     * @param oKHttpCallback 用于接口回调
+     * @param resultCallback 用于接口回调
      */
-    public static void postAsyn(String url, Map<String, String> map, ResultCallback oKHttpCallback) {
-        callback = oKHttpCallback;
+    public static void postAsyn(String url, Map<String, String> map, ResultCallback resultCallback) {
+        callback = resultCallback;
         OKHttpManager.postAsyn(url, map, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -91,8 +91,8 @@ public class OKHttpUtils {
     /**
      * get同步请求
      */
-    public static void getSync(String url,ResultCallback oKHttpCallback) {
-        callback = oKHttpCallback;
+    public static void getSync(String url,ResultCallback resultCallback) {
+        callback = resultCallback;
         try {
             callback.onSuccess(OKHttpManager.getSync(url));
         } catch (IOException e) {

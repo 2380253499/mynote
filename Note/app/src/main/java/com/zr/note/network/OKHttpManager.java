@@ -4,8 +4,11 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.zr.note.tools.LogUtils;
+import com.zr.note.tools.MyToast;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -132,6 +135,19 @@ public class OKHttpManager {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                if ("timeout".equalsIgnoreCase(e.getMessage())) {
+                    MyToast.showToast("请求超时,请稍后再试");
+                } else if (e instanceof ConnectException) {
+                    MyToast.showToast("请检查网络之后再试");
+                } else if (e instanceof SocketTimeoutException) {
+                    if (e.getMessage() != null && e.getMessage().indexOf("after") >= 0) {
+                        MyToast.showToast("请检查网络之后再试");
+                    } else {
+                        MyToast.showToast("请求超时,请稍后再试");
+                    }
+                } else {
+                    MyToast.showToast("请检查网络之后再试");
+                }
                 sendFailedCallback(callback,call, e);
             }
             @Override
