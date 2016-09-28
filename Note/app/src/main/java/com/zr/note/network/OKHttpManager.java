@@ -3,6 +3,8 @@ package com.zr.note.network;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.zr.note.tools.LogUtils;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -44,19 +46,19 @@ public class OKHttpManager {
     /**
      * 异步post请求(json)
      */
-    public void postAsyn(String url,String json,ResultCallback callback) {
+    public static void postAsyn(String url,String json,OKHttpCallback callback) {
         getInstance().requestForPostAsyn(url, json,callback);
     }
     /**
      * 异步post请求(form)
      */
-    public void postAsyn(String url,Map<String,String> map,ResultCallback callback) {
+    public static void postAsyn(String url,Map<String,String> map,OKHttpCallback callback) {
         getInstance().requestForPostAsyn(url, map,callback);
     }
     /**
      * 异步get请求
      */
-    public void getAsyn(String url, ResultCallback callback) {
+    public static void getAsyn(String url, OKHttpCallback callback) {
         Request request = new Request.Builder().url(url).build();
         getInstance().deliveryResultForPostAsyn(request, callback);
     }
@@ -64,23 +66,23 @@ public class OKHttpManager {
     /**
      * 同步post请求(json)
      */
-    public String postSync(String url,String json) throws IOException {
+    public static String postSync(String url,String json) throws IOException {
         return getInstance().requestForPostSync(url, json);
     }
     /**
      * 同步post请求(form)
      */
-    public String postSync(String url,Map<String,String> map) throws IOException {
+    public static String postSync(String url,Map<String,String> map) throws IOException {
         return getInstance().requestForPostSync(url, map);
     }
     /**
      * 同步get请求
      */
-    public String getSync(String url) throws IOException {
+    public static String getSync(String url) throws IOException {
         return getInstance().requestForGetSync(url);
     }
     /************************************回调方法************************************************/
-    private void sendSuccessCallback(final ResultCallback callback,final Call call, final Response response){
+    private void sendSuccessCallback(final OKHttpCallback callback,final Call call, final Response response){
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -92,7 +94,7 @@ public class OKHttpManager {
             }
         });
     }
-    private void sendFailedCallback(final ResultCallback callback,final Call call,final IOException e){
+    private void sendFailedCallback(final OKHttpCallback callback,final Call call,final IOException e){
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -104,6 +106,7 @@ public class OKHttpManager {
     public RequestBody buildPostBody(Map<String, String> map){
         FormBody.Builder formBody = new FormBody.Builder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
+            LogUtils.Log(entry.getKey(), entry.getValue());
             formBody.addEncoded(entry.getKey(), entry.getValue());
         }
         return formBody.build();
@@ -111,10 +114,10 @@ public class OKHttpManager {
     private RequestBody buildPostBody(String json){
         return RequestBody.create(JSON, json);
     }
-    private void requestForPostAsyn(String url,String json,ResultCallback callback) {
+    private void requestForPostAsyn(String url,String json,OKHttpCallback callback) {
         deliveryResultForPostAsyn(bulidRequestForPost(url, json), callback);
     }
-    private void requestForPostAsyn(String url,Map<String,String> map,ResultCallback callback) {
+    private void requestForPostAsyn(String url,Map<String,String> map,OKHttpCallback callback) {
         deliveryResultForPostAsyn(bulidRequestForPost(url, map), callback);
     }
     public Request bulidRequestForPost(String url, String json){
@@ -124,7 +127,7 @@ public class OKHttpManager {
         return new Request.Builder().url(url).post(buildPostBody(map)).build();
     }
 
-    private void deliveryResultForPostAsyn(Request request,final ResultCallback callback) {
+    private void deliveryResultForPostAsyn(Request request,final OKHttpCallback callback) {
         OkHttpClient client = okHttpClient.newBuilder().connectTimeout(connectTimeout, TimeUnit.SECONDS).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
