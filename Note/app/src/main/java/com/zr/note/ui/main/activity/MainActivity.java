@@ -1,9 +1,9 @@
 package com.zr.note.ui.main.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -11,22 +11,24 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
+import com.zr.note.network.OKHttpUtils;
+import com.zr.note.network.ResultCallback;
+import com.zr.note.tools.LogUtils;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.main.contract.MainContract;
 import com.zr.note.ui.main.contract.imp.MainImp;
 import com.zr.note.view.MyPopupwindow;
 
-import org.joda.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
-    @Bind(R.id.tv_a4)
-    TextView tvA4;
+    @BindView(R.id.tv_a4)
+    TextView tv_a4;
     private DrawerLayout drawerLayout;
     private CollapsingToolbarLayout ctl_layout;
     private TextView tv_a1, tv_a2;
@@ -74,63 +76,45 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     }
 
-    private String[] getStartAndEndTime() {
-        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.getTime();
-        String start = dateFormater.format(cal.getTime());
-        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        String end = dateFormater.format(cal.getTime());
-        return new String[]{start, end};
-    }
-
     String URL;
+    private void bb() {
+        URL="http://61.152.255.241:8082/sales-web/mobile/cust/addCustomerdelMobile";
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("price","0-900");
+        map.put("other","噶哈哈哈你啊好11");
+        map.put("area","");
+        map.put("fromToRoom","1-2");
+        map.put("token","72b092d47d1d45eba99fdbb6246825a6");
+        map.put("custCode","C98040000041");
+        map.put("reqType","rent");
+        map.put("distCode","");
+        map.put("acreage","0-50");
+        map.put("randomTime","1475982728");
+        OKHttpUtils.postAsyn(URL, map, new ResultCallback<String>() {
+            @Override
+            public void onError(Call call, Exception e) {
+                Log.i("===", "===" + e);
+            }
 
+            @Override
+            public void onSuccess(String response) {
+                LogUtils.Log(response);
+            }
+        });
+    }
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_a3:
+                bb();
                 break;
             case R.id.tv_a4:
                 break;
             case R.id.tv_a2:
                 break;
             case R.id.tv_a1:
-
                 break;
             case R.id.fab:
-                getStartAndEndTime();
-//                startActivity(new Intent(MainActivity.this,SActivity.class));
-                LocalDate today = LocalDate.now();
-                today.minusDays(today.getMonthOfYear());
-                today.dayOfMonth();
-                today.getDayOfMonth();
-                today.withDayOfMonth(today.getMonthOfYear());
-//                today.get(DateTimeFieldType.millisOfDay());
-                LocalDate a = new LocalDate(2017, 01, 02);
-                a.getDayOfMonth();
-                a.size();
-                a.getDayOfYear();
-                a.withDayOfMonth(1).plusWeeks(0);
-                a.withDayOfMonth(1).plusWeeks(1);
-                a.withDayOfMonth(1).plusWeeks(4);
-                a.withDayOfMonth(1).plusWeeks(5);
-                a.withDayOfWeek(7);
-                LocalDate localDate = a.withDayOfMonth(1).withDayOfWeek(7);
-                localDate.getDayOfWeek();
-                localDate.getDayOfMonth();
-                int dayOfYear = localDate.getDayOfYear();
-                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfWeek();
-                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getDayOfMonth();
-                new LocalDate(a.withDayOfMonth(1).plusWeeks(5)).getMonthOfYear();//
-                new LocalDate(a.withDayOfMonth(1).plusWeeks(4).withDayOfWeek(7)).getMonthOfYear();//
-                int monthOfYear = a.getMonthOfYear();
-                a.getWeekOfWeekyear();
-                a.getWeekyear();
-                a.getMonthOfYear();//
-                a.getDayOfWeek();
-                showToastS("" + monthOfYear);
                 break;
         }
     }
@@ -154,15 +138,11 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         return new MainImp();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-    }
-
     @OnClick(R.id.tv_a4)
     public void onClick(TextView View) {
+        LogUtils.Log("onClick");
         View.setText("tv_a");
         showToastS("tv_a4");
     }
+
 }

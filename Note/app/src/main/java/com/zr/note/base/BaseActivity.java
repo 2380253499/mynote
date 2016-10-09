@@ -10,6 +10,8 @@ import android.view.View;
 import com.zr.note.R;
 import com.zr.note.tools.ClickUtils;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2016/8/4.
  */
@@ -39,6 +41,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         super.onCreate(savedInstanceState);
         setColorPrimaryDark();//兼容4.4
         setContentView(setContentView());
+        ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setToolbarStyle();
         setSupportActionBar(toolbar);

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2016/8/4.
  */
@@ -15,7 +13,6 @@ public class IBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         mIntent=new Intent();
     }
 

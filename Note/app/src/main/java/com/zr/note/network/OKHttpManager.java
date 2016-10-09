@@ -97,7 +97,7 @@ public class OKHttpManager {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                callback.onError(call,e);
+                callback.onError(call, e);
             }
         });
     }
