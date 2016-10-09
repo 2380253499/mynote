@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:fitsSystemWindows="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.zr.note.ui.main.activity.AddDataActivity"
+    >
+    <include layout="@layout/toolbar"/>
+    <RadioGroup
+        android:id="@+id/rg_addData"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        >
+        <com.zr.note.base.customview.MyRadioButton
+            android:id="@+id/mrb_button0"
+            android:text="用户账号"
+            app:my_radio_checked="@drawable/check_select"
+            app:my_radio_normal="@drawable/check_normal"
+            style="@style/AddDataTab"/>
+
+        <com.zr.note.base.customview.MyRadioButton
+            android:id="@+id/mrb_button1"
+            app:my_radio_checked="@drawable/check_select"
+            app:my_radio_normal="@drawable/check_normal"
+            android:text="日常备忘"
+            style="@style/AddDataTab"/>
+
+        <com.zr.note.base.customview.MyRadioButton
+            android:id="@+id/mrb_button2"
+            app:my_radio_checked="@drawable/check_select"
+            app:my_radio_normal="@drawable/check_normal"
+            android:text="日常消费"
+            style="@style/AddDataTab"/>
+    </RadioGroup>
+<FrameLayout
+    android:id="@+id/fl_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</FrameLayout>
+</LinearLayout>

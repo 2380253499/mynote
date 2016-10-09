@@ -40,6 +40,7 @@ dependencies {
     compile(name: 'library2', ext: 'aar')
     compile(name: 'ToggleButtonLib', ext: 'aar')
     compile(name: 'library', ext: 'aar')
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'joda-time:joda-time:2.9.4'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:appcompat-v7:23.4.0'
@@ -47,5 +48,4 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

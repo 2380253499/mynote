@@ -49,11 +49,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
-                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                        />
                 </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 
-            <include layout="@layout/content_main"/>
+            <include
+                android:layout_above="@+id/v_divider"
+                layout="@layout/content_main"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
@@ -61,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                app:backgroundTint="@color/c_divider"
+                app:backgroundTint="@color/white"
                 android:src="@drawable/main_note_selector"/>
 
         </android.support.design.widget.CoordinatorLayout>

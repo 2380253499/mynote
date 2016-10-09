@@ -1,5 +1,6 @@
 package com.zr.note.base;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
     private int navigationIcon =-1;
+    private Drawable backColor;
     private int logIcon=-1;
     private Drawable logIconDrawble;
     private int titleId=-1;
@@ -44,6 +46,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setToolbarStyle();
+        setNavigationColor(R.color.white);
         setSupportActionBar(toolbar);
         setToolBar();
         mPresenter= initPresenter();
@@ -53,6 +56,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private void setToolBar() {
         if(navigationIcon !=-1){
             getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else if(backColor!=null){
+            getSupportActionBar().setHomeAsUpIndicator(backColor);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else{
             getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
@@ -67,7 +73,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         }else if(titleString!=null){
             getSupportActionBar().setTitle(titleString);
         }
-        if(subTitleId != -1) {
+        if (subTitleId != -1) {
             getSupportActionBar().setSubtitle(subTitleId);
         }else if(subTitleString!=null){
             getSupportActionBar().setSubtitle(subTitleString);
@@ -76,6 +82,10 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
 
     private void setColorPrimaryDark() {
 //        StatusBarCompatForKitKat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
+    }
+    protected void setNavigationColor(int backColor){
+        this.backColor = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        this.backColor.setColorFilter(getResources().getColor(backColor), PorterDuff.Mode.SRC_ATOP);
     }
     protected void setNavigationIcon(int backIcon){
         this.navigationIcon =backIcon;
