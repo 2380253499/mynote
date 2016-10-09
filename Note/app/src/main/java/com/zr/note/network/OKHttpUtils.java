@@ -38,7 +38,6 @@ public class OKHttpUtils {
      */
     public static void postAsyn(String url, Object object, ResultCallback resultCallback) {
         String json = GsonUtils.getGson().toJson(object);
-        LogUtils.Log(json);
         postAsyn(url, json, resultCallback);
     }
     /***
@@ -49,6 +48,7 @@ public class OKHttpUtils {
      */
     public static void postAsyn(String url, String json, ResultCallback resultCallback) {
         callback = resultCallback;
+        LogUtils.Log(json);
         OKHttpManager.postAsyn(url, json, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -74,6 +74,7 @@ public class OKHttpUtils {
             public void onError(Call call, Exception e) {
                 callback.onError(call, e);
             }
+
             @Override
             public void onSuccess(String response) {
                 callbackSuccess(response);
@@ -91,13 +92,58 @@ public class OKHttpUtils {
     /**
      * get同步请求
      */
-    public static void getSync(String url,ResultCallback resultCallback) {
-        callback = resultCallback;
+    public static String getSync(String url) {
         try {
-            callback.onSuccess(OKHttpManager.getSync(url));
+            String sync = OKHttpManager.getSync(url);
+            return sync;
         } catch (IOException e) {
-            e.printStackTrace();
-//            return null;
+            return null;
+        }
+    }
+    public static <T> T getSync(String url,Class<T> clazz) {
+        try {
+            String sync = OKHttpManager.getSync(url);
+            return GsonUtils.jsonToObject(sync,clazz);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    /**
+     * post同步请求(json)
+     */
+    public static String postSync(String url,String json) {
+        try {
+            String response = OKHttpManager.postSync(url, json);
+            return response;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    public static <T> T postSync(String url,String json,Class<T> clazz) {
+        try {
+            String response = OKHttpManager.postSync(url, json);
+            return GsonUtils.jsonToObject(response,clazz);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    /**
+     * post同步请求(map)
+     */
+    public static String postSync(String url,Map<String,String> map) {
+        try {
+            String response = OKHttpManager.postSync(url, map);
+            return response;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    public static <T> T postSync(String url,Map<String,String> map,Class<T> clazz) {
+        try {
+            String response = OKHttpManager.postSync(url, map);
+            return GsonUtils.jsonToObject(response,clazz);
+        } catch (IOException e) {
+            return null;
         }
     }
 }
