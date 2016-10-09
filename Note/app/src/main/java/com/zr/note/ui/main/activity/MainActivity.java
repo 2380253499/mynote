@@ -1,5 +1,6 @@
 package com.zr.note.ui.main.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -20,10 +21,15 @@ import org.joda.time.LocalDate;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends BaseActivity<MainContract.View,MainContract.Presenter>implements MainContract.View{
+import butterknife.Bind;
+import butterknife.OnClick;
+
+public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
+    @Bind(R.id.tv_a4)
+    TextView tvA4;
     private DrawerLayout drawerLayout;
     private CollapsingToolbarLayout ctl_layout;
-    private TextView tv_a1,tv_a2;
+    private TextView tv_a1, tv_a2;
     private FloatingActionButton fab;
 
     @Override
@@ -42,16 +48,16 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        drawerLayout= (DrawerLayout) findViewById(R.id.drawerlayout);
-        ctl_layout= (CollapsingToolbarLayout) findViewById(R.id.ctl_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        ctl_layout = (CollapsingToolbarLayout) findViewById(R.id.ctl_layout);
         ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
         ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
 
         findViewById(R.id.tv_a1).setOnClickListener(this);
         findViewById(R.id.tv_a2).setOnClickListener(this);
         findViewById(R.id.tv_a3).setOnClickListener(this);
-        findViewById(R.id.tv_a4).setOnClickListener(this);
     }
+
     @Override
     protected void setToolbarStyle() {
         setToolbarTitle("Note");
@@ -67,20 +73,23 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
     protected void initData() {
 
     }
+
     private String[] getStartAndEndTime() {
         SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.getTime();
-        String start=dateFormater.format(cal.getTime());
+        String start = dateFormater.format(cal.getTime());
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        String end=dateFormater.format(cal.getTime());
-        return new String[]{start,end};
+        String end = dateFormater.format(cal.getTime());
+        return new String[]{start, end};
     }
+
     String URL;
+
     @Override
     protected void viewOnClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_a3:
                 break;
             case R.id.tv_a4:
@@ -99,7 +108,7 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
                 today.getDayOfMonth();
                 today.withDayOfMonth(today.getMonthOfYear());
 //                today.get(DateTimeFieldType.millisOfDay());
-                LocalDate a=new LocalDate(2017,01,02);
+                LocalDate a = new LocalDate(2017, 01, 02);
                 a.getDayOfMonth();
                 a.size();
                 a.getDayOfYear();
@@ -122,20 +131,19 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
                 a.getMonthOfYear();//
                 a.getDayOfWeek();
                 showToastS("" + monthOfYear);
-            break;
+                break;
         }
     }
 
 
-
     @Override
     protected void menuOnClick(int itemId) {
-        switch (itemId){
+        switch (itemId) {
             case R.id.action_settings:
 //                startActivity(new Intent(MainActivity.this, SActivity.class));
-                MyPopupwindow popupwindow=new MyPopupwindow(this,R.layout.layout_options);
-                int xoff= PhoneUtils.getPhoneWidth(this)-PhoneUtils.dip2px(this, 115);
-                popupwindow.showAsDropDown(getToolbar(),xoff,0);
+                MyPopupwindow popupwindow = new MyPopupwindow(this, R.layout.layout_options);
+                int xoff = PhoneUtils.getPhoneWidth(this) - PhoneUtils.dip2px(this, 115);
+                popupwindow.showAsDropDown(getToolbar(), xoff, 0);
                 break;
         }
     }
@@ -146,4 +154,15 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
         return new MainImp();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+    }
+
+    @OnClick(R.id.tv_a4)
+    public void onClick(TextView View) {
+        View.setText("tv_a");
+        showToastS("tv_a4");
+    }
 }

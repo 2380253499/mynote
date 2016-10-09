@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import butterknife.Unbinder;
+
 public class IBaseFragment extends Fragment {
     protected Intent mIntent;
+    protected Unbinder mUnBind;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,12 @@ public class IBaseFragment extends Fragment {
     protected void STActivity(Intent intent,Class clazz){
         intent.setClass(getActivity(),clazz);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnBind.unbind();
     }
 
     @Override

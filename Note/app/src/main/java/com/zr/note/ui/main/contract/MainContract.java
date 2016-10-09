@@ -1,7 +1,7 @@
 package com.zr.note.ui.main.contract;
 
 import com.zr.note.base.BaseView;
-import com.zr.note.base.IPresenter;
+import com.zr.note.base.BasePresenter;
 
 /**
  * Created by Administrator on 2016/9/5.
@@ -10,7 +10,7 @@ public interface MainContract {
     interface View extends BaseView{
 
     }
-    interface Presenter extends IPresenter<View> {
+    interface Presenter extends BasePresenter<View> {
 
     }
 

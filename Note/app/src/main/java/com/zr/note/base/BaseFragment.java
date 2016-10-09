@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 
 import com.zr.note.tools.ClickUtils;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
+public abstract class BaseFragment <V extends BaseView,P extends IPresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
     protected P mPresenter;
     protected abstract P initPresenter();
     protected abstract int setContentView();
@@ -20,7 +22,9 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(setContentView(), container, false);
+        View view = inflater.inflate(setContentView(), container, false);
+        mUnBind = ButterKnife.bind(this, view);
+        return view;
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
