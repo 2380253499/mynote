@@ -56,7 +56,7 @@ public class OKHttpManager {
      * 异步post请求(form)
      */
     public static void postAsyn(String url,Map<String,String> map,OKHttpCallback callback) {
-        getInstance().requestForPostAsyn(url, map,callback);
+        getInstance().requestForPostAsyn(url, map, callback);
     }
     /**
      * 异步get请求
@@ -85,15 +85,11 @@ public class OKHttpManager {
         return getInstance().requestForGetSync(url);
     }
     /************************************回调方法************************************************/
-    private void sendSuccessCallback(final OKHttpCallback callback,final Call call, final Response response){
+    private void sendSuccessCallback(final OKHttpCallback callback,final Call call, final String response){
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                try {
-                    callback.onSuccess(response.body().string());
-                } catch (IOException e) {
-                    callback.onError(call,e);
-                }
+                callback.onSuccess(response);
             }
         });
     }
@@ -110,7 +106,12 @@ public class OKHttpManager {
         FormBody.Builder formBody = new FormBody.Builder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             LogUtils.Log(entry.getKey(), entry.getValue());
-            formBody.addEncoded(entry.getKey(), entry.getValue());
+            if(entry.getKey().equals("other")){
+
+                formBody.addEncoded("other", "你好好好好哦啊好哦啊后22");
+            }else{
+                formBody.addEncoded(entry.getKey(), entry.getValue());
+            }
         }
         return formBody.build();
     }
@@ -152,7 +153,7 @@ public class OKHttpManager {
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                sendSuccessCallback(callback,call,response);
+                sendSuccessCallback(callback,call,response.body().string());
             }
         });
     }

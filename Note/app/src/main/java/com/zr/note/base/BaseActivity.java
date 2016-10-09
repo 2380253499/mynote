@@ -104,7 +104,7 @@ public abstract class BaseActivity<V extends BaseView, P extends IPresenter<V>> 
 
     @Override
     public void onClick(View v) {
-        if(!ClickUtils.isFastClick(v)){
+        if(!ClickUtils.isFastClick(v,900)){
             viewOnClick(v);
         }
     }

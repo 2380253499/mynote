@@ -46,6 +46,11 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
         ctl_layout= (CollapsingToolbarLayout) findViewById(R.id.ctl_layout);
         ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
         ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+
+        findViewById(R.id.tv_a1).setOnClickListener(this);
+        findViewById(R.id.tv_a2).setOnClickListener(this);
+        findViewById(R.id.tv_a3).setOnClickListener(this);
+        findViewById(R.id.tv_a4).setOnClickListener(this);
     }
     @Override
     protected void setToolbarStyle() {
@@ -72,9 +77,19 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
         String end=dateFormater.format(cal.getTime());
         return new String[]{start,end};
     }
+    String URL;
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()){
+            case R.id.tv_a3:
+                break;
+            case R.id.tv_a4:
+                break;
+            case R.id.tv_a2:
+                break;
+            case R.id.tv_a1:
+
+                break;
             case R.id.fab:
                 getStartAndEndTime();
 //                startActivity(new Intent(MainActivity.this,SActivity.class));
@@ -110,6 +125,8 @@ public class MainActivity extends BaseActivity<MainContract.View,MainContract.Pr
             break;
         }
     }
+
+
 
     @Override
     protected void menuOnClick(int itemId) {

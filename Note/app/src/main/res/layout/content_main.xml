@@ -25,55 +25,36 @@
                 android:id="@+id/tv_a1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/violet"
                 android:gravity="center"
-                android:text="android1"
+                android:text="post异步--json"
                 />
 
             <TextView
                 android:id="@+id/tv_a2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/brown"
-                android:gravity="bottom"
-                android:text="android2"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/violet"
                 android:gravity="center"
-                android:text="android1"
+                android:text="post异步--map"
                 />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/brown"
-                android:gravity="bottom"
-                android:text="android2"
-                />
-
-            <TextView
+                android:id="@+id/tv_a3"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/violet"
-                android:gravity="center"
-                android:text="android1"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="get异步"
                 />
 
             <TextView
+                android:id="@+id/tv_a4"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@color/brown"
                 android:gravity="bottom"
-                android:text="android2"
+                android:text="get同步"
                 />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

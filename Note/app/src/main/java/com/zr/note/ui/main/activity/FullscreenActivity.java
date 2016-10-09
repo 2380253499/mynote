@@ -29,8 +29,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
     /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
+     * Some older devices needs aa small delay between UI widget updates
+     * and aa change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
@@ -141,7 +141,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
+        // Schedule aa runnable to remove the status and navigation bar after aa delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
@@ -153,13 +153,13 @@ public class FullscreenActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mVisible = true;
 
-        // Schedule a runnable to display UI elements after a delay
+        // Schedule aa runnable to display UI elements after aa delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
+     * Schedules aa call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
      */
     private void delayedHide(int delayMillis) {
