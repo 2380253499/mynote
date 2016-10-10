@@ -19,6 +19,7 @@
     <color name="c_press">#F7F7F7</color>
     <!-- 主题颜色-->
     <color name="top_color1">#20000000</color>
+    <color name="top_color2">#FFCECBCB</color>
     <color name="top_color">#fd4b4d</color>
     <color name="image_checked_bg">#66000000</color>
     <!-- ************************* 不常用颜色 ************************* -->

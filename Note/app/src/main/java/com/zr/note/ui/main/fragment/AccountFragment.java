@@ -5,8 +5,9 @@ import android.view.View;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.IPresenter;
+import com.zr.note.ui.main.inter.AddDataInter;
 
-public class AccountFragment extends BaseFragment {
+public class AccountFragment extends BaseFragment implements AddDataInter{
     @Override
     protected IPresenter initPresenter() {
         return null;
@@ -30,5 +31,11 @@ public class AccountFragment extends BaseFragment {
     @Override
     protected void viewOnClick(View v) {
 
+    }
+
+    @Override
+    public boolean isPerfectData() {
+
+        return false;
     }
 }

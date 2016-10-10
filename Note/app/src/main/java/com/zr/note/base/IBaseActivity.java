@@ -2,6 +2,7 @@ package com.zr.note.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -26,10 +27,21 @@ public class IBaseActivity extends AppCompatActivity {
         startActivity(new Intent(this, clazz));
     }
     protected void STActivity(Intent intent,Class clazz){
-        intent.setClass(this,clazz);
+        intent.setClass(this, clazz);
         startActivity(intent);
     }
-
+    protected   void addFragment(int resId,Fragment fragment){
+        getSupportFragmentManager().beginTransaction().add(resId, fragment).commit();
+    }
+    protected  void replaceFragment(int resId,Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(resId, fragment).commit();
+    }
+    protected  void hideFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+    }
+    protected  void showFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().attach(fragment).commit();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

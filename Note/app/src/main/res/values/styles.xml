@@ -6,34 +6,32 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item><!--光标颜色-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
     </style>
-    <style name="toolbarStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <!--<style name="toolbarStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:colorControlNormal">@color/white</item>
-    </style>
-    <!-- <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
-         &lt;!&ndash; Customize your theme here. &ndash;&gt;
-         <item name="colorPrimary">@color/colorPrimaryDark</item>
-         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-         <item name="colorAccent">@color/colorAccent</item>
-         <item name="windowActionBar">false</item>
-         <item name="windowNoTitle">true</item>
-     </style>-->
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        &lt;!&ndash; Customize your theme here. &ndash;&gt;
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>-->
+    <style name="editTextStyle" parent="@style/Base.V7.Widget.AppCompat.EditText">
+        <item name="android:editTextColor">@color/colorText</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColorHint">@color/top_color2</item>
+    </style>
+    <style name="addDataEditStyle" parent="@style/editTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="addDataEditStyle1" parent="@style/editTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
     <style name="SwitchButtonStyle">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>

@@ -59,7 +59,7 @@ public abstract class BaseFragment <V extends BaseView,P extends IPresenter<V>> 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.attach((V) this);
+        if(mPresenter!=null)mPresenter.attach((V) this);
     }
     @Override
     public void onDestroy() {
