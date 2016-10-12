@@ -8,6 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.zr.note.ui.main.activity.AddDataActivity"
+    android:background="@color/white"
     >
     <include layout="@layout/toolbar"/>
     <RadioGroup
@@ -21,12 +22,14 @@
             android:text="用户账号"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
+            app:my_radio_checked_color="@color/colorPrimary"
             style="@style/AddDataTab"/>
 
         <com.zr.note.base.customview.MyRadioButton
             android:id="@+id/mrb_button1"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
+            app:my_radio_checked_color="@color/colorPrimary"
             android:text="日常备忘"
             style="@style/AddDataTab"/>
 
@@ -34,13 +37,36 @@
             android:id="@+id/mrb_button2"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
+            app:my_radio_checked_color="@color/colorPrimary"
             android:text="日常消费"
             style="@style/AddDataTab"/>
     </RadioGroup>
-<FrameLayout
-    android:id="@+id/fl_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/fl_fragment"
+            android:layout_above="@+id/ll_addData_save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</FrameLayout>
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/ll_addData_save"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="保存"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

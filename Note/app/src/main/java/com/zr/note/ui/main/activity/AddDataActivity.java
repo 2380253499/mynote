@@ -3,6 +3,7 @@ package com.zr.note.ui.main.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.zr.note.R;
@@ -11,6 +12,7 @@ import com.zr.note.base.customview.MyRadioButton;
 import com.zr.note.ui.main.contract.AddDataContract;
 import com.zr.note.ui.main.contract.imp.AddDataImp;
 import com.zr.note.ui.main.fragment.AccountFragment;
+import com.zr.note.ui.main.fragment.DailyReminderFragment;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
@@ -28,9 +30,12 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     MyRadioButton mrb_button2;
     @BindView(R.id.fl_fragment)
     FrameLayout fl_fragment;
+    @BindView(R.id.ll_addData_save)
+    LinearLayout ll_addData_save;
 
-    private AddDataInter addDataInter0,addDataInter1,addDataInter2;
+    private AddDataInter addDataInter0, addDataInter1, addDataInter2;
     private AccountFragment accountFragment;
+    private DailyReminderFragment dailyReminderFragment;
 
     @Override
     protected AddDataImp initPresenter() {
@@ -56,23 +61,37 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void initView() {
         mrb_button0.setChecked(true);
         accountFragment = new AccountFragment();
-        addDataInter0= accountFragment;
-        addFragment( R.id.fl_fragment, accountFragment);
+        addDataInter0 = accountFragment;
+        addFragment(R.id.fl_fragment, accountFragment);
+
+        ll_addData_save.setOnClickListener(this);
 
         rg_addData.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.mrb_button0:
-                    break;
+                        hideFragment(dailyReminderFragment);
+                        showFragment(accountFragment);
+                        break;
                     case R.id.mrb_button1:
-                    break;
+                        if (dailyReminderFragment == null) {
+                            hideFragment(accountFragment);
+                            dailyReminderFragment=new DailyReminderFragment();
+                            addDataInter1=dailyReminderFragment;
+                            addFragment(R.id.fl_fragment, dailyReminderFragment);
+                        }else{
+                            hideFragment(accountFragment);
+                            showFragment(dailyReminderFragment);
+                        }
+                        break;
                     case R.id.mrb_button2:
-                    break;
+                        break;
                 }
             }
         });
     }
+
     @Override
     protected void initData() {
 
@@ -80,7 +99,11 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
 
     @Override
     protected void viewOnClick(View v) {
-
+        switch (v.getId()){
+            case R.id.ll_addData_save:
+                addDataInter0.saveData();
+            break;
+        }
     }
 
     @Override

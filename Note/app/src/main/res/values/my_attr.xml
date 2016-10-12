@@ -30,14 +30,30 @@
     </declare-styleable>
     <declare-styleable name="MyLinearLayout">
         <attr name="my_ll_solid" format="color"/>
-        <attr name="my_ll_border_width" format="dimension"/>
+        <attr name="my_ll_border_width" format="dimension"/><!--线的宽度-->
         <attr name="my_ll_border_color" format="color"/>
         <attr name="my_ll_border_dashWidth" format="dimension"/>
-        <attr name="my_ll_border_dashGap" format="dimension"/>
+        <attr name="my_ll_border_dashGap" format="dimension"/><!--虚线间距-->
         <attr name="my_ll_corner_radius" format="dimension"/>
         <attr name="my_ll_corner_topLeftRadius" format="dimension"/>
         <attr name="my_ll_corner_topRightRadius" format="dimension"/>
         <attr name="my_ll_corner_bottomLeftRadius" format="dimension"/>
         <attr name="my_ll_corner_bottomRightRadius" format="dimension"/>
+        <attr name="my_ll_left_line" format="boolean"/>
+        <attr name="my_ll_top_line" format="boolean"/>
+        <attr name="my_ll_right_line" format="boolean"/>
+        <attr name="my_ll_bottom_line" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="MyEditText">
+        <attr name="my_et_solid" format="color"/>
+        <attr name="my_et_border_width" format="dimension"/>
+        <attr name="my_et_border_color" format="color"/>
+        <attr name="my_et_border_dashWidth" format="dimension"/>
+        <attr name="my_et_border_dashGap" format="dimension"/>
+        <attr name="my_et_corner_radius" format="dimension"/>
+        <attr name="my_et_corner_topLeftRadius" format="dimension"/>
+        <attr name="my_et_corner_topRightRadius" format="dimension"/>
+        <attr name="my_et_corner_bottomLeftRadius" format="dimension"/>
+        <attr name="my_et_corner_bottomRightRadius" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -30,17 +30,25 @@ public class IBaseActivity extends AppCompatActivity {
         intent.setClass(this, clazz);
         startActivity(intent);
     }
-    protected   void addFragment(int resId,Fragment fragment){
-        getSupportFragmentManager().beginTransaction().add(resId, fragment).commit();
+    protected  void addFragment(int resId,Fragment fragment){
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().add(resId, fragment).commit();
+        }
     }
     protected  void replaceFragment(int resId,Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(resId, fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(resId, fragment).commit();
+        }
     }
     protected  void hideFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        }
     }
     protected  void showFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().attach(fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().show(fragment).commit();
+        }
     }
     @Override
     protected void onDestroy() {

@@ -8,5 +8,5 @@
     app:layout_collapseMode="pin"
     app:titleTextColor="@color/white"
     android:background="@color/colorPrimary"
-    app:popupTheme="@style/AppTheme.PopupOverlay"
+    android:popupTheme="@style/AppTheme.PopupOverlay"
     />
