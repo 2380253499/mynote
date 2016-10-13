@@ -95,7 +95,7 @@ public class SpendFragment extends BaseFragment implements AddDataInter {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+        // TODO: inflate DailyReminderFragment fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
