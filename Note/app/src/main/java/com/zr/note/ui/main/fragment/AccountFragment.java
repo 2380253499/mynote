@@ -9,13 +9,15 @@ import android.widget.EditText;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.IPresenter;
+import com.zr.note.ui.main.entity.AccountBean;
+import com.zr.note.ui.main.fragment.contract.AccountCon;
+import com.zr.note.ui.main.fragment.contract.imp.AccountImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AccountFragment extends BaseFragment implements AddDataInter {
+public class AccountFragment extends BaseFragment<AccountCon.View,AccountCon.Presenter> implements AddDataInter,AccountCon.View {
     @BindView(R.id.et_addData_source)
     EditText et_addData_source;
     @BindView(R.id.et_addData_user)
@@ -26,8 +28,8 @@ public class AccountFragment extends BaseFragment implements AddDataInter {
     EditText et_addData_note;
 
     @Override
-    protected IPresenter initPresenter() {
-        return null;
+    protected AccountImp initPresenter() {
+        return new AccountImp(getActivity());
     }
 
     @Override
@@ -56,6 +58,16 @@ public class AccountFragment extends BaseFragment implements AddDataInter {
         if(TextUtils.isEmpty(userStr)){
             showToastS("账户不能为空");
         }else{
+            String source = et_addData_source.getText().toString();
+            String user = et_addData_user.getText().toString();
+            String pwd = et_addData_pwd.getText().toString();
+            String note = et_addData_note.getText().toString();
+            AccountBean bean=new AccountBean();
+            bean.setDataSource(source);
+            bean.setDataAccount(user);
+            bean.setDataPassword(pwd);
+            bean.setDataRemark(note);
+            mPresenter.addAccount(bean);
         }
 
     }
