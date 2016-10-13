@@ -1,4 +1,4 @@
-package com.zr.note.ui.main.entity;
+package com.zr.note.base;
 
 import java.io.Serializable;
 import java.util.Date;
