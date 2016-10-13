@@ -1,7 +1,5 @@
 package com.zr.note.ui.main.entity;
 
-import com.zr.note.base.BaseBean;
-
 import java.io.Serializable;
 
 /**
