@@ -23,28 +23,13 @@
         >
         <TextView
             android:drawableLeft="@drawable/option_add"
-            android:text="创建时间↑"
+            android:text="创建时间"
             style="@style/main_popu_options"
             />
         <TextView
             android:drawableLeft="@drawable/option_add"
             style="@style/main_popu_options"
-            android:text="修改时间↑"
-            />
-        <TextView
-            android:drawableLeft="@drawable/option_add"
-            style="@style/main_popu_options"
-            android:text="显示全部"
-            />
-        <TextView
-            android:drawableLeft="@drawable/option_add"
-            style="@style/main_popu_options"
-            android:text="显示账号"
-            />
-        <TextView
-            android:drawableLeft="@drawable/option_add"
-            style="@style/main_popu_options"
-            android:text="显示备忘"
+            android:text="修改时间"
             />
     </com.zr.note.base.customview.MyLinearLayout>
 

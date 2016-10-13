@@ -109,6 +109,14 @@
                     />
                 <com.zr.note.base.customview.MyRadioButton
                     app:my_compound_top="true"
+                    android:text="@string/main_data_joke"
+                    style="@style/radio_main"
+                    app:my_radio_normal="@drawable/memo_normal"
+                    app:my_radio_checked="@drawable/memo_selector"
+                    app:my_radio_checked_color="@color/c_icon"
+                    />
+                <com.zr.note.base.customview.MyRadioButton
+                    app:my_compound_top="true"
                     android:text="@string/main_data_consumption"
                     style="@style/radio_main"
                     app:my_radio_normal="@drawable/consumption_normal"

@@ -1,4 +1,4 @@
-package com.zr.note.ui.main.contract;
+package com.zr.note.ui.main.activity.contract;
 
 import com.zr.note.base.BaseView;
 import com.zr.note.base.BasePresenter;

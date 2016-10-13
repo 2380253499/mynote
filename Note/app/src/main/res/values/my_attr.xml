@@ -6,6 +6,10 @@
         <attr name="my_checkbox_normal_color" format="color"/>
         <attr name="my_checkbox_checked_color" format="color"/>
     </declare-styleable>
+    <declare-styleable name="MyButton">
+        <attr name="my_bt_normal" format="reference"/>
+        <attr name="my_bt_press" format="reference"/>
+    </declare-styleable>
     <declare-styleable name="MyRadioButton">
         <attr name="my_radio_normal" format="reference"/>
         <attr name="my_radio_checked" format="reference"/>
@@ -43,6 +47,8 @@
         <attr name="my_ll_top_line" format="boolean"/>
         <attr name="my_ll_right_line" format="boolean"/>
         <attr name="my_ll_bottom_line" format="boolean"/>
+        <!--<attr name="my_ll_normal" format="reference"/>-->
+        <!--<attr name="my_ll_press" format="reference"/>-->
     </declare-styleable>
     <declare-styleable name="MyEditText">
         <attr name="my_et_solid" format="color"/>
@@ -55,5 +61,6 @@
         <attr name="my_et_corner_topRightRadius" format="dimension"/>
         <attr name="my_et_corner_bottomLeftRadius" format="dimension"/>
         <attr name="my_et_corner_bottomRightRadius" format="dimension"/>
+        <attr name="my_et_hiddenClear" format="boolean"/>
     </declare-styleable>
 </resources>

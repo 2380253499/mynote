@@ -1,18 +1,21 @@
 package com.zr.note.ui.main.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
+import com.zr.note.base.customview.MyButton;
 import com.zr.note.base.customview.MyRadioButton;
-import com.zr.note.ui.main.contract.AddDataContract;
-import com.zr.note.ui.main.contract.imp.AddDataImp;
+import com.zr.note.ui.main.activity.contract.AddDataContract;
+import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
 import com.zr.note.ui.main.fragment.AccountFragment;
 import com.zr.note.ui.main.fragment.DailyReminderFragment;
+import com.zr.note.ui.main.fragment.JokeFragment;
+import com.zr.note.ui.main.fragment.SpendFragment;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
@@ -28,15 +31,18 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     MyRadioButton mrb_button1;
     @BindView(R.id.mrb_button2)
     MyRadioButton mrb_button2;
+    @BindView(R.id.mrb_button3)
+    MyRadioButton mrb_button3;
     @BindView(R.id.fl_fragment)
     FrameLayout fl_fragment;
-    @BindView(R.id.ll_addData_save)
-    LinearLayout ll_addData_save;
+    @BindView(R.id.bt_addData_save)
+    MyButton bt_addData_save;
 
-    private AddDataInter addDataInter0, addDataInter1, addDataInter2;
+    private AddDataInter addDataInter0, addDataInter1, addDataInter2,addDataInter3;
     private AccountFragment accountFragment;
     private DailyReminderFragment dailyReminderFragment;
-
+    private JokeFragment jokeFragment;
+    private SpendFragment spendFragment;
     @Override
     protected AddDataImp initPresenter() {
         return new AddDataImp();
@@ -46,10 +52,10 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected int setContentView() {
         return R.layout.activity_add_data;
     }
-
     @Override
     protected void setToolbarStyle() {
         setTitle("信息录入");
+
     }
 
     @Override
@@ -64,32 +70,71 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
         addDataInter0 = accountFragment;
         addFragment(R.id.fl_fragment, accountFragment);
 
-        ll_addData_save.setOnClickListener(this);
+        bt_addData_save.setOnClickListener(this);
 
-        rg_addData.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rg_addData.setOnCheckedChangeListener(getChangeListener());
+    }
+
+    @NonNull
+    private RadioGroup.OnCheckedChangeListener getChangeListener() {
+        return new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.mrb_button0:
-                        hideFragment(dailyReminderFragment);
                         showFragment(accountFragment);
+                        hideFragment(dailyReminderFragment);
+                        hideFragment(jokeFragment);
+                        hideFragment(spendFragment);
                         break;
                     case R.id.mrb_button1:
                         if (dailyReminderFragment == null) {
-                            hideFragment(accountFragment);
-                            dailyReminderFragment=new DailyReminderFragment();
+                            dailyReminderFragment= DailyReminderFragment.newInstance();
                             addDataInter1=dailyReminderFragment;
+                            hideFragment(accountFragment);
                             addFragment(R.id.fl_fragment, dailyReminderFragment);
-                        }else{
+                            hideFragment(jokeFragment);
+                            hideFragment(spendFragment);
+                        } else {
                             hideFragment(accountFragment);
                             showFragment(dailyReminderFragment);
+                            hideFragment(jokeFragment);
+                            hideFragment(spendFragment);
                         }
                         break;
                     case R.id.mrb_button2:
+                        if (jokeFragment == null) {
+                            jokeFragment= JokeFragment.newInstance();
+                            addDataInter2 = jokeFragment;
+                            hideFragment(accountFragment);
+                            hideFragment(dailyReminderFragment);
+                            addFragment(R.id.fl_fragment, jokeFragment);
+                            hideFragment(spendFragment);
+                        } else {
+                            hideFragment(accountFragment);
+                            hideFragment(dailyReminderFragment);
+                            showFragment(jokeFragment);
+                            hideFragment(spendFragment);
+                        }
+                        break;
+                    case R.id.mrb_button3:
+                        if (spendFragment == null) {
+                            spendFragment= SpendFragment.newInstance();
+                            addDataInter3 = spendFragment;
+                            hideFragment(accountFragment);
+                            hideFragment(dailyReminderFragment);
+                            hideFragment(jokeFragment);
+                            addFragment(R.id.fl_fragment, spendFragment);
+                        } else {
+                            hideFragment(accountFragment);
+                            hideFragment(dailyReminderFragment);
+                            hideFragment(jokeFragment);
+                            showFragment(spendFragment);
+                        }
                         break;
                 }
             }
-        });
+        };
     }
 
     @Override
@@ -100,7 +145,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()){
-            case R.id.ll_addData_save:
+            case R.id.bt_addData_save:
                 addDataInter0.saveData();
             break;
         }
@@ -109,6 +154,11 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     protected void menuOnClick(int itemId) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

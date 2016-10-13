@@ -1,4 +1,4 @@
-package com.zr.note.ui.main.contract;
+package com.zr.note.ui.main.activity.contract;
 
 import com.zr.note.base.BasePresenter;
 import com.zr.note.base.BaseView;
@@ -11,6 +11,5 @@ public interface AddDataContract {
 
     }
     interface Presenter extends BasePresenter<View> {
-
     }
 }

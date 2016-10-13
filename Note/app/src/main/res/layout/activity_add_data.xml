@@ -32,9 +32,15 @@
             app:my_radio_checked_color="@color/colorPrimary"
             android:text="日常备忘"
             style="@style/AddDataTab"/>
-
         <com.zr.note.base.customview.MyRadioButton
             android:id="@+id/mrb_button2"
+            app:my_radio_checked="@drawable/check_select"
+            app:my_radio_normal="@drawable/check_normal"
+            app:my_radio_checked_color="@color/colorPrimary"
+            android:text="搞笑段子"
+            style="@style/AddDataTab"/>
+        <com.zr.note.base.customview.MyRadioButton
+            android:id="@+id/mrb_button3"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
             app:my_radio_checked_color="@color/colorPrimary"
@@ -43,30 +49,27 @@
     </RadioGroup>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
         <FrameLayout
             android:id="@+id/fl_fragment"
-            android:layout_above="@+id/ll_addData_save"
+            android:layout_above="@+id/bt_addData_save"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </FrameLayout>
-        <LinearLayout
-            android:id="@+id/ll_addData_save"
+        <com.zr.note.base.customview.MyButton
+            android:id="@+id/bt_addData_save"
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimaryDark"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="保存"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                />
-        </LinearLayout>
+            app:my_bt_normal="@drawable/save_normal"
+            app:my_bt_press="@drawable/save_press"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:textColor="@color/white"
+            />
     </RelativeLayout>
 
 </LinearLayout>

@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
         <TextView
@@ -37,6 +38,7 @@
             android:layout_height="35dp"
             android:gravity="center_vertical"
             android:hint="请输入相关平台名称,如QQ邮箱账号"
+            android:textCursorDrawable="@drawable/cursor_color"
             />
     </LinearLayout>
 
@@ -51,6 +53,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
         <TextView
@@ -63,7 +66,7 @@
             android:textSize="16sp"
             />
 
-        <EditText
+        <com.zr.note.base.customview.MyEditText
             android:id="@+id/et_addData_user"
             style="@style/addDataEditStyle"
             android:layout_width="0dp"
@@ -85,6 +88,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
         <TextView
@@ -97,7 +101,7 @@
             android:textSize="16sp"
             />
 
-        <EditText
+        <com.zr.note.base.customview.MyEditText
             android:id="@+id/et_addData_pwd"
             style="@style/addDataEditStyle"
             android:layout_width="0dp"
@@ -119,6 +123,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
         <TextView

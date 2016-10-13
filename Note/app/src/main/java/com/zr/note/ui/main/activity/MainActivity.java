@@ -12,8 +12,8 @@ import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.main.contract.MainContract;
-import com.zr.note.ui.main.contract.imp.MainImp;
+import com.zr.note.ui.main.activity.contract.MainContract;
+import com.zr.note.ui.main.activity.contract.imp.MainImp;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
