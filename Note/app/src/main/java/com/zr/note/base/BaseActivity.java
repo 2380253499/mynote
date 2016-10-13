@@ -83,6 +83,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private void setColorPrimaryDark() {
 //        StatusBarCompatForKitKat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
     }
+    /**
+     *返回键颜色
+     */
     protected void setNavigationColor(int backColor){
         this.backColor = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         this.backColor.setColorFilter(getResources().getColor(backColor), PorterDuff.Mode.SRC_ATOP);
