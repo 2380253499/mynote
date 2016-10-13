@@ -1,11 +1,13 @@
 package com.zr.note.ui.main.entity;
 
+import com.zr.note.base.BaseEntity;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class SpendBean  extends BaseBean implements Serializable{
+public class SpendBean  extends BaseEntity implements Serializable{
     /*liveSpend
 dataRemark*/
     private String dataRemark;

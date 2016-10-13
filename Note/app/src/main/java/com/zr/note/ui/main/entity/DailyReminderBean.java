@@ -1,11 +1,13 @@
 package com.zr.note.ui.main.entity;
 
+import com.zr.note.base.BaseEntity;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class DailyReminderBean  extends BaseBean implements Serializable{
+public class DailyReminderBean  extends BaseEntity implements Serializable{
 
     /*dataContent
     dataRemark

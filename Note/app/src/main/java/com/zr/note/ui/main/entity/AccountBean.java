@@ -1,11 +1,13 @@
 package com.zr.note.ui.main.entity;
 
+import com.zr.note.base.BaseEntity;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class AccountBean extends BaseBean implements Serializable{
+public class AccountBean extends BaseEntity implements Serializable{
     /*dataSource TEXT,
 dataAccount TEXT,
 dataPassword TEXT,
