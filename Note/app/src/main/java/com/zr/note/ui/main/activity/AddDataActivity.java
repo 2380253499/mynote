@@ -38,7 +38,8 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @BindView(R.id.bt_addData_save)
     MyButton bt_addData_save;
 
-    private AddDataInter addDataInter0, addDataInter1, addDataInter2,addDataInter3;
+    private int addDataInterIndex=0;
+    private AddDataInter[]addDataInter=new AddDataInter[4];
     private AccountFragment accountFragment;
     private DailyReminderFragment dailyReminderFragment;
     private JokeFragment jokeFragment;
@@ -67,7 +68,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void initView() {
         mrb_button0.setChecked(true);
         accountFragment = new AccountFragment();
-        addDataInter0 = accountFragment;
+        addDataInter[0] = accountFragment;
         addFragment(R.id.fl_fragment, accountFragment);
 
         bt_addData_save.setOnClickListener(this);
@@ -82,15 +83,17 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.mrb_button0:
+                        addDataInterIndex=0;
                         showFragment(accountFragment);
                         hideFragment(dailyReminderFragment);
                         hideFragment(jokeFragment);
                         hideFragment(spendFragment);
                         break;
                     case R.id.mrb_button1:
+                        addDataInterIndex=1;
                         if (dailyReminderFragment == null) {
                             dailyReminderFragment= DailyReminderFragment.newInstance();
-                            addDataInter1=dailyReminderFragment;
+                            addDataInter[1] = dailyReminderFragment;
                             hideFragment(accountFragment);
                             addFragment(R.id.fl_fragment, dailyReminderFragment);
                             hideFragment(jokeFragment);
@@ -103,9 +106,10 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                         }
                         break;
                     case R.id.mrb_button2:
+                        addDataInterIndex=2;
                         if (jokeFragment == null) {
                             jokeFragment= JokeFragment.newInstance();
-                            addDataInter2 = jokeFragment;
+                            addDataInter[2] = jokeFragment;
                             hideFragment(accountFragment);
                             hideFragment(dailyReminderFragment);
                             addFragment(R.id.fl_fragment, jokeFragment);
@@ -118,9 +122,10 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                         }
                         break;
                     case R.id.mrb_button3:
+                        addDataInterIndex=3;
                         if (spendFragment == null) {
                             spendFragment= SpendFragment.newInstance();
-                            addDataInter3 = spendFragment;
+                            addDataInter[3] = spendFragment;
                             hideFragment(accountFragment);
                             hideFragment(dailyReminderFragment);
                             hideFragment(jokeFragment);
@@ -146,7 +151,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.bt_addData_save:
-                addDataInter0.saveData();
+                addDataInter[addDataInterIndex].saveData();
             break;
         }
     }
