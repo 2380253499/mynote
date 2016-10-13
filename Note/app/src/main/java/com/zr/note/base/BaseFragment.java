@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <V extends BaseView,P extends IPresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
+public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
     protected P mPresenter;
     protected abstract P initPresenter();
     protected abstract int setContentView();
