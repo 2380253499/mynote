@@ -11,6 +11,12 @@ public class LogUtils {
         //request=====log-key[equipmentName: ]########[HUAWEI HN3-U01]
         Log.i("LogUtils", "request=====["+key+":]#########["+value+"]");
     }
+    public static void Log(int logString) {
+        Log(logString + "");
+    }
+    public static void Log(long logString) {
+        Log(logString+"");
+    }
     public static void Log(String logString) {
         if (logString.length() > length) {
             Log.i("LogUtils", "logString.length = " + logString.length());

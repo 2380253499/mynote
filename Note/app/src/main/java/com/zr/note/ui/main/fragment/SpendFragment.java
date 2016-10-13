@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.IPresenter;
+import com.zr.note.base.BasePresenter;
 import com.zr.note.base.customview.MyEditText;
 import com.zr.note.tools.EditTextUtils;
 import com.zr.note.ui.main.inter.AddDataInter;
@@ -29,7 +29,7 @@ public class SpendFragment extends BaseFragment implements AddDataInter {
     MyEditText et_spend_amount;
 
     @Override
-    protected IPresenter initPresenter() {
+    protected BasePresenter initPresenter() {
         return null;
     }
 
@@ -53,18 +53,20 @@ public class SpendFragment extends BaseFragment implements AddDataInter {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int pointIndex=s.toString().trim().indexOf(".");
-                if(pointIndex>=0){
+                int pointIndex = s.toString().trim().indexOf(".");
+                if (pointIndex >= 0) {
                     String[] split = s.toString().split("\\.");
-                    if(split.length>1&&split[1].length()>1){
-                        et_spend_amount.setText(split[0]+"."+split[1].substring(0,1));
+                    if (split.length > 1 && split[1].length() > 1) {
+                        et_spend_amount.setText(split[0] + "." + split[1].substring(0, 1));
                         Editable etext = et_spend_amount.getText();
                         Selection.setSelection(etext, etext.length());
                     }
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }

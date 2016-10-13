@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.IPresenter;
+import com.zr.note.base.BasePresenter;
 import com.zr.note.base.customview.MyEditText;
 import com.zr.note.ui.main.inter.AddDataInter;
 
@@ -33,7 +33,7 @@ public class JokeFragment extends BaseFragment implements AddDataInter {
         return fragment;
     }
     @Override
-    protected IPresenter initPresenter() {
+    protected BasePresenter initPresenter() {
         return null;
     }
     
