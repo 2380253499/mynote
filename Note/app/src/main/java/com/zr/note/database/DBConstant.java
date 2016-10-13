@@ -16,7 +16,7 @@ public class DBConstant {
             "dataAccount TEXT," +
             "dataPassword TEXT," +
             "dataRemark TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )," +
+            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
     /**
      * dataContent  --数据内容
@@ -24,17 +24,17 @@ public class DBConstant {
      */
     public static final String T_Remark_Note = "create table "+DBManager.T_Remark_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataContent TEXT," +
             "dataRemark TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )," +
+            "dataContent TEXT," +
+            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
     /**
      * dataContent  --数据内容
      */
     public static final String T_Joke_Note = "create table "+DBManager.T_Joke_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataContent TEXT,   --数据内容" +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )," +
+            "dataContent TEXT," +
+            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
     /**
      * liveSpend DOUBLE,   --生活消费
@@ -44,6 +44,6 @@ public class DBConstant {
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "liveSpend DOUBLE," +
             "dataRemark TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )," +
+            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
 }

@@ -1,9 +1,13 @@
 package com.zr.note.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.zr.note.tools.LogUtils;
+import com.zr.note.ui.main.entity.AccountBean;
 
 /**
  * Created by Administrator on 2016/10/11.
@@ -55,10 +59,7 @@ public class DBManager extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-
-
-    public boolean existTable(SQLiteDatabase db,String table){
+    private boolean existTable(SQLiteDatabase db,String table){
         boolean exits = false;
         String sql = "select * from sqlite_master where name=?";
         Cursor cursor = db.rawQuery(sql, new String[]{table});
@@ -68,7 +69,7 @@ public class DBManager extends SQLiteOpenHelper{
         cursor.close();
         return exits;
     }
-    public boolean noExistTable(SQLiteDatabase db,String table){
+    private boolean noExistTable(SQLiteDatabase db,String table){
         boolean exits = true;
         String sql = "select * from sqlite_master where name=?";
         Cursor cursor = db.rawQuery(sql, new String[]{table});
@@ -78,4 +79,17 @@ public class DBManager extends SQLiteOpenHelper{
         cursor.close();
         return exits;
     }
+    /**************************************保存数据方法************************************************/
+    public void addAccount(AccountBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put("dataSource",bean.getDataSource());
+        values.put("dataAccount",bean.getDataAccount());
+        values.put("dataPassword",bean.getDataPassword());
+        values.put("dataRemark", bean.getDataRemark());
+        long insert = db.insert(T_Account_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+    }
+
 }
