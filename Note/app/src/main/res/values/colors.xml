@@ -16,7 +16,7 @@
     <color name="c_F8F8F8">#F8F8F8</color>
     <color name="c_divider">#E2E2E2</color>
     <color name="c_icon">#56abe4</color>
-    <color name="c_press">#F7F7F7</color>
+    <color name="c_press">#E2E2E2</color>
     <!-- 主题颜色-->
     <color name="top_color1">#20000000</color>
     <color name="top_color2">#FFCECBCB</color>

@@ -1,12 +1,12 @@
 package com.zr.note.view;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
  */
 public class MyPopupwindow extends PopupWindow{
     private Context context;
+    private Drawable backgroundColor;
     public MyPopupwindow(Context ctx,int contentView) {
         context=ctx;
         View view = LayoutInflater.from(ctx).inflate(contentView, null);
@@ -33,10 +34,10 @@ public class MyPopupwindow extends PopupWindow{
         setPopupwindow(contentView,width,height);
     }
     private void setPopupwindow(View contentView) {
-        setPopupwindow(contentView,-1,-1);
+        setPopupwindow(contentView, -1, -1);
     }
     private void setPopupwindow(View contentView,int width,int height) {
-//        setBackground();
+        setBackground();
         setOutsideTouchable(true);
         setFocusable(true);
         setContentView(contentView);
@@ -53,18 +54,25 @@ public class MyPopupwindow extends PopupWindow{
         setOnDismissListener(getOnDismissListener());
     }
 
-
+    public void setBackgroundColor(int color){
+        backgroundColor=new ColorDrawable(context.getResources().getColor(color));
+    }
+    public void setBackgroundColor(Drawable color){
+        backgroundColor=color;
+    }
     private void setBackground(){
-//        ColorDrawable cd = new ColorDrawable(0x000000);
-//        this.setBackgroundDrawable(cd);
-        WindowManager.LayoutParams lp=((Activity)context).getWindow().getAttributes();
-        lp.alpha = 0.5f;
-        ((Activity)context).getWindow().setAttributes(lp);
+        if(backgroundColor==null){
+            backgroundColor= new ColorDrawable(0x000000);
+        }
+        this.setBackgroundDrawable(backgroundColor);
+//        WindowManager.LayoutParams lp=((Activity)context).getWindow().getAttributes();
+//        lp.alpha = 0.7f;
+//        ((Activity)context).getWindow().setAttributes(lp);
     }
     private void onDismissBackground(){
-        WindowManager.LayoutParams lp= ((Activity)context).getWindow().getAttributes();
-        lp.alpha = 1f;
-        ((Activity)context).getWindow().setAttributes(lp);
+//        WindowManager.LayoutParams lp= ((Activity)context).getWindow().getAttributes();
+//        lp.alpha = 1f;
+//        ((Activity)context).getWindow().setAttributes(lp);
     }
     @NonNull
     private OnDismissListener getOnDismissListener() {

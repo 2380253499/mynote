@@ -20,18 +20,6 @@
         <attr name="my_compound_left" format="boolean"/>
         <attr name="my_compound_right" format="boolean"/>
     </declare-styleable>
-    <declare-styleable name="MyTextView">
-        <attr name="my_tv_solid" format="color"/>
-        <attr name="my_tv_border_width" format="dimension"/>
-        <attr name="my_tv_border_color" format="color"/>
-        <attr name="my_tv_border_dashWidth" format="dimension"/>
-        <attr name="my_tv_border_dashGap" format="dimension"/>
-        <attr name="my_tv_corner_radius" format="dimension"/>
-        <attr name="my_tv_corner_topLeftRadius" format="dimension"/>
-        <attr name="my_tv_corner_topRightRadius" format="dimension"/>
-        <attr name="my_tv_corner_bottomLeftRadius" format="dimension"/>
-        <attr name="my_tv_corner_bottomRightRadius" format="dimension"/>
-    </declare-styleable>
     <declare-styleable name="MyLinearLayout">
         <attr name="my_ll_solid" format="color"/>
         <attr name="my_ll_border_width" format="dimension"/><!--线的宽度-->
@@ -62,5 +50,22 @@
         <attr name="my_et_corner_bottomLeftRadius" format="dimension"/>
         <attr name="my_et_corner_bottomRightRadius" format="dimension"/>
         <attr name="my_et_hiddenClear" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="MyTextView">
+        <attr name="my_tv_solid" format="color"/>
+        <attr name="my_tv_border_width" format="dimension"/><!--线的宽度-->
+        <attr name="my_tv_border_color" format="color"/>
+        <attr name="my_tv_border_dashWidth" format="dimension"/>
+        <attr name="my_tv_border_dashGap" format="dimension"/><!--虚线间距-->
+        <attr name="my_tv_corner_radius" format="dimension"/>
+        <attr name="my_tv_corner_topLeftRadius" format="dimension"/>
+        <attr name="my_tv_corner_topRightRadius" format="dimension"/>
+        <attr name="my_tv_corner_bottomLeftRadius" format="dimension"/>
+        <attr name="my_tv_corner_bottomRightRadius" format="dimension"/>
+        <attr name="my_tv_left_line" format="boolean"/>
+        <attr name="my_tv_top_line" format="boolean"/>
+        <attr name="my_tv_right_line" format="boolean"/>
+        <attr name="my_tv_bottom_line" format="boolean"/>
+        <attr name="my_tv_press" format="color"/>
     </declare-styleable>
 </resources>

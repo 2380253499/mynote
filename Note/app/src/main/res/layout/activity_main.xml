@@ -7,6 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/fl"
@@ -126,7 +129,15 @@
             </RadioGroup>
         </LinearLayout>
     </RelativeLayout>
-
+        <View
+            android:id="@+id/view_backgroud"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.3"
+            android:visibility="gone"
+            />
+    </FrameLayout>
     <fragment
         android:id="@+id/drawerlayout_left"
         android:name="com.zr.note.BlankFragment"
