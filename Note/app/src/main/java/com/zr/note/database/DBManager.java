@@ -6,8 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.LogUtils;
 import com.zr.note.ui.main.entity.AccountBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/11.
@@ -33,7 +37,7 @@ public class DBManager extends SQLiteOpenHelper{
         }
         return dbManager;
     }
-    
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -79,7 +83,38 @@ public class DBManager extends SQLiteOpenHelper{
         cursor.close();
         return exits;
     }
-    /**************************************保存数据方法************************************************/
+    /**************************************操作数据方法************************************************/
+    public List<AccountBean> selectAccount(){
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Account_Note,
+                new String[]{
+                        DBConstant.dataSource,
+                        DBConstant.dataAccount,
+                        DBConstant.dataPassword,
+                        DBConstant.dataRemark,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime}, null, null, null, null, null);
+        List<AccountBean>list=new ArrayList<AccountBean>();
+        AccountBean bean;
+        while (query.moveToNext()){
+            bean=new AccountBean();
+            String dataSource=query.getString(query.getColumnIndex(DBConstant.dataSource));
+            String dataAccount=query.getString(query.getColumnIndex(DBConstant.dataAccount));
+            String dataPassword=query.getString(query.getColumnIndex(DBConstant.dataPassword));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.setDataSource(dataSource);
+            bean.setDataAccount(dataAccount);
+            bean.setDataPassword(dataPassword);
+            bean.setDataRemark(dataRemark);
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
     public void addAccount(AccountBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();

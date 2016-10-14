@@ -6,11 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.zr.note.adapter.CommonAdapter;
+
 /**
  * Created by Administrator on 2016/8/4.
  */
 public class IBaseActivity extends AppCompatActivity {
     protected Intent mIntent;
+    protected CommonAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class IBaseActivity extends AppCompatActivity {
         }
     }
     protected  void hideFragment(Fragment fragment){
-        if (fragment != null) {
+        if (fragment != null&&!fragment.isHidden()) {
             getSupportFragmentManager().beginTransaction().hide(fragment).commit();
         }
     }

@@ -15,16 +15,16 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DailyReminderFragment extends BaseFragment implements AddDataInter {
+public class AddDailyReminderFragment extends BaseFragment implements AddDataInter {
 
     @BindView(R.id.et_memo_reminder)
     MyEditText et_memo_reminder;
     @BindView(R.id.et_memo_content)
     MyEditText et_memo_content;
 
-    public static DailyReminderFragment newInstance() {
+    public static AddDailyReminderFragment newInstance() {
         Bundle args = new Bundle();
-        DailyReminderFragment fragment = new DailyReminderFragment();
+        AddDailyReminderFragment fragment = new AddDailyReminderFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,7 +35,7 @@ public class DailyReminderFragment extends BaseFragment implements AddDataInter 
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_daily_reminder;
+        return R.layout.fragment_add_daily_reminder;
     }
 
     @Override

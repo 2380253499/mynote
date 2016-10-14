@@ -13,13 +13,11 @@ import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.ButterKnife;
 
-public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon.Presenter> implements AddDataInter,AddAccountCon.View {
+public class MemoFragment extends BaseFragment<AddAccountCon.View,AddAccountCon.Presenter> implements AddDataInter,AddAccountCon.View {
 
-    public static SpendFragment newInstance() {
-        
+    public static MemoFragment newInstance() {
         Bundle args = new Bundle();
-        
-        SpendFragment fragment = new SpendFragment();
+        MemoFragment fragment = new MemoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,7 +28,7 @@ public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_spend;
+        return R.layout.fragment_memo;
     }
 
     @Override

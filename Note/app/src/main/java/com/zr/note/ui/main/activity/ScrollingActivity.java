@@ -10,20 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import com.zr.note.R;
+import com.zr.note.tools.PhoneUtils;
+import com.zr.note.view.MyPopupwindow;
 
 public class ScrollingActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                  MyPopupwindow popupwindow = new MyPopupwindow(ScrollingActivity.this, R.layout.layout_options);
+                  int xoff = PhoneUtils.getPhoneWidth(ScrollingActivity.this) - PhoneUtils.dip2px(ScrollingActivity.this, 115);
+                        popupwindow.showAsDropDown(toolbar, xoff, 0);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

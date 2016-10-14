@@ -4,6 +4,13 @@ package com.zr.note.database;
  * Created by Administrator on 2016/10/11.
  */
 public class DBConstant {
+    public static final String _id="_id";
+    public static final String dataSource="dataSource";
+    public static final String dataAccount="dataAccount";
+    public static final String dataPassword="dataPassword";
+    public static final String dataRemark="dataRemark";
+    public static final String updateTime="updateTime";
+    public static final String creatTime="creatTime";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"

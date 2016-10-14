@@ -12,10 +12,10 @@ import com.zr.note.base.customview.MyButton;
 import com.zr.note.base.customview.MyRadioButton;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
-import com.zr.note.ui.main.fragment.AccountFragment;
-import com.zr.note.ui.main.fragment.DailyReminderFragment;
-import com.zr.note.ui.main.fragment.JokeFragment;
-import com.zr.note.ui.main.fragment.SpendFragment;
+import com.zr.note.ui.main.fragment.AddAccountFragment;
+import com.zr.note.ui.main.fragment.AddDailyReminderFragment;
+import com.zr.note.ui.main.fragment.AddJokeFragment;
+import com.zr.note.ui.main.fragment.AddSpendFragment;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
@@ -40,10 +40,10 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
 
     private int addDataInterIndex=0;
     private AddDataInter[]addDataInter=new AddDataInter[4];
-    private AccountFragment accountFragment;
-    private DailyReminderFragment dailyReminderFragment;
-    private JokeFragment jokeFragment;
-    private SpendFragment spendFragment;
+    private AddAccountFragment addAccountFragment;
+    private AddDailyReminderFragment addDailyReminderFragment;
+    private AddJokeFragment addJokeFragment;
+    private AddSpendFragment addSpendFragment;
     @Override
     protected AddDataImp initPresenter() {
         return new AddDataImp();
@@ -67,9 +67,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     protected void initView() {
         mrb_button0.setChecked(true);
-        accountFragment = new AccountFragment();
-        addDataInter[0] = accountFragment;
-        addFragment(R.id.fl_fragment, accountFragment);
+        addAccountFragment = new AddAccountFragment();
+        addDataInter[0] = addAccountFragment;
+        addFragment(R.id.fl_fragment, addAccountFragment);
 
         bt_addData_save.setOnClickListener(this);
 
@@ -84,57 +84,57 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                 switch (checkedId) {
                     case R.id.mrb_button0:
                         addDataInterIndex=0;
-                        showFragment(accountFragment);
-                        hideFragment(dailyReminderFragment);
-                        hideFragment(jokeFragment);
-                        hideFragment(spendFragment);
+                        showFragment(addAccountFragment);
+                        hideFragment(addDailyReminderFragment);
+                        hideFragment(addJokeFragment);
+                        hideFragment(addSpendFragment);
                         break;
                     case R.id.mrb_button1:
                         addDataInterIndex=1;
-                        if (dailyReminderFragment == null) {
-                            dailyReminderFragment= DailyReminderFragment.newInstance();
-                            addDataInter[1] = dailyReminderFragment;
-                            hideFragment(accountFragment);
-                            addFragment(R.id.fl_fragment, dailyReminderFragment);
-                            hideFragment(jokeFragment);
-                            hideFragment(spendFragment);
+                        if (addDailyReminderFragment == null) {
+                            addDailyReminderFragment = AddDailyReminderFragment.newInstance();
+                            addDataInter[1] = addDailyReminderFragment;
+                            hideFragment(addAccountFragment);
+                            addFragment(R.id.fl_fragment, addDailyReminderFragment);
+                            hideFragment(addJokeFragment);
+                            hideFragment(addSpendFragment);
                         } else {
-                            hideFragment(accountFragment);
-                            showFragment(dailyReminderFragment);
-                            hideFragment(jokeFragment);
-                            hideFragment(spendFragment);
+                            hideFragment(addAccountFragment);
+                            showFragment(addDailyReminderFragment);
+                            hideFragment(addJokeFragment);
+                            hideFragment(addSpendFragment);
                         }
                         break;
                     case R.id.mrb_button2:
                         addDataInterIndex=2;
-                        if (jokeFragment == null) {
-                            jokeFragment= JokeFragment.newInstance();
-                            addDataInter[2] = jokeFragment;
-                            hideFragment(accountFragment);
-                            hideFragment(dailyReminderFragment);
-                            addFragment(R.id.fl_fragment, jokeFragment);
-                            hideFragment(spendFragment);
+                        if (addJokeFragment == null) {
+                            addJokeFragment = AddJokeFragment.newInstance();
+                            addDataInter[2] = addJokeFragment;
+                            hideFragment(addAccountFragment);
+                            hideFragment(addDailyReminderFragment);
+                            addFragment(R.id.fl_fragment, addJokeFragment);
+                            hideFragment(addSpendFragment);
                         } else {
-                            hideFragment(accountFragment);
-                            hideFragment(dailyReminderFragment);
-                            showFragment(jokeFragment);
-                            hideFragment(spendFragment);
+                            hideFragment(addAccountFragment);
+                            hideFragment(addDailyReminderFragment);
+                            showFragment(addJokeFragment);
+                            hideFragment(addSpendFragment);
                         }
                         break;
                     case R.id.mrb_button3:
                         addDataInterIndex=3;
-                        if (spendFragment == null) {
-                            spendFragment= SpendFragment.newInstance();
-                            addDataInter[3] = spendFragment;
-                            hideFragment(accountFragment);
-                            hideFragment(dailyReminderFragment);
-                            hideFragment(jokeFragment);
-                            addFragment(R.id.fl_fragment, spendFragment);
+                        if (addSpendFragment == null) {
+                            addSpendFragment = AddSpendFragment.newInstance();
+                            addDataInter[3] = addSpendFragment;
+                            hideFragment(addAccountFragment);
+                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addJokeFragment);
+                            addFragment(R.id.fl_fragment, addSpendFragment);
                         } else {
-                            hideFragment(accountFragment);
-                            hideFragment(dailyReminderFragment);
-                            hideFragment(jokeFragment);
-                            showFragment(spendFragment);
+                            hideFragment(addAccountFragment);
+                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addJokeFragment);
+                            showFragment(addSpendFragment);
                         }
                         break;
                 }

@@ -3,79 +3,15 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
-              tools:context=".ui.main.fragment.DailyReminderFragment"
-    >
+              android:background="#ffffff"
+              android:orientation="vertical"
+              tools:context=".ui.main.fragment.AddAccountFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp"
-        >
+     <ListView
+         android:id="@+id/lv_account_list"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="消费说明"
-            android:textSize="15sp"
-            android:paddingLeft="@dimen/asterisk_padding"
-            />
-        <com.zr.note.base.customview.MyEditText
-            android:id="@+id/et_spend_declare"
-            style="@style/editTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:ellipsize="end"
-            app:my_et_border_color="@color/top_color2"
-            app:my_et_border_width="1px"
-            app:my_et_corner_radius="4px"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            tools:text="消费说明"
-            android:textSize="15sp"
-            android:layout_marginLeft="@dimen/asterisk_padding"
-            android:layout_marginRight="@dimen/asterisk_padding"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="消费金额"
-                android:textSize="15sp"
-                android:drawableLeft="@drawable/asterisk"
-                />
-        </LinearLayout>
-
-        <com.zr.note.base.customview.MyEditText
-            android:id="@+id/et_spend_amount"
-            style="@style/editTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:ellipsize="end"
-            app:my_et_border_color="@color/top_color2"
-            app:my_et_border_width="1px"
-            app:my_et_corner_radius="4px"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:hint="请填写金额"
-            android:textSize="15sp"
-            android:inputType="numberDecimal"
-            android:layout_marginLeft="@dimen/asterisk_padding"
-            android:layout_marginRight="@dimen/asterisk_padding"
-            />
-
-    </LinearLayout>
+     </ListView>
 </LinearLayout>

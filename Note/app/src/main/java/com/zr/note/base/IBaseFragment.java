@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.zr.note.adapter.CommonAdapter;
+
 import butterknife.Unbinder;
 
 public class IBaseFragment extends Fragment {
     protected Intent mIntent;
     protected Unbinder mUnBind;
+    protected CommonAdapter mAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

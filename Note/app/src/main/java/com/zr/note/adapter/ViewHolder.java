@@ -76,21 +76,20 @@ public class ViewHolder {
 		return (T) view;
 	}
 
-	public <TB extends View> TB getViewByType(Class<TB> a, int viewId) {
-		return (TB) getView(viewId);
+	public <V extends View> V getViewByType(Class<V> a, int viewId) {
+		return (V) getView(viewId);
 	}
-	public TextView getViewByType(int viewId) {
+	public TextView getTextView(int viewId) {
 		return (TextView) getView(viewId);
 	}
-	public <T extends View> T getView(int viewId, View currentView) {
+	/*public <T extends View> T getView(int viewId, View currentView) {
 		View view = mViews.get(viewId);
 		if (view == null) {
 			mViews.put(viewId, currentView);
 			return (T) currentView;
 		}
 		return (T) view;
-	}
-
+	}*/
 	/**
 	 * 为TextView设置字符串
 	 *

@@ -2,7 +2,6 @@ package com.zr.note.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,7 @@ public class MyPopupwindow extends PopupWindow{
         setPopupwindow(contentView,-1,-1);
     }
     private void setPopupwindow(View contentView,int width,int height) {
-        setBackground();
+//        setBackground();
         setOutsideTouchable(true);
         setFocusable(true);
         setContentView(contentView);
@@ -56,10 +55,10 @@ public class MyPopupwindow extends PopupWindow{
 
 
     private void setBackground(){
-        ColorDrawable cd = new ColorDrawable(0x000000);
-        this.setBackgroundDrawable(cd);
+//        ColorDrawable cd = new ColorDrawable(0x000000);
+//        this.setBackgroundDrawable(cd);
         WindowManager.LayoutParams lp=((Activity)context).getWindow().getAttributes();
-        lp.alpha = 0.7f;
+        lp.alpha = 0.5f;
         ((Activity)context).getWindow().setAttributes(lp);
     }
     private void onDismissBackground(){
