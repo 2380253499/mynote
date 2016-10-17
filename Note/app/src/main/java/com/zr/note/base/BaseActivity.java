@@ -54,10 +54,10 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         initData();
     }
     private void setToolBar() {
-        if(navigationIcon !=-1){
+        if(navigationIcon !=-1){//设置icon
             getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }else if(backColor!=null){
+        }else if(backColor!=null){//设置箭头颜色
             getSupportActionBar().setHomeAsUpIndicator(backColor);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else{

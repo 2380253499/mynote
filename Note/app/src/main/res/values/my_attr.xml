@@ -10,6 +10,15 @@
         <attr name="my_bt_normal" format="reference"/>
         <attr name="my_bt_press" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="MyButtonC">
+        <attr name="my_btc_corner_radius" format="dimension"/>
+        <attr name="my_btc_corner_topLeftRadius" format="dimension"/>
+        <attr name="my_btc_corner_topRightRadius" format="dimension"/>
+        <attr name="my_btc_corner_bottomLeftRadius" format="dimension"/>
+        <attr name="my_btc_corner_bottomRightRadius" format="dimension"/>
+        <attr name="my_btc_normal" format="color"/>
+        <attr name="my_btc_press" format="color"/>
+    </declare-styleable>
     <declare-styleable name="MyRadioButton">
         <attr name="my_radio_normal" format="reference"/>
         <attr name="my_radio_checked" format="reference"/>

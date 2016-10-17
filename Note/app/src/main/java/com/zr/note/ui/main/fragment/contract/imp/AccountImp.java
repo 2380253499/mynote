@@ -27,7 +27,14 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
         CommonAdapter<AccountBean> commonAdapter = new CommonAdapter<AccountBean>(mContext, list, R.layout.item_account) {
             @Override
             public void convert(ViewHolder helper, AccountBean item) {
-                helper.setText(R.id.tv_data_id, helper.getPosition() + 1 + "")
+                int countLength = String.valueOf(getCount()).length();
+                int position=helper.getPosition()+1;
+                StringBuffer stringBuffer=new StringBuffer();
+                for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
+                    stringBuffer.append("0");
+                }
+
+                helper.setText(R.id.tv_data_id, stringBuffer.toString()+""+position)
                         .setText(R.id.tv_source, item.getDataSource())
                         .setText(R.id.tv_account, item.getDataAccount());
             }

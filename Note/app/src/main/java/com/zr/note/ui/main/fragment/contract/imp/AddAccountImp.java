@@ -19,6 +19,6 @@ public class AddAccountImp extends IPresenter<AddAccountCon.View> implements Add
     public boolean addAccount(AccountBean bean) {
         DBManager.getInstance(mContext).addAccount(bean);
         mView.showMsg("保存成功");
-        return false;
+        return true;
     }
 }

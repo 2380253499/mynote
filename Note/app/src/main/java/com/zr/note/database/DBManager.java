@@ -85,6 +85,13 @@ public class DBManager extends SQLiteOpenHelper{
     }
     /**************************************操作数据方法************************************************/
     public List<AccountBean> selectAccount(){
+        return selectAccount(true);
+    }
+    public List<AccountBean> selectAccount(boolean isOrderByCreateTime){
+        String orderBy=DBConstant.updateTime+" desc";
+        if(isOrderByCreateTime){
+            orderBy=DBConstant.creatTime+" desc";
+        }
         SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Account_Note,
                 new String[]{
@@ -93,7 +100,7 @@ public class DBManager extends SQLiteOpenHelper{
                         DBConstant.dataPassword,
                         DBConstant.dataRemark,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null, null);
+                        DBConstant.creatTime}, null, null, null, null,orderBy);
         List<AccountBean>list=new ArrayList<AccountBean>();
         AccountBean bean;
         while (query.moveToNext()){

@@ -6,8 +6,10 @@
     <color name="colorPrimaryDark1">#87ceeb</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorText">#848484</color>
-
+    <color name="c_icon">#56abe4</color>
+    <color name="colorPrimaryAlpha">#BF58C2F7</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="transparent_half">#70000000</color>
     <color name="transparent_half_darker">#90000000</color>
@@ -15,8 +17,8 @@
     <color name="transparent_half_darker_darker_dark">#b0000000</color>
     <color name="c_F8F8F8">#F8F8F8</color>
     <color name="c_divider">#E2E2E2</color>
-    <color name="c_icon">#56abe4</color>
     <color name="c_press">#E2E2E2</color>
+    <color name="c_press_bt">#41A5D6</color>
     <!-- 主题颜色-->
     <color name="top_color1">#20000000</color>
     <color name="top_color2">#FFCECBCB</color>

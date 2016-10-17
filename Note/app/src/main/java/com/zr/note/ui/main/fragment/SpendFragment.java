@@ -49,8 +49,8 @@ public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon
     }
 
     @Override
-    public void saveData() {
-
+    public boolean saveData() {
+        return false;
     }
 
     @Override

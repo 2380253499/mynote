@@ -12,6 +12,8 @@ import com.zr.note.base.customview.MyButton;
 import com.zr.note.base.customview.MyRadioButton;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
+import com.zr.note.ui.main.constant.IntentParam;
+import com.zr.note.ui.main.constant.RequestCode;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
 import com.zr.note.ui.main.fragment.AddDailyReminderFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
@@ -44,6 +46,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private AddDailyReminderFragment addDailyReminderFragment;
     private AddJokeFragment addJokeFragment;
     private AddSpendFragment addSpendFragment;
+    private boolean saveDataIsSuccess;
+    private boolean addDataFlag;
+
     @Override
     protected AddDataImp initPresenter() {
         return new AddDataImp();
@@ -151,19 +156,20 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.bt_addData_save:
-                addDataInter[addDataInterIndex].saveData();
-            break;
+                addDataFlag = addDataInter[addDataInterIndex].saveData();
+                break;
         }
     }
 
     @Override
     protected void menuOnClick(int itemId) {
-
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void finish() {
+        mIntent.putExtra(IntentParam.addDataCode,addDataFlag);
+        setResult(RequestCode.addDataResultCode, mIntent);
+        super.finish();
     }
 
     @Override

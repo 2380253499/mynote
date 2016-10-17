@@ -26,6 +26,13 @@ public class IBaseActivity extends AppCompatActivity {
     protected void showToastL(String toast){
         Toast.makeText(this,toast,Toast.LENGTH_LONG).show();
     }
+    protected void STActivityForResult(Class clazz,int requestCode){
+        startActivityForResult(new Intent(this, clazz), requestCode);
+    }
+    protected void STActivityForResult(Intent intent,Class clazz,int requestCode){
+        intent.setClass(this, clazz);
+        startActivityForResult(intent,requestCode);
+    }
     protected void STActivity(Class clazz){
         startActivity(new Intent(this, clazz));
     }

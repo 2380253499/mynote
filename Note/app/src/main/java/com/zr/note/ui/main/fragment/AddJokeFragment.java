@@ -62,13 +62,13 @@ public class AddJokeFragment extends BaseFragment implements AddDataInter {
     }
 
     @Override
-    public void saveData() {
+    public boolean saveData() {
         String jokeContent = et_joke_content.getText().toString().trim();
         if (TextUtils.isEmpty(jokeContent)) {
             showToastS("段子内容不能为空");
         } else {
         }
-
+return false;
     }
 
     @Override

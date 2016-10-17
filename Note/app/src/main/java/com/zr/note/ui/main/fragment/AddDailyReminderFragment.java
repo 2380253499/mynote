@@ -54,12 +54,13 @@ public class AddDailyReminderFragment extends BaseFragment implements AddDataInt
     }
 
     @Override
-    public void saveData() {
+    public boolean saveData() {
         String memoContent=et_memo_content.getText().toString().trim();
         if (TextUtils.isEmpty(memoContent)) {
             showToastS("备忘内容不能为空");
         } else {
         }
+        return false;
 
     }
 

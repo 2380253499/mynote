@@ -84,13 +84,13 @@ public class AddSpendFragment extends BaseFragment implements AddDataInter {
     }
 
     @Override
-    public void saveData() {
+    public boolean saveData() {
         String spendContent = et_spend_amount.getText().toString().trim();
         if (TextUtils.isEmpty(spendContent)) {
             showToastS("金额不能为空");
         } else {
         }
-
+    return false;
     }
 
     @Override

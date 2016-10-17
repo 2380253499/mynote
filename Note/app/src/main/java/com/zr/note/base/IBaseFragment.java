@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.zr.note.adapter.CommonAdapter;
+import com.zr.note.view.MyPopupwindow;
 
 import butterknife.Unbinder;
 
@@ -13,6 +14,7 @@ public class IBaseFragment extends Fragment {
     protected Intent mIntent;
     protected Unbinder mUnBind;
     protected CommonAdapter mAdapter;
+    protected MyPopupwindow mPopupwindow;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

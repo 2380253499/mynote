@@ -1,9 +1,6 @@
 package com.zr.note.ui.main.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +17,8 @@ import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.main.activity.contract.MainContract;
 import com.zr.note.ui.main.activity.contract.imp.MainImp;
+import com.zr.note.ui.main.constant.IntentParam;
+import com.zr.note.ui.main.constant.RequestCode;
 import com.zr.note.ui.main.fragment.AccountFragment;
 import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
@@ -53,6 +52,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
     private SpendFragment spendFragment;
+
     @Override
     protected int setContentView() {
         return R.layout.activity_main;
@@ -137,12 +137,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initData() {
-        Drawable background=new ColorDrawable(Color.parseColor("#00000000"));
-        Drawable background2=new ColorDrawable(Color.parseColor("#90000000"));
-        StateListDrawable stateListDrawable = new StateListDrawable();
-                stateListDrawable.addState(new int[]{-android.R.attr.state_pressed},background);
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, background2);
-        stateListDrawable.addState(new int[]{}, background);
+
     }
 
 
@@ -150,14 +145,36 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     protected void viewOnClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-                STActivity(AddDataActivity.class);
+//                STActivity(AddDataActivity.class);
+                STActivityForResult(AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        switch (requestCode){
+            case RequestCode.addDataRequestCode:
+                //是否添加或者修改数据回传到主页，更新数据
+                boolean addDataIsSuccess = data.getBooleanExtra(IntentParam.addDataCode, false);
+                if(addDataIsSuccess){
+                    if(!accountFragment.isHidden()){
+                        accountFragment.selectData();
+                    }else if(!memoFragment.isHidden()){
 
+                    }else if(!jokeFragment.isHidden()){
 
+                    }else if(!spendFragment.isHidden()){
 
+                    }
+                }
+                break;
+        }
+    }
 
     @Override
     protected void menuOnClick(int itemId) {
