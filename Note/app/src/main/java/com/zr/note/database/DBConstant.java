@@ -4,6 +4,7 @@ package com.zr.note.database;
  * Created by Administrator on 2016/10/11.
  */
 public class DBConstant {
+    /**************************账户表字段************************************/
     public static final String _id="_id";
     public static final String dataSource="dataSource";
     public static final String dataAccount="dataAccount";

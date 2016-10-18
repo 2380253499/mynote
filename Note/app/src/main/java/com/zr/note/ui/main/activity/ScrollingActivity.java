@@ -28,7 +28,7 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  MyPopupwindow popupwindow = new MyPopupwindow(ScrollingActivity.this, R.layout.layout_options);
+                  MyPopupwindow popupwindow = new MyPopupwindow(ScrollingActivity.this, R.layout.popu_options);
                   int xoff = PhoneUtils.getPhoneWidth(ScrollingActivity.this) - PhoneUtils.dip2px(ScrollingActivity.this, 115);
                         popupwindow.showAsDropDown(toolbar, xoff, 0);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

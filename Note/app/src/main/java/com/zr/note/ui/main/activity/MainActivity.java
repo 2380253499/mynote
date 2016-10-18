@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
@@ -180,14 +181,27 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     protected void menuOnClick(int itemId) {
         switch (itemId) {
             case R.id.action_settings:
-//                startActivity(new Intent(MainActivity.this, SActivity.class));
                 showSeting();
+                break;
+            case R.id.tv_orderBy_create:
+                break;
+            case R.id.tv_orderBy_update:
+                break;
+            case R.id.tv_batchDelete:
                 break;
         }
     }
 
     private void showSeting() {
-        MyPopupwindow popupwindow = new MyPopupwindow(this, R.layout.layout_options);
+//        tv_orderBy_create
+        View view = inflateView(R.layout.popu_options, null);
+        TextView tv_orderBy_create = (TextView) view.findViewById(R.id.tv_orderBy_create);
+        TextView tv_orderBy_update = (TextView) view.findViewById(R.id.tv_orderBy_update);
+        TextView tv_batchDelete = (TextView) view.findViewById(R.id.tv_batchDelete);
+        tv_orderBy_create.setOnClickListener(this);
+        tv_orderBy_update.setOnClickListener(this);
+        tv_batchDelete.setOnClickListener(this);
+        MyPopupwindow popupwindow = new MyPopupwindow(this,view);
         int xoff = PhoneUtils.getPhoneWidth(this) - PhoneUtils.dip2px(this, 125);
         view_backgroud.setVisibility(View.VISIBLE);
         popupwindow.showAsDropDown(getToolbar(), xoff, 0);

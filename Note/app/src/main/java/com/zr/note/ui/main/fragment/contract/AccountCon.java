@@ -4,6 +4,7 @@ import android.widget.ListView;
 
 import com.zr.note.base.BasePresenter;
 import com.zr.note.base.BaseView;
+import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.main.entity.AccountBean;
 
 import java.util.List;
@@ -13,9 +14,12 @@ import java.util.List;
  */
 public interface AccountCon {
     interface View extends BaseView{
-
+        void selectData(boolean isOrderByCreateTime);
     }
     interface Presenter extends BasePresenter<View>{
-       List<AccountBean> selectData(ListView lv_account_list);
+        List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime);
+        AccountBean copyAccount(int position);
+        void deleteAccountById(MyDialog.Builder mDialog, int id);
+        void deleteAccountById(MyDialog.Builder mDialog,String[] id);
     }
 }

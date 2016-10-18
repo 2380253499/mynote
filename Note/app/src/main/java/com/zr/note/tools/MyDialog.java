@@ -3,7 +3,6 @@ package com.zr.note.tools;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -21,7 +20,6 @@ public class MyDialog extends Dialog {
 	public MyDialog(Context context) {
 		super(context);
 	}
-
 	public MyDialog(Context context, int theme) {
 		super(context, theme);
 	}
@@ -35,21 +33,7 @@ public class MyDialog extends Dialog {
 		private OnClickListener positiveButtonClickListener;
 		private OnClickListener negativeButtonClickListener;
 		private OnDismissListener onDismissListener;
-		private boolean isCancelable=false;
-		private boolean isFullWidth=false;
-		private boolean isBottomDialog=false;
-		private boolean isNotitle;   //增加是否允许有标题
 
-		public Builder setCanceledOnTouchOutside(boolean cancelable) {
-			isCancelable=cancelable;
-			return this;
-		}
-		public void setFullWidth(boolean isFullWidth) {
-			this.isFullWidth=isFullWidth;
-		}
-		public void setBottomDialog(boolean isBottomDialog) {
-			this.isBottomDialog=isBottomDialog;
-		}
 		public Builder(Context context) {
 			this.context = context;
 		}
@@ -91,55 +75,50 @@ public class MyDialog extends Dialog {
 			this.positiveButtonClickListener = listener;
 			return this;
 		}
-
+		public Builder setPositiveButton(OnClickListener listener) {
+			return setPositiveButton("确认",listener);
+		}
 		public Builder setNegativeButton(int negativeButtonText,
-				OnClickListener listener) {
+										 OnClickListener listener) {
 			this.negativeButtonText = (String) context
 					.getText(negativeButtonText);
 			this.negativeButtonClickListener = listener;
 			return this;
 		}
-		public Builder setDismissListener(OnDismissListener listener) {
-			this.onDismissListener = listener;
-			return this;
-		}
-
 		public Builder setNegativeButton(String negativeButtonText,
 				OnClickListener listener) {
 			this.negativeButtonText = negativeButtonText;
 			this.negativeButtonClickListener = listener;
 			return this;
 		}
-
-		public Builder setNoTitle(boolean isNotitle){
-			this.isNotitle = isNotitle;
+		public Builder setNegativeButton(OnClickListener listener) {
+			return setNegativeButton("取消",listener);
+		}
+		public Builder setDismissListener(OnDismissListener listener) {
+			this.onDismissListener = listener;
 			return this;
 		}
-
 		public MyDialog create() {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			// instantiate the dialog with the custom Theme
 			final MyDialog dialog=new MyDialog(context, R.style.Dialog);
-			dialog.setCanceledOnTouchOutside(this.isCancelable);
+			dialog.setCanceledOnTouchOutside(false);
 			View layout = inflater.inflate(R.layout.my_dialog, null);
 			//增加Dialog是否设置标题
-			if(isNotitle){
+			/*if(isNotitle){
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				(layout.findViewById(R.id.title)).setVisibility(View.GONE);
-			}else{
+			}else{*/
 				// set the dialog title
-				((TextView) layout.findViewById(R.id.title)).setText(title);
-			}
+				((TextView) layout.findViewById(R.id.title)).setText(title==null?"提示":title);
+//			}
 
 			WindowManager wm = (WindowManager) context
 					.getSystemService(Context.WINDOW_SERVICE);
 			Window dialogWindow =dialog.getWindow();
 			int width = wm.getDefaultDisplay().getWidth();
 //			int height = wm.getDefaultDisplay().getHeight();
-			if(isBottomDialog){
-				dialogWindow.setGravity(Gravity.BOTTOM);
-			}
 			// set the confirm button
 			if(onDismissListener!=null){
 				dialog.setOnDismissListener(onDismissListener);

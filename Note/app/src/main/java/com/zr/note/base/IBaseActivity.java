@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zr.note.adapter.CommonAdapter;
@@ -19,7 +22,12 @@ public class IBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mIntent=new Intent();
     }
-
+    protected View inflateView(int resource,ViewGroup viewGroup){
+        return LayoutInflater.from(this).inflate(resource, viewGroup);
+    }
+    protected View inflateView(int resource){
+        return inflateView(resource,null);
+    }
     protected void showToastS(String toast){
         Toast.makeText(this,toast,Toast.LENGTH_SHORT).show();
     }

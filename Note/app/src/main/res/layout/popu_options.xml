@@ -21,6 +21,7 @@
         app:my_ll_corner_radius="4dp"
         >
         <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_orderBy_create"
             android:text="↑创建时间排序"
             style="@style/main_popu_options"
             app:my_tv_press="@color/c_divider"
@@ -34,10 +35,23 @@
             android:background="@color/c_divider"
             />
         <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_orderBy_update"
             app:my_tv_press="@color/c_divider"
             app:my_tv_solid="@color/white"
             style="@style/main_popu_options"
             android:text="↑修改时间排序"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_divider"
+            />
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_batchDelete"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/main_popu_options"
+            android:text="批量删除"
             app:my_tv_corner_bottomLeftRadius="4dp"
             app:my_tv_corner_bottomRightRadius="4dp"
             />

@@ -84,6 +84,40 @@ public class DBManager extends SQLiteOpenHelper{
         return exits;
     }
     /**************************************操作数据方法************************************************/
+    public boolean updateAccount(AccountBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        values.put(DBConstant.dataAccount,bean.getDataAccount());
+        values.put(DBConstant.dataPassword,bean.getDataPassword());
+        values.put(DBConstant.dataRemark,bean.getDataRemark());
+        values.put(DBConstant.dataSource, bean.getDataSource());
+        int update = db.update(T_Account_Note, values, DBConstant._id, new String[]{bean.get_id() + ""});
+        return update>0?true:false;
+    }
+    public boolean deleteAccount(int id){
+        SQLiteDatabase db=getWritableDatabase();
+        int delete = db.delete(T_Account_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete>0?true:false;
+    }
+    public boolean deleteAccount(String[] id){
+        SQLiteDatabase db=getWritableDatabase();
+        try {
+            db.beginTransaction();
+            for (int i = 0; i < id.length; i++) {
+                db.delete(T_Account_Note, DBConstant._id + "=?", new String[]{id[i]});
+            }
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+            LogUtils.Log("批量删除异常:"+e);
+            return false;
+        }finally {
+            db.endTransaction();
+            db.close();
+        }
+        return true;
+    }
     public List<AccountBean> selectAccount(){
         return selectAccount(true);
     }
@@ -95,6 +129,7 @@ public class DBManager extends SQLiteOpenHelper{
         SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Account_Note,
                 new String[]{
+                        DBConstant._id,
                         DBConstant.dataSource,
                         DBConstant.dataAccount,
                         DBConstant.dataPassword,
@@ -105,12 +140,14 @@ public class DBManager extends SQLiteOpenHelper{
         AccountBean bean;
         while (query.moveToNext()){
             bean=new AccountBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
             String dataSource=query.getString(query.getColumnIndex(DBConstant.dataSource));
             String dataAccount=query.getString(query.getColumnIndex(DBConstant.dataAccount));
             String dataPassword=query.getString(query.getColumnIndex(DBConstant.dataPassword));
             String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.set_id(id);
             bean.setDataSource(dataSource);
             bean.setDataAccount(dataAccount);
             bean.setDataPassword(dataPassword);
