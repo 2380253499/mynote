@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class DailyReminderBean  extends BaseEntity implements Serializable{
+public class MemoBean extends BaseEntity implements Serializable{
 
     /*dataContent
     dataRemark

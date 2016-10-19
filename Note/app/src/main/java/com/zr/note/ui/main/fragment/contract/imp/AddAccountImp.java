@@ -17,8 +17,12 @@ public class AddAccountImp extends IPresenter<AddAccountCon.View> implements Add
 
     @Override
     public boolean addAccount(AccountBean bean) {
-        DBManager.getInstance(mContext).addAccount(bean);
-        mView.showMsg("保存成功");
-        return true;
+        if(DBManager.getInstance(mContext).addAccount(bean)>0){
+            mView.showMsg("保存成功");
+            return true;
+        }else{
+            mView.showMsg("保存失败");
+            return false;
+        }
     }
 }

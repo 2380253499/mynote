@@ -12,6 +12,8 @@ public class DBConstant {
     public static final String dataRemark="dataRemark";
     public static final String updateTime="updateTime";
     public static final String creatTime="creatTime";
+    /**************************备忘录表字段************************************/
+    public static final String dataContent="dataContent";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"
@@ -30,7 +32,7 @@ public class DBConstant {
      * dataContent  --数据内容
      * dataRemark   --备注
      */
-    public static final String T_Remark_Note = "create table "+DBManager.T_Remark_Note+" (" +
+    public static final String T_Memo_Note = "create table "+DBManager.T_Memo_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "dataRemark TEXT," +
             "dataContent TEXT," +

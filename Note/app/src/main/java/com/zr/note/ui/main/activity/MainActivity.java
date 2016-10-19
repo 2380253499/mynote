@@ -89,7 +89,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                     case R.id.rb_main_memo:
                         if (memoFragment == null) {
                             memoFragment = MemoFragment.newInstance();
+                            hideFragment(accountFragment);
                             addFragment(R.id.fl_fragment, memoFragment);
+                            hideFragment(jokeFragment);
+                            hideFragment(spendFragment);
                         } else {
                             hideFragment(accountFragment);
                             showFragment(memoFragment);
@@ -100,7 +103,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                     case R.id.rb_main_joke:
                         if (jokeFragment == null) {
                             jokeFragment = JokeFragment.newInstance();
+                            hideFragment(accountFragment);
+                            hideFragment(memoFragment);
                             addFragment(R.id.fl_fragment, jokeFragment);
+                            hideFragment(spendFragment);
                         } else {
                             hideFragment(accountFragment);
                             hideFragment(memoFragment);
@@ -111,6 +117,9 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                     case R.id.rb_main_spend:
                         if (spendFragment == null) {
                             spendFragment = SpendFragment.newInstance();
+                            hideFragment(accountFragment);
+                            hideFragment(memoFragment);
+                            hideFragment(jokeFragment);
                             addFragment(R.id.fl_fragment, spendFragment);
                         } else {
                             hideFragment(accountFragment);
@@ -163,15 +172,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 //是否添加或者修改数据回传到主页，更新数据
                 boolean addDataIsSuccess = data.getBooleanExtra(IntentParam.addDataCode, false);
                 if(addDataIsSuccess){
-                    if(!accountFragment.isHidden()){
-                        accountFragment.selectData();
-                    }else if(!memoFragment.isHidden()){
-
-                    }else if(!jokeFragment.isHidden()){
-
-                    }else if(!spendFragment.isHidden()){
-
-                    }
+                    selectFragmentData(true);
                 }
                 break;
         }
@@ -184,11 +185,26 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 showSeting();
                 break;
             case R.id.tv_orderBy_create:
+                selectFragmentData(true);
                 break;
             case R.id.tv_orderBy_update:
+                selectFragmentData(false);
                 break;
             case R.id.tv_batchDelete:
                 break;
+        }
+    }
+
+
+    private void selectFragmentData(boolean isOrderByCreate) {
+        if(!accountFragment.isHidden()){
+            accountFragment.selectData(isOrderByCreate);
+        }else if(!memoFragment.isHidden()){
+
+        }else if(!jokeFragment.isHidden()){
+
+        }else if(!spendFragment.isHidden()){
+
         }
     }
 
@@ -215,7 +231,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected MainImp initPresenter() {
-        return new MainImp();
+        return new MainImp(this);
     }
 
 

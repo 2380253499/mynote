@@ -6,7 +6,6 @@
               android:background="#ffffff"
               android:orientation="vertical"
               tools:context=".ui.main.fragment.AddAccountFragment">
-
      <com.zr.note.base.customview.CustomListView
          android:id="@+id/lv_account_list"
          android:layout_width="match_parent"

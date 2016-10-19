@@ -15,12 +15,13 @@ import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.contract.AccountCon;
 import com.zr.note.ui.main.fragment.contract.imp.AccountImp;
+import com.zr.note.ui.main.inter.DeteleDataInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View {
+public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter {
 
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
@@ -44,7 +45,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
 
     @Override
     protected void initView() {
-        View menu = LayoutInflater.from(getActivity()).inflate(R.layout.popu_data_menu, null);
+        View menu = LayoutInflater.from(getActivity()).inflate(R.layout.popu_account_menu, null);
         TextView tv_menu_copyAccount= (TextView) menu.findViewById(R.id.tv_menu_copyAccount);
         TextView tv_menu_copyPwd= (TextView) menu.findViewById(R.id.tv_menu_copyPwd);
         TextView tv_menu_deleteAccount= (TextView) menu.findViewById(R.id.tv_menu_deleteAccount);
@@ -103,5 +104,10 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public boolean deleteData() {
+        return false;
     }
 }

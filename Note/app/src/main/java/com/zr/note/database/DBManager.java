@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.LogUtils;
 import com.zr.note.ui.main.entity.AccountBean;
+import com.zr.note.ui.main.entity.MemoBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public class DBManager extends SQLiteOpenHelper{
     private static final String dbName="MyNote";
-    private static final int version=1;
+    private static final int version=2;
     private static DBManager dbManager;
     public static final String T_Account_Note="T_Account_Note";
-    public static final String T_Remark_Note="T_Remark_Note";
+    public static final String T_Memo_Note="T_Memo_Note";
     public static final String T_Joke_Note="T_Joke_Note";
     public static final String T_Spend_Note="T_Spend_Note";
     private DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -48,8 +49,8 @@ public class DBManager extends SQLiteOpenHelper{
         if (noExistTable(db,T_Account_Note)) {
             db.execSQL(DBConstant.T_Account_Note);
         }
-        if (noExistTable(db,T_Remark_Note)) {
-            db.execSQL(DBConstant.T_Remark_Note);
+        if (noExistTable(db,T_Memo_Note)) {
+            db.execSQL(DBConstant.T_Memo_Note);
         }
         if (noExistTable(db,T_Joke_Note)) {
             db.execSQL(DBConstant.T_Joke_Note);
@@ -61,7 +62,7 @@ public class DBManager extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        addDataTable(db);
     }
     private boolean existTable(SQLiteDatabase db,String table){
         boolean exits = false;
@@ -159,7 +160,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return list;
     }
-    public void addAccount(AccountBean bean){
+    public long addAccount(AccountBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put("dataSource",bean.getDataSource());
@@ -169,6 +170,51 @@ public class DBManager extends SQLiteOpenHelper{
         long insert = db.insert(T_Account_Note, null, values);
         LogUtils.Log(insert);
         db.close();
+        return insert;
     }
-
+    public long addMemo(MemoBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark,bean.getDataRemark());
+        values.put(DBConstant.dataContent, bean.getDataContent());
+        long insert = db.insert(T_Memo_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
+    public List<MemoBean> selectMemo(){
+        return selectMemo(true);
+    }
+    public List<MemoBean> selectMemo(boolean isOrderByCreateTime){
+        String orderBy=DBConstant.updateTime+" desc";
+        if(isOrderByCreateTime){
+            orderBy=DBConstant.creatTime+" desc";
+        }
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Memo_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.dataContent,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime}, null, null, null, null,orderBy);
+        List<MemoBean>list=new ArrayList<MemoBean>();
+        MemoBean bean;
+        while (query.moveToNext()){
+            bean=new MemoBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            String dataContent=query.getString(query.getColumnIndex(DBConstant.dataContent));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.set_id(id);
+            bean.setDataContent(dataContent);
+            bean.setDataRemark(dataRemark);
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
 }

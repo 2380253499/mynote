@@ -73,7 +73,7 @@ return false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate AddDailyReminderFragment fragment view
+        // TODO: inflate AddMemoFragment fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;

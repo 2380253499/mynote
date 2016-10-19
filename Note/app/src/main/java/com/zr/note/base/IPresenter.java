@@ -11,9 +11,9 @@ public abstract class IPresenter<V extends BaseView>{
     protected V mView;
     protected Handler mHandler;
     protected Context mContext;
-    public IPresenter() {
+    /*public IPresenter() {
         this.mHandler =new Handler(Looper.getMainLooper());
-    }
+    }*/
     public IPresenter(Context context) {
         mContext=context;
         this.mHandler =new Handler(Looper.getMainLooper());

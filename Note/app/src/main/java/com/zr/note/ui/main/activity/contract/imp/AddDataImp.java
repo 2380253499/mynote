@@ -1,5 +1,7 @@
 package com.zr.note.ui.main.activity.contract.imp;
 
+import android.content.Context;
+
 import com.zr.note.base.IPresenter;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 
@@ -8,4 +10,7 @@ import com.zr.note.ui.main.activity.contract.AddDataContract;
  */
 public class AddDataImp extends IPresenter<AddDataContract.View> implements AddDataContract.Presenter{
 
+    public AddDataImp(Context context) {
+        super(context);
+    }
 }

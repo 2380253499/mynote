@@ -15,7 +15,7 @@ import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
 import com.zr.note.ui.main.constant.IntentParam;
 import com.zr.note.ui.main.constant.RequestCode;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
-import com.zr.note.ui.main.fragment.AddDailyReminderFragment;
+import com.zr.note.ui.main.fragment.AddMemoFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
 import com.zr.note.ui.main.fragment.AddSpendFragment;
 import com.zr.note.ui.main.inter.AddDataInter;
@@ -43,7 +43,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private int addDataInterIndex=0;
     private AddDataInter[]addDataInter=new AddDataInter[4];
     private AddAccountFragment addAccountFragment;
-    private AddDailyReminderFragment addDailyReminderFragment;
+    private AddMemoFragment addMemoFragment;
     private AddJokeFragment addJokeFragment;
     private AddSpendFragment addSpendFragment;
     private boolean saveDataIsSuccess;
@@ -51,7 +51,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
 
     @Override
     protected AddDataImp initPresenter() {
-        return new AddDataImp();
+        return new AddDataImp(this);
     }
 
     @Override
@@ -90,22 +90,22 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                     case R.id.mrb_button0:
                         addDataInterIndex=0;
                         showFragment(addAccountFragment);
-                        hideFragment(addDailyReminderFragment);
+                        hideFragment(addMemoFragment);
                         hideFragment(addJokeFragment);
                         hideFragment(addSpendFragment);
                         break;
                     case R.id.mrb_button1:
                         addDataInterIndex=1;
-                        if (addDailyReminderFragment == null) {
-                            addDailyReminderFragment = AddDailyReminderFragment.newInstance();
-                            addDataInter[1] = addDailyReminderFragment;
+                        if (addMemoFragment == null) {
+                            addMemoFragment = AddMemoFragment.newInstance();
+                            addDataInter[1] = addMemoFragment;
                             hideFragment(addAccountFragment);
-                            addFragment(R.id.fl_fragment, addDailyReminderFragment);
+                            addFragment(R.id.fl_fragment, addMemoFragment);
                             hideFragment(addJokeFragment);
                             hideFragment(addSpendFragment);
                         } else {
                             hideFragment(addAccountFragment);
-                            showFragment(addDailyReminderFragment);
+                            showFragment(addMemoFragment);
                             hideFragment(addJokeFragment);
                             hideFragment(addSpendFragment);
                         }
@@ -116,12 +116,12 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                             addJokeFragment = AddJokeFragment.newInstance();
                             addDataInter[2] = addJokeFragment;
                             hideFragment(addAccountFragment);
-                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addMemoFragment);
                             addFragment(R.id.fl_fragment, addJokeFragment);
                             hideFragment(addSpendFragment);
                         } else {
                             hideFragment(addAccountFragment);
-                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addMemoFragment);
                             showFragment(addJokeFragment);
                             hideFragment(addSpendFragment);
                         }
@@ -132,12 +132,12 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                             addSpendFragment = AddSpendFragment.newInstance();
                             addDataInter[3] = addSpendFragment;
                             hideFragment(addAccountFragment);
-                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addMemoFragment);
                             hideFragment(addJokeFragment);
                             addFragment(R.id.fl_fragment, addSpendFragment);
                         } else {
                             hideFragment(addAccountFragment);
-                            hideFragment(addDailyReminderFragment);
+                            hideFragment(addMemoFragment);
                             hideFragment(addJokeFragment);
                             showFragment(addSpendFragment);
                         }

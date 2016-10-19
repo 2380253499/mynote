@@ -8,29 +8,31 @@ import android.view.ViewGroup;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.BasePresenter;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.main.entity.MemoBean;
+import com.zr.note.ui.main.fragment.contract.AddMemoCon;
+import com.zr.note.ui.main.fragment.contract.imp.AddMemoImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddDailyReminderFragment extends BaseFragment implements AddDataInter {
+public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Presenter> implements AddMemoCon.View, AddDataInter {
 
     @BindView(R.id.et_memo_reminder)
     MyEditText et_memo_reminder;
     @BindView(R.id.et_memo_content)
     MyEditText et_memo_content;
 
-    public static AddDailyReminderFragment newInstance() {
+    public static AddMemoFragment newInstance() {
         Bundle args = new Bundle();
-        AddDailyReminderFragment fragment = new AddDailyReminderFragment();
+        AddMemoFragment fragment = new AddMemoFragment();
         fragment.setArguments(args);
         return fragment;
     }
     @Override
-    protected BasePresenter initPresenter() {
-        return null;
+    protected AddMemoImp initPresenter() {
+        return new AddMemoImp(getActivity());
     }
 
     @Override
@@ -59,6 +61,11 @@ public class AddDailyReminderFragment extends BaseFragment implements AddDataInt
         if (TextUtils.isEmpty(memoContent)) {
             showToastS("备忘内容不能为空");
         } else {
+            String reminder = et_memo_reminder.getText().toString();
+            MemoBean reminderBean=new MemoBean();
+            reminderBean.setDataRemark(reminder);
+            reminderBean.setDataContent(memoContent);
+            return mPresenter.addMemo(reminderBean);
         }
         return false;
 
