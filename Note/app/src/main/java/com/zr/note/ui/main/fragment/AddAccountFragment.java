@@ -43,6 +43,14 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
         return R.layout.fragment_add_account;
     }
 
+    public static AddAccountFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        AddAccountFragment fragment = new AddAccountFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     protected void initView() {
         tv_account_copy.setOnClickListener(this);

@@ -207,7 +207,9 @@ public class AES {
     private static final String keyBytes = "zhongruishanghai";
 
     /**
-     *加密
+     * 加密
+     * @param content
+     * @return
      */
     public static String encode(String content){
         //加密之后的字节数组,转成16进制的字符串形式输出

@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
     private SpendFragment spendFragment;
-
+    private int tabIndex=0;
     @Override
     protected int setContentView() {
         return R.layout.activity_main;
@@ -81,12 +81,14 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main_account:
+                        tabIndex=0;
                         showFragment(accountFragment);
                         hideFragment(memoFragment);
                         hideFragment(jokeFragment);
                         hideFragment(spendFragment);
                         break;
                     case R.id.rb_main_memo:
+                        tabIndex=1;
                         if (memoFragment == null) {
                             memoFragment = MemoFragment.newInstance();
                             hideFragment(accountFragment);
@@ -101,6 +103,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         }
                         break;
                     case R.id.rb_main_joke:
+                        tabIndex=2;
                         if (jokeFragment == null) {
                             jokeFragment = JokeFragment.newInstance();
                             hideFragment(accountFragment);
@@ -115,6 +118,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         }
                         break;
                     case R.id.rb_main_spend:
+                        tabIndex=3;
                         if (spendFragment == null) {
                             spendFragment = SpendFragment.newInstance();
                             hideFragment(accountFragment);
@@ -156,7 +160,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         switch (v.getId()) {
             case R.id.fab:
 //                STActivity(AddDataActivity.class);
-                STActivityForResult(AddDataActivity.class, RequestCode.addDataRequestCode);
+                mIntent.putExtra(IntentParam.tabIndex,tabIndex);
+                STActivityForResult(mIntent,AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
         }
     }
@@ -171,8 +176,9 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             case RequestCode.addDataRequestCode:
                 //是否添加或者修改数据回传到主页，更新数据
                 boolean addDataIsSuccess = data.getBooleanExtra(IntentParam.addDataCode, false);
+                int addDataIndex = data.getIntExtra(IntentParam.addDataIndex, 0);
                 if(addDataIsSuccess){
-                    selectFragmentData(true);
+                    selectFragmentData(addDataIndex,true);
                 }
                 break;
         }
@@ -185,10 +191,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 showSeting();
                 break;
             case R.id.tv_orderBy_create:
-                selectFragmentData(true);
+                selectFragmentData(tabIndex,true);
                 break;
             case R.id.tv_orderBy_update:
-                selectFragmentData(false);
+                selectFragmentData(tabIndex,false);
                 break;
             case R.id.tv_batchDelete:
                 break;
@@ -196,15 +202,27 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     }
 
 
-    private void selectFragmentData(boolean isOrderByCreate) {
-        if(!accountFragment.isHidden()){
-            accountFragment.selectData(isOrderByCreate);
-        }else if(!memoFragment.isHidden()){
+    private void selectFragmentData(int addDataIndex,boolean isOrderByCreate) {
+        switch (addDataIndex){
+            case 0:
+                accountFragment.selectData(isOrderByCreate);
+            break;
+            case 1:
+                if(memoFragment!=null){
+                    memoFragment.selectData(isOrderByCreate);
+                }
 
-        }else if(!jokeFragment.isHidden()){
-
-        }else if(!spendFragment.isHidden()){
-
+            break;
+            case 2:
+                if(memoFragment!=null){
+                    memoFragment.selectData(isOrderByCreate);
+                }
+            break;
+            case 3:
+                if(memoFragment!=null){
+                    memoFragment.selectData(isOrderByCreate);
+                }
+            break;
         }
     }
 

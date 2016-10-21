@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.zr.note.tools.AES;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.LogUtils;
 import com.zr.note.ui.main.entity.AccountBean;
@@ -149,10 +150,10 @@ public class DBManager extends SQLiteOpenHelper{
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataSource(dataSource);
-            bean.setDataAccount(dataAccount);
-            bean.setDataPassword(dataPassword);
-            bean.setDataRemark(dataRemark);
+            bean.setDataSource(AES.decode(dataSource));
+            bean.setDataAccount(AES.decode(dataAccount));
+            bean.setDataPassword(AES.decode(dataPassword));
+            bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime));
             bean.setCreatTime(DateUtils.stringToDate(creatTime));
             list.add(bean);
@@ -163,10 +164,10 @@ public class DBManager extends SQLiteOpenHelper{
     public long addAccount(AccountBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put("dataSource",bean.getDataSource());
-        values.put("dataAccount",bean.getDataAccount());
-        values.put("dataPassword",bean.getDataPassword());
-        values.put("dataRemark", bean.getDataRemark());
+        values.put(DBConstant.dataSource, AES.encode(bean.getDataSource()));
+        values.put(DBConstant.dataAccount,AES.encode(bean.getDataAccount()));
+        values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         long insert = db.insert(T_Account_Note, null, values);
         LogUtils.Log(insert);
         db.close();
@@ -175,8 +176,8 @@ public class DBManager extends SQLiteOpenHelper{
     public long addMemo(MemoBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put(DBConstant.dataRemark,bean.getDataRemark());
-        values.put(DBConstant.dataContent, bean.getDataContent());
+        values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
         long insert = db.insert(T_Memo_Note, null, values);
         LogUtils.Log(insert);
         db.close();
@@ -208,8 +209,8 @@ public class DBManager extends SQLiteOpenHelper{
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataContent(dataContent);
-            bean.setDataRemark(dataRemark);
+            bean.setDataContent(AES.decode(dataContent));
+            bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime));
             bean.setCreatTime(DateUtils.stringToDate(creatTime));
             list.add(bean);

@@ -5,4 +5,6 @@ package com.zr.note.ui.main.constant;
  */
 public class IntentParam {
     public static final String addDataCode="addDataRequestCode";
+    public static final String addDataIndex="addDataIndex";
+    public static final String tabIndex="tabIndex";
 }

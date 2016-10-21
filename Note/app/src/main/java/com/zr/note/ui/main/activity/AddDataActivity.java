@@ -15,8 +15,8 @@ import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
 import com.zr.note.ui.main.constant.IntentParam;
 import com.zr.note.ui.main.constant.RequestCode;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
-import com.zr.note.ui.main.fragment.AddMemoFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
+import com.zr.note.ui.main.fragment.AddMemoFragment;
 import com.zr.note.ui.main.fragment.AddSpendFragment;
 import com.zr.note.ui.main.inter.AddDataInter;
 
@@ -71,14 +71,40 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
 
     @Override
     protected void initView() {
-        mrb_button0.setChecked(true);
-        addAccountFragment = new AddAccountFragment();
-        addDataInter[0] = addAccountFragment;
-        addFragment(R.id.fl_fragment, addAccountFragment);
-
+        int tabIndex = getIntent().getIntExtra(IntentParam.tabIndex, 0);
+        addDataInterIndex=tabIndex;
+        setCheckDiffTab(tabIndex);
         bt_addData_save.setOnClickListener(this);
-
         rg_addData.setOnCheckedChangeListener(getChangeListener());
+    }
+
+    private void setCheckDiffTab(int tabIndex) {
+        switch (tabIndex){
+            case 0:
+                addAccountFragment = AddAccountFragment.newInstance();
+                addDataInter[0] = addAccountFragment;
+                addFragment(R.id.fl_fragment, addAccountFragment);
+                mrb_button0.setChecked(true);
+            break;
+            case 1:
+                mrb_button1.setChecked(true);
+                addMemoFragment = AddMemoFragment.newInstance();
+                addDataInter[1] = addMemoFragment;
+                addFragment(R.id.fl_fragment, addMemoFragment);
+            break;
+            case 2:
+                mrb_button2.setChecked(true);
+                addJokeFragment =   AddJokeFragment.newInstance();
+                addDataInter[2] = addJokeFragment;
+                addFragment(R.id.fl_fragment, addJokeFragment);
+            break;
+            case 3:
+                mrb_button3.setChecked(true);
+                addSpendFragment =   AddSpendFragment.newInstance();
+                addDataInter[3] = addSpendFragment;
+                addFragment(R.id.fl_fragment, addSpendFragment);
+            break;
+        }
     }
 
     @NonNull
@@ -89,10 +115,19 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                 switch (checkedId) {
                     case R.id.mrb_button0:
                         addDataInterIndex=0;
-                        showFragment(addAccountFragment);
-                        hideFragment(addMemoFragment);
-                        hideFragment(addJokeFragment);
-                        hideFragment(addSpendFragment);
+                        if (addAccountFragment == null) {
+                            addAccountFragment = AddAccountFragment.newInstance();
+                            addDataInter[0] = addAccountFragment;
+                            addFragment(R.id.fl_fragment, addAccountFragment);
+                            hideFragment(addMemoFragment);
+                            hideFragment(addJokeFragment);
+                            hideFragment(addSpendFragment);
+                        } else {
+                            showFragment(addAccountFragment);
+                            hideFragment(addMemoFragment);
+                            hideFragment(addJokeFragment);
+                            hideFragment(addSpendFragment);
+                        }
                         break;
                     case R.id.mrb_button1:
                         addDataInterIndex=1;
@@ -168,6 +203,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     public void finish() {
         mIntent.putExtra(IntentParam.addDataCode,addDataFlag);
+        mIntent.putExtra(IntentParam.addDataIndex,addDataInterIndex);
         setResult(RequestCode.addDataResultCode, mIntent);
         super.finish();
     }
