@@ -217,4 +217,16 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return list;
     }
+
+    /**
+     * 删除备忘
+     * @param id
+     * @return
+     */
+    public boolean deleteMemo(int id){
+        SQLiteDatabase db=getWritableDatabase();
+        int delete = db.delete(T_Memo_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete>0?true:false;
+    }
 }

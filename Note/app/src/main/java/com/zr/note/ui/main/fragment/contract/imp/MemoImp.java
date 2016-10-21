@@ -1,6 +1,7 @@
 package com.zr.note.ui.main.fragment.contract.imp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
         CommonAdapter<MemoBean> commonAdapter = new CommonAdapter<MemoBean>(mContext, memoBeanList, R.layout.item_memo) {
             @Override
             public void convert(ViewHolder helper, MemoBean item) {
-                helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + helper.getPosition() + 1)
+                helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
                         .setText(R.id.tv_memo_content, item.getDataContent());
                 TextView tv_reminder = helper.getTextView(R.id.tv_reminder);
                 if (item.getDataRemark() == null || item.getDataRemark().trim().length() == 0) {
@@ -50,16 +51,56 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
 
     @Override
     public MemoBean copyMemo(int position) {
-        return null;
+        return memoBeanList.get(position);
     }
 
     @Override
-    public void deleteMemoById(MyDialog.Builder mDialog, int id) {
-
+    public void deleteMemoById(MyDialog.Builder mDialog,final int id) {
+        mDialog=new MyDialog.Builder(mContext);
+        mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean flag = DBManager.getInstance(mContext).deleteMemo(id);
+                if(flag){
+                    mView.showMsg("删除成功");
+                    mView.selectData(true);
+                }else{
+                    mView.showMsg("删除失败");
+                }
+                dialog.dismiss();
+            }
+        });
+        mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mDialog.create().show();
     }
 
     @Override
-    public void deleteMemoById(MyDialog.Builder mDialog, String[] id) {
-
+    public void deleteMemoById(MyDialog.Builder mDialog,final String[] id) {
+        mDialog=new MyDialog.Builder(mContext);
+        mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                boolean flag = DBManager.getInstance(mContext).deleteAccount(id);
+                if(flag){
+                    mView.showMsg("删除成功");
+                    mView.selectData(true);
+                }else{
+                    mView.showMsg("删除失败");
+                }
+                dialog.dismiss();
+            }
+        });
+        mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mDialog.create().show();
     }
 }

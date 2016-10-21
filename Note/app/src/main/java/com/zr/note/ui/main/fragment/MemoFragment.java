@@ -1,6 +1,7 @@
 package com.zr.note.ui.main.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 memoBean = mPresenter.copyMemo(position);
-                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 55), -PhoneUtils.dip2px(getActivity(), 80));
                 return false;
             }
         });
@@ -66,8 +67,15 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.tv_menu_copyMemoContent:
+                mPopupwindow.dismiss();
+                if(!TextUtils.isEmpty(memoBean.getDataContent())){
+                    PhoneUtils.copyText(getActivity(),memoBean.getDataContent());
+                    showToastS("复制成功");
+                }
                 break;
             case R.id.tv_menu_deleteMemo:
+                mPopupwindow.dismiss();
+                mPresenter.deleteMemoById(mDialog,memoBean.get_id());
             break;
         }
     }

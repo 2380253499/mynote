@@ -39,7 +39,7 @@
             android:paddingTop="10dp"
             android:textColor="@color/black"
             android:text="确定退出吗？"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
         <com.zr.note.base.customview.MyLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:layout_gravity="bottom"
             android:gravity="center"
             app:my_ll_corner_bottomLeftRadius="8dp"
