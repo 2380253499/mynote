@@ -10,7 +10,9 @@ import com.zr.note.tools.AES;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.LogUtils;
 import com.zr.note.ui.main.entity.AccountBean;
+import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.entity.MemoBean;
+import com.zr.note.ui.main.entity.SpendBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,8 +156,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataAccount(AES.decode(dataAccount));
             bean.setDataPassword(AES.decode(dataPassword));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
             list.add(bean);
         }
         db.close();
@@ -211,8 +213,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setDataContent(AES.decode(dataContent));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
             list.add(bean);
         }
         db.close();
@@ -227,6 +229,131 @@ public class DBManager extends SQLiteOpenHelper{
     public boolean deleteMemo(int id){
         SQLiteDatabase db=getWritableDatabase();
         int delete = db.delete(T_Memo_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete>0?true:false;
+    }
+
+    public long addJoke(JokeBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        long insert = db.insert(T_Joke_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
+    public List<JokeBean> selectJoke(){
+        return selectJoke(true);
+    }
+    public List<JokeBean> selectJoke(boolean isOrderByCreateTime){
+        String orderBy=DBConstant.updateTime+" desc";
+        if(isOrderByCreateTime){
+            orderBy=DBConstant.creatTime+" desc";
+        }
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Joke_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.dataContent,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime}, null, null, null, null,orderBy);
+        List<JokeBean>list=new ArrayList<JokeBean>();
+        JokeBean bean;
+        while (query.moveToNext()){
+            bean=new JokeBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String dataContent=query.getString(query.getColumnIndex(DBConstant.dataContent));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.set_id(id);
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataContent(AES.decode(dataContent));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
+    /**
+     * 删除joke
+     * @param id
+     * @return
+     */
+    public boolean deleteJoke(int id){
+        SQLiteDatabase db=getWritableDatabase();
+        int delete = db.delete(T_Joke_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete>0?true:false;
+    }
+    public List<SpendBean> selectSpend(){
+        return selectSpend(true);
+    }
+    public List<SpendBean> selectSpend(boolean isOrderByCreateTime){
+        String orderBy=DBConstant.updateTime+" desc";
+        if(isOrderByCreateTime){
+            orderBy=DBConstant.creatTime+" desc";
+        }
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Spend_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.liveSpend,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime}, null, null, null, null,orderBy);
+        List<SpendBean>list=new ArrayList<SpendBean>();
+        SpendBean bean;
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            String liveSpend=query.getString(query.getColumnIndex(DBConstant.liveSpend));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.set_id(id);
+            bean.setLiveSpend(Double.parseDouble(AES.decode(liveSpend)));
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
+    public long addSpend(SpendBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.liveSpend, AES.encode(bean.getLiveSpend()+""));
+        long insert = db.insert(T_Spend_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
+    /**
+     * 删除消费
+     * @param id
+     * @return
+     */
+    public boolean deleteSpend(int id){
+        SQLiteDatabase db=getWritableDatabase();
+        int delete = db.delete(T_Spend_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete>0?true:false;
+    }
+    /**
+     * 删除数据
+     * @param table 表名
+     * @param id    标识id
+     * @return
+     */
+    public boolean deleteData(String table,int id){
+        SQLiteDatabase db=getWritableDatabase();
+        int delete = db.delete(table, DBConstant._id + "=?", new String[]{id + ""});
         db.close();
         return delete>0?true:false;
     }

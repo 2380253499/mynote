@@ -18,6 +18,7 @@ creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 
 create table T_Joke_Note (
 _id INTEGER PRIMARY KEY AUTOINCREMENT,
+dataRemark TEXT,         --备注
 dataContent TEXT,   --数据内容
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
 creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )

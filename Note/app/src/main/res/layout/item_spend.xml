@@ -23,22 +23,21 @@
             android:layout_marginRight="10dp"
             />
         <TextView
-            android:id="@+id/tv_memo_content"
+            android:id="@+id/tv_spend"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            tools:text="tv_accounttv_accounttv_accounttv_account"
+            tools:text="消费金额"
             android:layout_marginRight="5dp"
             android:singleLine="true"
             android:ellipsize="end"
             />
         <TextView
-            android:id="@+id/tv_reminder"
-            android:maxWidth="120dp"
-            android:minWidth="70dp"
-            android:layout_width="110dp"
+            android:id="@+id/tv_spend_date"
+            android:maxWidth="130dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            tools:text="备注提醒备注提醒"
+            tools:text="2014-09-09 12:12"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="right"

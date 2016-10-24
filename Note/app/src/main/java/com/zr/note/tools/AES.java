@@ -227,7 +227,7 @@ public class AES {
 
     //测试用例
     public static void test1(){
-        String content = "新浪邮箱";
+        String content = "新.浪邮箱";
         String pStr = encode(content );
         System.out.println("加密前："+content);
         System.out.println("加密后:" + pStr);

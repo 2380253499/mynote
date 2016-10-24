@@ -9,13 +9,15 @@ import java.util.Date;
  * Created by Administrator on 2016/10/14.
  */
 public class DateUtils {
+    public static final String ymdhm="yyyy-MM-dd HH:mm";
     //把日期转为字符串
     public static String dateToString(Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
+        return dateToString(date,"yyyy-MM-dd");
+    }
+    public static String dateToString(Date date,String format) {
+        DateFormat df = new SimpleDateFormat(format);
         return df.format(date);
     }
-
     //把字符串转为日期
     public static Date stringToDate(String strDate,String format) {
         DateFormat df = new SimpleDateFormat(format);

@@ -4,17 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.ui.main.fragment.contract.AddAccountCon;
-import com.zr.note.ui.main.fragment.contract.imp.AddAccountImp;
+import com.zr.note.ui.main.entity.SpendBean;
+import com.zr.note.ui.main.fragment.contract.SpendCon;
+import com.zr.note.ui.main.fragment.contract.imp.SpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon.Presenter> implements AddDataInter,AddAccountCon.View {
-
+public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements AddDataInter,SpendCon.View {
+    @BindView(R.id.lv_spend_list)
+    ListView lv_spend_list;
+    private SpendBean spendBean;
     public static SpendFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -24,8 +30,8 @@ public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon
         return fragment;
     }
     @Override
-    protected AddAccountImp initPresenter() {
-        return new AddAccountImp(getActivity());
+    protected SpendImp initPresenter() {
+        return new SpendImp(getActivity());
     }
 
     @Override
@@ -35,12 +41,18 @@ public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon
 
     @Override
     protected void initView() {
-
+        lv_spend_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.deleteSpendById(mDialog,position);
+                return false;
+            }
+        });
     }
 
     @Override
     protected void initData() {
-
+        selectData();
     }
 
     @Override
@@ -59,5 +71,10 @@ public class SpendFragment extends BaseFragment<AddAccountCon.View,AddAccountCon
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public void selectData() {
+        mPresenter.selectData(lv_spend_list,true);
     }
 }

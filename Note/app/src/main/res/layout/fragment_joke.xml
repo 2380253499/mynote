@@ -7,11 +7,11 @@
               android:orientation="vertical"
               tools:context=".ui.main.fragment.AddAccountFragment">
 
-     <ListView
-         android:id="@+id/lv_account_list"
+     <com.zr.note.base.customview.CustomListView
+         android:id="@+id/lv_joke_list"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
+         android:listSelector="@drawable/selector_list_item"
          >
-
-     </ListView>
+     </com.zr.note.base.customview.CustomListView>
 </LinearLayout>

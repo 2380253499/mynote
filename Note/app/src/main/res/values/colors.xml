@@ -19,6 +19,8 @@
     <color name="c_divider">#E2E2E2</color>
     <color name="c_press">#E2E2E2</color>
     <color name="c_press_bt">#41A5D6</color>
+    <color name="blue_point">#58c2f7</color>
+    <color name="red_point">#DE2F24</color>
     <!-- 主题颜色-->
     <color name="top_color1">#20000000</color>
     <color name="top_color2">#FFCECBCB</color>

@@ -9,21 +9,25 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.BasePresenter;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.main.entity.JokeBean;
+import com.zr.note.ui.main.fragment.contract.AddJokeCon;
+import com.zr.note.ui.main.fragment.contract.imp.AddJokeImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddJokeFragment extends BaseFragment implements AddDataInter {
+public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Presenter> implements AddDataInter,AddJokeCon.View {
 
-    @BindView(R.id.et_joke_declare)
-    MyEditText et_joke_declare;
+    @BindView(R.id.et_joke_remark)
+    MyEditText et_joke_remark;
     @BindView(R.id.et_joke_content)
     MyEditText et_joke_content;
     @BindView(R.id.tv_joke_clear)
     TextView tv_joke_clear;
+    @BindView(R.id.tv_joke_copy)
+    TextView tv_joke_copy;
     public static AddJokeFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -33,8 +37,8 @@ public class AddJokeFragment extends BaseFragment implements AddDataInter {
         return fragment;
     }
     @Override
-    protected BasePresenter initPresenter() {
-        return null;
+    protected AddJokeImp initPresenter() {
+        return new AddJokeImp(getActivity());
     }
     
     @Override
@@ -45,6 +49,7 @@ public class AddJokeFragment extends BaseFragment implements AddDataInter {
     @Override
     protected void initView() {
         tv_joke_clear.setOnClickListener(this);
+        tv_joke_copy.setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +63,14 @@ public class AddJokeFragment extends BaseFragment implements AddDataInter {
             case R.id.tv_joke_clear:
                 et_joke_content.setText("");
             break;
+            case R.id.tv_joke_copy:
+                String jokeContent = et_joke_content.getText().toString().trim();
+                if (TextUtils.isEmpty(jokeContent)) {
+                    showToastS("段子内容不能为空");
+                } else {
+                    showToastS("复制成功");
+                }
+            break;
         }
     }
 
@@ -67,8 +80,13 @@ public class AddJokeFragment extends BaseFragment implements AddDataInter {
         if (TextUtils.isEmpty(jokeContent)) {
             showToastS("段子内容不能为空");
         } else {
+            String jokeRemark = et_joke_remark.getText().toString().trim();
+            JokeBean bean=new JokeBean();
+            bean.setDataRemark(jokeRemark);
+            bean.setDataContent(jokeContent);
+            return mPresenter.addJoke(bean);
         }
-return false;
+        return false;
     }
 
     @Override

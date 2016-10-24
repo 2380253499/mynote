@@ -214,13 +214,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
             break;
             case 2:
-                if(memoFragment!=null){
-                    memoFragment.selectData(isOrderByCreate);
+                if(jokeFragment!=null){
+                    jokeFragment.selectData();
                 }
             break;
             case 3:
-                if(memoFragment!=null){
-                    memoFragment.selectData(isOrderByCreate);
+                if(spendFragment!=null){
+                    spendFragment.selectData();
                 }
             break;
         }

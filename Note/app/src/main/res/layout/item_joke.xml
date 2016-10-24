@@ -23,17 +23,17 @@
             android:layout_marginRight="10dp"
             />
         <TextView
-            android:id="@+id/tv_memo_content"
+            android:id="@+id/tv_joke_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            tools:text="tv_accounttv_accounttv_accounttv_account"
+            tools:text="tv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_accounttv_account"
             android:layout_marginRight="5dp"
             android:singleLine="true"
             android:ellipsize="end"
             />
         <TextView
-            android:id="@+id/tv_reminder"
+            android:id="@+id/tv_joke_remark"
             android:maxWidth="120dp"
             android:minWidth="70dp"
             android:layout_width="110dp"

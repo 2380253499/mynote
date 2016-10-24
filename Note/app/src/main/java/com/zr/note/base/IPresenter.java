@@ -1,6 +1,7 @@
 package com.zr.note.base;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -20,6 +21,10 @@ public abstract class IPresenter<V extends BaseView>{
     }
     public void detach(){
         mView=null;
+        this.mHandler=null;
         mContext=null;
+    }
+    protected Resources getR(){
+        return mContext.getResources();
     }
 }

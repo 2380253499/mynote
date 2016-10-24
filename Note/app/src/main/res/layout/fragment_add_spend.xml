@@ -22,7 +22,7 @@
             android:paddingLeft="@dimen/asterisk_padding"
             />
         <com.zr.note.base.customview.MyEditText
-            android:id="@+id/et_spend_declare"
+            android:id="@+id/et_spend_remark"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

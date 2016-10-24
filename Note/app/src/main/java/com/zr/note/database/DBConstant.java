@@ -14,6 +14,8 @@ public class DBConstant {
     public static final String creatTime="creatTime";
     /**************************备忘录表字段************************************/
     public static final String dataContent="dataContent";
+    /**************************消费表字段************************************/
+    public static final String liveSpend="liveSpend";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"
@@ -43,6 +45,7 @@ public class DBConstant {
      */
     public static final String T_Joke_Note = "create table "+DBManager.T_Joke_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "dataRemark TEXT," +
             "dataContent TEXT," +
             "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";

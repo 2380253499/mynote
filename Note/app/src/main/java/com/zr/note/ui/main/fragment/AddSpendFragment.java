@@ -12,25 +12,27 @@ import android.view.ViewGroup;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.BasePresenter;
 import com.zr.note.base.customview.MyEditText;
 import com.zr.note.tools.EditTextUtils;
+import com.zr.note.ui.main.entity.SpendBean;
+import com.zr.note.ui.main.fragment.contract.AddSpendCon;
+import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddSpendFragment extends BaseFragment implements AddDataInter {
+public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.Presenter> implements AddDataInter,AddSpendCon.View {
 
 
-    @BindView(R.id.et_spend_declare)
-    MyEditText et_spend_declare;
+    @BindView(R.id.et_spend_remark)
+    MyEditText et_spend_remark;
     @BindView(R.id.et_spend_amount)
     MyEditText et_spend_amount;
 
     @Override
-    protected BasePresenter initPresenter() {
-        return null;
+    protected AddSpendImp initPresenter() {
+        return new AddSpendImp(getActivity());
     }
 
     public static AddSpendFragment newInstance() {
@@ -89,8 +91,13 @@ public class AddSpendFragment extends BaseFragment implements AddDataInter {
         if (TextUtils.isEmpty(spendContent)) {
             showToastS("金额不能为空");
         } else {
+            String spendRemark = et_spend_remark.getText().toString().trim();
+            SpendBean bean=new SpendBean();
+            bean.setLiveSpend(Double.parseDouble(spendContent));
+            bean.setDataRemark(spendRemark);
+            return mPresenter.addSpend(bean);
         }
-    return false;
+        return false;
     }
 
     @Override

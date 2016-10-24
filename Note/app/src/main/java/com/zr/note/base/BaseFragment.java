@@ -33,7 +33,6 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
         initView();
         initData();
     }
-
     @Override
     public void onClick(View v) {
         if(!ClickUtils.isFastClick(v)){
