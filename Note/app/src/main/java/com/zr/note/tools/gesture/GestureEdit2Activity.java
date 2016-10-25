@@ -1,5 +1,6 @@
 package com.zr.note.tools.gesture;
 
+import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.BasePresenter;
+import com.zr.note.tools.AES;
+import com.zr.note.tools.LogUtils;
+import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.GestureDrawline;
 import com.zr.note.tools.gesture.widget.LockIndicator;
+import com.zr.note.ui.main.activity.MainActivity;
 
 import butterknife.BindView;
 
@@ -43,6 +48,13 @@ public class GestureEdit2Activity extends BaseActivity     {
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		LogUtils.Log("");
+		super.onCreate(savedInstanceState);
+		LogUtils.Log("");
+	}
+
+	@Override
 	protected int setContentView() {
 		return R.layout.activity_gesture_edit;
 	}
@@ -67,7 +79,7 @@ public class GestureEdit2Activity extends BaseActivity     {
 			@Override
 			public void onGestureCodeInput(String inputCode) {
 				if (!isInputPassValidate(inputCode)) {
-					text_tip.setText(Html.fromHtml("<font color='#ff0000'>最少链接4个点,请重新输入</font>"));
+					text_tip.setText(Html.fromHtml("<font color='#990814'>最少链接4个点,请重新输入</font>"));
 					mGestureContentView.clearDrawlineState(0L);
 					return;
 				}
@@ -81,9 +93,11 @@ public class GestureEdit2Activity extends BaseActivity     {
 					if (inputCode.equals(mFirstPassword)) {
 						showToastS("设置成功");
 						mGestureContentView.clearDrawlineState(0L);
+						SPUtils.setGesturePWD(GestureEdit2Activity.this, AES.encode(inputCode));
+						STActivity(MainActivity.class);
 						finish();
 					} else {
-						text_tip.setText(Html.fromHtml("<font color='#ff0000'>与上一次绘制不一致，请重新绘制</font>"));
+						text_tip.setText(Html.fromHtml("<font color='#990814'>与上一次绘制不一致，请重新绘制</font>"));
 						// 左右移动动画
 						Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEdit2Activity.this, R.anim.shake);
 						text_tip.startAnimation(shakeAnimation);
