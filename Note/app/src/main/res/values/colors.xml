@@ -16,11 +16,15 @@
     <color name="transparent_half_darker_darker">#a0000000</color>
     <color name="transparent_half_darker_darker_dark">#b0000000</color>
     <color name="c_F8F8F8">#F8F8F8</color>
+    <color name="c_F8F8F81">#C0C5CA</color>
+    <color name="c_F8F8F83">#BEC2C7</color>
+    <color name="c_F8F8F82">#DFE4EA</color>
     <color name="c_divider">#E2E2E2</color>
     <color name="c_press">#E2E2E2</color>
     <color name="c_press_bt">#41A5D6</color>
     <color name="blue_point">#58c2f7</color>
-    <color name="red_point">#DE2F24</color>
+    <color name="red_point">#990814</color>
+    <color name="red_point1">#DE2F24</color>
     <!-- 主题颜色-->
     <color name="top_color1">#20000000</color>
     <color name="top_color2">#FFCECBCB</color>

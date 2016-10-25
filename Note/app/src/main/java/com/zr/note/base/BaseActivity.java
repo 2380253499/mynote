@@ -54,14 +54,14 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         initData();
     }
     private void setToolBar() {
-        if(navigationIcon !=-1){//设置icon
+        if(!showNavigationIcon){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
+        }else if(navigationIcon !=-1){//设置icon
             getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else if(backColor!=null){//设置箭头颜色
             getSupportActionBar().setHomeAsUpIndicator(backColor);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }else{
-            getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
         }
         if(logIcon!=-1){
             getSupportActionBar().setLogo(logIcon);
@@ -168,7 +168,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.attach((V) this);
+        if(mPresenter!=null){
+            mPresenter.attach((V) this);
+        }
     }
     @Override
     protected void onDestroy() {

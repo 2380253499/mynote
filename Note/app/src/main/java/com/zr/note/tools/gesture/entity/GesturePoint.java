@@ -128,13 +128,14 @@ public class GesturePoint {
 		pointState = state;
 		switch (state) {
 			case Constants.POINT_STATE_NORMAL:
+//				this.image.setBackgroundResource(R.drawable.gray_dian);
 				this.image.setBackgroundResource(R.drawable.startpwd_gesture_bigview_bg_gray);
 				break;
 			case Constants.POINT_STATE_SELECTED:
-				this.image.setBackgroundResource(R.drawable.gesture_show_blue);
+				this.image.setBackgroundResource(R.drawable.startpwd_gesture_bigview_bg_blue);
 				break;
 			case Constants.POINT_STATE_WRONG:
-				this.image.setBackgroundResource(R.drawable.gesture_show_red);
+				this.image.setBackgroundResource(R.drawable.startpwd_gesture_bigview_bg_red);
 				break;
 			default:
 				break;
