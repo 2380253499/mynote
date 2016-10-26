@@ -1,4 +1,4 @@
-package com.zr.note.ui.main.constant;
+package com.zr.note.ui.constant;
 
 /**
  * Created by Administrator on 2016/10/17.

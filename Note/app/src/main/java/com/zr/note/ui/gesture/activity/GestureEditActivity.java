@@ -1,4 +1,4 @@
-package com.zr.note.tools.gesture;
+package com.zr.note.ui.gesture.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -54,7 +54,7 @@ public class GestureEditActivity extends Activity implements OnClickListener {
 		mTextReset = (TextView) findViewById(R.id.text_reset);
 		mTextReset.setClickable(false);
 		mLockIndicator = (LockIndicator) findViewById(R.id.lock_indicator);
-		mTextTip = (TextView) findViewById(R.id.text_tip);
+		mTextTip = (TextView) findViewById(R.id.tv_tip);
 		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
 		// 初始化一个显示各个点的viewGroup
 		mGestureContentView = new GestureContentView(this, false,null, new GestureDrawline.GestureCallBack() {
@@ -115,9 +115,6 @@ public class GestureEditActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.text_cancel:
-				this.finish();
-				break;
 			case R.id.text_reset:
 				mIsFirstInput = true;
 				updateCodeList("");

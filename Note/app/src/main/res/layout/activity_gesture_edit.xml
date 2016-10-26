@@ -20,7 +20,7 @@
             android:layout_marginTop="10dp" />
 
         <TextView
-            android:id="@+id/text_tip"
+            android:id="@+id/tv_tip"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

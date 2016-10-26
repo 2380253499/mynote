@@ -2,6 +2,8 @@ package com.zr.note.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -11,16 +13,19 @@ import android.widget.Toast;
 
 import com.zr.note.adapter.CommonAdapter;
 
+
 /**
  * Created by Administrator on 2016/8/4.
  */
 public class IBaseActivity extends AppCompatActivity {
     protected Intent mIntent;
     protected CommonAdapter mAdapter;
+    protected Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mIntent=new Intent();
+        mHandler=new Handler(Looper.getMainLooper());
     }
     protected View inflateView(int resource,ViewGroup viewGroup){
         return LayoutInflater.from(this).inflate(resource, viewGroup);
@@ -72,5 +77,6 @@ public class IBaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mIntent=null;
+        mHandler=null;
     }
 }

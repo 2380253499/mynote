@@ -57,7 +57,6 @@
             android:layout_above="@+id/bt_addData_save"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </FrameLayout>
         <com.zr.note.base.customview.MyButton
             android:id="@+id/bt_addData_save"

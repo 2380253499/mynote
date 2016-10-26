@@ -1,6 +1,7 @@
-package com.zr.note.tools.gesture;
+package com.zr.note.ui.gesture.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,11 +29,11 @@ import butterknife.BindView;
  * 手势密码设置界面
  *
  */
-public class GestureEdit2Activity extends BaseActivity     {
+public class GestureEdit2Activity extends BaseActivity{
 
 	@BindView(R.id.lock_indicator)
 	LockIndicator mLockIndicator;
-	@BindView(R.id.text_tip)
+	@BindView(R.id.tv_tip)
 	TextView text_tip;
 	@BindView(R.id.gesture_container)
 	FrameLayout gesture_container;
@@ -41,7 +42,6 @@ public class GestureEdit2Activity extends BaseActivity     {
 	TextView text_reset;
 	private boolean mIsFirstInput = true;
 	private String mFirstPassword = null;
-
 	@Override
 	protected BasePresenter initPresenter() {
 		return null;
@@ -49,9 +49,9 @@ public class GestureEdit2Activity extends BaseActivity     {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		LogUtils.Log("");
+		LogUtils.Log("1");
 		super.onCreate(savedInstanceState);
-		LogUtils.Log("");
+		LogUtils.Log("2");
 	}
 
 	@Override
@@ -64,18 +64,24 @@ public class GestureEdit2Activity extends BaseActivity     {
 		setTitle("设置密码");
 		setHideNavigationIcon();
 	}
-
 	@Override
 	protected int setOptionsMenu() {
 		return 0;
 	}
-
 	@Override
 	protected void initView() {
 		text_reset.setClickable(false);
 		text_reset.setOnClickListener(this);
 		// 初始化一个显示各个点的viewGroup
-		mGestureContentView = new GestureContentView(this, false,null, new GestureDrawline.GestureCallBack() {
+		mGestureContentView = initeGestureView();
+		// 设置手势解锁显示到哪个布局里面
+		mGestureContentView.setParentView(gesture_container);
+		updateCodeList("");
+	}
+
+	@NonNull
+	private GestureContentView initeGestureView() {
+		return new GestureContentView(this, false,null, new GestureDrawline.GestureCallBack() {
 			@Override
 			public void onGestureCodeInput(String inputCode) {
 				if (!isInputPassValidate(inputCode)) {
@@ -114,9 +120,6 @@ public class GestureEdit2Activity extends BaseActivity     {
 			public void checkedFail() {
 			}
 		});
-		// 设置手势解锁显示到哪个布局里面
-		mGestureContentView.setParentView(gesture_container);
-		updateCodeList("");
 	}
 
 	@Override
@@ -127,9 +130,6 @@ public class GestureEdit2Activity extends BaseActivity     {
 	@Override
 	protected void viewOnClick(View v) {
 		switch (v.getId()) {
-			case R.id.text_cancel:
-				this.finish();
-				break;
 			case R.id.text_reset:
 				mIsFirstInput = true;
 				updateCodeList("");

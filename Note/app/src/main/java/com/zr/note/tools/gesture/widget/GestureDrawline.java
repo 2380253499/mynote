@@ -225,7 +225,6 @@ public class GestureDrawline extends View {
 		}
 		new Handler().postDelayed(new clearStateRunnable(), delayTime);
 	}
-
 	/**
 	 * 清除绘制状态的线程
 	 */

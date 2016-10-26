@@ -10,10 +10,10 @@ import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyButton;
 import com.zr.note.base.customview.MyRadioButton;
+import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.constant.RequestCode;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
-import com.zr.note.ui.main.constant.IntentParam;
-import com.zr.note.ui.main.constant.RequestCode;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
 import com.zr.note.ui.main.fragment.AddMemoFragment;
@@ -76,6 +76,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
         setCheckDiffTab(tabIndex);
         bt_addData_save.setOnClickListener(this);
         rg_addData.setOnCheckedChangeListener(getChangeListener());
+
     }
 
     private void setCheckDiffTab(int tabIndex) {
