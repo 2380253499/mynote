@@ -25,13 +25,12 @@ public class IBaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mIntent=new Intent();
-        mHandler=new Handler(Looper.getMainLooper());
     }
     protected View inflateView(int resource,ViewGroup viewGroup){
         return LayoutInflater.from(this).inflate(resource, viewGroup);
     }
     protected View inflateView(int resource){
-        return inflateView(resource,null);
+        return inflateView(resource, null);
     }
     protected void showToastS(String toast){
         Toast.makeText(this,toast,Toast.LENGTH_SHORT).show();
@@ -72,6 +71,12 @@ public class IBaseActivity extends AppCompatActivity {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().show(fragment).commit();
         }
+    }
+    protected Handler getHandler(){
+        if(mHandler==null){
+            mHandler=new Handler(Looper.getMainLooper());
+        }
+        return mHandler;
     }
     @Override
     protected void onDestroy() {

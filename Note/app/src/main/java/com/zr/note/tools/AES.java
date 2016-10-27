@@ -233,7 +233,7 @@ public class AES {
         System.out.println("加密后:" + pStr);
 
         String postStr = decode(pStr);
-        System.out.println("解密后："+ postStr );
+        System.out.println(decode("E00203D35AB42B85A410A675CA096115")+"解密后："+ postStr );
     }
 
     public static void main(String[] args) {

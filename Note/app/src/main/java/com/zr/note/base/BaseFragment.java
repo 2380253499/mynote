@@ -1,5 +1,6 @@
 package com.zr.note.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +52,30 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     }
 
     @Override
+    public void actFinish() {
+
+    }
+
+    @Override
     public void showMsg(String msg) {
         showToastS(msg);
     }
-
+    @Override
+    public void STActivityForResult(Class clazz,int requestCode){
+        super.STActivityForResult(clazz, requestCode);
+    }
+    @Override
+    public void STActivityForResult(Intent intent,Class clazz,int requestCode){
+        super.STActivityForResult(intent,clazz,requestCode);
+    }
+    @Override
+    public void STActivity(Class clazz){
+        super.STActivity(clazz);
+    }
+    @Override
+    public void STActivity(Intent intent,Class clazz){
+        super.STActivity(intent, clazz);
+    }
     @Override
     public void onResume() {
         super.onResume();

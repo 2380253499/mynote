@@ -28,6 +28,13 @@ public class IBaseFragment extends Fragment {
     protected void showToastL(String toast){
         Toast.makeText(getActivity(),toast,Toast.LENGTH_LONG).show();
     }
+    protected void STActivityForResult(Class clazz,int requestCode){
+        startActivityForResult(new Intent(getActivity(), clazz), requestCode);
+    }
+    protected void STActivityForResult(Intent intent,Class clazz,int requestCode){
+        intent.setClass(getActivity(), clazz);
+        startActivityForResult(intent, requestCode);
+    }
     protected void STActivity(Class clazz){
         startActivity(new Intent(getActivity(), clazz));
     }

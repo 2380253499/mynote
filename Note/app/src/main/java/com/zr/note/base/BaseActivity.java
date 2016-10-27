@@ -1,5 +1,6 @@
 package com.zr.note.base;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -161,9 +162,31 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     public void hideLoading() {
 
     }
+
+    @Override
+    public void actFinish() {
+        finish();
+    }
+
     @Override
     public void showMsg(String msg) {
         showToastS(msg);
+    }
+    @Override
+    public void STActivityForResult(Class clazz,int requestCode){
+        super.STActivityForResult(clazz, requestCode);
+    }
+    @Override
+    public void STActivityForResult(Intent intent,Class clazz,int requestCode){
+        super.STActivityForResult(intent,clazz,requestCode);
+    }
+    @Override
+    public void STActivity(Class clazz){
+        super.STActivity(clazz);
+    }
+    @Override
+    public void STActivity(Intent intent,Class clazz){
+        super.STActivity(intent,clazz);
     }
     @Override
     protected void onResume() {
