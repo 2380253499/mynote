@@ -14,7 +14,6 @@ import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.BasePresenter;
 import com.zr.note.tools.AES;
-import com.zr.note.tools.LogUtils;
 import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.GestureDrawline;
@@ -50,9 +49,7 @@ public class GestureEditActivity extends BaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		LogUtils.Log("1");
 		super.onCreate(savedInstanceState);
-		LogUtils.Log("2");
 	}
 
 	@Override
