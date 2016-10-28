@@ -21,6 +21,7 @@ public class IBaseActivity extends AppCompatActivity {
     protected Intent mIntent;
     protected CommonAdapter mAdapter;
     protected Handler mHandler;
+    protected long mExitTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

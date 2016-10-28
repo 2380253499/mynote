@@ -101,5 +101,13 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 		// 设置手势解锁显示到哪个布局里面
 		mGestureContentView.setParentView(fl_gesture_container);
 	}
-
+	@Override
+	public void onBackPressed() {
+		if ((System.currentTimeMillis() - mExitTime) > 1500) {
+			showToastS("再按一次退出程序");
+			mExitTime = System.currentTimeMillis();
+		} else {
+			super.onBackPressed();
+		}
+	}
 }

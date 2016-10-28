@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.zr.note.R;
 import com.zr.note.tools.ClickUtils;
+import com.zr.note.tools.StatusBarCompat;
 
 import butterknife.ButterKnife;
 
@@ -42,8 +43,8 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setColorPrimaryDark();//兼容4.4
         setContentView(setContentView());
+        setColorPrimaryDark();//兼容4.4
         ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setToolbarStyle();
@@ -82,7 +83,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     }
 
     private void setColorPrimaryDark() {
-//        StatusBarCompatForKitKat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
+        StatusBarCompat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
     }
     /**
      *返回键颜色
