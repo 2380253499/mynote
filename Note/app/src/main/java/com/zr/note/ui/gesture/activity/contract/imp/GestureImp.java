@@ -54,7 +54,7 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
                     @Override
                     public void checkedSuccess() {
                         gestureContentView.clearDrawlineState(0L);
-                        mView.showMsg("密码正确");
+//                        mView.showMsg("密码正确");
                         mView.STActivity(MainActivity.class);
                         mView.actFinish();
                     }

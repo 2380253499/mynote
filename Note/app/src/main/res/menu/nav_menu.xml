@@ -6,12 +6,12 @@
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>
-         <item android:id="@+id/update_pwd"
+         <item android:id="@+id/update_pwd1"
                android:title="修改手势密码"
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>
-         <item android:id="@+id/update_pwd"
+         <item android:id="@+id/update_pwd2"
                android:title="修改手势密码"
                android:icon="@drawable/left_menu_update_pwd"
              >

@@ -9,5 +9,6 @@ public class IntentParam {
     public static final String tabIndex="tabIndex";
     public class Gesture{
         public static final String isFirstIntoApp="isFirstIntoApp";
+        public static final String isUpdatePwd="isUpdatePwd";
     }
 }

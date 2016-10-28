@@ -1,6 +1,7 @@
 package com.zr.note.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ public abstract class IPresenter<V extends BaseView>{
     protected V mView;
     protected Handler mHandler;
     protected Context mContext;
+    protected Intent mIntent;
     public IPresenter(Context context) {
         mContext=context;
         this.mHandler =new Handler(Looper.getMainLooper());
@@ -22,7 +24,11 @@ public abstract class IPresenter<V extends BaseView>{
     public void detach(){
         mView=null;
         this.mHandler=null;
+        mIntent=null;
         mContext=null;
+    }
+    protected Intent getmIntent(){
+        return mIntent==null?new Intent():mIntent;
     }
     protected Resources getR(){
         return mContext.getResources();

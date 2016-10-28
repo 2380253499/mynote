@@ -19,6 +19,7 @@ import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.GestureDrawline;
 import com.zr.note.tools.gesture.widget.LockIndicator;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.MainActivity;
 
 import butterknife.BindView;
@@ -62,7 +63,10 @@ public class GestureEditActivity extends BaseActivity{
 	@Override
 	protected void setToolbarStyle() {
 		setTitle("设置密码");
-		setHideNavigationIcon();
+		boolean isUpdatePwd = getIntent().getBooleanExtra(IntentParam.Gesture.isUpdatePwd, false);
+		if(!isUpdatePwd){
+			setHideNavigationIcon();
+		}
 	}
 	@Override
 	protected int setOptionsMenu() {
