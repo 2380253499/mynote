@@ -62,17 +62,19 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
                     @Override
                     public void checkedFail() {
                         errorNum--;
-                        gestureContentView.clearDrawlineState(1000L);
+                        gestureContentView.clearDrawlineState(800L);
                         if (errorNum == 0) {
+                            tv_verify_tip.setVisibility(View.INVISIBLE);
                             fl_gesture_noClick.setVisibility(View.VISIBLE);
                             initTimer(tv_verify_tip, fl_gesture_noClick);
                             timer.schedule(tt_task, 100, 1000);
+                        }else{
+                            tv_verify_tip.setVisibility(View.VISIBLE);
+                            tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>密码错误,您还可以输入" + errorNum + "次</font>"));
+                            // 左右移动动画
+                            Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
+                            tv_verify_tip.startAnimation(shakeAnimation);
                         }
-                        tv_verify_tip.setVisibility(View.VISIBLE);
-                        tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>密码错误,您还可以输入" + errorNum + "次</font>"));
-                        // 左右移动动画
-                        Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
-                        tv_verify_tip.startAnimation(shakeAnimation);
                     }
                 });
     }
@@ -100,6 +102,7 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
                                 timer.cancel();
                                 timer = null;
                             } else {
+                                tv_verify_tip.setVisibility(View.VISIBLE);
                                 tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>" + countDown  + "秒之后才能输入密码</font>"));
                             }
                         }

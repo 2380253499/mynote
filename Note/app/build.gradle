@@ -40,6 +40,7 @@ dependencies {
     compile(name: 'library2', ext: 'aar')
     compile(name: 'ToggleButtonLib', ext: 'aar')
     compile(name: 'library', ext: 'aar')
+    //findView注解
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'joda-time:joda-time:2.9.4'
@@ -49,4 +50,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    //圆形图片控件
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

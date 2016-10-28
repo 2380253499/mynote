@@ -138,11 +138,12 @@
             />
     </FrameLayout>
     <fragment
+        class="com.zr.note.ui.main.fragment.LeftMenuFragment"
         android:id="@+id/drawerlayout_left"
-        android:name="com.zr.note.BlankFragment"
+        android:name="com.zr.note.ui.main.fragment.LeftMenuFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        tools:layout="@layout/fragment_blank"
+        tools:layout="@layout/fragment_left_menu"
         />
 </android.support.v4.widget.DrawerLayout>
