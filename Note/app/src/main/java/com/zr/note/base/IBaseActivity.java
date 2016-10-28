@@ -1,5 +1,6 @@
 package com.zr.note.base;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.zr.note.adapter.CommonAdapter;
  * Created by Administrator on 2016/8/4.
  */
 public class IBaseActivity extends AppCompatActivity {
+    protected Activity mContext;
     protected Intent mIntent;
     protected CommonAdapter mAdapter;
     protected Handler mHandler;
@@ -84,5 +86,6 @@ public class IBaseActivity extends AppCompatActivity {
         super.onDestroy();
         mIntent=null;
         mHandler=null;
+        mContext=null;
     }
 }
