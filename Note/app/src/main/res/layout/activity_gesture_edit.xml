@@ -45,6 +45,8 @@
         android:layout_height="50dp"
         android:gravity="center_horizontal"
         android:layout_below="@id/gesture_container"
-        android:text="@string/set_gesture_pattern_reason" />
+        android:text="@string/set_gesture_pattern_reason"
+        android:textColor="#E7E7E6"
+        />
 
 </LinearLayout>
