@@ -26,8 +26,8 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
     private int errorNum;
     //倒计时
     private int countDown;
-    private final int countErrorNum = 2;
-    private final int countDownLength = 3;
+    private final int countErrorNum = 4;
+    private final int countDownLength = 59;
     private Timer timer;
     private TimerTask tt_task;
     private GestureContentView gestureContentView;
@@ -87,26 +87,28 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
             tt_task = new TimerTask() {
                 @Override
                 public void run() {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            countDown--;
-                            if (countDown == 0) {
-                                tv_verify_tip.setVisibility(View.INVISIBLE);
-                                countDown = countDownLength;
-                                errorNum = countErrorNum;
-                                fl_gesture_noClick.setVisibility(View.GONE);
+                    if(mHandler!=null){
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                countDown--;
+                                if (countDown == 0) {
+                                    tv_verify_tip.setVisibility(View.INVISIBLE);
+                                    countDown = countDownLength;
+                                    errorNum = countErrorNum;
+                                    fl_gesture_noClick.setVisibility(View.GONE);
 
-                                tt_task.cancel();
-                                tt_task = null;
-                                timer.cancel();
-                                timer = null;
-                            } else {
-                                tv_verify_tip.setVisibility(View.VISIBLE);
-                                tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>" + countDown  + "秒之后才能输入密码</font>"));
+                                    tt_task.cancel();
+                                    tt_task = null;
+                                    timer.cancel();
+                                    timer = null;
+                                } else {
+                                    tv_verify_tip.setVisibility(View.VISIBLE);
+                                    tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>" + countDown  + "秒之后才能输入密码</font>"));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             };
         }

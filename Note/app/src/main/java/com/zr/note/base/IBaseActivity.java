@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zr.note.adapter.CommonAdapter;
+import com.zr.note.tools.MyDialog;
+import com.zr.note.view.MyPopupwindow;
 
 
 /**
@@ -24,6 +26,8 @@ public class IBaseActivity extends AppCompatActivity {
     protected CommonAdapter mAdapter;
     protected Handler mHandler;
     protected long mExitTime;
+    protected MyPopupwindow mPopupwindow;
+    protected MyDialog.Builder mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

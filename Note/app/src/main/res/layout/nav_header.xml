@@ -18,6 +18,7 @@
         android:padding="20dp"
         >
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/aa"
@@ -33,6 +34,7 @@
             android:layout_marginTop="10dp"
             />
         <TextView
+            android:id="@+id/tv_leftmenu_qq"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="QQ群:271910854   (复制群号)"

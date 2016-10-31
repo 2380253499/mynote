@@ -6,10 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyRadioButton;
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     RadioGroup rg_main;
     @BindView(R.id.view_backgroud)
     View view_backgroud;
+    @BindView(R.id.iv_banner)
+    ImageView iv_banner;
     private AccountFragment accountFragment;
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
@@ -59,6 +63,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initView() {
+        Glide.with(this).load(R.drawable.zr5).crossFade(800).into(iv_banner);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
@@ -189,12 +194,15 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 showSeting();
                 break;
             case R.id.tv_orderBy_create:
-                selectFragmentData(tabIndex,true);
+//                selectFragmentData(tabIndex,true);
+                showToastS("正在开发中……");
                 break;
             case R.id.tv_orderBy_update:
-                selectFragmentData(tabIndex,false);
+//                selectFragmentData(tabIndex,false);
+                showToastS("正在开发中……");
                 break;
             case R.id.tv_batchDelete:
+                showToastS("正在开发中……");
                 break;
         }
     }

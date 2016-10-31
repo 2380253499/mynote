@@ -1,13 +1,10 @@
 package com.zr.note.ui.main.fragment.contract.imp;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
 import com.zr.note.tools.ClickUtils;
-import com.zr.note.ui.constant.IntentParam;
-import com.zr.note.ui.gesture.activity.GestureEditActivity;
 import com.zr.note.ui.main.fragment.contract.LeftMenuCon;
 
 /**
@@ -23,9 +20,10 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
         if (!ClickUtils.isFastClickById(itemId)){
             switch (itemId){
                 case R.id.update_pwd:
-                    Intent intent = getmIntent();
-                    intent.putExtra(IntentParam.Gesture.isUpdatePwd,true);
-                    mView.STActivity(intent,GestureEditActivity.class);
+//                    Intent intent = getmIntent();
+//                    intent.putExtra(IntentParam.Gesture.isUpdatePwd,true);
+//                    mView.STActivity(intent,GestureEditActivity.class);
+                    mView.showMsg("正在开发中……");
                     break;
             }
         }

@@ -87,7 +87,11 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 
 	@Override
 	protected void viewOnClick(View v) {
-
+		switch (v.getId()){
+			case R.id.tv_forget_gesture:
+				showToastL("请加QQ群271910854联系群主");
+			break;
+		}
 	}
 	@Override
 	protected void menuOnClick(int itemId) {

@@ -7,12 +7,12 @@
              >
          </item>
          <item android:id="@+id/update_pwd1"
-               android:title="修改手势密码"
+               android:title="如果您有什么好的建议"
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>
          <item android:id="@+id/update_pwd2"
-               android:title="修改手势密码"
+               android:title="可以以邮件的方式告诉我"
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>

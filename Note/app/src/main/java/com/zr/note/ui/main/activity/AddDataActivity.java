@@ -1,5 +1,6 @@
 package com.zr.note.ui.main.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyButton;
 import com.zr.note.base.customview.MyRadioButton;
+import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
@@ -196,7 +198,22 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                     addDataInter[addDataInterIndex].clearData();
                 break;
             case R.id.bt_addData_save:
-                addDataInter[addDataInterIndex].saveData();
+                mDialog=new MyDialog.Builder(this);
+                mDialog.setMessage("确定清空页面已输入的数据吗?");
+                mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        addDataInter[addDataInterIndex].saveData();
+                    }
+                });
+                mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mDialog.create().show();
                 break;
         }
     }
