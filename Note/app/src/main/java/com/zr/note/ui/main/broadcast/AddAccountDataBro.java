@@ -9,10 +9,10 @@ import com.zr.note.ui.main.inter.AddDataInter;
 /**
  * Created by Administrator on 2016/10/31.
  */
-public class AddDataBro extends BroadcastReceiver {
+public class AddAccountDataBro extends BroadcastReceiver {
     private AddDataInter.AddDataFinish addDataInter;
 
-    public AddDataBro(AddDataInter.AddDataFinish addDataInter) {
+    public AddAccountDataBro(AddDataInter.AddDataFinish addDataInter) {
         this.addDataInter= addDataInter;
     }
 
@@ -22,5 +22,6 @@ public class AddDataBro extends BroadcastReceiver {
         if(isAddData){
             addDataInter.addDataFinish();
         }
+
     }
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.AddJokeDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.fragment.contract.JokeCon;
@@ -28,7 +28,7 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
     @BindView(R.id.lv_joke_list)
     ListView lv_joke_list;
     private JokeBean jokeBean;
-    private AddDataBro addDataBro;
+    private AddJokeDataBro addDataBro;
     public static JokeFragment newInstance() {
         Bundle args = new Bundle();
         JokeFragment fragment = new JokeFragment();
@@ -38,13 +38,13 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+        addDataBro = new AddJokeDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
                 selectData();
             }
         });
-        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_joke));
     }
     @Override
     protected JokeImp initPresenter() {

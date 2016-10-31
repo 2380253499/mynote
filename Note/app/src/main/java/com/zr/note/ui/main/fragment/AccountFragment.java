@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.AddAccountDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.contract.AccountCon;
@@ -30,7 +30,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
     private AccountBean accountBean;
-    private AddDataBro addDataBro;
+    private AddAccountDataBro addDataBro;
 
     public static AccountFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,13 +42,13 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+        addDataBro = new AddAccountDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
                 selectData(true);
             }
         });
-        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_account));
     }
 
     @Override

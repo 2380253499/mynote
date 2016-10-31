@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.AddMemoDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.fragment.contract.MemoCon;
@@ -28,7 +28,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     @BindView(R.id.lv_memo_list)
     ListView lv_memo_list;
     private MemoBean memoBean;
-    private AddDataBro addDataBro;
+    private AddMemoDataBro addDataBro;
     public static MemoFragment newInstance() {
         Bundle args = new Bundle();
         MemoFragment fragment = new MemoFragment();
@@ -38,13 +38,13 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+        addDataBro = new AddMemoDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
                 selectData(true);
             }
         });
-        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_memo));
     }
     @Override
     protected MemoImp initPresenter() {

@@ -87,7 +87,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             bean.setDataContent(jokeContent);
             boolean b = mPresenter.addJoke(bean);
             if(b){
-                mIntent.setAction(BroFilter.isAddData);
+                mIntent.setAction(BroFilter.addData_joke);
+                mIntent.putExtra(BroFilter.isAddData, true);
                 mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
                 getActivity().sendBroadcast(mIntent);
             }

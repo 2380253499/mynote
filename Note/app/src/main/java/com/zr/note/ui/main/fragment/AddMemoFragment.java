@@ -68,7 +68,8 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
             reminderBean.setDataContent(memoContent);
             boolean b = mPresenter.addMemo(reminderBean);
             if(b){
-                mIntent.setAction(BroFilter.isAddData);
+                mIntent.setAction(BroFilter.addData_memo);
+                mIntent.putExtra(BroFilter.isAddData,true);
                 mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_1);
                 getActivity().sendBroadcast(mIntent);
             }

@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:maxLength="30"
+            android:maxLength="9"
             android:singleLine="true"
             android:ellipsize="end"
             app:my_et_border_color="@color/top_color2"

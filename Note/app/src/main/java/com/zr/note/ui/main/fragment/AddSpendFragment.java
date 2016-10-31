@@ -2,7 +2,6 @@ package com.zr.note.ui.main.fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
-import com.zr.note.tools.EditTextUtils;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.AddSpendCon;
@@ -51,7 +49,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
 
     @Override
     protected void initView() {
-        et_spend_amount.setFilters(new InputFilter[]{EditTextUtils.getInputFilter()});
+//        et_spend_amount.setFilters(new InputFilter[]{EditTextUtils.getInputFilter()});
+//        et_spend_amount.setMaxLines(9);
         et_spend_amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,7 +97,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
             bean.setDataRemark(spendRemark);
             boolean b = mPresenter.addSpend(bean);
             if(b){
-                mIntent.setAction(BroFilter.isAddData);
+                mIntent.setAction(BroFilter.addData_spend);
+                mIntent.putExtra(BroFilter.isAddData, true);
                 mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
                 getActivity().sendBroadcast(mIntent);
             }

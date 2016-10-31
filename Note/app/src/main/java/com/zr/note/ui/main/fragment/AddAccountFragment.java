@@ -104,7 +104,8 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
             bean.setDataRemark(note);
             boolean b = mPresenter.addAccount(bean);
             if(b){
-                mIntent.setAction(BroFilter.isAddData);
+                mIntent.setAction(BroFilter.addData_account);
+                mIntent.putExtra(BroFilter.isAddData, true);
                 mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_0);
                 getActivity().sendBroadcast(mIntent);
             }

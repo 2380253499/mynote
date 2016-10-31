@@ -1,6 +1,5 @@
 package com.zr.note.ui.main.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +15,10 @@ import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyRadioButton;
 import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.main.activity.contract.MainContract;
-import com.zr.note.ui.main.activity.contract.imp.MainImp;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.constant.RequestCode;
+import com.zr.note.ui.main.activity.contract.MainContract;
+import com.zr.note.ui.main.activity.contract.imp.MainImp;
 import com.zr.note.ui.main.fragment.AccountFragment;
 import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
@@ -165,7 +164,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         }
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
@@ -182,7 +181,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 break;
         }
     }
-
+*/
     @Override
     protected void menuOnClick(int itemId) {
         switch (itemId) {

@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.AddSpendDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
@@ -24,7 +24,7 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     @BindView(R.id.lv_spend_list)
     ListView lv_spend_list;
     private SpendBean spendBean;
-    private AddDataBro addDataBro;
+    private AddSpendDataBro addDataBro;
     public static SpendFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -36,13 +36,13 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+        addDataBro = new AddSpendDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
                 selectData();
             }
         });
-        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_spend));
     }
     @Override
     protected SpendImp initPresenter() {
