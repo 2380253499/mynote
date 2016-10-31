@@ -57,6 +57,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
     @Override
     public void deleteMemoById(MyDialog.Builder mDialog,final int id) {
         mDialog=new MyDialog.Builder(mContext);
+        mDialog.setMessage(getStr(R.string.delete_data));
         mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

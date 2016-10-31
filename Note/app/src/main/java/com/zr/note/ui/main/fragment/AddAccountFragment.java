@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.contract.AddAccountCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddAccountImp;
@@ -101,9 +102,23 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
             bean.setDataAccount(user);
             bean.setDataPassword(pwd);
             bean.setDataRemark(note);
-            return mPresenter.addAccount(bean);
+            boolean b = mPresenter.addAccount(bean);
+            if(b){
+                mIntent.setAction(BroFilter.isAddData);
+                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_0);
+                getActivity().sendBroadcast(mIntent);
+            }
+            return b;
         }
         return false;
+    }
+
+    @Override
+    public void clearData() {
+        et_addData_source.setText(null);
+        et_addData_user.setText(null);
+        et_addData_pwd.setText(null);
+        et_addData_note.setText(null);
     }
 
     @Override

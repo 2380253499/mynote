@@ -56,7 +56,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     @Override
     public void deleteAccountById(MyDialog.Builder mDialog,final int id) {
         mDialog=new MyDialog.Builder(mContext);
-        mDialog.setMessage("确认删除选中的数据吗?");
+        mDialog.setMessage(mContext.getString(R.string.delete_data));
         mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -70,7 +70,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     @Override
     public void deleteAccountById(MyDialog.Builder mDialog,final String[] id) {
         mDialog=new MyDialog.Builder(mContext);
-        mDialog.setMessage("确认删除选中的数据吗?");
+        mDialog.setMessage(mContext.getString(R.string.delete_data));
         mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

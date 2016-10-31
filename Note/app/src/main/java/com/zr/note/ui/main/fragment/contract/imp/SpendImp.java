@@ -51,6 +51,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     @Override
     public void deleteSpendById(MyDialog.Builder mDialog,final int position) {
         mDialog=new MyDialog.Builder(mContext);
+        mDialog.setMessage(getStr(R.string.delete_data));
         mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

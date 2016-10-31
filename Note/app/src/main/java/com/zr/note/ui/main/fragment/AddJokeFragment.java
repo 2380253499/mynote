@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.fragment.contract.AddJokeCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddJokeImp;
@@ -84,9 +85,21 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             JokeBean bean=new JokeBean();
             bean.setDataRemark(jokeRemark);
             bean.setDataContent(jokeContent);
-            return mPresenter.addJoke(bean);
+            boolean b = mPresenter.addJoke(bean);
+            if(b){
+                mIntent.setAction(BroFilter.isAddData);
+                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
+                getActivity().sendBroadcast(mIntent);
+            }
+            return b;
         }
         return false;
+    }
+
+    @Override
+    public void clearData() {
+        et_joke_remark.setText(null);
+        et_joke_content.setText(null);
     }
 
     @Override

@@ -56,6 +56,7 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
     @Override
     public void deleteJokeById(MyDialog.Builder mDialog,final int id) {
         mDialog=new MyDialog.Builder(mContext);
+        mDialog.setMessage(getStr(R.string.delete_data));
         mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

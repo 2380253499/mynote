@@ -14,6 +14,7 @@ import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
 import com.zr.note.tools.EditTextUtils;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.AddSpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
@@ -95,9 +96,21 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
             SpendBean bean=new SpendBean();
             bean.setLiveSpend(Double.parseDouble(spendContent));
             bean.setDataRemark(spendRemark);
-            return mPresenter.addSpend(bean);
+            boolean b = mPresenter.addSpend(bean);
+            if(b){
+                mIntent.setAction(BroFilter.isAddData);
+                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
+                getActivity().sendBroadcast(mIntent);
+            }
+            return b;
         }
         return false;
+    }
+
+    @Override
+    public void clearData() {
+        et_spend_remark.setText(null);
+        et_spend_amount.setText(null);
     }
 
     @Override

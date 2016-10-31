@@ -1,5 +1,6 @@
 package com.zr.note.ui.main.fragment;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ListView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
+import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.SpendImp;
@@ -17,10 +20,11 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements AddDataInter,SpendCon.View {
+public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements SpendCon.View {
     @BindView(R.id.lv_spend_list)
     ListView lv_spend_list;
     private SpendBean spendBean;
+    private AddDataBro addDataBro;
     public static SpendFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -28,6 +32,17 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
         SpendFragment fragment = new SpendFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+            @Override
+            public void addDataFinish() {
+                selectData();
+            }
+        });
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
     }
     @Override
     protected SpendImp initPresenter() {
@@ -61,11 +76,6 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     }
 
     @Override
-    public boolean saveData() {
-        return false;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate AddMemoFragment fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -76,5 +86,11 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     @Override
     public void selectData() {
         mPresenter.selectData(lv_spend_list,true);
+    }
+
+    @Override
+    public void onDestroy() {
+        getActivity().unregisterReceiver(addDataBro);
+        super.onDestroy();
     }
 }

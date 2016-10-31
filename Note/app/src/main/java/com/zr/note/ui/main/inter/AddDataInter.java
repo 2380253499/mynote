@@ -5,4 +5,8 @@ package com.zr.note.ui.main.inter;
  */
 public interface AddDataInter {
     boolean saveData();
+    void clearData();
+    interface AddDataFinish{
+        void addDataFinish();
+    }
 }

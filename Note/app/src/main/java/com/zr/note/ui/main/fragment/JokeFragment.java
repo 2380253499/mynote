@@ -1,5 +1,6 @@
 package com.zr.note.ui.main.fragment;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.fragment.contract.JokeCon;
 import com.zr.note.ui.main.fragment.contract.imp.JokeImp;
@@ -21,15 +24,27 @@ import com.zr.note.view.MyPopupwindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements AddDataInter,JokeCon.View {
+public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements JokeCon.View {
     @BindView(R.id.lv_joke_list)
     ListView lv_joke_list;
     private JokeBean jokeBean;
+    private AddDataBro addDataBro;
     public static JokeFragment newInstance() {
         Bundle args = new Bundle();
         JokeFragment fragment = new JokeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+            @Override
+            public void addDataFinish() {
+                selectData();
+            }
+        });
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
     }
     @Override
     protected JokeImp initPresenter() {
@@ -81,10 +96,6 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
             break;
         }
     }
-    @Override
-    public boolean saveData() {
-        return false;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,5 +108,11 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
     @Override
     public void selectData() {
         mPresenter.selectData(lv_joke_list,true);
+    }
+
+    @Override
+    public void onDestroy() {
+        getActivity().unregisterReceiver(addDataBro);
+        super.onDestroy();
     }
 }

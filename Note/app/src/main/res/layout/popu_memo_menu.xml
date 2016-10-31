@@ -44,7 +44,7 @@
 <ImageButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/triangleb_bottom_alpha"
+    android:src="@drawable/triangle_black_bottom"
     android:background="@null"
     />
 </LinearLayout>

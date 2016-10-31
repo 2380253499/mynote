@@ -59,21 +59,46 @@
         >
         <FrameLayout
             android:id="@+id/fl_fragment"
-            android:layout_above="@+id/bt_addData_save"
+            android:layout_above="@+id/ll_addData_save"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </FrameLayout>
-        <com.zr.note.base.customview.MyButton
-            android:id="@+id/bt_addData_save"
+        <LinearLayout
+            android:id="@+id/ll_addData_save"
             android:layout_width="match_parent"
-            android:gravity="center"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
-            app:my_bt_normal="@drawable/save_normal"
-            app:my_bt_press="@drawable/save_press"
-            android:layout_height="wrap_content"
-            android:text="保存"
-            android:textColor="@color/white"
-            />
+            android:orientation="horizontal"
+            >
+            <com.zr.note.base.customview.MyButton
+                android:id="@+id/bt_addData_clear"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:my_bt_normal="@drawable/save_normal"
+                app:my_bt_press="@drawable/save_press"
+                android:layout_height="match_parent"
+                android:text="清空"
+                android:textColor="@color/white"
+                />
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                />
+            <com.zr.note.base.customview.MyButton
+                android:id="@+id/bt_addData_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:my_bt_normal="@drawable/save_normal"
+                app:my_bt_press="@drawable/save_press"
+                android:layout_height="match_parent"
+                android:text="保存"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
     </RelativeLayout>
 
     </LinearLayout>

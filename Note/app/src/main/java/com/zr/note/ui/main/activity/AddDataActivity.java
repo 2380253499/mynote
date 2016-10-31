@@ -37,6 +37,8 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     MyRadioButton mrb_button3;
     @BindView(R.id.fl_fragment)
     FrameLayout fl_fragment;
+    @BindView(R.id.bt_addData_clear)
+    MyButton bt_addData_clear;
     @BindView(R.id.bt_addData_save)
     MyButton bt_addData_save;
 
@@ -48,6 +50,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private AddSpendFragment addSpendFragment;
     private boolean saveDataIsSuccess;
     private boolean addDataFlag;
+
 
     @Override
     protected AddDataImp initPresenter() {
@@ -74,6 +77,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
         int tabIndex = getIntent().getIntExtra(IntentParam.tabIndex, 0);
         addDataInterIndex=tabIndex;
         setCheckDiffTab(tabIndex);
+        bt_addData_clear.setOnClickListener(this);
         bt_addData_save.setOnClickListener(this);
         rg_addData.setOnCheckedChangeListener(getChangeListener());
 
@@ -191,6 +195,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()){
+            case R.id.bt_addData_clear:
+                    addDataInter[addDataInterIndex].clearData();
+                break;
             case R.id.bt_addData_save:
                 addDataFlag = addDataInter[addDataInterIndex].saveData();
                 break;

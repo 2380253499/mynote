@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.fragment.contract.AddMemoCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddMemoImp;
@@ -37,7 +38,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_add_daily_reminder;
+        return R.layout.fragment_add_memo;
     }
 
     @Override
@@ -65,10 +66,22 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
             MemoBean reminderBean=new MemoBean();
             reminderBean.setDataRemark(reminder);
             reminderBean.setDataContent(memoContent);
-            return mPresenter.addMemo(reminderBean);
+            boolean b = mPresenter.addMemo(reminderBean);
+            if(b){
+                mIntent.setAction(BroFilter.isAddData);
+                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_1);
+                getActivity().sendBroadcast(mIntent);
+            }
+            return b;
         }
         return false;
 
+    }
+
+    @Override
+    public void clearData() {
+        et_memo_reminder.setText(null);
+        et_memo_content.setText(null);
     }
 
     @Override

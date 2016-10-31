@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
-import com.zr.note.base.BasePresenter;
 import com.zr.note.tools.AES;
 import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.GestureDrawline;
 import com.zr.note.tools.gesture.widget.LockIndicator;
 import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.gesture.activity.contract.GestureCon;
+import com.zr.note.ui.gesture.activity.contract.imp.GestureImp;
 import com.zr.note.ui.main.activity.MainActivity;
 
 import butterknife.BindView;
@@ -29,7 +30,7 @@ import butterknife.BindView;
  * 手势密码设置界面
  *
  */
-public class GestureEditActivity extends BaseActivity{
+public class GestureEditActivity extends BaseActivity implements GestureCon.View{
 
 	@BindView(R.id.lock_indicator)
 	LockIndicator mLockIndicator;
@@ -43,8 +44,8 @@ public class GestureEditActivity extends BaseActivity{
 	private boolean mIsFirstInput = true;
 	private String mFirstPassword = null;
 	@Override
-	protected BasePresenter initPresenter() {
-		return null;
+	protected GestureImp initPresenter() {
+		return new GestureImp(this);
 	}
 
 	@Override

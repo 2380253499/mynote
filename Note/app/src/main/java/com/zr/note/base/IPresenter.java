@@ -33,4 +33,7 @@ public abstract class IPresenter<V extends BaseView>{
     protected Resources getR(){
         return mContext.getResources();
     }
+    protected String getStr(int resId){
+        return mContext==null?"":mContext.getResources().getString(resId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.zr.note.ui.main.fragment;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.main.broadcast.AddDataBro;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.fragment.contract.MemoCon;
 import com.zr.note.ui.main.fragment.contract.imp.MemoImp;
+import com.zr.note.ui.main.inter.AddDataInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
@@ -24,11 +28,23 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     @BindView(R.id.lv_memo_list)
     ListView lv_memo_list;
     private MemoBean memoBean;
+    private AddDataBro addDataBro;
     public static MemoFragment newInstance() {
         Bundle args = new Bundle();
         MemoFragment fragment = new MemoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addDataBro = new AddDataBro(new AddDataInter.AddDataFinish() {
+            @Override
+            public void addDataFinish() {
+                selectData(true);
+            }
+        });
+        getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.isAddData));
     }
     @Override
     protected MemoImp initPresenter() {
@@ -90,6 +106,11 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
 
     @Override
     public void selectData(boolean isOrderByCreateTime) {
-        mPresenter.selectData(lv_memo_list,true);
+        mPresenter.selectData(lv_memo_list, true);
+    }
+    @Override
+    public void onDestroy() {
+        getActivity().unregisterReceiver(addDataBro);
+        super.onDestroy();
     }
 }
