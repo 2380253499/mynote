@@ -195,16 +195,13 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void viewOnClick(View v) {
         switch (v.getId()){
             case R.id.bt_addData_clear:
-                    addDataInter[addDataInterIndex].clearData();
-                break;
-            case R.id.bt_addData_save:
                 mDialog=new MyDialog.Builder(this);
                 mDialog.setMessage("确定清空页面已输入的数据吗?");
                 mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        addDataInter[addDataInterIndex].saveData();
+                        addDataInter[addDataInterIndex].clearData();
                     }
                 });
                 mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
@@ -214,6 +211,10 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                     }
                 });
                 mDialog.create().show();
+
+                break;
+            case R.id.bt_addData_save:
+                addDataInter[addDataInterIndex].saveData();
                 break;
         }
     }
