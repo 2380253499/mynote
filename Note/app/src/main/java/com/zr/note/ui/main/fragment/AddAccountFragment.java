@@ -39,6 +39,8 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
      * 判断是否是编辑还是添加
      */
     private boolean isEdit;
+    private AccountBean accountBean;
+
     @Override
     protected AddAccountImp initPresenter() {
         return new AddAccountImp(getActivity());
@@ -69,8 +71,8 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
 
     @Override
     protected void initData() {
-        AccountBean accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
-        if(accountBean!=null){
+        accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
+        if(accountBean !=null){
             isEdit=true;
             et_addData_source.setText(accountBean.getDataSource());
             et_addData_user.setText(accountBean.getDataAccount());
@@ -118,6 +120,7 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
             bean.setDataAccount(user);
             bean.setDataPassword(pwd);
             bean.setDataRemark(note);
+            bean.set_id(isEdit ? accountBean.get_id() : -1);
             boolean b = mPresenter.addAccount(bean);
             if(b){
                 mIntent.setAction(BroFilter.addData_account);

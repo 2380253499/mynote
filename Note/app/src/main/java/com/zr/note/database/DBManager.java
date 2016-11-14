@@ -88,17 +88,6 @@ public class DBManager extends SQLiteOpenHelper{
         return exits;
     }
     /**************************************操作数据方法************************************************/
-    public boolean updateAccount(AccountBean bean){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues values=new ContentValues();
-        values.put(DBConstant.updateTime,"datetime('now','localtime')");
-        values.put(DBConstant.dataAccount,bean.getDataAccount());
-        values.put(DBConstant.dataPassword,bean.getDataPassword());
-        values.put(DBConstant.dataRemark,bean.getDataRemark());
-        values.put(DBConstant.dataSource, bean.getDataSource());
-        int update = db.update(T_Account_Note, values, DBConstant._id, new String[]{bean.get_id() + ""});
-        return update>0?true:false;
-    }
     public boolean deleteAccount(int id){
         SQLiteDatabase db=getWritableDatabase();
         int delete = db.delete(T_Account_Note, DBConstant._id + "=?", new String[]{id + ""});
@@ -162,6 +151,27 @@ public class DBManager extends SQLiteOpenHelper{
         }
         db.close();
         return list;
+    }
+    public long addOrEditAccount(AccountBean bean){
+        if(bean.get_id()==-1){
+            return addAccount(bean);
+        }else{
+            return updateAccount(bean);
+        }
+
+    }
+    public long updateAccount(AccountBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataSource, AES.encode(bean.getDataSource()));
+        values.put(DBConstant.dataAccount,AES.encode(bean.getDataAccount()));
+        values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        long insert = db.update(T_Account_Note, values,DBConstant._id+"=?",new String[]{bean.get_id()+""});
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
     }
     public long addAccount(AccountBean bean){
         SQLiteDatabase db=getWritableDatabase();
