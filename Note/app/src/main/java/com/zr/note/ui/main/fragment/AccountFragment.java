@@ -78,7 +78,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 accountBean = mPresenter.copyAccount(position);
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
-                return false;
+                return true;
             }
         });
         lv_account_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

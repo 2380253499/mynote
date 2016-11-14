@@ -16,6 +16,9 @@ import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
 import com.zr.note.ui.main.entity.AccountBean;
+import com.zr.note.ui.main.entity.JokeBean;
+import com.zr.note.ui.main.entity.MemoBean;
+import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
 import com.zr.note.ui.main.fragment.AddMemoFragment;
@@ -52,6 +55,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private AddSpendFragment addSpendFragment;
 
     private AccountBean accountBean;
+    private MemoBean  memoBean;
+    private JokeBean  jokeBean;
+    private SpendBean spendBean;
     @Override
     protected AddDataImp initPresenter() {
         return new AddDataImp(this);
@@ -76,6 +82,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     protected void initView() {
         int tabIndex = getIntent().getIntExtra(IntentParam.tabIndex, 0);
         accountBean= (AccountBean) getIntent().getSerializableExtra(IntentParam.editAccount);
+        memoBean= (MemoBean) getIntent().getSerializableExtra(IntentParam.editMemoBean);
+        jokeBean= (JokeBean) getIntent().getSerializableExtra(IntentParam.editJokeBean);
+        spendBean= (SpendBean) getIntent().getSerializableExtra(IntentParam.editSpendBean);
         addDataInterIndex=tabIndex;
         setCheckDiffTab(tabIndex);
         bt_addData_clear.setOnClickListener(this);
@@ -94,19 +103,19 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
             break;
             case 1:
                 mrb_button1.setChecked(true);
-                addMemoFragment = AddMemoFragment.newInstance();
+                addMemoFragment = AddMemoFragment.newInstance(memoBean);
                 addDataInter[1] = addMemoFragment;
                 addFragment(R.id.fl_fragment, addMemoFragment);
             break;
             case 2:
                 mrb_button2.setChecked(true);
-                addJokeFragment =   AddJokeFragment.newInstance();
+                addJokeFragment =   AddJokeFragment.newInstance(jokeBean);
                 addDataInter[2] = addJokeFragment;
                 addFragment(R.id.fl_fragment, addJokeFragment);
             break;
             case 3:
                 mrb_button3.setChecked(true);
-                addSpendFragment =   AddSpendFragment.newInstance();
+                addSpendFragment =   AddSpendFragment.newInstance(spendBean);
                 addDataInter[3] = addSpendFragment;
                 addFragment(R.id.fl_fragment, addSpendFragment);
             break;

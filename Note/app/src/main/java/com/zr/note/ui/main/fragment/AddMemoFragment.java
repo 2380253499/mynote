@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.fragment.contract.AddMemoCon;
@@ -24,12 +25,18 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     MyEditText et_memo_reminder;
     @BindView(R.id.et_memo_content)
     MyEditText et_memo_content;
-
-    public static AddMemoFragment newInstance() {
+    private boolean isEdit;
+    public static AddMemoFragment newInstance(MemoBean bean) {
         Bundle args = new Bundle();
+        if (args!=null){
+            args.putSerializable(IntentParam.editMemoBean,bean);
+        }
         AddMemoFragment fragment = new AddMemoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    public static AddMemoFragment newInstance() {
+        return newInstance(null);
     }
     @Override
     protected AddMemoImp initPresenter() {
@@ -48,7 +55,12 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected void initData() {
-
+        MemoBean memoBean = (MemoBean) getArguments().getSerializable(IntentParam.editMemoBean);
+        if(memoBean!=null){
+            isEdit=true;
+            et_memo_reminder.setText(memoBean.getDataRemark());
+            et_memo_content.setText(memoBean.getDataContent());
+        }
     }
 
     @Override

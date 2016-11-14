@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddMemoDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
@@ -69,7 +71,16 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 memoBean = mPresenter.copyMemo(position);
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 55), -PhoneUtils.dip2px(getActivity(), 80));
-                return false;
+                return true;
+            }
+        });
+        lv_memo_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MemoBean memoBean = (MemoBean) parent.getItemAtPosition(position);
+                mIntent.putExtra(IntentParam.tabIndex, 1);
+                mIntent.putExtra(IntentParam.editMemoBean, memoBean);
+                STActivity(mIntent, AddDataActivity.class);
             }
         });
     }

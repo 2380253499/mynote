@@ -129,7 +129,7 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
         if(!TextUtils.isEmpty(text)){
-            setSelection(text.length());
+//            setSelection(text.length());
         }
     }
     @Override

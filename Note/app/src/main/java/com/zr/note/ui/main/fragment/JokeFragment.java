@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddJokeDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
@@ -69,7 +71,16 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 jokeBean = mPresenter.copyJoke(position);
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 55), -PhoneUtils.dip2px(getActivity(), 80));
-                return false;
+                return true;
+            }
+        });
+        lv_joke_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                JokeBean jokeBean = (JokeBean) parent.getItemAtPosition(position);
+                mIntent.putExtra(IntentParam.tabIndex, 2);
+                mIntent.putExtra(IntentParam.editJokeBean, jokeBean);
+                STActivity(mIntent, AddDataActivity.class);
             }
         });
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.fragment.contract.AddJokeCon;
@@ -29,13 +30,19 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     TextView tv_joke_clear;
     @BindView(R.id.tv_joke_copy)
     TextView tv_joke_copy;
-    public static AddJokeFragment newInstance() {
-        
+
+    private boolean isEdit;
+    public static AddJokeFragment newInstance(JokeBean bean) {
         Bundle args = new Bundle();
-        
+        if (args!=null){
+            args.putSerializable(IntentParam.editJokeBean,bean);
+        }
         AddJokeFragment fragment = new AddJokeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    public static AddJokeFragment newInstance() {
+        return newInstance(null);
     }
     @Override
     protected AddJokeImp initPresenter() {
@@ -55,7 +62,12 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
 
     @Override
     protected void initData() {
-
+        JokeBean jokeBean = (JokeBean) getArguments().getSerializable(IntentParam.editJokeBean);
+        if(jokeBean!=null){
+            isEdit=true;
+            et_joke_remark.setText(jokeBean.getDataRemark());
+            et_joke_content.setText(jokeBean.getDataContent());
+        }
     }
 
     @Override

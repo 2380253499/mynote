@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
+import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddSpendDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
@@ -60,7 +62,16 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mPresenter.deleteSpendById(mDialog,position);
-                return false;
+                return true;
+            }
+        });
+        lv_spend_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SpendBean spendBean = (SpendBean) parent.getItemAtPosition(position);
+                mIntent.putExtra(IntentParam.tabIndex, 3);
+                mIntent.putExtra(IntentParam.editSpendBean, spendBean);
+                STActivity(mIntent, AddDataActivity.class);
             }
         });
     }

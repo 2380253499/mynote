@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".ui.main.activity.AddDataActivity"
                   android:theme="@style/AppTheme.NoActionBar"
+                  android:windowSoftInputMode="adjustResize|stateHidden"
             >
         </activity>
     </application>

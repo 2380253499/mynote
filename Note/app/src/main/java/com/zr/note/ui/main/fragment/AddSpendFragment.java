@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.AddSpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,19 +31,24 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
     MyEditText et_spend_remark;
     @BindView(R.id.et_spend_amount)
     MyEditText et_spend_amount;
+    private boolean isEdit;
 
     @Override
     protected AddSpendImp initPresenter() {
         return new AddSpendImp(getActivity());
     }
 
-    public static AddSpendFragment newInstance() {
-
+    public static AddSpendFragment newInstance(SpendBean bean) {
         Bundle args = new Bundle();
-        
+        if (args!=null){
+            args.putSerializable(IntentParam.editSpendBean,bean);
+        }
         AddSpendFragment fragment = new AddSpendFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    public static AddSpendFragment newInstance() {
+        return newInstance(null);
     }
     @Override
     protected int setContentView() {
@@ -77,7 +85,12 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
 
     @Override
     protected void initData() {
-
+        SpendBean spendBean = (SpendBean) getArguments().getSerializable(IntentParam.editSpendBean);
+        if(spendBean!=null){
+            isEdit =true;
+            et_spend_remark.setText(spendBean.getDataRemark());
+            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
+        }
     }
 
     @Override
