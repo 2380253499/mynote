@@ -15,6 +15,7 @@ import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
+import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.AddAccountFragment;
 import com.zr.note.ui.main.fragment.AddJokeFragment;
 import com.zr.note.ui.main.fragment.AddMemoFragment;
@@ -50,7 +51,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private AddJokeFragment addJokeFragment;
     private AddSpendFragment addSpendFragment;
 
-
+    private AccountBean accountBean;
     @Override
     protected AddDataImp initPresenter() {
         return new AddDataImp(this);
@@ -74,6 +75,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @Override
     protected void initView() {
         int tabIndex = getIntent().getIntExtra(IntentParam.tabIndex, 0);
+        accountBean= (AccountBean) getIntent().getSerializableExtra(IntentParam.editAccount);
         addDataInterIndex=tabIndex;
         setCheckDiffTab(tabIndex);
         bt_addData_clear.setOnClickListener(this);
@@ -85,7 +87,7 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     private void setCheckDiffTab(int tabIndex) {
         switch (tabIndex){
             case 0:
-                addAccountFragment = AddAccountFragment.newInstance();
+                addAccountFragment = AddAccountFragment.newInstance(accountBean);
                 addDataInter[0] = addAccountFragment;
                 addFragment(R.id.fl_fragment, addAccountFragment);
                 mrb_button0.setChecked(true);

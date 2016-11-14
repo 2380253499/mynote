@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -119,7 +120,18 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
         setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
     }
 
-
+    /**
+     * 设置光标位置
+     * @param text
+     * @param type
+     */
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        super.setText(text, type);
+        if(!TextUtils.isEmpty(text)){
+            setSelection(text.length());
+        }
+    }
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         this.hasFoucs = hasFocus;

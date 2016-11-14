@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.contract.AddAccountCon;
@@ -34,6 +35,10 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     @BindView(R.id.tv_pwd_copy)
     TextView tv_pwd_copy;
 
+    /**
+     * 判断是否是编辑还是添加
+     */
+    private boolean isEdit;
     @Override
     protected AddAccountImp initPresenter() {
         return new AddAccountImp(getActivity());
@@ -44,13 +49,17 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
         return R.layout.fragment_add_account;
     }
 
-    public static AddAccountFragment newInstance() {
-        
+    public static AddAccountFragment newInstance(AccountBean bean) {
         Bundle args = new Bundle();
-        
         AddAccountFragment fragment = new AddAccountFragment();
+        if(bean!=null){
+            args.putSerializable(IntentParam.editAccount,bean);
+        }
         fragment.setArguments(args);
         return fragment;
+    }
+    public static AddAccountFragment newInstance() {
+        return newInstance(null);
     }
     @Override
     protected void initView() {
@@ -60,7 +69,14 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
 
     @Override
     protected void initData() {
-
+        AccountBean accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
+        if(accountBean!=null){
+            isEdit=true;
+            et_addData_source.setText(accountBean.getDataSource());
+            et_addData_user.setText(accountBean.getDataAccount());
+            et_addData_pwd.setText(accountBean.getDataPassword());
+            et_addData_note.setText(accountBean.getDataRemark());
+        }
     }
 
     @Override

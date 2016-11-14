@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
+import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddAccountDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.AccountBean;
@@ -77,6 +79,15 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
                 accountBean = mPresenter.copyAccount(position);
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
                 return false;
+            }
+        });
+        lv_account_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AccountBean accountBean = (AccountBean) parent.getItemAtPosition(position);
+                mIntent.putExtra(IntentParam.tabIndex,0);
+                mIntent.putExtra(IntentParam.editAccount,accountBean);
+                STActivity(mIntent, AddDataActivity.class);
             }
         });
     }
