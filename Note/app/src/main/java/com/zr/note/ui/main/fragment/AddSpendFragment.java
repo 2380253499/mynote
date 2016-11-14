@@ -32,6 +32,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
     @BindView(R.id.et_spend_amount)
     MyEditText et_spend_amount;
     private boolean isEdit;
+    private SpendBean spendBean;
 
     @Override
     protected AddSpendImp initPresenter() {
@@ -85,8 +86,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
 
     @Override
     protected void initData() {
-        SpendBean spendBean = (SpendBean) getArguments().getSerializable(IntentParam.editSpendBean);
-        if(spendBean!=null){
+        spendBean = (SpendBean) getArguments().getSerializable(IntentParam.editSpendBean);
+        if(spendBean !=null){
             isEdit =true;
             et_spend_remark.setText(spendBean.getDataRemark());
             et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
@@ -108,6 +109,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
             SpendBean bean=new SpendBean();
             bean.setLiveSpend(Double.parseDouble(spendContent));
             bean.setDataRemark(spendRemark);
+            bean.set_id(isEdit ? spendBean.get_id() : -1);
             boolean b = mPresenter.addSpend(bean);
             if(b){
                 mIntent.setAction(BroFilter.addData_spend);

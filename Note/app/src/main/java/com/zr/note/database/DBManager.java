@@ -168,7 +168,7 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.updateTime,"datetime('now','localtime')");
-        long insert = db.update(T_Account_Note, values,DBConstant._id+"=?",new String[]{bean.get_id()+""});
+        long insert = db.update(T_Account_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
         db.close();
         return insert;
@@ -181,6 +181,24 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         long insert = db.insert(T_Account_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
+    public long addOrEditMemo(MemoBean bean){
+        if (bean.get_id() == -1) {
+            return addMemo(bean);
+        }else{
+            return updateMemo(bean);
+        }
+    }
+    public long updateMemo(MemoBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        long insert = db.update(T_Memo_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
         db.close();
         return insert;
@@ -243,6 +261,24 @@ public class DBManager extends SQLiteOpenHelper{
         return delete>0?true:false;
     }
 
+    public long addOrEditJoke(JokeBean bean){
+        if(bean.get_id()==-1){
+            return addJoke(bean);
+        }else{
+            return updateJoke(bean);
+        }
+    }
+    public long updateJoke(JokeBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        long insert = db.update(T_Joke_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
     public long addJoke(JokeBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
@@ -333,6 +369,24 @@ public class DBManager extends SQLiteOpenHelper{
         }
         db.close();
         return list;
+    }
+    public long addOrEditSpend(SpendBean bean){
+        if(bean.get_id()==-1){
+            return addSpend(bean);
+        }else {
+            return updateSpend(bean);
+        }
+    }
+    public long updateSpend(SpendBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.liveSpend, AES.encode(bean.getLiveSpend()+""));
+        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        long insert = db.update(T_Spend_Note, values, DBConstant._id+"=?", new String[]{bean.get_id()+""});
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
     }
     public long addSpend(SpendBean bean){
         SQLiteDatabase db=getWritableDatabase();

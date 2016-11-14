@@ -26,6 +26,8 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     @BindView(R.id.et_memo_content)
     MyEditText et_memo_content;
     private boolean isEdit;
+    private MemoBean memoBean;
+
     public static AddMemoFragment newInstance(MemoBean bean) {
         Bundle args = new Bundle();
         if (args!=null){
@@ -55,8 +57,8 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected void initData() {
-        MemoBean memoBean = (MemoBean) getArguments().getSerializable(IntentParam.editMemoBean);
-        if(memoBean!=null){
+        memoBean = (MemoBean) getArguments().getSerializable(IntentParam.editMemoBean);
+        if(memoBean !=null){
             isEdit=true;
             et_memo_reminder.setText(memoBean.getDataRemark());
             et_memo_content.setText(memoBean.getDataContent());
@@ -78,6 +80,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
             MemoBean reminderBean=new MemoBean();
             reminderBean.setDataRemark(reminder);
             reminderBean.setDataContent(memoContent);
+            reminderBean.set_id(isEdit ? memoBean.get_id() : -1);
             boolean b = mPresenter.addMemo(reminderBean);
             if(b){
                 mIntent.setAction(BroFilter.addData_memo);

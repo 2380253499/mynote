@@ -32,6 +32,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     TextView tv_joke_copy;
 
     private boolean isEdit;
+    private JokeBean jokeBean;
+
     public static AddJokeFragment newInstance(JokeBean bean) {
         Bundle args = new Bundle();
         if (args!=null){
@@ -62,8 +64,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
 
     @Override
     protected void initData() {
-        JokeBean jokeBean = (JokeBean) getArguments().getSerializable(IntentParam.editJokeBean);
-        if(jokeBean!=null){
+        jokeBean = (JokeBean) getArguments().getSerializable(IntentParam.editJokeBean);
+        if(jokeBean !=null){
             isEdit=true;
             et_joke_remark.setText(jokeBean.getDataRemark());
             et_joke_content.setText(jokeBean.getDataContent());
@@ -97,6 +99,7 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             JokeBean bean=new JokeBean();
             bean.setDataRemark(jokeRemark);
             bean.setDataContent(jokeContent);
+            bean.set_id(isEdit ? jokeBean.get_id() : -1);
             boolean b = mPresenter.addJoke(bean);
             if(b){
                 mIntent.setAction(BroFilter.addData_joke);
