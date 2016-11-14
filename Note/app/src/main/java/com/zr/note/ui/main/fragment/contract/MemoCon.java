@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface MemoCon {
     interface View extends BaseView{
-        void selectData(boolean isOrderByCreateTime);
+        void selectData();
     }
     interface Presenter extends BasePresenter<View>{
         List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);

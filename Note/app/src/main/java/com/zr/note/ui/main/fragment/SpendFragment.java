@@ -18,15 +18,18 @@ import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.SpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
+import com.zr.note.ui.main.inter.DateInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements SpendCon.View {
+public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements SpendCon.View, DateInter.OrderInter {
     @BindView(R.id.lv_spend_list)
     ListView lv_spend_list;
     private SpendBean spendBean;
     private AddSpendDataBro addDataBro;
+    private boolean isCreateTime;
+
     public static SpendFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -96,12 +99,21 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
 
     @Override
     public void selectData() {
-        mPresenter.selectData(lv_spend_list,true);
+        mPresenter.selectData(lv_spend_list,isCreateTime);
     }
 
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(addDataBro);
         super.onDestroy();
+    }
+
+    @Override
+    public void orderByCreateTime(boolean isCreateTime) {
+        if(this.isCreateTime!=isCreateTime){
+            this.isCreateTime = isCreateTime;
+            selectData();
+        }
+
     }
 }

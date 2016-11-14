@@ -21,16 +21,19 @@ import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.fragment.contract.JokeCon;
 import com.zr.note.ui.main.fragment.contract.imp.JokeImp;
 import com.zr.note.ui.main.inter.AddDataInter;
+import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements JokeCon.View {
+public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements JokeCon.View, DateInter.OrderInter {
     @BindView(R.id.lv_joke_list)
     ListView lv_joke_list;
     private JokeBean jokeBean;
     private AddJokeDataBro addDataBro;
+    private boolean isCreateTime=true;
+
     public static JokeFragment newInstance() {
         Bundle args = new Bundle();
         JokeFragment fragment = new JokeFragment();
@@ -118,12 +121,21 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
 
     @Override
     public void selectData() {
-        mPresenter.selectData(lv_joke_list,true);
+        mPresenter.selectData(lv_joke_list,isCreateTime);
     }
 
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(addDataBro);
         super.onDestroy();
+    }
+
+    @Override
+    public void orderByCreateTime(boolean isCreateTime) {
+        if(this.isCreateTime!=isCreateTime){
+            this.isCreateTime = isCreateTime;
+            selectData();
+        }
+
     }
 }

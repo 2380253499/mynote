@@ -21,19 +21,20 @@ import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.fragment.contract.AccountCon;
 import com.zr.note.ui.main.fragment.contract.imp.AccountImp;
 import com.zr.note.ui.main.inter.AddDataInter;
+import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.ui.main.inter.DeteleDataInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter {
+public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter, DateInter.OrderInter {
 
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
     private AccountBean accountBean;
     private AddAccountDataBro addDataBro;
-
+    private boolean isCreateTime=true;
     public static AccountFragment newInstance() {
         Bundle args = new Bundle();
         AccountFragment fragment = new AccountFragment();
@@ -47,7 +48,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         addDataBro = new AddAccountDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
-                selectData(true);
+                selectData();
             }
         });
         getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_account));
@@ -94,11 +95,11 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
 
     @Override
     protected void initData() {
-        selectData(true);
+        selectData();
     }
     @Override
-    public void selectData(boolean isOrderByCreateTime) {
-        mPresenter.selectData(lv_account_list,isOrderByCreateTime);
+    public void selectData( ) {
+        mPresenter.selectData(lv_account_list,isCreateTime);
     }
     @Override
     protected void viewOnClick(View v) {
@@ -144,5 +145,13 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     public void onDestroy() {
         getActivity().unregisterReceiver(addDataBro);
         super.onDestroy();
+    }
+
+    @Override
+    public void orderByCreateTime(boolean isCreateTime) {
+        if(this.isCreateTime!=isCreateTime){
+            this.isCreateTime=isCreateTime;
+            selectData();
+        }
     }
 }

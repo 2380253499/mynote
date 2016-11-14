@@ -64,7 +64,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                 boolean flag = DBManager.getInstance(mContext).deleteMemo(id);
                 if(flag){
                     mView.showMsg("删除成功");
-                    mView.selectData(true);
+                    mView.selectData();
                 }else{
                     mView.showMsg("删除失败");
                 }
@@ -89,7 +89,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                 boolean flag = DBManager.getInstance(mContext).deleteAccount(id);
                 if(flag){
                     mView.showMsg("删除成功");
-                    mView.selectData(true);
+                    mView.selectData();
                 }else{
                     mView.showMsg("删除失败");
                 }

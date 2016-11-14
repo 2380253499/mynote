@@ -21,16 +21,19 @@ import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.fragment.contract.MemoCon;
 import com.zr.note.ui.main.fragment.contract.imp.MemoImp;
 import com.zr.note.ui.main.inter.AddDataInter;
+import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> implements MemoCon.View {
+public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> implements MemoCon.View, DateInter.OrderInter {
     @BindView(R.id.lv_memo_list)
     ListView lv_memo_list;
     private MemoBean memoBean;
     private AddMemoDataBro addDataBro;
+    private boolean isCreateTime;
+
     public static MemoFragment newInstance() {
         Bundle args = new Bundle();
         MemoFragment fragment = new MemoFragment();
@@ -43,7 +46,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
         addDataBro = new AddMemoDataBro(new AddDataInter.AddDataFinish() {
             @Override
             public void addDataFinish() {
-                selectData(true);
+                selectData();
             }
         });
         getActivity().registerReceiver(addDataBro, new IntentFilter(BroFilter.addData_memo));
@@ -87,7 +90,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
 
     @Override
     protected void initData() {
-        selectData(true);
+        selectData();
     }
 
     @Override
@@ -116,12 +119,21 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     }
 
     @Override
-    public void selectData(boolean isOrderByCreateTime) {
-        mPresenter.selectData(lv_memo_list, true);
+    public void selectData() {
+        mPresenter.selectData(lv_memo_list, isCreateTime);
     }
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(addDataBro);
         super.onDestroy();
+    }
+
+    @Override
+    public void orderByCreateTime(boolean isCreateTime) {
+        if(this.isCreateTime!=isCreateTime){
+            this.isCreateTime = isCreateTime;
+            selectData();
+        }
+
     }
 }

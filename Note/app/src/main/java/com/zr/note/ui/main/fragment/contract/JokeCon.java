@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface JokeCon {
     interface View extends BaseView{
-        void selectData( );
+        void selectData();
     }
     interface Presenter extends BasePresenter<View>{
         List<JokeBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);

@@ -25,6 +25,7 @@ import com.zr.note.ui.main.fragment.AccountFragment;
 import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
 import com.zr.note.ui.main.fragment.SpendFragment;
+import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     private JokeFragment jokeFragment;
     private SpendFragment spendFragment;
     private int tabIndex=0;
+    private DateInter.OrderInter[]orderInters=new DateInter.OrderInter[4];
     @Override
     protected int setContentView() {
         return R.layout.activity_main;
@@ -78,22 +80,24 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
 
         accountFragment=AccountFragment.newInstance();
+        orderInters[0]=accountFragment;
         addFragment(R.id.fl_fragment, accountFragment);
         rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main_account:
-                        tabIndex=0;
+                        tabIndex = 0;
                         showFragment(accountFragment);
                         hideFragment(memoFragment);
                         hideFragment(jokeFragment);
                         hideFragment(spendFragment);
                         break;
                     case R.id.rb_main_memo:
-                        tabIndex=1;
+                        tabIndex = 1;
                         if (memoFragment == null) {
                             memoFragment = MemoFragment.newInstance();
+                            orderInters[1] = memoFragment;
                             hideFragment(accountFragment);
                             addFragment(R.id.fl_fragment, memoFragment);
                             hideFragment(jokeFragment);
@@ -106,9 +110,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         }
                         break;
                     case R.id.rb_main_joke:
-                        tabIndex=2;
+                        tabIndex = 2;
                         if (jokeFragment == null) {
                             jokeFragment = JokeFragment.newInstance();
+                            orderInters[2] = jokeFragment;
                             hideFragment(accountFragment);
                             hideFragment(memoFragment);
                             addFragment(R.id.fl_fragment, jokeFragment);
@@ -121,9 +126,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         }
                         break;
                     case R.id.rb_main_spend:
-                        tabIndex=3;
+                        tabIndex = 3;
                         if (spendFragment == null) {
                             spendFragment = SpendFragment.newInstance();
+                            orderInters[3] = spendFragment;
                             hideFragment(accountFragment);
                             hideFragment(memoFragment);
                             hideFragment(jokeFragment);
@@ -166,6 +172,17 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 mIntent.putExtra(IntentParam.tabIndex,tabIndex);
                 STActivityForResult(mIntent,AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
+            case R.id.tv_orderBy_create:
+                orderInters[tabIndex].orderByCreateTime(true);
+                mPopupwindow.dismiss();
+                break;
+            case R.id.tv_orderBy_update:
+                orderInters[tabIndex].orderByCreateTime(false);
+                mPopupwindow.dismiss();
+                break;
+            case R.id.tv_batchDelete:
+                showToastS("正在开发中……");
+                break;
         }
     }
 
@@ -193,42 +210,6 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             case R.id.action_settings:
                 showSeting();
                 break;
-            case R.id.tv_orderBy_create:
-//                selectFragmentData(tabIndex,true);
-                showToastS("正在开发中……");
-                break;
-            case R.id.tv_orderBy_update:
-//                selectFragmentData(tabIndex,false);
-                showToastS("正在开发中……");
-                break;
-            case R.id.tv_batchDelete:
-                showToastS("正在开发中……");
-                break;
-        }
-    }
-
-
-    private void selectFragmentData(int addDataIndex,boolean isOrderByCreate) {
-        switch (addDataIndex){
-            case 0:
-                accountFragment.selectData(isOrderByCreate);
-            break;
-            case 1:
-                if(memoFragment!=null){
-                    memoFragment.selectData(isOrderByCreate);
-                }
-
-            break;
-            case 2:
-                if(jokeFragment!=null){
-                    jokeFragment.selectData();
-                }
-            break;
-            case 3:
-                if(spendFragment!=null){
-                    spendFragment.selectData();
-                }
-            break;
         }
     }
 
@@ -241,11 +222,11 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         tv_orderBy_create.setOnClickListener(this);
         tv_orderBy_update.setOnClickListener(this);
         tv_batchDelete.setOnClickListener(this);
-        MyPopupwindow popupwindow = new MyPopupwindow(this,view);
+        mPopupwindow = new MyPopupwindow(this,view);
         int xoff = PhoneUtils.getPhoneWidth(this) - PhoneUtils.dip2px(this, 125);
         view_backgroud.setVisibility(View.VISIBLE);
-        popupwindow.showAsDropDown(getToolbar(), xoff, 0);
-        popupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        mPopupwindow.showAsDropDown(getToolbar(), xoff, 0);
+        mPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 view_backgroud.setVisibility(View.GONE);
