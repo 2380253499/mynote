@@ -1,5 +1,6 @@
 package com.zr.note.tools;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,5 +37,13 @@ public class DateUtils {
             e.printStackTrace();
             return new Date();
         }
+    }
+
+    /**
+     * 获取当前时间
+     * @return
+     */
+    public static String getLocalDate(){
+        return new Timestamp(new Date().getTime())+"";
     }
 }

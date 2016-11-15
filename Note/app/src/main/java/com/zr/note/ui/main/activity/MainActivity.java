@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initView() {
-        Glide.with(this).load(R.drawable.zr5).crossFade(800).into(iv_banner);
+        Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {

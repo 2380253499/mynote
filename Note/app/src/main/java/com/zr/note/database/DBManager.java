@@ -167,7 +167,7 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataAccount,AES.encode(bean.getDataAccount()));
         values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        values.put(DBConstant.updateTime,DateUtils.getLocalDate());
         long insert = db.update(T_Account_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
         db.close();
@@ -197,7 +197,7 @@ public class DBManager extends SQLiteOpenHelper{
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
-        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        values.put(DBConstant.updateTime,DateUtils.getLocalDate());
         long insert = db.update(T_Memo_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
         db.close();
@@ -273,9 +273,9 @@ public class DBManager extends SQLiteOpenHelper{
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
-        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        values.put(DBConstant.updateTime,DateUtils.getLocalDate());
         long insert = db.update(T_Joke_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
-        LogUtils.Log(insert);
+        LogUtils.Log(bean.get_id()+"==="+insert);
         db.close();
         return insert;
     }
@@ -382,7 +382,7 @@ public class DBManager extends SQLiteOpenHelper{
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.liveSpend, AES.encode(bean.getLiveSpend()+""));
-        values.put(DBConstant.updateTime,"datetime('now','localtime')");
+        values.put(DBConstant.updateTime,DateUtils.getLocalDate());
         long insert = db.update(T_Spend_Note, values, DBConstant._id+"=?", new String[]{bean.get_id()+""});
         LogUtils.Log(insert);
         db.close();
