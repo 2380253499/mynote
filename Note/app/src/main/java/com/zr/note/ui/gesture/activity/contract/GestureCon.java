@@ -13,9 +13,8 @@ import com.zr.note.tools.gesture.widget.LockIndicator;
  */
 public interface GestureCon {
    interface View extends BaseView{
-
+      void pwdValidationSuccess();
    }
-
    interface Presenter extends BasePresenter<View>{
       void setGestureContentView(GestureContentView mGestureContentView);
       /**
@@ -28,6 +27,17 @@ public interface GestureCon {
        * @return
        */
       GestureContentView initEditGestureContentView(TextView text_reset,TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
+
+      /**
+       *修改手势密码
+       * @return
+       */
+      GestureContentView initUpdateGestureContentView(TextView text_reset,TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
+      /**
+       *验证原手势密码
+       * @return
+       */
+      GestureContentView initVerifyOldGestureContentView(String pwd,TextView text_reset,TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
 
       /**
        * 重置手势view清除小图案

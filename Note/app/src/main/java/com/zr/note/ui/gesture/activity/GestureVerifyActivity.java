@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
-import com.zr.note.tools.AES;
 import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.ui.constant.IntentParam;
@@ -42,9 +41,6 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		gesturePWD =SPUtils.getGesturePWD(this);
-		if(gesturePWD!=null){
-			gesturePWD=AES.decode(gesturePWD);
-		}
 		super.onCreate(savedInstanceState);
 		if(gesturePWD==null){
 			mIntent.putExtra(IntentParam.Gesture.isFirstIntoApp,true);
@@ -112,5 +108,10 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	@Override
+	public void pwdValidationSuccess() {
+
 	}
 }

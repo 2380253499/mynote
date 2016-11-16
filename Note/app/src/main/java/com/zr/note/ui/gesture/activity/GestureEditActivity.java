@@ -69,7 +69,7 @@ public class GestureEditActivity extends BaseActivity<GestureCon.View,GestureCon
 		mPresenter.setLockIndicator(mLockIndicator);
 		// 设置手势解锁显示到哪个布局里面
 		mGestureContentView.setParentView(gesture_container);
-		updateCodeList("");
+		mLockIndicator.setPath("");
 	}
 
 	@Override
@@ -92,17 +92,6 @@ public class GestureEditActivity extends BaseActivity<GestureCon.View,GestureCon
 	protected void menuOnClick(int itemId) {
 
 	}
-
-
-
-
-	private void updateCodeList(String inputCode) {
-		// 更新选择的图案
-		mLockIndicator.setPath(inputCode);
-	}
-
-
-
 	@Override
 	public void onBackPressed() {
 		if ((System.currentTimeMillis() - mExitTime) > 1500) {
@@ -111,5 +100,10 @@ public class GestureEditActivity extends BaseActivity<GestureCon.View,GestureCon
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	@Override
+	public void pwdValidationSuccess() {
+
 	}
 }

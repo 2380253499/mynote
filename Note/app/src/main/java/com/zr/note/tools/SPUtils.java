@@ -3,6 +3,7 @@ package com.zr.note.tools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 /**
  * Created by Administrator on 2016/10/25.
@@ -19,12 +20,17 @@ public class SPUtils {
     public static void setGesturePWD(Context context,String pwd){
         init(context);
         editor=spf.edit();
-        editor.putString(gesturePWD, pwd);
+        editor.putString(gesturePWD,AES.encode(pwd));
         editor.commit();
     }
     public static String getGesturePWD(Context context){
         init(context);
-        return spf.getString(gesturePWD,null);
+        String pwd = spf.getString(gesturePWD, null);
+        if(pwd!=null){
+            return AES.decode(pwd);
+        }else{
+            return null;
+        }
     }
     public static void clearGesturePWD(Context context) {
         init(context);

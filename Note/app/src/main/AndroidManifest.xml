@@ -44,6 +44,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".ui.gesture.activity.GestureUpdateActivity"
+            android:label="GestureUpdateActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".ui.main.activity.MainActivity"
             android:label="MainActivity"
             android:launchMode="singleTask"
