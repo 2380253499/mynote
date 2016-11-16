@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.zr.note.base.BasePresenter;
 import com.zr.note.base.BaseView;
 import com.zr.note.tools.gesture.widget.GestureContentView;
+import com.zr.note.tools.gesture.widget.LockIndicator;
 
 /**
  * Created by Administrator on 2016/10/26.
@@ -17,7 +18,26 @@ public interface GestureCon {
 
    interface Presenter extends BasePresenter<View>{
       void setGestureContentView(GestureContentView mGestureContentView);
-      GestureContentView initGestureContentView(String gesturePWD,TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
+      /**
+       * 重置手势view
+       * @param lockIndicator
+       */
+      void setLockIndicator(LockIndicator lockIndicator);
+      /**
+       *首次编辑手势密码
+       * @return
+       */
+      GestureContentView initEditGestureContentView(TextView text_reset,TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
+
+      /**
+       * 重置手势view清除小图案
+       */
+      void resetPwd();
+      /**
+       *验证手势密码
+       * @return
+       */
+      GestureContentView initVerifyGestureContentView(String gesturePWD, TextView tv_verify_tip, FrameLayout fl_gesture_noClick);
    }
 
 }

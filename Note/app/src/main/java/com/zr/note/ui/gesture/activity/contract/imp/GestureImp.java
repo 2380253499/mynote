@@ -2,6 +2,7 @@ package com.zr.note.ui.gesture.activity.contract.imp;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,8 +11,11 @@ import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
+import com.zr.note.tools.AES;
+import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.GestureDrawline;
+import com.zr.note.tools.gesture.widget.LockIndicator;
 import com.zr.note.ui.gesture.activity.contract.GestureCon;
 import com.zr.note.ui.main.activity.MainActivity;
 
@@ -22,6 +26,16 @@ import java.util.TimerTask;
  * Created by Administrator on 2016/10/26.
  */
 public class GestureImp extends IPresenter<GestureCon.View> implements GestureCon.Presenter {
+
+    private LockIndicator mLockIndicator;
+    /**
+     * 第一次输入
+     */
+    private boolean mIsFirstInput = true;
+    /**
+     * 第一次设置的密码
+     */
+    private String mFirstPassword = null;
     //可输出次数
     private int errorNum;
     //倒计时
@@ -44,7 +58,75 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
     }
 
     @Override
-    public GestureContentView initGestureContentView(final String gesturePWD,final TextView tv_verify_tip, final FrameLayout fl_gesture_noClick) {
+    public void setLockIndicator(LockIndicator lockIndicator) {
+        mLockIndicator=lockIndicator;
+    }
+
+    /**
+     * 设置小图案提示
+     * @param inputCode
+     */
+    private void updateCodeList(String inputCode) {
+        // 更新选择的图案
+        mLockIndicator.setPath(inputCode);
+    }
+    @Override
+    public GestureContentView initEditGestureContentView(final TextView text_reset ,final TextView tv_verify_tip, FrameLayout fl_gesture_noClick) {
+            return new GestureContentView(mContext, false,null, new GestureDrawline.GestureCallBack() {
+                @Override
+                public void onGestureCodeInput(String inputCode) {
+                    if (!isInputPassValidate(inputCode)) {
+                        tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>最少链接4个点,请重新输入</font>"));
+                        gestureContentView.clearDrawlineState(0L);
+                        return;
+                    }
+                    if (mIsFirstInput) {
+                        mFirstPassword = inputCode;
+                        updateCodeList(inputCode);
+                        gestureContentView.clearDrawlineState(0L);
+                        text_reset.setClickable(true);
+                        text_reset.setText(mContext.getString(R.string.reset_gesture_code));
+                    } else {
+                        if (inputCode.equals(mFirstPassword)) {
+                            mView.showMsg("设置成功");
+                            gestureContentView.clearDrawlineState(0L);
+                            SPUtils.setGesturePWD(mContext, AES.encode(inputCode));
+                            mView.STActivity(MainActivity.class);
+                            mView.actFinish();
+                        } else {
+                            tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>与上一次绘制不一致，请重新绘制</font>"));
+                            // 左右移动动画
+                            Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
+                            tv_verify_tip.startAnimation(shakeAnimation);
+                            // 保持绘制的线，1.5秒后清除
+                            gestureContentView.clearDrawlineState(1300L);
+                        }
+                    }
+                    mIsFirstInput = false;
+                }
+                @Override
+                public void checkedSuccess() {
+                }
+                @Override
+                public void checkedFail() {
+                }
+            });
+    }
+
+    @Override
+    public void resetPwd() {
+        mIsFirstInput = true;
+        updateCodeList("");
+    }
+
+    private boolean isInputPassValidate(String inputPassword) {
+        if (TextUtils.isEmpty(inputPassword) || inputPassword.length() < 4) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public GestureContentView initVerifyGestureContentView(final String gesturePWD, final TextView tv_verify_tip, final FrameLayout fl_gesture_noClick) {
         return new GestureContentView(mContext, true, gesturePWD,
                 new GestureDrawline.GestureCallBack() {
                     @Override

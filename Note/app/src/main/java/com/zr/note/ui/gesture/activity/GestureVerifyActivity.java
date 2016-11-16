@@ -52,7 +52,6 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 			finish();
 		}
 	}
-
 	@Override
 	protected GestureImp initPresenter() {
 		return new GestureImp(this);
@@ -100,7 +99,7 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 	private void setUpViews() {
 		// 初始化一个显示各个点的viewGroup
 //		mGestureContentView = new GestureContentView(this, true, gesturePWD,
-		mGestureContentView = mPresenter.initGestureContentView(gesturePWD,tv_verify_tip,fl_gesture_noClick);
+		mGestureContentView = mPresenter.initVerifyGestureContentView(gesturePWD, tv_verify_tip, fl_gesture_noClick);
 		mPresenter.setGestureContentView(mGestureContentView);
 		// 设置手势解锁显示到哪个布局里面
 		mGestureContentView.setParentView(fl_gesture_container);

@@ -18,10 +18,10 @@ import butterknife.BindView;
 
 /**
  *
- * 手势密码设置界面
+ * 修改手势密码界面
  *
  */
-public class GestureEditActivity extends BaseActivity<GestureCon.View,GestureCon.Presenter> implements GestureCon.View{
+public class GestureUpdateActivity extends BaseActivity<GestureCon.View,GestureCon.Presenter> implements GestureCon.View{
 
 	@BindView(R.id.lock_indicator)
 	LockIndicator mLockIndicator;
@@ -43,12 +43,12 @@ public class GestureEditActivity extends BaseActivity<GestureCon.View,GestureCon
 
 	@Override
 	protected int setContentView() {
-		return R.layout.activity_gesture_edit;
+		return R.layout.activity_gesture_update;
 	}
 
 	@Override
 	protected void setToolbarStyle() {
-		setTitle("设置密码");
+		setTitle("修改密码");
 		boolean isUpdatePwd = getIntent().getBooleanExtra(IntentParam.Gesture.isUpdatePwd, false);
 		if(!isUpdatePwd){
 			setHideNavigationIcon();
