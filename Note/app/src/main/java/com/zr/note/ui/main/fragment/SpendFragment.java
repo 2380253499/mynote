@@ -118,7 +118,7 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     }
 
     @Override
-    public void dataBatchDelte() {
+    public void dataBatchCheck() {
 
     }
 }

@@ -6,12 +6,11 @@ import android.support.annotation.NonNull;
 import android.widget.ListView;
 
 import com.zr.note.R;
-import com.zr.note.adapter.CommonAdapter;
-import com.zr.note.adapter.ViewHolder;
 import com.zr.note.base.IPresenter;
 import com.zr.note.database.DBManager;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.main.entity.AccountBean;
+import com.zr.note.ui.main.fragment.adapter.AccountAdapter;
 import com.zr.note.ui.main.fragment.contract.AccountCon;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
 public class AccountImp extends IPresenter<AccountCon.View> implements AccountCon.Presenter{
 
     private List<AccountBean> accountList;
-
+    private AccountAdapter  accountAdapter;
     public AccountImp(Context context) {
         super(context);
     }
@@ -30,23 +29,12 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     @Override
     public List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime) {
         accountList = DBManager.getInstance(mContext).selectAccount(isOrderByCreateTime);
-        CommonAdapter<AccountBean> commonAdapter = new CommonAdapter<AccountBean>(mContext, accountList, R.layout.item_account) {
-            @Override
-            public void convert(ViewHolder helper, AccountBean item) {
-                int countLength = String.valueOf(getCount()).length();
-                int position=helper.getPosition()+1;
-                StringBuffer stringBuffer=new StringBuffer();
-                for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
-                    stringBuffer.append("0");
-                }
-
-                helper.setText(R.id.tv_data_id, stringBuffer.toString()+""+position)
-                        .setText(R.id.tv_source, item.getDataSource())
-                        .setText(R.id.tv_account, item.getDataAccount());
-            }
-        };
-        lv_account_list.setAdapter(commonAdapter);
+        accountAdapter = new AccountAdapter(mContext, accountList, R.layout.item_account);
+        lv_account_list.setAdapter(accountAdapter);
         return accountList;
+    }
+    public void batchDelete(){
+
     }
     @Override
     public AccountBean copyAccount(int position) {
@@ -79,6 +67,12 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
         });
         mDialog.setPositiveButton(getDeleteAccountListener(id));
         mDialog.create().show();
+    }
+
+    @Override
+    public void dataBatchCheck() {
+        accountAdapter.setCheck();
+        accountAdapter.notifyDataSetChanged();
     }
 
     @NonNull

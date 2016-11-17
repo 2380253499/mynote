@@ -21,5 +21,6 @@ public interface AccountCon {
         AccountBean copyAccount(int position);
         void deleteAccountById(MyDialog.Builder mDialog, int id);
         void deleteAccountById(MyDialog.Builder mDialog,String[] id);
+        void dataBatchCheck();
     }
 }

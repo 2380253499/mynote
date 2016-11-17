@@ -15,6 +15,10 @@ import com.zr.note.tools.StatusBarUtils;
 import com.zr.note.ui.main.activity.MainActivity;
 
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -32,6 +36,11 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private int subTitleId=-1;
     private String subTitleString;
     private Menu mMenu;
+    /****************************RxJava********************************/
+    protected Observable mObservable;
+    protected Subscriber mSubscriber;
+    protected Action1 mAction1;
+    protected Action0 mAction0;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
@@ -225,6 +234,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         }
         if(mMenu!=null){
             mMenu=null;
+        }
+        if(mSubscriber!=null&&!mSubscriber.isUnsubscribed()){
+            mSubscriber.unsubscribe();
         }
         ClickUtils.clearLastClickTime();
     }

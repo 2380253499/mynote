@@ -1,17 +1,18 @@
 package com.zr.note.ui.main.fragment;
 
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
+import com.zr.note.base.customview.MyTextView;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.AddDataActivity;
@@ -26,10 +27,14 @@ import com.zr.note.ui.main.inter.DeteleDataInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 
 public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter, DateInter.dataManageInter {
 
+    @BindView(R.id.tv_data_delete)
+    MyTextView tv_data_delete;
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
     private AccountBean accountBean;
@@ -40,6 +45,20 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         AccountFragment fragment = new AccountFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(mObservable!=null){
+            return;
+        }
+        mObservable= Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                cSubscriber=subscriber;
+            }
+        });
+        mObservable.subscribe((Action1) context);
     }
 
     @Override
@@ -86,11 +105,12 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AccountBean accountBean = (AccountBean) parent.getItemAtPosition(position);
-                mIntent.putExtra(IntentParam.tabIndex,0);
-                mIntent.putExtra(IntentParam.editAccount,accountBean);
+                mIntent.putExtra(IntentParam.tabIndex, 0);
+                mIntent.putExtra(IntentParam.editAccount, accountBean);
                 STActivity(mIntent, AddDataActivity.class);
             }
         });
+        tv_data_delete.setOnClickListener(this);
     }
 
     @Override
@@ -104,6 +124,9 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()){
+            case R.id.tv_data_delete:
+                cSubscriber.onNext("cSubscriber删除");
+                break;
             case R.id.tv_menu_copyAccount:
                 mPopupwindow.dismiss();
                 if(!TextUtils.isEmpty(accountBean.getDataAccount())){
@@ -126,16 +149,6 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             break;
         }
     }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
     @Override
     public boolean deleteData() {
         return false;
@@ -156,7 +169,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     }
 
     @Override
-    public void dataBatchDelte() {
-
+    public void dataBatchCheck() {
+        mPresenter.dataBatchCheck();
     }
 }

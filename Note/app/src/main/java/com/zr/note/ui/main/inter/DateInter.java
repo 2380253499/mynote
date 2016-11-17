@@ -6,6 +6,6 @@ package com.zr.note.ui.main.inter;
 public interface DateInter {
     interface dataManageInter {
         void orderByCreateTime(boolean isCreateTime);
-        void dataBatchDelte();
+        void dataBatchCheck();
     }
 }

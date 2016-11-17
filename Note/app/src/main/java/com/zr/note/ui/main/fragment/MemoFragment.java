@@ -138,7 +138,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
     }
 
     @Override
-    public void dataBatchDelte() {
+    public void dataBatchCheck() {
 
     }
 }

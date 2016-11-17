@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2016/11/15.
  */
-public class test {
+public class testa {
     public static void main(String[]a){
         System.out.println( new Timestamp(new Date().getTime()));
     }

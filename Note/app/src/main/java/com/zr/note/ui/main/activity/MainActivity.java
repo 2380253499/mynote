@@ -1,12 +1,13 @@
 package com.zr.note.ui.main.activity;
 
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,9 +30,13 @@ import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 
-public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
+public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View ,Action1<Object>{
+    @BindView(R.id.ll_bottom)
+    LinearLayout ll_bottom;
     @BindView(R.id.ctl_layout)
     CollapsingToolbarLayout ctl_layout;
     @BindView(R.id.drawerlayout)
@@ -174,6 +179,15 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     protected void initData() {
 
     }
+    @NonNull
+    private <V> Observable getStringObservable(Class<V> a) {
+        return Observable.create(new Observable.OnSubscribe<V>() {
+            @Override
+            public void call(Subscriber<? super V> subscriber) {
+
+            }
+        });
+    }
 
 
     @Override
@@ -193,8 +207,11 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 mPopupwindow.dismiss();
                 break;
             case R.id.tv_batchDelete:
-                dataManageInters[tabIndex].dataBatchDelte();
-//                showToastS("正在开发中……");
+                mPopupwindow.dismiss();
+                if(fab.getVisibility()!=View.GONE){
+                    fab.setVisibility(View.GONE);
+                    dataManageInters[tabIndex].dataBatchCheck();
+                }
                 break;
         }
     }
@@ -225,6 +242,9 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             @Override
             public void onDismiss() {
                 view_backgroud.setVisibility(View.GONE);
+                if(fab.getVisibility()==View.GONE){
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -251,9 +271,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void call(Object o) {
+        showToastS((String)o+"String");
     }
 }
