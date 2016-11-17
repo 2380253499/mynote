@@ -28,7 +28,7 @@ import com.zr.note.view.MyPopupwindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter, DateInter.OrderInter {
+public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter, DateInter.dataManageInter {
 
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
@@ -153,5 +153,10 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             this.isCreateTime=isCreateTime;
             selectData();
         }
+    }
+
+    @Override
+    public void dataBatchDelte() {
+
     }
 }

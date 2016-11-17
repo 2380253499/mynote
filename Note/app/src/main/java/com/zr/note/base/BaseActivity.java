@@ -31,6 +31,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private String titleString;
     private int subTitleId=-1;
     private String subTitleString;
+    private Menu mMenu;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
@@ -142,11 +143,19 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(setOptionsMenu()!=0){
+            mMenu=menu;
             getMenuInflater().inflate(setOptionsMenu(), menu);
         }
         return true;
     }
-
+    protected void setMenuVisible(int itemIndex){
+        setMenuVisible(itemIndex,true);
+    }
+    protected void setMenuVisible(int itemIndex,boolean visible){
+        if(mMenu!=null){
+            mMenu.getItem(itemIndex).setVisible(visible);
+        }
+    }
     private void onMenuClick(int itemId) {
         if(!ClickUtils.isFastClickById(itemId,900)){
             menuOnClick(itemId);
@@ -213,6 +222,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         super.onDestroy();
         if(mPresenter!=null){
             mPresenter.detach();
+        }
+        if(mMenu!=null){
+            mMenu=null;
         }
         ClickUtils.clearLastClickTime();
     }

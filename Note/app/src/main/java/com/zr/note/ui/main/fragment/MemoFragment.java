@@ -27,7 +27,7 @@ import com.zr.note.view.MyPopupwindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> implements MemoCon.View, DateInter.OrderInter {
+public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> implements MemoCon.View, DateInter.dataManageInter {
     @BindView(R.id.lv_memo_list)
     ListView lv_memo_list;
     private MemoBean memoBean;
@@ -134,6 +134,11 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
             this.isCreateTime = isCreateTime;
             selectData();
         }
+
+    }
+
+    @Override
+    public void dataBatchDelte() {
 
     }
 }

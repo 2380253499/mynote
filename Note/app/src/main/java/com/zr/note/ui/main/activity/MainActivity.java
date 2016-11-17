@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     private JokeFragment jokeFragment;
     private SpendFragment spendFragment;
     private int tabIndex=0;
-    private DateInter.OrderInter[]orderInters=new DateInter.OrderInter[4];
+    private DateInter.dataManageInter[] dataManageInters =new DateInter.dataManageInter[4];
     @Override
     protected int setContentView() {
         return R.layout.activity_main;
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
 
         accountFragment=AccountFragment.newInstance();
-        orderInters[0]=accountFragment;
+        dataManageInters[0]=accountFragment;
         addFragment(R.id.fl_fragment, accountFragment);
         rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -92,12 +92,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         hideFragment(memoFragment);
                         hideFragment(jokeFragment);
                         hideFragment(spendFragment);
+                        setMenuHidden();
                         break;
                     case R.id.rb_main_memo:
                         tabIndex = 1;
                         if (memoFragment == null) {
                             memoFragment = MemoFragment.newInstance();
-                            orderInters[1] = memoFragment;
+                            dataManageInters[1] = memoFragment;
                             hideFragment(accountFragment);
                             addFragment(R.id.fl_fragment, memoFragment);
                             hideFragment(jokeFragment);
@@ -108,12 +109,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                             hideFragment(jokeFragment);
                             hideFragment(spendFragment);
                         }
+                        setMenuHidden();
                         break;
                     case R.id.rb_main_joke:
                         tabIndex = 2;
                         if (jokeFragment == null) {
                             jokeFragment = JokeFragment.newInstance();
-                            orderInters[2] = jokeFragment;
+                            dataManageInters[2] = jokeFragment;
                             hideFragment(accountFragment);
                             hideFragment(memoFragment);
                             addFragment(R.id.fl_fragment, jokeFragment);
@@ -124,12 +126,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                             showFragment(jokeFragment);
                             hideFragment(spendFragment);
                         }
+                        setMenuHidden();
                         break;
                     case R.id.rb_main_spend:
                         tabIndex = 3;
                         if (spendFragment == null) {
                             spendFragment = SpendFragment.newInstance();
-                            orderInters[3] = spendFragment;
+                            dataManageInters[3] = spendFragment;
                             hideFragment(accountFragment);
                             hideFragment(memoFragment);
                             hideFragment(jokeFragment);
@@ -140,10 +143,19 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                             hideFragment(jokeFragment);
                             showFragment(spendFragment);
                         }
+                        setMenuHidden();
                         break;
                 }
             }
         });
+    }
+
+    private void setMenuHidden() {
+        if(tabIndex==3){
+            setMenuVisible(0,false);
+        }else{
+            setMenuVisible(0);
+        }
     }
 
     @Override
@@ -173,37 +185,20 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 STActivityForResult(mIntent,AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
             case R.id.tv_orderBy_create:
-                orderInters[tabIndex].orderByCreateTime(true);
+                dataManageInters[tabIndex].orderByCreateTime(true);
                 mPopupwindow.dismiss();
                 break;
             case R.id.tv_orderBy_update:
-                orderInters[tabIndex].orderByCreateTime(false);
+                dataManageInters[tabIndex].orderByCreateTime(false);
                 mPopupwindow.dismiss();
                 break;
             case R.id.tv_batchDelete:
-                showToastS("正在开发中……");
+                dataManageInters[tabIndex].dataBatchDelte();
+//                showToastS("正在开发中……");
                 break;
         }
     }
 
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode){
-            case RequestCode.addDataRequestCode:
-                //是否添加或者修改数据回传到主页，更新数据
-                boolean addDataIsSuccess = data.getBooleanExtra(IntentParam.addDataCode, false);
-                int addDataIndex = data.getIntExtra(IntentParam.addDataIndex, 0);
-                if(addDataIsSuccess){
-                    selectFragmentData(addDataIndex,true);
-                }
-                break;
-        }
-    }
-*/
     @Override
     protected void menuOnClick(int itemId) {
         switch (itemId) {

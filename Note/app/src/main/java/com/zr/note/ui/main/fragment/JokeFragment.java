@@ -27,7 +27,7 @@ import com.zr.note.view.MyPopupwindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements JokeCon.View, DateInter.OrderInter {
+public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> implements JokeCon.View, DateInter.dataManageInter {
     @BindView(R.id.lv_joke_list)
     ListView lv_joke_list;
     private JokeBean jokeBean;
@@ -136,6 +136,11 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
             this.isCreateTime = isCreateTime;
             selectData();
         }
+
+    }
+
+    @Override
+    public void dataBatchDelte() {
 
     }
 }

@@ -23,7 +23,7 @@ import com.zr.note.ui.main.inter.DateInter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements SpendCon.View, DateInter.OrderInter {
+public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter> implements SpendCon.View, DateInter.dataManageInter {
     @BindView(R.id.lv_spend_list)
     ListView lv_spend_list;
     private SpendBean spendBean;
@@ -114,6 +114,11 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
             this.isCreateTime = isCreateTime;
             selectData();
         }
+
+    }
+
+    @Override
+    public void dataBatchDelte() {
 
     }
 }
