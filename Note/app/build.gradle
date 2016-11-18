@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-//    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile(name: 'library2', ext: 'aar')
     compile(name: 'ToggleButtonLib', ext: 'aar')
     compile(name: 'library', ext: 'aar')
@@ -56,4 +56,5 @@ dependencies {
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+    compile project(':zrlibrary')
 }
