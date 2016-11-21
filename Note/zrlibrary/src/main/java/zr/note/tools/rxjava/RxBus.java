@@ -2,8 +2,6 @@ package zr.note.tools.rxjava;
 
 
 import com.trello.rxlifecycle.LifecycleProvider;
-import com.trello.rxlifecycle.android.ActivityEvent;
-import com.trello.rxlifecycle.android.FragmentEvent;
 
 import rx.Observable;
 import rx.Scheduler;
@@ -44,7 +42,8 @@ public class RxBus {
         _bus.onNext(o);
     }
 
-    public void send(@Events.EventCode int code, Object content) {
+//    public void send(@Events.EventCode int code, Object content) {
+    public void send( int code, Object content) {
         Events<Object> event = new Events<>();
         event.code = code;
         event.content = content;
@@ -61,8 +60,6 @@ public class RxBus {
 
     public static class SubscriberBuilder {
         private LifecycleProvider lifecycleProvider;
-        private FragmentEvent mFragmentEndEvent;
-        private ActivityEvent mActivityEndEvent;
         private int event;
         private Action1<? super Events<?>> onNext;
         private Action1<Throwable> onError;
@@ -71,20 +68,12 @@ public class RxBus {
             this.lifecycleProvider = provider;
         }
 
-        public SubscriberBuilder setEvent(@Events.EventCode int event) {
+//        public SubscriberBuilder setEvent(@Events.EventCode int event) {
+        public SubscriberBuilder setEvent( int event) {
             this.event = event;
             return this;
         }
 
-        public SubscriberBuilder setEndEvent(FragmentEvent event) {
-            this.mFragmentEndEvent = event;
-            return this;
-        }
-
-        public SubscriberBuilder setEndEvent(ActivityEvent event) {
-            this.mActivityEndEvent = event;
-            return this;
-        }
 
         public SubscriberBuilder onNext(Action1<? super Events<?>> action) {
             this.onNext = action;
@@ -108,7 +97,7 @@ public class RxBus {
         public Subscription _create(Scheduler io, Scheduler mainThread) {
             if (lifecycleProvider != null) {
                 return RxBus.getInstance().toObservable()
-                        .compose(mFragmentEndEvent == null ? lifecycleProvider.<Events<?>>bindToLifecycle() : lifecycleProvider.<Events<?>>bindUntilEvent(mFragmentEndEvent)) // 绑定生命周期
+                        .compose(lifecycleProvider.<Events<?>>bindToLifecycle()) // 绑定生命周期
                         .filter(new Func1<Events<?>, Boolean>() {
                             @Override
                             public Boolean call(Events<?> events) {

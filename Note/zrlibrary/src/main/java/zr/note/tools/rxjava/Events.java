@@ -1,7 +1,5 @@
 package zr.note.tools.rxjava;
 
-import android.support.annotation.IntDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -12,7 +10,6 @@ public class Events<T> {
     public static final int OTHER = 21; //其他事件
 
     //枚举
-    @IntDef({TAP, OTHER})
     @Retention(RetentionPolicy.SOURCE)
     public @interface EventCode {}
 

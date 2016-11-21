@@ -1,7 +1,6 @@
 package com.zr.note.base;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -67,7 +66,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         initView();
         initData();
     }
-
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -112,8 +110,8 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
      */
     protected void setNavigationColor(int backColor){
 //        this.backColor = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        this.backColor = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        this.backColor.setColorFilter(getResources().getColor(backColor), PorterDuff.Mode.SRC_ATOP);
+        this.backColor = getResources().getDrawable(R.drawable.ic_back);
+//        this.backColor.setColorFilter(getResources().getColor(backColor), PorterDuff.Mode.SRC_ATOP);
     }
     protected void setNavigationIcon(int backIcon){
         this.navigationIcon =backIcon;

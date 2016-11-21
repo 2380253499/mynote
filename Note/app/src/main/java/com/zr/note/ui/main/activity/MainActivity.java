@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
         ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
 
+//        RxBus.getInstance().send(1, "11");
 
         accountFragment=AccountFragment.newInstance();
         dataManageInters[0]=accountFragment;
