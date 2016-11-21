@@ -81,7 +81,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:background="@color/c_F8F8F8"
             android:gravity="center"
             >
@@ -127,6 +127,54 @@
                     app:my_radio_checked_color="@color/c_icon"
                     />
             </RadioGroup>
+            <com.zr.note.base.customview.MyLinearLayout
+                android:id="@+id/ll_data_check"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="2px"
+                app:my_ll_border_width="1px"
+                app:my_ll_top_line="true"
+                app:showDividers="middle"
+                android:visibility="gone"
+                >
+                <com.zr.note.base.customview.MyCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="全选"
+                    app:my_checkbox_checked="@drawable/check_select"
+                    app:my_checkbox_normal="@drawable/check_normal"
+                    app:my_checkbox_checked_color="@color/colorText"
+                    app:my_checkbox_normal_color="@color/colorText"
+                    android:button="@null"
+                    android:paddingLeft="9dp"
+                    android:drawablePadding="15dp"
+                    app:my_checkbox_checked_drawable="left"
+                    />
+
+                <com.zr.note.base.customview.MyTextView
+                    android:id="@+id/tv_data_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="删除"
+                    app:my_tv_press="@color/c_divider"
+                    app:my_tv_solid="@color/white"
+                    />
+                <com.zr.note.base.customview.MyTextView
+                    android:id="@+id/tv_date_endselect"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="取消"
+                    app:my_tv_press="@color/c_divider"
+                    app:my_tv_solid="@color/white"
+                    />
+            </com.zr.note.base.customview.MyLinearLayout>
         </LinearLayout>
     </RelativeLayout>
         <View

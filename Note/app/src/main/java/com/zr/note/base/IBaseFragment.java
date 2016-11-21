@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.hwangjr.rxbus.RxBus;
 import com.zr.note.adapter.CommonAdapter;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.view.MyPopupwindow;
@@ -20,6 +21,7 @@ public class IBaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RxBus.get().register(this);
         mIntent =new Intent();
     }
     protected void showToastS(String toast){
@@ -53,5 +55,6 @@ public class IBaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mIntent =null;
+        RxBus.get().unregister(this);
     }
 }

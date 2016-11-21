@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.hwangjr.rxbus.RxBus;
 import com.zr.note.adapter.CommonAdapter;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.view.MyPopupwindow;
@@ -31,6 +32,7 @@ public class IBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RxBus.get().register(this);
         mIntent=new Intent();
     }
     protected View inflateView(int resource,ViewGroup viewGroup){
@@ -91,5 +93,6 @@ public class IBaseActivity extends AppCompatActivity {
         mIntent=null;
         mHandler=null;
         mContext=null;
+        RxBus.get().unregister(this);
     }
 }

@@ -1,6 +1,5 @@
 package com.zr.note.ui.main.activity;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
+import com.hwangjr.rxbus.thread.EventThread;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyRadioButton;
@@ -20,6 +23,7 @@ import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.constant.RequestCode;
+import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.contract.MainContract;
 import com.zr.note.ui.main.activity.contract.imp.MainImp;
 import com.zr.note.ui.main.fragment.AccountFragment;
@@ -30,11 +34,12 @@ import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
 
-public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View ,Action1<Object>{
+public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
+    @BindView(R.id.tv_date_endselect)
+    TextView tv_date_endselect;
+    @BindView(R.id.ll_data_check)
+    LinearLayout ll_data_check;
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
     @BindView(R.id.ctl_layout)
@@ -70,6 +75,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initView() {
+        tv_date_endselect.setOnClickListener(this);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
             @Override
@@ -83,7 +89,6 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
         ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
 
-//        RxBus.getInstance().send(1, "11");
 
         accountFragment=AccountFragment.newInstance();
         dataManageInters[0]=accountFragment;
@@ -180,20 +185,15 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     protected void initData() {
 
     }
-    @NonNull
-    private <V> Observable getStringObservable(Class<V> a) {
-        return Observable.create(new Observable.OnSubscribe<V>() {
-            @Override
-            public void call(Subscriber<? super V> subscriber) {
-
-            }
-        });
-    }
-
 
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_date_endselect:
+                rg_main.setVisibility(View.VISIBLE);
+                ll_data_check.setVisibility(View.GONE);
+                fab.setVisibility(View.VISIBLE);
+                break;
             case R.id.fab:
 //                STActivity(AddDataActivity.class);
                 mIntent.putExtra(IntentParam.tabIndex,tabIndex);
@@ -211,7 +211,19 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 mPopupwindow.dismiss();
                 if(fab.getVisibility()!=View.GONE){
                     fab.setVisibility(View.GONE);
-                    dataManageInters[tabIndex].dataBatchCheck();
+                    rg_main.setVisibility(View.GONE);
+                    ll_data_check.setVisibility(View.VISIBLE);
+                    switch (tabIndex){
+                        case 0:
+                            RxBus.get().post(RxTag.dataBatchSelect,0);
+                        break;
+                        case 1:
+                        break;
+                        case 2:
+                        break;
+                        case 3:
+                        break;
+                    }
                 }
                 break;
         }
@@ -255,7 +267,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         return new MainImp(this);
     }
 
+    @Subscribe(thread = EventThread.MAIN_THREAD,tags = {@Tag(RxTag.endDataBatchSelect)})
+    public void endDataBatchSelect(Integer index){
 
+    }
     @Override
     public void onBackPressed() {
         if(drawerlayout.isDrawerOpen(Gravity.START)) {
@@ -269,10 +284,5 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             }
         }
 
-    }
-
-    @Override
-    public void call(Object o) {
-        showToastS((String)o+"String");
     }
 }

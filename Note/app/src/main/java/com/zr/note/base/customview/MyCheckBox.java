@@ -43,12 +43,30 @@ public class MyCheckBox extends CheckBox{
         Drawable my_checked = viewNormal.getDrawable(R.styleable.MyCheckBox_my_checkbox_checked);
         int my_normal_color = viewNormal.getColor(R.styleable.MyCheckBox_my_checkbox_normal_color, this.getTextColors().getDefaultColor());
         int my_checked_color = viewNormal.getColor(R.styleable.MyCheckBox_my_checkbox_checked_color,-1);
+        int my_checked_drawable = viewNormal.getInteger(R.styleable.MyCheckBox_my_checkbox_checked_drawable, 0);
         viewNormal.recycle();
         if(my_normal!=null&&my_checked!=null){
             StateListDrawable stateListDrawable = new StateListDrawable();
             stateListDrawable.addState(new int[]{android.R.attr.state_checked}, my_checked);
             stateListDrawable.addState(new int[]{}, my_normal);
-            this.setButtonDrawable(stateListDrawable);
+            switch (my_checked_drawable){
+                case 0:
+                    this.setButtonDrawable(stateListDrawable);
+                break;
+                case 1:
+                    this.setCompoundDrawablesWithIntrinsicBounds(stateListDrawable,null,null,null);
+                break;
+                case 2:
+                    this.setCompoundDrawablesWithIntrinsicBounds(null,stateListDrawable,null,null);
+                break;
+                case 3:
+                    this.setCompoundDrawablesWithIntrinsicBounds(null,null,stateListDrawable,null);
+                break;
+                case 4:
+                    this.setCompoundDrawablesWithIntrinsicBounds(null,null,null,stateListDrawable);
+                break;
+            }
+
         }
 
         if(my_checked_color!=-1){
