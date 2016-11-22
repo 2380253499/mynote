@@ -59,5 +59,7 @@ dependencies {
     compile ('com.hwangjr.rxbus:rxbus:1.0.5') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
+    //loading
+    compile 'com.pnikosis:materialish-progress:1.7'
 //    compile project(':zrlibrary')
 }

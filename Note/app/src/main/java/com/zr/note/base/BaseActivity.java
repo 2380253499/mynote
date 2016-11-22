@@ -185,12 +185,12 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
 
     @Override
     public void showLoading() {
-
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        dismissLoading();
     }
 
     @Override

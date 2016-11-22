@@ -195,9 +195,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 fab.setVisibility(View.VISIBLE);
                 break;
             case R.id.fab:
-//                STActivity(AddDataActivity.class);
-                mIntent.putExtra(IntentParam.tabIndex,tabIndex);
-                STActivityForResult(mIntent,AddDataActivity.class, RequestCode.addDataRequestCode);
+                STActivity(AddDataActivity.class);
+                mIntent.putExtra(IntentParam.tabIndex, tabIndex);
+//                Loading.show(this);
+                STActivityForResult(mIntent, AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hwangjr.rxbus.RxBus;
 import com.zr.note.adapter.CommonAdapter;
 import com.zr.note.tools.MyDialog;
+import com.zr.note.view.Loading;
 import com.zr.note.view.MyPopupwindow;
 
 
@@ -59,7 +60,8 @@ public class IBaseActivity extends AppCompatActivity {
     }
     protected void STActivity(Intent intent,Class clazz){
         intent.setClass(this, clazz);
-        startActivity(intent);
+        startActivity(intent);//ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+
     }
     protected  void addFragment(int resId,Fragment fragment){
         if (fragment != null) {
@@ -86,6 +88,15 @@ public class IBaseActivity extends AppCompatActivity {
             mHandler=new Handler(Looper.getMainLooper());
         }
         return mHandler;
+    }
+    protected void showLoading(boolean isExit){
+        Loading.showForExit(this,isExit);
+    }
+    protected void showLoading(){
+        Loading.show(this);
+    }
+    protected void dismissLoading(){
+        Loading.dismissLoading();
     }
     @Override
     protected void onDestroy() {
