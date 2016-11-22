@@ -22,5 +22,8 @@ public interface AccountCon {
         void deleteAccountById(MyDialog.Builder mDialog, int id);
         void deleteAccountById(MyDialog.Builder mDialog,String[] id);
         void dataBatchCheck();
+        void endDataBatchSelect();
+        void checkAll(boolean isOrderByCreateTime);
+        void cancelCheckAll(boolean isOrderByCreateTime);
     }
 }

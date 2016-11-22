@@ -3,6 +3,7 @@ package com.zr.note.ui.main.fragment;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,10 +11,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddAccountDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
@@ -27,7 +30,7 @@ import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 
-public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter, DateInter.dataManageInter {
+public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter,DateInter.dataManageInter{
 
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
@@ -148,8 +151,24 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     public void dataBatchCheck() {
 
     }
-    @Subscribe
+    //开始批量选择
+    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_0))
     public void dataBatchSelect(Integer index){
-//        mPresenter.dataBatchCheck();
+        mPresenter.dataBatchCheck();
+    }
+    //取消批量选择
+    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_0))
+    public void endDataBatchSelect(Integer index){
+        mPresenter.endDataBatchSelect();
+    }
+    //true全选  false取消全选
+    @Subscribe(tags = @Tag(RxTag.dataCheckAll_0))
+    public void dataCheckAll_0(Boolean isCheckAll){
+        Log.i("=====", "====="+isCheckAll);
+        if(isCheckAll){
+            mPresenter.checkAll(isCreateTime);
+        }else{
+            mPresenter.cancelCheckAll(isCreateTime);
+        }
     }
 }

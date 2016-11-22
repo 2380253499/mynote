@@ -18,6 +18,11 @@ import com.zr.note.tools.MyDialog;
 import com.zr.note.view.Loading;
 import com.zr.note.view.MyPopupwindow;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
+
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -30,6 +35,11 @@ public class IBaseActivity extends AppCompatActivity {
     protected long mExitTime;
     protected MyPopupwindow mPopupwindow;
     protected MyDialog.Builder mDialog;
+    /****************************RxJava********************************/
+    protected Observable mObservable;
+    protected Subscriber mSubscriber;
+    protected Action1 mAction1;
+    protected Action0 mAction0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +108,9 @@ public class IBaseActivity extends AppCompatActivity {
     protected void dismissLoading(){
         Loading.dismissLoading();
     }
+    protected Observable getmObservable(){
+        return mObservable;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -105,5 +118,8 @@ public class IBaseActivity extends AppCompatActivity {
         mHandler=null;
         mContext=null;
         RxBus.get().unregister(this);
+        if(mSubscriber!=null&&!mSubscriber.isUnsubscribed()){
+            mSubscriber.unsubscribe();
+        }
     }
 }

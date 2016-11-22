@@ -153,13 +153,14 @@
                     >
 
                     <com.zr.note.base.customview.MyCheckBox
+                        android:id="@+id/cb_data_checkall"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:button="@null"
                         android:drawablePadding="15dp"
-                        android:paddingLeft="9dp"
+                        android:paddingLeft="10dp"
                         android:text="全选"
                         app:my_checkbox_checked="@drawable/check_select"
                         app:my_checkbox_checked_color="@color/colorText"

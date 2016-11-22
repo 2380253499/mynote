@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 import com.zr.note.tools.ClickUtils;
 
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -24,11 +20,7 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     protected abstract void initView();
     protected abstract void initData();
     protected abstract void viewOnClick(View v);
-    /****************************RxJava********************************/
-    protected Observable mObservable;
-    protected Subscriber mSubscriber,cSubscriber;
-    protected Action1 mAction1;
-    protected Action0 mAction0;
+
     /************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,9 +88,6 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
         super.onDestroy();
         if(mPresenter!=null){
             mPresenter.detach();
-        }
-        if(mSubscriber!=null&&!mSubscriber.isUnsubscribed()){
-            mSubscriber.unsubscribe();
         }
     }
 }

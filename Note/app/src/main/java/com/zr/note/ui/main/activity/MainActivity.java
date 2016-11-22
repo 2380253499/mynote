@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -36,6 +37,10 @@ import com.zr.note.view.MyPopupwindow;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
+    @BindView(R.id.cb_data_checkall)
+    CheckBox cb_data_checkall;
+    @BindView(R.id.tv_data_delete)
+    TextView tv_data_delete;
     @BindView(R.id.tv_date_endselect)
     TextView tv_date_endselect;
     @BindView(R.id.ll_data_check)
@@ -96,69 +101,95 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_main_account:
-                        tabIndex = 0;
-                        showFragment(accountFragment);
-                        hideFragment(memoFragment);
-                        hideFragment(jokeFragment);
-                        hideFragment(spendFragment);
-                        setMenuHidden();
-                        break;
-                    case R.id.rb_main_memo:
-                        tabIndex = 1;
-                        if (memoFragment == null) {
-                            memoFragment = MemoFragment.newInstance();
-                            dataManageInters[1] = memoFragment;
-                            hideFragment(accountFragment);
-                            addFragment(R.id.fl_fragment, memoFragment);
-                            hideFragment(jokeFragment);
-                            hideFragment(spendFragment);
-                        } else {
-                            hideFragment(accountFragment);
-                            showFragment(memoFragment);
-                            hideFragment(jokeFragment);
-                            hideFragment(spendFragment);
-                        }
-                        setMenuHidden();
-                        break;
-                    case R.id.rb_main_joke:
-                        tabIndex = 2;
-                        if (jokeFragment == null) {
-                            jokeFragment = JokeFragment.newInstance();
-                            dataManageInters[2] = jokeFragment;
-                            hideFragment(accountFragment);
-                            hideFragment(memoFragment);
-                            addFragment(R.id.fl_fragment, jokeFragment);
-                            hideFragment(spendFragment);
-                        } else {
-                            hideFragment(accountFragment);
-                            hideFragment(memoFragment);
-                            showFragment(jokeFragment);
-                            hideFragment(spendFragment);
-                        }
-                        setMenuHidden();
-                        break;
-                    case R.id.rb_main_spend:
-                        tabIndex = 3;
-                        if (spendFragment == null) {
-                            spendFragment = SpendFragment.newInstance();
-                            dataManageInters[3] = spendFragment;
-                            hideFragment(accountFragment);
-                            hideFragment(memoFragment);
-                            hideFragment(jokeFragment);
-                            addFragment(R.id.fl_fragment, spendFragment);
-                        } else {
-                            hideFragment(accountFragment);
-                            hideFragment(memoFragment);
-                            hideFragment(jokeFragment);
-                            showFragment(spendFragment);
-                        }
-                        setMenuHidden();
-                        break;
-                }
+                addFragment(checkedId);
             }
         });
+        //批量删除数据-全选
+        cb_data_checkall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkClick();
+            }
+        });
+    }
+
+    private void checkClick() {
+        boolean isChecked = cb_data_checkall.isChecked();
+        switch (tabIndex){
+            case 0:
+                RxBus.get().post(RxTag.dataCheckAll_0,isChecked);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void addFragment(int checkedId) {
+        switch (checkedId) {
+            case R.id.rb_main_account:
+                tabIndex = 0;
+                showFragment(accountFragment);
+                hideFragment(memoFragment);
+                hideFragment(jokeFragment);
+                hideFragment(spendFragment);
+                setMenuHidden();
+                break;
+            case R.id.rb_main_memo:
+                tabIndex = 1;
+                if (memoFragment == null) {
+                    memoFragment = MemoFragment.newInstance();
+                    dataManageInters[1] = memoFragment;
+                    hideFragment(accountFragment);
+                    addFragment(R.id.fl_fragment, memoFragment);
+                    hideFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    showFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+            case R.id.rb_main_joke:
+                tabIndex = 2;
+                if (jokeFragment == null) {
+                    jokeFragment = JokeFragment.newInstance();
+                    dataManageInters[2] = jokeFragment;
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    addFragment(R.id.fl_fragment, jokeFragment);
+                    hideFragment(spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    showFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+            case R.id.rb_main_spend:
+                tabIndex = 3;
+                if (spendFragment == null) {
+                    spendFragment = SpendFragment.newInstance();
+                    dataManageInters[3] = spendFragment;
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    addFragment(R.id.fl_fragment, spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    showFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+        }
     }
 
     private void setMenuHidden() {
@@ -189,15 +220,31 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_data_delete:
+                break;
             case R.id.tv_date_endselect:
+                setMenuVisible(0);
                 rg_main.setVisibility(View.VISIBLE);
                 ll_data_check.setVisibility(View.GONE);
                 fab.setVisibility(View.VISIBLE);
+                switch (tabIndex){
+                    case 0:
+                        RxBus.get().post(RxTag.endDataBatchSelect_0,0);
+                    break;
+                    case 1:
+                        RxBus.get().post(RxTag.endDataBatchSelect_1,1);
+                    break;
+                    case 2:
+                        RxBus.get().post(RxTag.endDataBatchSelect_2,2);
+                    break;
+                    case 3:
+                        RxBus.get().post(RxTag.endDataBatchSelect_3,3);
+                    break;
+                }
                 break;
             case R.id.fab:
                 STActivity(AddDataActivity.class);
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
-//                Loading.show(this);
                 STActivityForResult(mIntent, AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
             case R.id.tv_orderBy_create:
@@ -208,15 +255,17 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 dataManageInters[tabIndex].orderByCreateTime(false);
                 mPopupwindow.dismiss();
                 break;
+            //批量删除
             case R.id.tv_batchDelete:
                 mPopupwindow.dismiss();
+                setMenuVisible(0,false);
                 if(fab.getVisibility()!=View.GONE){
                     fab.setVisibility(View.GONE);
                     rg_main.setVisibility(View.GONE);
                     ll_data_check.setVisibility(View.VISIBLE);
                     switch (tabIndex){
                         case 0:
-                            RxBus.get().post(RxTag.dataBatchSelect,0);
+                            RxBus.get().post(RxTag.dataBatchSelect_0,0);
                         break;
                         case 1:
                         break;
@@ -268,7 +317,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         return new MainImp(this);
     }
 
-    @Subscribe(thread = EventThread.MAIN_THREAD,tags = {@Tag(RxTag.endDataBatchSelect)})
+    @Subscribe(thread = EventThread.MAIN_THREAD,tags = {@Tag(RxTag.endDataBatchSelect_0)})
     public void endDataBatchSelect(Integer index){
 
     }
@@ -284,6 +333,15 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 super.onBackPressed();
             }
         }
-
+    }
+    //逐个选择-->全选
+    @Subscribe(tags = @Tag(RxTag.dataSelectAll))
+    public void dataSelectAll(Integer index){
+        cb_data_checkall.setChecked(true);
+    }
+    //取消某个选择-->取消全选
+    @Subscribe(tags = @Tag(RxTag.dataNoSelectAll))
+    public void dataNoSelectAll(Integer index){
+        cb_data_checkall.setChecked(false);
     }
 }

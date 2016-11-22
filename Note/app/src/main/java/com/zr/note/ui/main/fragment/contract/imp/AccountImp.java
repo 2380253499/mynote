@@ -75,6 +75,24 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
         accountAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void endDataBatchSelect() {
+        accountAdapter.setCheck(false);
+        accountAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void checkAll(boolean isOrderByCreateTime) {
+        accountAdapter.checkAll(isOrderByCreateTime);
+        accountAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void cancelCheckAll(boolean isOrderByCreateTime) {
+        accountAdapter.cancelCheckAll(isOrderByCreateTime);
+        accountAdapter.notifyDataSetChanged();
+    }
+
     @NonNull
     private DialogInterface.OnClickListener getDeleteAccountListener(final String[] id) {
         return new DialogInterface.OnClickListener() {

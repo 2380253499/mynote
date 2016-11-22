@@ -11,6 +11,10 @@ import com.zr.note.tools.MyDialog;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 public class IBaseFragment extends Fragment {
     protected Intent mIntent;
@@ -18,6 +22,11 @@ public class IBaseFragment extends Fragment {
     protected CommonAdapter mAdapter;
     protected MyPopupwindow mPopupwindow;
     protected MyDialog.Builder mDialog;
+    /****************************RxJava********************************/
+    protected Observable mObservable;
+    protected Subscriber mSubscriber,cSubscriber;
+    protected Action1 mAction1;
+    protected Action0 mAction0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +50,12 @@ public class IBaseFragment extends Fragment {
         startActivity(new Intent(getActivity(), clazz));
     }
     protected void STActivity(Intent intent,Class clazz){
-        intent.setClass(getActivity(),clazz);
+        intent.setClass(getActivity(), clazz);
         startActivity(intent);
+    }
+
+    protected Observable getmObservable(){
+        return mObservable;
     }
 
     @Override
@@ -56,5 +69,8 @@ public class IBaseFragment extends Fragment {
         super.onDestroy();
         mIntent =null;
         RxBus.get().unregister(this);
+        if(mSubscriber!=null&&!mSubscriber.isUnsubscribed()){
+            mSubscriber.unsubscribe();
+        }
     }
 }
