@@ -1,6 +1,7 @@
 package com.zr.note.ui.main.fragment.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
@@ -9,7 +10,6 @@ import com.hwangjr.rxbus.RxBus;
 import com.zr.note.R;
 import com.zr.note.adapter.CommonAdapter;
 import com.zr.note.adapter.ViewHolder;
-import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.entity.AccountBean;
 
@@ -22,14 +22,14 @@ import java.util.List;
 public class AccountAdapter extends CommonAdapter<AccountBean> {
     private SparseBooleanArray checkState;
     private boolean startCheck;
-    private List<String> data_id;
+    private List<Integer> data_id;
     public AccountAdapter(Context context, List<AccountBean> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
         checkState=new SparseBooleanArray();
-        data_id=new ArrayList<String>();
+        data_id=new ArrayList<Integer>();
     }
 
-    public List<String> getData_id() {
+    public List<Integer> getData_id() {
         return data_id;
     }
 
@@ -45,14 +45,14 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
         helper.setText(R.id.tv_data_id, stringBuffer.toString()+""+position)
                 .setText(R.id.tv_source, item.getDataSource())
                 .setText(R.id.tv_account, item.getDataAccount());
-        cb_check.setOnClickListener(new MyOnClickListener() {
+        cb_check.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected void onNoDoubleClick(View v) {
+            public void onClick(View v) {
                 boolean isChecked = cb_check.isChecked();
                 checkState.put(helper.getPosition(), isChecked);
                 if (isChecked) {
-                    if (!data_id.contains(item.get_id())) {
-                        data_id.add(item.get_id() + "");
+                    if (!data_id.contains(item.get_id() )) {
+                        data_id.add(item.get_id() );
                     }
                     if (data_id.size() == getCount()) {//选择的item数量和数据集数量相等时选中全选按钮
                         RxBus.get().post(RxTag.dataSelectAll, 0);
@@ -64,6 +64,7 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
                     }
                     RxBus.get().post(RxTag.dataNoSelectAll, 0);
                 }
+                Log.i("====", "===="+data_id.size());
             }
         });
         if(startCheck){
@@ -84,7 +85,7 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
         for (int i = 0; i < mDatas.size(); i++) {
             checkState.put(i,true);
             if(!data_id.contains(mDatas.get(i).get_id())){
-                data_id.add(mDatas.get(i).get_id()+"");
+                data_id.add(mDatas.get(i).get_id());
             }
         }
     }
