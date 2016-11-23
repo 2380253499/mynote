@@ -10,10 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddJokeDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
@@ -121,7 +125,7 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
 
     @Override
     public void selectData() {
-        mPresenter.selectData(lv_joke_list,isCreateTime);
+        mPresenter.selectData(lv_joke_list, isCreateTime);
     }
 
     @Override
@@ -136,8 +140,31 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
             this.isCreateTime = isCreateTime;
             selectData();
         }
-
     }
-
+    //开始批量选择
+    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_joke))
+    public void dataBatchSelect(Integer index){
+        boolean notEmpty = mPresenter.dataBatchCheckNotEmpty();
+        RxBus.get().post(RxTag.notEmpty, notEmpty);
+    }
+    //取消批量选择
+    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_joke))
+    public void endDataBatchSelect(Integer index){
+        mPresenter.endDataBatchSelect();
+    }
+    //true全选  false取消全选
+    @Subscribe(tags = @Tag(RxTag.dataCheckAll_joke))
+    public void dataCheckAll_2(Boolean isCheckAll){
+        if(isCheckAll){
+            mPresenter.checkAll(isCreateTime);
+        }else{
+            mPresenter.cancelCheckAll(isCreateTime);
+        }
+    }
+    //开始删除
+    @Subscribe(tags = @Tag(RxTag.deleteAll_joke))
+    public void deleteAll_2(Integer index){
+        mPresenter.deleteAll();
+    }
 
 }

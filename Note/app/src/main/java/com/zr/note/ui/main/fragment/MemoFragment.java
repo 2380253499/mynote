@@ -141,18 +141,18 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
 
     }
     //开始批量选择
-    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_1))
+    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_memo))
     public void dataBatchSelect(Integer index){
         boolean notEmpty = mPresenter.dataBatchCheckNotEmpty();
         RxBus.get().post(RxTag.notEmpty, notEmpty);
     }
     //取消批量选择
-    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_1))
+    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_memo))
     public void endDataBatchSelect(Integer index){
         mPresenter.endDataBatchSelect();
     }
     //true全选  false取消全选
-    @Subscribe(tags = @Tag(RxTag.dataCheckAll_1))
+    @Subscribe(tags = @Tag(RxTag.dataCheckAll_memo))
     public void dataCheckAll_1(Boolean isCheckAll){
         if(isCheckAll){
             mPresenter.checkAll(isCreateTime);
@@ -161,7 +161,7 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
         }
     }
     //开始删除
-    @Subscribe(tags = @Tag(RxTag.deleteAll_1))
+    @Subscribe(tags = @Tag(RxTag.deleteAll_memo))
     public void deleteAll_1(Integer index){
         mPresenter.deleteAll();
     }

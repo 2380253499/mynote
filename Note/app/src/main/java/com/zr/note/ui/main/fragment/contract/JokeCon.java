@@ -21,5 +21,11 @@ public interface JokeCon {
         JokeBean copyJoke(int position);
         void deleteJokeById(MyDialog.Builder mDialog, int id);
         void deleteJokeById(MyDialog.Builder mDialog, String[] id);
+
+        boolean dataBatchCheckNotEmpty();
+        void endDataBatchSelect();
+        void checkAll(boolean isOrderByCreateTime);
+        void cancelCheckAll(boolean isOrderByCreateTime);
+        void deleteAll();
     }
 }

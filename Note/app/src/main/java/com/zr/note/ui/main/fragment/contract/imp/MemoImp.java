@@ -8,7 +8,6 @@ import com.hwangjr.rxbus.RxBus;
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
 import com.zr.note.database.DBManager;
-import com.zr.note.tools.LogUtils;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.entity.MemoBean;
@@ -145,8 +144,8 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                             List<Integer> data_id = memoAdapter.getData_id();
                             final boolean isDeleteAll=data_id.size()==memoAdapter.getCount();
                             for (int i = 0; i < data_id.size(); i++) {
-                                LogUtils.Log("====" + data_id.get(i) + "============");
-//                                DBManager.getInstance(mContext).deleteMemo(data_id.get(i));
+//                                LogUtils.Log("====" + data_id.get(i) + "============");
+                                DBManager.getInstance(mContext).deleteMemo(data_id.get(i));
                             }
                             mHandler.post(new Runnable() {
                                 @Override

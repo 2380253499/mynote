@@ -116,10 +116,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         boolean isChecked = cb_data_checkall.isChecked();
         switch (tabIndex){
             case 0:
-                RxBus.get().post(RxTag.dataCheckAll_0,isChecked);
+                RxBus.get().post(RxTag.dataCheckAll_account,isChecked);
                 break;
             case 1:
-                RxBus.get().post(RxTag.dataCheckAll_1,isChecked);
+                RxBus.get().post(RxTag.dataCheckAll_memo,isChecked);
                 break;
             case 2:
                 break;
@@ -224,13 +224,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             case R.id.tv_data_delete:
                 switch (tabIndex){
                     case 0:
-                        RxBus.get().post(RxTag.deleteAll_0,0);
+                        RxBus.get().post(RxTag.deleteAll_account,0);
                         break;
                     case 1:
-                        RxBus.get().post(RxTag.deleteAll_1,1);
+                        RxBus.get().post(RxTag.deleteAll_memo,1);
                         break;
                     case 2:
-                        RxBus.get().post(RxTag.deleteAll_2,2);
+                        RxBus.get().post(RxTag.deleteAll_joke,2);
                         break;
                     case 3:
                         RxBus.get().post(RxTag.deleteAll_3,3);
@@ -246,13 +246,13 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 cb_data_checkall.setChecked(false);
                 switch (tabIndex){
                     case 0:
-                        RxBus.get().post(RxTag.endDataBatchSelect_0,0);
+                        RxBus.get().post(RxTag.endDataBatchSelect_account,0);
                     break;
                     case 1:
-                        RxBus.get().post(RxTag.endDataBatchSelect_1,1);
+                        RxBus.get().post(RxTag.endDataBatchSelect_memo,1);
                     break;
                     case 2:
-                        RxBus.get().post(RxTag.endDataBatchSelect_2,2);
+                        RxBus.get().post(RxTag.endDataBatchSelect_joke,2);
                     break;
                     case 3:
                         RxBus.get().post(RxTag.endDataBatchSelect_3,3);
@@ -277,14 +277,16 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 if(fab.getVisibility()!=View.GONE){
                     switch (tabIndex){
                         case 0:
-                            RxBus.get().post(RxTag.dataBatchSelect_0,tabIndex);
+                            RxBus.get().post(RxTag.dataBatchSelect_account,tabIndex);
                         break;
                         case 1:
-                            RxBus.get().post(RxTag.dataBatchSelect_1,tabIndex);
+                            RxBus.get().post(RxTag.dataBatchSelect_memo,tabIndex);
                         break;
                         case 2:
+                            RxBus.get().post(RxTag.dataBatchSelect_joke,tabIndex);
                         break;
                         case 3:
+                            RxBus.get().post(RxTag.dataBatchSelect_3,tabIndex);
                         break;
                     }
                 }

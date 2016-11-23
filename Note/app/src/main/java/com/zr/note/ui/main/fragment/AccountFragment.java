@@ -141,20 +141,19 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             selectData();
         }
     }
-
     //开始批量选择
-    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_0))
+    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_account))
     public void dataBatchSelect(Integer index){
         boolean notEmpty = mPresenter.dataBatchCheckNotEmpty();
         RxBus.get().post(RxTag.notEmpty,notEmpty);
     }
     //取消批量选择
-    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_0))
+    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_account))
     public void endDataBatchSelect(Integer index){
         mPresenter.endDataBatchSelect();
     }
     //true全选  false取消全选
-    @Subscribe(tags = @Tag(RxTag.dataCheckAll_0))
+    @Subscribe(tags = @Tag(RxTag.dataCheckAll_account))
     public void dataCheckAll_0(Boolean isCheckAll){
         if(isCheckAll){
             mPresenter.checkAll(isCreateTime);
@@ -163,7 +162,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         }
     }
     //开始删除
-    @Subscribe(tags = @Tag(RxTag.deleteAll_0))
+    @Subscribe(tags = @Tag(RxTag.deleteAll_account))
     public void deleteAll_0(Integer index){
         mPresenter.deleteAll_0();
     }
