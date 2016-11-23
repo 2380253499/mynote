@@ -3,13 +3,13 @@ package com.zr.note.ui.main.fragment;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.zr.note.R;
@@ -154,7 +154,8 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     //开始批量选择
     @Subscribe(tags = @Tag(RxTag.dataBatchSelect_0))
     public void dataBatchSelect(Integer index){
-        mPresenter.dataBatchCheck();
+        boolean notEmpty = mPresenter.dataBatchCheckNotEmpty();
+        RxBus.get().post(RxTag.notEmpty,notEmpty);
     }
     //取消批量选择
     @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_0))
@@ -164,11 +165,15 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     //true全选  false取消全选
     @Subscribe(tags = @Tag(RxTag.dataCheckAll_0))
     public void dataCheckAll_0(Boolean isCheckAll){
-        Log.i("=====", "====="+isCheckAll);
         if(isCheckAll){
             mPresenter.checkAll(isCreateTime);
         }else{
             mPresenter.cancelCheckAll(isCreateTime);
         }
+    }
+    //开始删除
+    @Subscribe(tags = @Tag(RxTag.deleteAll_0))
+    public void deleteAll_0(Integer index){
+        mPresenter.deleteAll_0();
     }
 }

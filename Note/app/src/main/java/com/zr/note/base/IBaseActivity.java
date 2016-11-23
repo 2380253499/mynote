@@ -108,9 +108,6 @@ public class IBaseActivity extends AppCompatActivity {
     protected void dismissLoading(){
         Loading.dismissLoading();
     }
-    protected Observable getmObservable(){
-        return mObservable;
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

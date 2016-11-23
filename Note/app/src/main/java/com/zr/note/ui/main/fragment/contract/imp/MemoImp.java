@@ -80,7 +80,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
         mDialog.create().show();
     }
 
-    @Override
+    @Deprecated
     public void deleteMemoById(MyDialog.Builder mDialog,final String[] id) {
         mDialog=new MyDialog.Builder(mContext);
         mDialog.setPositiveButton(new DialogInterface.OnClickListener() {

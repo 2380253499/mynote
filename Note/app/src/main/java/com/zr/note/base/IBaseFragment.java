@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.hwangjr.rxbus.RxBus;
 import com.zr.note.adapter.CommonAdapter;
 import com.zr.note.tools.MyDialog;
+import com.zr.note.view.Loading;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.Unbinder;
@@ -53,9 +54,14 @@ public class IBaseFragment extends Fragment {
         intent.setClass(getActivity(), clazz);
         startActivity(intent);
     }
-
-    protected Observable getmObservable(){
-        return mObservable;
+    protected void showLoading(boolean isExit){
+        Loading.showForExit(getActivity(), isExit);
+    }
+    protected void showLoading(){
+        Loading.show(getActivity());
+    }
+    protected void dismissLoading(){
+        Loading.dismissLoading();
     }
 
     @Override

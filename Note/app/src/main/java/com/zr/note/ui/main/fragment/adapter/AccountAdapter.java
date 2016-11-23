@@ -79,6 +79,8 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
     }
     public void setCheck(boolean check){
         startCheck=check;
+        data_id.clear();
+        checkState.clear();
     }
 
     public void checkAll(final boolean isOrderByCreateTime) {

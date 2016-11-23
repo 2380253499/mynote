@@ -16,14 +16,12 @@ import com.bumptech.glide.Glide;
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
-import com.hwangjr.rxbus.thread.EventThread;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.base.customview.MyRadioButton;
 import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
-import com.zr.note.ui.constant.RequestCode;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.contract.MainContract;
 import com.zr.note.ui.main.activity.contract.imp.MainImp;
@@ -80,6 +78,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initView() {
+        tv_data_delete.setOnClickListener(this);
         tv_date_endselect.setOnClickListener(this);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
@@ -221,12 +220,28 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     protected void viewOnClick(View v) {
         switch (v.getId()) {
             case R.id.tv_data_delete:
+                switch (tabIndex){
+                    case 0:
+                        RxBus.get().post(RxTag.deleteAll_0,0);
+                        break;
+                    case 1:
+                        RxBus.get().post(RxTag.deleteAll_1,1);
+                        break;
+                    case 2:
+                        RxBus.get().post(RxTag.deleteAll_2,2);
+                        break;
+                    case 3:
+                        RxBus.get().post(RxTag.deleteAll_3,3);
+                        break;
+                }
                 break;
+            //取消批量删除
             case R.id.tv_date_endselect:
                 setMenuVisible(0);
                 rg_main.setVisibility(View.VISIBLE);
                 ll_data_check.setVisibility(View.GONE);
                 fab.setVisibility(View.VISIBLE);
+                cb_data_checkall.setChecked(false);
                 switch (tabIndex){
                     case 0:
                         RxBus.get().post(RxTag.endDataBatchSelect_0,0);
@@ -245,7 +260,6 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             case R.id.fab:
                 STActivity(AddDataActivity.class);
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
-                STActivityForResult(mIntent, AddDataActivity.class, RequestCode.addDataRequestCode);
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);
@@ -258,11 +272,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
             //批量删除
             case R.id.tv_batchDelete:
                 mPopupwindow.dismiss();
-                setMenuVisible(0,false);
                 if(fab.getVisibility()!=View.GONE){
-                    fab.setVisibility(View.GONE);
-                    rg_main.setVisibility(View.GONE);
-                    ll_data_check.setVisibility(View.VISIBLE);
                     switch (tabIndex){
                         case 0:
                             RxBus.get().post(RxTag.dataBatchSelect_0,0);
@@ -278,7 +288,26 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 break;
         }
     }
-
+    //批量删除之前判断是否为空数据
+    @Subscribe(tags = @Tag(RxTag.notEmpty))
+    public void dataBatchSelect(Boolean notEmpty){
+        if(notEmpty){
+            startDataBatchSelect();
+        }
+    }
+    public void startDataBatchSelect(){
+        setMenuVisible(0, false);
+        fab.setVisibility(View.GONE);
+        rg_main.setVisibility(View.GONE);
+        ll_data_check.setVisibility(View.VISIBLE);
+    }
+    public void endDataBatchSelect(){
+        setMenuVisible(0);
+        rg_main.setVisibility(View.VISIBLE);
+        ll_data_check.setVisibility(View.GONE);
+        fab.setVisibility(View.VISIBLE);
+        cb_data_checkall.setChecked(false);
+    }
     @Override
     protected void menuOnClick(int itemId) {
         switch (itemId) {
@@ -317,10 +346,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
         return new MainImp(this);
     }
 
-    @Subscribe(thread = EventThread.MAIN_THREAD,tags = {@Tag(RxTag.endDataBatchSelect_0)})
-    public void endDataBatchSelect(Integer index){
 
-    }
     @Override
     public void onBackPressed() {
         if(drawerlayout.isDrawerOpen(Gravity.START)) {
@@ -343,5 +369,12 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     @Subscribe(tags = @Tag(RxTag.dataNoSelectAll))
     public void dataNoSelectAll(Integer index){
         cb_data_checkall.setChecked(false);
+    }
+    //是否删除全部-->成功
+    @Subscribe(tags = @Tag(RxTag.dataDeleteAllSuccess))
+    public void dataDeleteAllSuccess(Boolean isDeleteAllSuccess){
+        if(isDeleteAllSuccess){
+            endDataBatchSelect();
+        }
     }
 }
