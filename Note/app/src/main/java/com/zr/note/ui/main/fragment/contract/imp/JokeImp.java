@@ -8,7 +8,6 @@ import com.hwangjr.rxbus.RxBus;
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
 import com.zr.note.database.DBManager;
-import com.zr.note.tools.LogUtils;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.entity.JokeBean;
@@ -92,7 +91,6 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
 
     @Override
     public void checkAll(boolean isOrderByCreateTime) {
-
         jokeAdapter.checkAll(isOrderByCreateTime);
         jokeAdapter.notifyDataSetChanged();
     }
@@ -126,8 +124,8 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
                             List<Integer> data_id = jokeAdapter.getData_id();
                             final boolean isDeleteAll=data_id.size()==jokeAdapter.getCount();
                             for (int i = 0; i < data_id.size(); i++) {
-                                LogUtils.Log("====" + data_id.get(i) + "============");
-//                                DBManager.getInstance(mContext).deleteAccount(data_id.get(i));
+//                                LogUtils.Log("====" + data_id.get(i) + "============");
+                                DBManager.getInstance(mContext).deleteJoke(data_id.get(i));
                             }
                             mHandler.post(new Runnable() {
                                 @Override

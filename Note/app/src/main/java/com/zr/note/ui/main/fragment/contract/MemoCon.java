@@ -20,7 +20,6 @@ public interface MemoCon {
         List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
         MemoBean copyMemo(int position);
         void deleteMemoById(MyDialog.Builder mDialog, int id);
-        void deleteMemoById(MyDialog.Builder mDialog, String[] id);
         boolean dataBatchCheckNotEmpty();
         void endDataBatchSelect();
         void checkAll(boolean isOrderByCreateTime);

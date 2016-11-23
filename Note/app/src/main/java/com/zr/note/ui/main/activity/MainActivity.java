@@ -122,8 +122,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 RxBus.get().post(RxTag.dataCheckAll_memo,isChecked);
                 break;
             case 2:
+                RxBus.get().post(RxTag.dataCheckAll_joke,isChecked);
                 break;
             case 3:
+                RxBus.get().post(RxTag.dataCheckAll_3,isChecked);
                 break;
         }
     }

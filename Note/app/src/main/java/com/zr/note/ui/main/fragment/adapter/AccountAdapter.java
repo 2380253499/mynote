@@ -95,4 +95,10 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
         data_id.clear();
         checkState.clear();
     }
+
+    @Override
+    public void setData(List<AccountBean> mDatas) {
+        super.setData(mDatas);
+        cancelCheckAll(true);
+    }
 }

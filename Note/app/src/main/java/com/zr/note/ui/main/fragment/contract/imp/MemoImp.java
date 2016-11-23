@@ -67,30 +67,6 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
         mDialog.create().show();
     }
 
-    @Deprecated
-    public void deleteMemoById(MyDialog.Builder mDialog,final String[] id) {
-        mDialog=new MyDialog.Builder(mContext);
-        mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                boolean flag = DBManager.getInstance(mContext).deleteAccount(id);
-                if(flag){
-                    mView.showMsg("删除成功");
-                    mView.selectData();
-                }else{
-                    mView.showMsg("删除失败");
-                }
-                dialog.dismiss();
-            }
-        });
-        mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        mDialog.create().show();
-    }
 
     @Override
     public boolean dataBatchCheckNotEmpty() {

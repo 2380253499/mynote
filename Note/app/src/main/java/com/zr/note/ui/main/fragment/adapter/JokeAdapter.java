@@ -97,4 +97,9 @@ public class JokeAdapter extends CommonAdapter<JokeBean> {
         data_id.clear();
         checkState.clear();
     }
+    @Override
+    public void setData(List<JokeBean> mDatas) {
+        super.setData(mDatas);
+        cancelCheckAll(true);
+    }
 }

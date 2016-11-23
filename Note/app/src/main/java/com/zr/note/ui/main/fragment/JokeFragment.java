@@ -154,7 +154,7 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
     }
     //true全选  false取消全选
     @Subscribe(tags = @Tag(RxTag.dataCheckAll_joke))
-    public void dataCheckAll_2(Boolean isCheckAll){
+    public void dataCheckAll_joke(Boolean isCheckAll){
         if(isCheckAll){
             mPresenter.checkAll(isCreateTime);
         }else{
