@@ -114,4 +114,5 @@
     <string name="joke_prompt">(%1$s/3000)</string>
     <string name="live_spend">消费:%1$8.1f元</string>
     <string name="delete_data">确认删除选中的数据吗?</string>
+    <string name="search_info">请输入搜索条件</string>
 </resources>
