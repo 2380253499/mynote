@@ -57,6 +57,9 @@ public class DBConstant {
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "liveSpend DOUBLE," +
             "dataRemark TEXT," +
+            "localYear  VARCHAR2 NOT NULL DEFAULT (strftime('%Y','now'))," +
+            "localMonth VARCHAR2 NOT NULL DEFAULT (strftime('%m','now'))," +
+            "localDay   VARCHAR2 NOT NULL DEFAULT (strftime('%d','now'))," +
             "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
 }

@@ -31,3 +31,8 @@ liveSpend DOUBLE,   --生活消费
 dataRemark TEXT,         --备注
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
 creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+
+//v3  新增year,month,day三个字段
+select strftime('%Y','now');当前年
+select strftime('%m','now');当前月
+select strftime('%d','now');当前日

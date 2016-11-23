@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class DBManager extends SQLiteOpenHelper{
     private static final String dbName="MyNote";
-    private static final int version=2;
+    private static final int version=3;
     private static DBManager dbManager;
     public static final String T_Account_Note="T_Account_Note";
     public static final String T_Memo_Note="T_Memo_Note";
@@ -47,7 +47,11 @@ public class DBManager extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         addDataTable(db);
     }
-
+    private void addDataTable(SQLiteDatabase db,String table) {
+        if (noExistTable(db,table)) {
+            db.execSQL(DBConstant.T_Spend_Note);
+        }
+    }
     private void addDataTable(SQLiteDatabase db) {
         if (noExistTable(db,T_Account_Note)) {
             db.execSQL(DBConstant.T_Account_Note);
@@ -65,7 +69,28 @@ public class DBManager extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        addDataTable(db);
+        switch (oldVersion){
+            case 1:
+                if(existTable(db,T_Spend_Note)){
+                    dropTable(db,T_Spend_Note);
+                    addDataTable(db,DBConstant.T_Spend_Note);
+                }
+            break;
+            case 2:
+                if(existTable(db,T_Spend_Note)){
+                    dropTable(db,T_Spend_Note);
+                    addDataTable(db,DBConstant.T_Spend_Note);
+                }
+            break;
+        }
+    }
+    private boolean dropTable(SQLiteDatabase db,String table){
+        try{
+            db.execSQL("drop table "+table);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
     private boolean existTable(SQLiteDatabase db,String table){
         boolean exits = false;
@@ -356,12 +381,12 @@ public class DBManager extends SQLiteOpenHelper{
         while (query.moveToNext()){
             bean=new SpendBean();
             int id=query.getInt(query.getColumnIndex(DBConstant._id));
-            String liveSpend=query.getString(query.getColumnIndex(DBConstant.liveSpend));
+            Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
             String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setLiveSpend(Double.parseDouble(AES.decode(liveSpend)));
+            bean.setLiveSpend(liveSpend);
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
@@ -381,7 +406,7 @@ public class DBManager extends SQLiteOpenHelper{
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.liveSpend, AES.encode(bean.getLiveSpend()+""));
+        values.put(DBConstant.liveSpend, bean.getLiveSpend());
         values.put(DBConstant.updateTime,DateUtils.getLocalDate());
         long insert = db.update(T_Spend_Note, values, DBConstant._id+"=?", new String[]{bean.get_id()+""});
         LogUtils.Log(insert);
@@ -392,7 +417,7 @@ public class DBManager extends SQLiteOpenHelper{
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.liveSpend, AES.encode(bean.getLiveSpend()+""));
+        values.put(DBConstant.liveSpend, bean.getLiveSpend());
         long insert = db.insert(T_Spend_Note, null, values);
         LogUtils.Log(insert);
         db.close();
