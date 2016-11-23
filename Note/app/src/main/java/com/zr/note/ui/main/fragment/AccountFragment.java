@@ -25,12 +25,11 @@ import com.zr.note.ui.main.fragment.contract.AccountCon;
 import com.zr.note.ui.main.fragment.contract.imp.AccountImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 import com.zr.note.ui.main.inter.DateInter;
-import com.zr.note.ui.main.inter.DeteleDataInter;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 
-public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DeteleDataInter,DateInter.dataManageInter{
+public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DateInter.dataManageInter{
 
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
@@ -128,10 +127,6 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             break;
         }
     }
-    @Override
-    public boolean deleteData() {
-        return false;
-    }
 
     @Override
     public void onDestroy() {
@@ -147,10 +142,6 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         }
     }
 
-    @Override
-    public void dataBatchCheck() {
-
-    }
     //开始批量选择
     @Subscribe(tags = @Tag(RxTag.dataBatchSelect_0))
     public void dataBatchSelect(Integer index){

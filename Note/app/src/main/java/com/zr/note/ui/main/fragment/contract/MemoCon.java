@@ -21,5 +21,10 @@ public interface MemoCon {
         MemoBean copyMemo(int position);
         void deleteMemoById(MyDialog.Builder mDialog, int id);
         void deleteMemoById(MyDialog.Builder mDialog, String[] id);
+        boolean dataBatchCheckNotEmpty();
+        void endDataBatchSelect();
+        void checkAll(boolean isOrderByCreateTime);
+        void cancelCheckAll(boolean isOrderByCreateTime);
+        void deleteAll();
     }
 }

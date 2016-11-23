@@ -139,8 +139,5 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
 
     }
 
-    @Override
-    public void dataBatchCheck() {
 
-    }
 }

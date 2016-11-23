@@ -10,10 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
+import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.AddDataActivity;
 import com.zr.note.ui.main.broadcast.AddMemoDataBro;
 import com.zr.note.ui.main.broadcast.BroFilter;
@@ -136,9 +140,29 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
         }
 
     }
-
-    @Override
-    public void dataBatchCheck() {
-
+    //开始批量选择
+    @Subscribe(tags = @Tag(RxTag.dataBatchSelect_1))
+    public void dataBatchSelect(Integer index){
+        boolean notEmpty = mPresenter.dataBatchCheckNotEmpty();
+        RxBus.get().post(RxTag.notEmpty, notEmpty);
+    }
+    //取消批量选择
+    @Subscribe(tags = @Tag(RxTag.endDataBatchSelect_1))
+    public void endDataBatchSelect(Integer index){
+        mPresenter.endDataBatchSelect();
+    }
+    //true全选  false取消全选
+    @Subscribe(tags = @Tag(RxTag.dataCheckAll_1))
+    public void dataCheckAll_1(Boolean isCheckAll){
+        if(isCheckAll){
+            mPresenter.checkAll(isCreateTime);
+        }else{
+            mPresenter.cancelCheckAll(isCreateTime);
+        }
+    }
+    //开始删除
+    @Subscribe(tags = @Tag(RxTag.deleteAll_1))
+    public void deleteAll_1(Integer index){
+        mPresenter.deleteAll();
     }
 }

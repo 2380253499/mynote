@@ -16,7 +16,7 @@ public class RxTag {
     public static final String dataBatchSelect_0 ="dataBatchSelect_0";
     public static final String endDataBatchSelect_0 ="endDataBatchSelect_0";
     public static final String dataCheckAll_0 ="dataCheckAll_0";
-    public static final String deleteAll_0 ="deleteAll_0";
+    public static final String deleteAll_0 ="deleteAll";
 
     public static final String dataBatchSelect_1 ="dataBatchSelect_1";
     public static final String endDataBatchSelect_1 ="endDataBatchSelect_1";

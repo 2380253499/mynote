@@ -119,6 +119,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 RxBus.get().post(RxTag.dataCheckAll_0,isChecked);
                 break;
             case 1:
+                RxBus.get().post(RxTag.dataCheckAll_1,isChecked);
                 break;
             case 2:
                 break;
@@ -219,6 +220,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     @Override
     protected void viewOnClick(View v) {
         switch (v.getId()) {
+            //删除
             case R.id.tv_data_delete:
                 switch (tabIndex){
                     case 0:
@@ -235,7 +237,7 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                         break;
                 }
                 break;
-            //取消批量删除
+            //取消删除
             case R.id.tv_date_endselect:
                 setMenuVisible(0);
                 rg_main.setVisibility(View.VISIBLE);
@@ -258,8 +260,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 }
                 break;
             case R.id.fab:
-                STActivity(AddDataActivity.class);
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
+                STActivity(mIntent,AddDataActivity.class);
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);
@@ -275,9 +277,10 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 if(fab.getVisibility()!=View.GONE){
                     switch (tabIndex){
                         case 0:
-                            RxBus.get().post(RxTag.dataBatchSelect_0,0);
+                            RxBus.get().post(RxTag.dataBatchSelect_0,tabIndex);
                         break;
                         case 1:
+                            RxBus.get().post(RxTag.dataBatchSelect_1,tabIndex);
                         break;
                         case 2:
                         break;
