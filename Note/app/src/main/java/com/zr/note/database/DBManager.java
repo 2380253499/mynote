@@ -247,9 +247,9 @@ public class DBManager extends SQLiteOpenHelper{
         return insert;
     }
     public List<MemoBean> selectMemo(){
-        return selectMemo(true);
+        return selectMemo(null,true);
     }
-    public List<MemoBean> selectMemo(boolean isOrderByCreateTime){
+    public List<MemoBean> selectMemo(String searchInfo,boolean isOrderByCreateTime){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
@@ -276,7 +276,14 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
-            list.add(bean);
+            if(searchInfo!=null){
+                if(bean.getDataContent().indexOf(searchInfo)>=0
+                        ||bean.getDataRemark().indexOf(searchInfo)>=0){
+                    list.add(bean);
+                }
+            }else{
+                list.add(bean);
+            }
         }
         db.close();
         return list;

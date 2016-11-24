@@ -15,6 +15,8 @@ import java.util.List;
 public interface AccountCon {
     interface View extends BaseView{
         void selectData();
+
+        void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
         List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime);

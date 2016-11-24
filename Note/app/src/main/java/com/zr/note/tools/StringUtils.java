@@ -42,13 +42,6 @@ public class StringUtils {
         }
         return string.toString();
     }
-    public static void main(String[] a) {
-        System.out.println(string2Unicode("123"));
-        System.out.println(unicode2String("\\u31\\u32\\u33"));
-        System.out.println(stringToUnicode("123"));
-        System.out.println(unicodeToString("\\u0031\\u0032\\u0033"));
-
-    }
 
 
 
@@ -122,4 +115,43 @@ public class StringUtils {
         return sb.toString();
     }
 
+
+    /**
+     *判断字符串属于数字还是字母
+     * @param txt
+     * @return 0数字   1字母   2汉字  -1混合  -2为null -3为空字符串
+     */
+    public static int getStringType(String txt){
+        if(txt==null){
+            return -2;
+        }else if(txt.trim().length()==0){
+            return -3;
+        }
+        txt=txt.trim();
+        Pattern p = Pattern.compile("[0-9]*");
+        Matcher m = p.matcher(txt);
+        if(m.matches() ){
+            return 0;
+        }
+        p=Pattern.compile("[a-zA-Z]*");
+        m=p.matcher(txt);
+        if(m.matches()){
+            return 1;
+        }
+        p=Pattern.compile("[\u4e00-\u9fa5]*");
+        m=p.matcher(txt);
+        if(m.matches()){
+            return 2;
+        }
+        return -1;
+    }
+    public static void main(String[]args){
+        System.out.println(getStringType("阿"));
+        System.out.println("S12".toUpperCase());
+        String a="啊Sa1sd";
+        System.out.println("=="+a);
+        a.toLowerCase();
+        System.out.println("=="+a);
+        System.out.println("啊Sa1sd".toLowerCase());
+    }
 }

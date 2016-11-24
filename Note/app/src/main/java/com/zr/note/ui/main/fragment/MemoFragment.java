@@ -2,11 +2,14 @@ package com.zr.note.ui.main.fragment;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,10 +31,14 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> implements MemoCon.View, DateInter.dataManageInter {
+    @BindView(R.id.et_search_memo)
+    EditText et_search_memo;
     @BindView(R.id.lv_memo_list)
     ListView lv_memo_list;
     private MemoBean memoBean;
@@ -90,6 +97,19 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
                 STActivity(mIntent, AddDataActivity.class);
             }
         });
+        et_search_memo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.searchMemo(s.toString().replace(" ", ""));
+                mPresenter.cancelCheckAll(isCreateTime);
+            }
+        });
     }
 
     @Override
@@ -124,7 +144,19 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
 
     @Override
     public void selectData() {
-        mPresenter.selectData(lv_memo_list, isCreateTime);
+        List<MemoBean> list = mPresenter.selectData(lv_memo_list, isCreateTime);
+        if(list!=null&&list.size()>0){
+            et_search_memo.setVisibility(View.VISIBLE);
+        }else{
+            et_search_memo.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hiddenSearch(boolean isDeleteAll) {
+        if(isDeleteAll){
+            et_search_memo.setVisibility(View.GONE);
+        }
     }
     @Override
     public void onDestroy() {

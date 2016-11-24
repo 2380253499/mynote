@@ -109,7 +109,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     @Override
     public void searchAccount(String info) {
         searchInfo=info;
-        RxBus.get().post(RxTag.dataNoSelectAll, 0);
+        RxBus.get().post(RxTag.dataNoSelectAll,RxTag.accountDataIndex);
         accountList= DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
         accountAdapter.setSearchInfo(searchInfo);
         accountAdapter.setData(accountList);
@@ -148,7 +148,8 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
                                     accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
                                     accountAdapter.setData(accountList);
                                     accountAdapter.notifyDataSetChanged();
-                                    RxBus.get().post(RxTag.dataDeleteAllSuccess,isDeleteAll);
+                                    RxBus.get().post(RxTag.dataDeleteAllSuccess, isDeleteAll);
+                                    mView.hiddenSearch(isDeleteAll);
                                 }
                             });
                         }

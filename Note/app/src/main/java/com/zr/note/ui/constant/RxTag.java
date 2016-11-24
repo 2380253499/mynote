@@ -4,6 +4,11 @@ package com.zr.note.ui.constant;
  * Created by Administrator on 2016/11/21.
  */
 public class RxTag {
+    public static final int accountDataIndex=0;
+    public static final int memoDataIndex=1;
+    public static final int jokeDataIndex=2;
+    public static final int spendDataIndex=3;
+
     //item选择-->全部
     public static final String dataSelectAll ="dataSelectAll";
     //item没有选择全部

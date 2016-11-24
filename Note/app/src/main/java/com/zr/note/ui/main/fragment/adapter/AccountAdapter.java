@@ -1,6 +1,7 @@
 package com.zr.note.ui.main.fragment.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -46,19 +47,8 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
         String dataAccountHTML=item.getDataAccount();
         String dataSourceHTML=item.getDataSource();
         if(searchInfo!=null){//关键字搜索变色
-            StringBuffer dataSource=new StringBuffer(item.getDataSource());
-            int indexOf = dataSource.indexOf(searchInfo);
-            String searchName="<font color='#18B4ED'>"+searchInfo+"</font>";
-            if(indexOf>=0){
-                dataSource=dataSource.replace(indexOf,indexOf+searchInfo.length(),searchName);
-            }
-            StringBuffer dataAccount=new StringBuffer(item.getDataAccount());
-            int indexOfDataAccount = dataAccount.indexOf(searchInfo);
-            if(indexOfDataAccount>=0){
-                dataAccount=dataAccount.replace(indexOfDataAccount,indexOfDataAccount+searchInfo.length(),searchName);
-            }
-            dataAccountHTML=  dataAccount.toString();
-            dataSourceHTML=  dataSource.toString();
+            dataAccountHTML= getSearchColorString(item.getDataAccount());
+            dataSourceHTML=  getSearchColorString(item.getDataSource());
         }
 
         final CheckBox cb_check = helper.getView(R.id.cb_check);
@@ -82,7 +72,7 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
                         int indexOf = data_id.indexOf(item.get_id());
                         data_id.remove(indexOf);
                     }
-                    RxBus.get().post(RxTag.dataNoSelectAll, 0);
+                    RxBus.get().post(RxTag.dataNoSelectAll, RxTag.accountDataIndex);
                 }
                 Log.i("====", "====" + data_id.size());
             }
@@ -124,5 +114,18 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
 
     public void setSearchInfo(String info) {
         searchInfo=info;
+    }
+    @NonNull
+    private String getSearchColorString(String dataContentHTML) {
+        StringBuffer dataContent=new StringBuffer(dataContentHTML);
+        int indexOf = dataContentHTML.toLowerCase().indexOf(searchInfo.toLowerCase());
+        String searchName="<font color='#18B4ED'>"+searchInfo+"</font>";
+        if(indexOf>=0){
+            dataContent=dataContent.replace(indexOf,indexOf+searchInfo.length(),searchName);
+        }else{
+
+        }
+        dataContentHTML=  dataContent.toString();
+        return dataContentHTML;
     }
 }

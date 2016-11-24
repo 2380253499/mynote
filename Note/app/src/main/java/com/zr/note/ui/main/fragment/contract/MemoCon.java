@@ -15,6 +15,8 @@ import java.util.List;
 public interface MemoCon {
     interface View extends BaseView{
         void selectData();
+
+        void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
         List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
@@ -25,5 +27,7 @@ public interface MemoCon {
         void checkAll(boolean isOrderByCreateTime);
         void cancelCheckAll(boolean isOrderByCreateTime);
         void deleteAll();
+
+        void searchMemo(String info);
     }
 }

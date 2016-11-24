@@ -1,6 +1,8 @@
 package com.zr.note.ui.main.fragment.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
@@ -24,6 +26,7 @@ public class MemoAdapter extends CommonAdapter<MemoBean> {
     private SparseBooleanArray checkState;
     private boolean startCheck;
     private List<Integer> data_id;
+    private String searchInfo;
     public MemoAdapter(Context context, List<MemoBean> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
         checkState=new SparseBooleanArray();
@@ -36,16 +39,24 @@ public class MemoAdapter extends CommonAdapter<MemoBean> {
 
     @Override
     public void convert(final ViewHolder helper,final MemoBean item) {
-        helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
-                .setText(R.id.tv_memo_content, item.getDataContent());
+
         TextView tv_reminder = helper.getTextView(R.id.tv_reminder);
-        if (item.getDataRemark() == null || item.getDataRemark().trim().length() == 0) {
+
+        String dataContentHTML=item.getDataContent();
+        String dataRemarkHTML=item.getDataRemark();
+        if(searchInfo!=null){//关键字搜索变色
+            dataContentHTML = getSearchColorString(dataContentHTML);
+            dataRemarkHTML = getSearchColorString(dataRemarkHTML);
+        }
+        helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
+                .setText(R.id.tv_memo_content, Html.fromHtml(dataContentHTML));
+
+        if (dataRemarkHTML== null || dataRemarkHTML.trim().length() == 0) {
             tv_reminder.setVisibility(View.GONE);
         } else {
             tv_reminder.setVisibility(View.VISIBLE);
-            tv_reminder.setText(item.getDataRemark());
+            tv_reminder.setText(Html.fromHtml(dataRemarkHTML));
         }
-
         final CheckBox cb_check = helper.getView(R.id.cb_memo_check);
         cb_check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +86,19 @@ public class MemoAdapter extends CommonAdapter<MemoBean> {
         }
         cb_check.setChecked(checkState.get(helper.getPosition()));
     }
+
+    @NonNull
+    private String getSearchColorString(String dataContentHTML) {
+        StringBuffer dataContent=new StringBuffer(dataContentHTML);
+        int indexOf = dataContentHTML.toLowerCase().indexOf(searchInfo.toLowerCase());
+        String searchName="<font color='#18B4ED'>"+searchInfo+"</font>";
+        if(indexOf>=0){
+            dataContent=dataContent.replace(indexOf,indexOf+searchInfo.length(),searchName);
+        }
+        dataContentHTML=  dataContent.toString();
+        return dataContentHTML;
+    }
+
     public void setCheck(){
         setCheck(true);
     }
@@ -100,5 +124,9 @@ public class MemoAdapter extends CommonAdapter<MemoBean> {
     public void setData(List<MemoBean> mDatas) {
         super.setData(mDatas);
         cancelCheckAll(true);
+    }
+
+    public void setSearchInfo(String searchInfo) {
+        this.searchInfo=searchInfo;
     }
 }

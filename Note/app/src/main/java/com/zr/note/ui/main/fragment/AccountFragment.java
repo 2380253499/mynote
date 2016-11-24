@@ -131,10 +131,10 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             et_search_account.setVisibility(View.GONE);
         }
     }
-    //删除全部时，隐藏搜索框
-    @Subscribe(tags = @Tag(RxTag.dataDeleteAllSuccess))
-    public void dataDeleteAllSuccess(Boolean isDeleteAllSuccess){
-        if(isDeleteAllSuccess){
+
+    @Override
+    public void hiddenSearch(boolean isDeleteAll) {
+        if(isDeleteAll){
             et_search_account.setVisibility(View.GONE);
         }
     }

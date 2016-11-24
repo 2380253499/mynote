@@ -23,6 +23,8 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
     private List<MemoBean>memoBeanList;
     private MemoAdapter memoAdapter;
     private boolean isOrderByCreateTime;
+    private String searchInfo;
+
     public MemoImp(Context context) {
         super(context);
     }
@@ -30,9 +32,14 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
     @Override
     public List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        memoBeanList= DBManager.getInstance(mContext).selectMemo(isOrderByCreateTime);
-        memoAdapter = new MemoAdapter(mContext, memoBeanList, R.layout.item_memo);
-        lv_memo_list.setAdapter(memoAdapter);
+        memoBeanList= DBManager.getInstance(mContext).selectMemo(searchInfo,isOrderByCreateTime);
+        if(memoAdapter==null){
+            memoAdapter = new MemoAdapter(mContext, memoBeanList, R.layout.item_memo);
+            lv_memo_list.setAdapter(memoAdapter);
+        }else{
+            memoAdapter.setData(memoBeanList);
+            memoAdapter.notifyDataSetChanged();
+        }
         return memoBeanList;
     }
 
@@ -128,10 +135,11 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                                 public void run() {
                                     mView.hideLoading();
                                     mView.showMsg("删除成功");
-                                    memoBeanList = DBManager.getInstance(mContext).selectMemo(isOrderByCreateTime);
+                                    memoBeanList = DBManager.getInstance(mContext).selectMemo(searchInfo,isOrderByCreateTime);
                                     memoAdapter.setData(memoBeanList);
                                     memoAdapter.notifyDataSetChanged();
-                                    RxBus.get().post(RxTag.dataDeleteAllSuccess,isDeleteAll);
+                                    RxBus.get().post(RxTag.dataDeleteAllSuccess, isDeleteAll);
+                                    mView.hiddenSearch(isDeleteAll);
                                 }
                             });
                         }
@@ -142,5 +150,14 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
         }else{
             mView.showMsg("请选择需要删除的数据");
         }
+    }
+
+    @Override
+    public void searchMemo(String info) {
+        searchInfo = info;
+        RxBus.get().post(RxTag.dataNoSelectAll, 0);
+        memoBeanList= DBManager.getInstance(mContext).selectMemo(searchInfo, isOrderByCreateTime);
+        memoAdapter.setSearchInfo(searchInfo);
+        memoAdapter.setData(memoBeanList);
     }
 }
