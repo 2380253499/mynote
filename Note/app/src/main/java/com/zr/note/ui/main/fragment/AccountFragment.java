@@ -2,10 +2,13 @@ package com.zr.note.ui.main.fragment;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,10 +30,14 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import com.zr.note.ui.main.inter.DateInter;
 import com.zr.note.view.MyPopupwindow;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Presenter> implements AccountCon.View ,DateInter.dataManageInter{
 
+    @BindView(R.id.et_search_account)
+    EditText et_search_account;
     @BindView(R.id.lv_account_list)
     ListView lv_account_list;
     private AccountBean accountBean;
@@ -94,6 +101,21 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
                 STActivity(mIntent, AddDataActivity.class);
             }
         });
+        et_search_account.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.searchAccount(s.toString().replace(" ",""));
+                mPresenter.cancelCheckAll(isCreateTime);
+            }
+        });
     }
 
     @Override
@@ -101,8 +123,20 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
         selectData();
     }
     @Override
-    public void selectData( ) {
-        mPresenter.selectData(lv_account_list, isCreateTime);
+    public void selectData() {
+        List<AccountBean> list = mPresenter.selectData(lv_account_list, isCreateTime);
+        if(list!=null&&list.size()>0){
+            et_search_account.setVisibility(View.VISIBLE);
+        }else{
+            et_search_account.setVisibility(View.GONE);
+        }
+    }
+    //删除全部时，隐藏搜索框
+    @Subscribe(tags = @Tag(RxTag.dataDeleteAllSuccess))
+    public void dataDeleteAllSuccess(Boolean isDeleteAllSuccess){
+        if(isDeleteAllSuccess){
+            et_search_account.setVisibility(View.GONE);
+        }
     }
     @Override
     protected void viewOnClick(View v) {
@@ -110,7 +144,7 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
             case R.id.tv_menu_copyAccount:
                 mPopupwindow.dismiss();
                 if(!TextUtils.isEmpty(accountBean.getDataAccount())){
-                    PhoneUtils.copyText(getActivity(),accountBean.getDataAccount());
+                    PhoneUtils.copyText(getActivity(), accountBean.getDataAccount());
                     showToastS("复制账号成功");
                 }
             break;

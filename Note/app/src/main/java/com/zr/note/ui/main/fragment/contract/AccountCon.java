@@ -26,5 +26,6 @@ public interface AccountCon {
         void checkAll(boolean isOrderByCreateTime);
         void cancelCheckAll(boolean isOrderByCreateTime);
         void deleteAll_0();
+        void searchAccount(String info);
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#58c2f7</color>
-    <color name="colorPrimaryDark">#58c2f7</color>
-    <color name="colorPrimaryDark2">#303F9F</color>
+    <color name="colorPrimary">#18B4ED</color>
+    <color name="colorPrimaryDark">#18B4ED</color>
+    <color name="colorPrimaryDark2">#18B4ED</color>
     <color name="colorPrimaryDark1">#87ceeb</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorText">#848484</color>
@@ -24,7 +24,7 @@
     <color name="c_divider">#E2E2E2</color>
     <color name="c_press">#E2E2E2</color>
     <color name="c_press_bt">#41A5D6</color>
-    <color name="blue_point">#58c2f7</color>
+    <color name="blue_point">#18B4ED</color>
     <color name="red_point">#990814</color>
     <color name="red_point1">#DE2F24</color>
     <!-- 主题颜色-->

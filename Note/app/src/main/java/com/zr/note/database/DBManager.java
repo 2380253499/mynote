@@ -137,9 +137,9 @@ public class DBManager extends SQLiteOpenHelper{
         return true;
     }
     public List<AccountBean> selectAccount(){
-        return selectAccount(true);
+        return selectAccount(null,true);
     }
-    public List<AccountBean> selectAccount(boolean isOrderByCreateTime){
+    public List<AccountBean> selectAccount(String searchInfo,boolean isOrderByCreateTime){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
@@ -153,7 +153,7 @@ public class DBManager extends SQLiteOpenHelper{
                         DBConstant.dataPassword,
                         DBConstant.dataRemark,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null,orderBy);
+                        DBConstant.creatTime},null,null, null, null,orderBy);
         List<AccountBean>list=new ArrayList<AccountBean>();
         AccountBean bean;
         while (query.moveToNext()){
@@ -170,9 +170,17 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataAccount(AES.decode(dataAccount));
             bean.setDataPassword(AES.decode(dataPassword));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
-            list.add(bean);
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            if(searchInfo!=null){
+                if(bean.getDataAccount().indexOf(searchInfo)>=0
+                        ||bean.getDataSource().indexOf(searchInfo)>=0
+                        ||bean.getDataRemark().indexOf(searchInfo)>=0){
+                    list.add(bean);
+                }
+            }else{
+                list.add(bean);
+            }
         }
         db.close();
         return list;

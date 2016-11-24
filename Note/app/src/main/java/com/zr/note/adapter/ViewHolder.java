@@ -101,7 +101,10 @@ public class ViewHolder {
 		getViewByType(TextView.class, viewId).setText(text);
 		return this;
 	}
-
+	public ViewHolder setText(int viewId, CharSequence text) {
+		getViewByType(TextView.class, viewId).setText(text);
+		return this;
+	}
 	/**
 	 * 为ImageView设置图片
 	 *

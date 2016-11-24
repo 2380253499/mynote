@@ -25,6 +25,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     private List<AccountBean> accountList;
     private AccountAdapter  accountAdapter;
     private boolean isOrderByCreateTime;
+    private String searchInfo;
     public AccountImp(Context context) {
         super(context);
     }
@@ -32,9 +33,14 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     @Override
     public List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        accountList = DBManager.getInstance(mContext).selectAccount(isOrderByCreateTime);
-        accountAdapter = new AccountAdapter(mContext, accountList, R.layout.item_account);
-        lv_account_list.setAdapter(accountAdapter);
+        accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
+        if(accountAdapter==null){
+            accountAdapter = new AccountAdapter(mContext, accountList, R.layout.item_account);
+            lv_account_list.setAdapter(accountAdapter);
+        }else{
+            accountAdapter.setData(accountList);
+            accountAdapter.notifyDataSetChanged();
+        }
         return accountList;
     }
     @Override
@@ -101,6 +107,15 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     }
 
     @Override
+    public void searchAccount(String info) {
+        searchInfo=info;
+        RxBus.get().post(RxTag.dataNoSelectAll, 0);
+        accountList= DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
+        accountAdapter.setSearchInfo(searchInfo);
+        accountAdapter.setData(accountList);
+    }
+
+    @Override
     public void deleteAll_0() {
         if(accountAdapter.getData_id()!=null&&accountAdapter.getData_id().size()>0){
             MyDialog.Builder builder=new MyDialog.Builder(mContext);
@@ -130,7 +145,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
                                 public void run() {
                                     mView.hideLoading();
                                     mView.showMsg("删除成功");
-                                    accountList = DBManager.getInstance(mContext).selectAccount(isOrderByCreateTime);
+                                    accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
                                     accountAdapter.setData(accountList);
                                     accountAdapter.notifyDataSetChanged();
                                     RxBus.get().post(RxTag.dataDeleteAllSuccess,isDeleteAll);

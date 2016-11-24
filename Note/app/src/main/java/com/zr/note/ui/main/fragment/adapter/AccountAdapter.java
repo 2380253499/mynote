@@ -1,6 +1,7 @@
 package com.zr.note.ui.main.fragment.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -23,6 +24,7 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
     private SparseBooleanArray checkState;
     private boolean startCheck;
     private List<Integer> data_id;
+    private String searchInfo;
     public AccountAdapter(Context context, List<AccountBean> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
         checkState=new SparseBooleanArray();
@@ -41,18 +43,36 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
         for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
             stringBuffer.append("0");
         }
+        String dataAccountHTML=item.getDataAccount();
+        String dataSourceHTML=item.getDataSource();
+        if(searchInfo!=null){//关键字搜索变色
+            StringBuffer dataSource=new StringBuffer(item.getDataSource());
+            int indexOf = dataSource.indexOf(searchInfo);
+            String searchName="<font color='#18B4ED'>"+searchInfo+"</font>";
+            if(indexOf>=0){
+                dataSource=dataSource.replace(indexOf,indexOf+searchInfo.length(),searchName);
+            }
+            StringBuffer dataAccount=new StringBuffer(item.getDataAccount());
+            int indexOfDataAccount = dataAccount.indexOf(searchInfo);
+            if(indexOfDataAccount>=0){
+                dataAccount=dataAccount.replace(indexOfDataAccount,indexOfDataAccount+searchInfo.length(),searchName);
+            }
+            dataAccountHTML=  dataAccount.toString();
+            dataSourceHTML=  dataSource.toString();
+        }
+
         final CheckBox cb_check = helper.getView(R.id.cb_check);
-        helper.setText(R.id.tv_data_id, stringBuffer.toString()+""+position)
-                .setText(R.id.tv_source, item.getDataSource())
-                .setText(R.id.tv_account, item.getDataAccount());
+        helper.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position)
+                .setText(R.id.tv_source, Html.fromHtml(dataSourceHTML))
+                .setText(R.id.tv_account,Html.fromHtml(dataAccountHTML));
         cb_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = cb_check.isChecked();
                 checkState.put(helper.getPosition(), isChecked);
                 if (isChecked) {
-                    if (!data_id.contains(item.get_id() )) {
-                        data_id.add(item.get_id() );
+                    if (!data_id.contains(item.get_id())) {
+                        data_id.add(item.get_id());
                     }
                     if (data_id.size() == getCount()) {//选择的item数量和数据集数量相等时选中全选按钮
                         RxBus.get().post(RxTag.dataSelectAll, 0);
@@ -64,7 +84,7 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
                     }
                     RxBus.get().post(RxTag.dataNoSelectAll, 0);
                 }
-                Log.i("====", "===="+data_id.size());
+                Log.i("====", "====" + data_id.size());
             }
         });
         if(startCheck){
@@ -100,5 +120,9 @@ public class AccountAdapter extends CommonAdapter<AccountBean> {
     public void setData(List<AccountBean> mDatas) {
         super.setData(mDatas);
         cancelCheckAll(true);
+    }
+
+    public void setSearchInfo(String info) {
+        searchInfo=info;
     }
 }

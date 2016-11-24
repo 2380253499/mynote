@@ -5,7 +5,34 @@
               android:layout_height="match_parent"
               android:background="#ffffff"
               android:orientation="vertical"
-              tools:context=".ui.main.fragment.AddAccountFragment">
+              tools:context=".ui.main.fragment.AddAccountFragment"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+    >
+    <com.zr.note.base.customview.MyEditText
+        android:id="@+id/et_search_account"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:hint="@string/search_info"
+        android:textColor="@color/colorText"
+        android:textColorHint="#B2B2B2"
+        app:my_et_border_color="@color/c_divider"
+        app:my_et_border_width="2px"
+        app:my_et_corner_radius="4dp"
+        android:layout_gravity="center"
+        android:maxLength="10"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/c_divider"
+        />
     <com.zr.note.base.customview.CustomListView
         android:id="@+id/lv_account_list"
         android:layout_width="match_parent"
