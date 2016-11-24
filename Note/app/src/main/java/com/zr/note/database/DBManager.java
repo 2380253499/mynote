@@ -173,9 +173,9 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
             if(searchInfo!=null){
-                if(bean.getDataAccount().indexOf(searchInfo)>=0
-                        ||bean.getDataSource().indexOf(searchInfo)>=0
-                        ||bean.getDataRemark().indexOf(searchInfo)>=0){
+                if(bean.getDataAccount().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
+                        ||bean.getDataSource().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
+                        ||bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase())>=0){
                     list.add(bean);
                 }
             }else{
@@ -274,11 +274,11 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setDataContent(AES.decode(dataContent));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
             if(searchInfo!=null){
-                if(bean.getDataContent().indexOf(searchInfo)>=0
-                        ||bean.getDataRemark().indexOf(searchInfo)>=0){
+                if(bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
+                        ||bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase())>=0){
                     list.add(bean);
                 }
             }else{

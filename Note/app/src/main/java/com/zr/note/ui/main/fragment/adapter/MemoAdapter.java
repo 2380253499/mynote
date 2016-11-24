@@ -91,9 +91,9 @@ public class MemoAdapter extends CommonAdapter<MemoBean> {
     private String getSearchColorString(String dataContentHTML) {
         StringBuffer dataContent=new StringBuffer(dataContentHTML);
         int indexOf = dataContentHTML.toLowerCase().indexOf(searchInfo.toLowerCase());
-        String searchName="<font color='#18B4ED'>"+searchInfo+"</font>";
         if(indexOf>=0){
-            dataContent=dataContent.replace(indexOf,indexOf+searchInfo.length(),searchName);
+            String sameInfo= "<font color='#18B4ED'>"+dataContent.subSequence(indexOf, indexOf + searchInfo.length())+"</font>";
+            dataContent=dataContent.replace(indexOf,indexOf+searchInfo.length(),sameInfo);
         }
         dataContentHTML=  dataContent.toString();
         return dataContentHTML;
