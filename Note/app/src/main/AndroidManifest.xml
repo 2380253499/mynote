@@ -49,6 +49,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".ui.gesture.activity.SuperPassWordActivity"
+            android:label="SuperPassWordActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".ui.main.activity.MainActivity"
             android:label="MainActivity"
             android:launchMode="singleTask"

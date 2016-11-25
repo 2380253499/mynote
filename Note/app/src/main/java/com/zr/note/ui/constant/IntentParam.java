@@ -14,5 +14,6 @@ public class IntentParam {
     public class Gesture{
         public static final String isFirstIntoApp="isFirstIntoApp";
         public static final String isUpdatePwd="isUpdatePwd";
+        public static final int request_superPWD =1000;
     }
 }

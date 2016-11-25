@@ -1,5 +1,6 @@
 package com.zr.note.ui.gesture.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,6 +14,7 @@ import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.gesture.activity.contract.GestureCon;
 import com.zr.note.ui.gesture.activity.contract.imp.GestureImp;
+import com.zr.note.ui.main.activity.MainActivity;
 
 import butterknife.BindView;
 
@@ -84,10 +86,23 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 	protected void viewOnClick(View v) {
 		switch (v.getId()){
 			case R.id.tv_forget_gesture:
-				showToastL("请加QQ群271910854联系群主");
+//				showToastL("请加QQ群271910854联系群主");
+				STActivityForResult(SuperPassWordActivity.class,IntentParam.Gesture.request_superPWD);
 			break;
 		}
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(data!=null){
+			if(requestCode==IntentParam.Gesture.request_superPWD&&resultCode==RESULT_OK){
+				STActivity(MainActivity.class);
+				finish();
+			}
+		}
+	}
+
 	@Override
 	protected void menuOnClick(int itemId) {
 
