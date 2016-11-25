@@ -12,6 +12,7 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textCursorDrawable">@drawable/cursor_color</item><!--光标颜色-->
+        <item name="android:editTextStyle">@style/editTextStyle</item>
     </style>
     <!--activity切换动画-->
     <!--<style name="WindowAnimTheme" parent="@android:style/Animation.Activity">
@@ -24,6 +25,11 @@
         <item name="android:editTextColor">@color/colorText</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textColorHint">@color/top_color2</item>
+        <item name="android:paddingLeft">7dp</item>
+        <item name="android:paddingRight">7dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_height">35dp</item>
     </style>
     <!-- 对话框-->
     <style name="Theme_dialog" parent="@android:style/Theme.Dialog">

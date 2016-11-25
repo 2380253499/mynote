@@ -92,7 +92,7 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         this.setCompoundDrawablePadding(PhoneUtils.dip2px(getContext(), 5));
-        this.setPadding(0,0,15,0);
+//        this.setPadding(0,0,15,0);
         // 默认设置隐藏图标
         setClearIconVisible(false);
         // 设置焦点改变的监听
