@@ -9,6 +9,7 @@ import com.hwangjr.rxbus.RxBus;
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
 import com.zr.note.database.DBManager;
+import com.zr.note.tools.LogUtils;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.entity.AccountBean;
@@ -134,8 +135,10 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            int accountCount = DBManager.getInstance(mContext).selectTableCount(DBManager.T_Account_Note);
+                                LogUtils.Log("====" +accountCount + "============");
                             List<Integer> data_id = accountAdapter.getData_id();
-                            final boolean isDeleteAll=data_id.size()==accountAdapter.getCount();
+                            final boolean isDeleteAll=data_id.size()==accountCount;
                             for (int i = 0; i < data_id.size(); i++) {
 //                                LogUtils.Log("===="+data_id.get(i)+"============");
                                 DBManager.getInstance(mContext).deleteAccount(data_id.get(i));
@@ -147,6 +150,9 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
                                     mView.showMsg("删除成功");
                                     accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
                                     accountAdapter.setData(accountList);
+                                    if(isDeleteAll){
+                                        accountAdapter.setCheck(false);
+                                    }
                                     accountAdapter.notifyDataSetChanged();
                                     RxBus.get().post(RxTag.dataDeleteAllSuccess, isDeleteAll);
                                     mView.hiddenSearch(isDeleteAll);

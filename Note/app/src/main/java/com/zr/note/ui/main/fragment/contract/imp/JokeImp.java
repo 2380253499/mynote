@@ -23,15 +23,21 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
     private List<JokeBean>jokeBeanList;
     private JokeAdapter jokeAdapter;
     private boolean isOrderByCreateTime;
+    private String searchInfo;
     public JokeImp(Context context) {
         super(context);
     }
     @Override
     public List<JokeBean> selectData(ListView lv_joke_list, boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        jokeBeanList= DBManager.getInstance(mContext).selectJoke(isOrderByCreateTime);
-        jokeAdapter=new JokeAdapter(mContext, jokeBeanList, R.layout.item_joke);
-        lv_joke_list.setAdapter(jokeAdapter);
+        jokeBeanList= DBManager.getInstance(mContext).selectJoke(searchInfo,isOrderByCreateTime);
+        if(jokeAdapter==null){
+            jokeAdapter=new JokeAdapter(mContext, jokeBeanList, R.layout.item_joke);
+            lv_joke_list.setAdapter(jokeAdapter);
+        }else{
+            jokeAdapter.setData(jokeBeanList);
+            jokeAdapter.notifyDataSetChanged();
+        }
         return jokeBeanList;
     }
 
@@ -121,8 +127,9 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            int jokeCount = DBManager.getInstance(mContext).selectTableCount(DBManager.T_Joke_Note);
                             List<Integer> data_id = jokeAdapter.getData_id();
-                            final boolean isDeleteAll=data_id.size()==jokeAdapter.getCount();
+                            final boolean isDeleteAll=data_id.size()==jokeCount;
                             for (int i = 0; i < data_id.size(); i++) {
 //                                LogUtils.Log("====" + data_id.get(i) + "============");
                                 DBManager.getInstance(mContext).deleteJoke(data_id.get(i));
@@ -132,10 +139,14 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
                                 public void run() {
                                     mView.hideLoading();
                                     mView.showMsg("删除成功");
-                                    jokeBeanList = DBManager.getInstance(mContext).selectJoke(isOrderByCreateTime);
+                                    jokeBeanList = DBManager.getInstance(mContext).selectJoke(searchInfo,isOrderByCreateTime);
                                     jokeAdapter.setData(jokeBeanList);
+                                    if(isDeleteAll){
+                                        jokeAdapter.setCheck(false);
+                                    }
                                     jokeAdapter.notifyDataSetChanged();
                                     RxBus.get().post(RxTag.dataDeleteAllSuccess,isDeleteAll);
+                                    mView.hiddenSearch(isDeleteAll);
                                 }
                             });
                         }
@@ -146,5 +157,14 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
         }else{
             mView.showMsg("请选择需要删除的数据");
         }
+    }
+
+    @Override
+    public void searchJoke(String info) {
+        searchInfo=info;
+        RxBus.get().post(RxTag.dataNoSelectAll,RxTag.accountDataIndex);
+        jokeBeanList= DBManager.getInstance(mContext).selectJoke(searchInfo, isOrderByCreateTime);
+        jokeAdapter.setSearchInfo(searchInfo);
+        jokeAdapter.setData(jokeBeanList);
     }
 }

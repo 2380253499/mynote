@@ -124,8 +124,9 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            int memoCount = DBManager.getInstance(mContext).selectTableCount(DBManager.T_Memo_Note);
                             List<Integer> data_id = memoAdapter.getData_id();
-                            final boolean isDeleteAll=data_id.size()==memoAdapter.getCount();
+                            final boolean isDeleteAll=data_id.size()==memoCount;
                             for (int i = 0; i < data_id.size(); i++) {
 //                                LogUtils.Log("====" + data_id.get(i) + "============");
                                 DBManager.getInstance(mContext).deleteMemo(data_id.get(i));
@@ -137,6 +138,9 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                                     mView.showMsg("删除成功");
                                     memoBeanList = DBManager.getInstance(mContext).selectMemo(searchInfo,isOrderByCreateTime);
                                     memoAdapter.setData(memoBeanList);
+                                    if(isDeleteAll){
+                                        memoAdapter.setCheck(false);//删除全部后，隐藏选择按钮，防止添加数据后继续显示checkbox
+                                    }
                                     memoAdapter.notifyDataSetChanged();
                                     RxBus.get().post(RxTag.dataDeleteAllSuccess, isDeleteAll);
                                     mView.hiddenSearch(isDeleteAll);

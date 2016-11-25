@@ -49,21 +49,21 @@ public class DBManager extends SQLiteOpenHelper{
     }
     private void addDataTable(SQLiteDatabase db,String table) {
         if (noExistTable(db,table)) {
-            db.execSQL(DBConstant.T_Spend_Note);
+            db.execSQL(DBConstant.CT_Spend_Note);
         }
     }
     private void addDataTable(SQLiteDatabase db) {
         if (noExistTable(db,T_Account_Note)) {
-            db.execSQL(DBConstant.T_Account_Note);
+            db.execSQL(DBConstant.CT_Account_Note);
         }
         if (noExistTable(db,T_Memo_Note)) {
-            db.execSQL(DBConstant.T_Memo_Note);
+            db.execSQL(DBConstant.CT_Memo_Note);
         }
         if (noExistTable(db,T_Joke_Note)) {
-            db.execSQL(DBConstant.T_Joke_Note);
+            db.execSQL(DBConstant.CT_Joke_Note);
         }
         if (noExistTable(db,T_Spend_Note)) {
-            db.execSQL(DBConstant.T_Spend_Note);
+            db.execSQL(DBConstant.CT_Spend_Note);
         }
     }
 
@@ -73,13 +73,13 @@ public class DBManager extends SQLiteOpenHelper{
             case 1:
                 if(existTable(db,T_Spend_Note)){
                     dropTable(db,T_Spend_Note);
-                    addDataTable(db,DBConstant.T_Spend_Note);
+                    addDataTable(db,DBConstant.CT_Spend_Note);
                 }
             break;
             case 2:
                 if(existTable(db,T_Spend_Note)){
                     dropTable(db,T_Spend_Note);
-                    addDataTable(db,DBConstant.T_Spend_Note);
+                    addDataTable(db,DBConstant.CT_Spend_Note);
                 }
             break;
         }
@@ -136,15 +136,32 @@ public class DBManager extends SQLiteOpenHelper{
         }
         return true;
     }
+    public int selectAccountCount(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(0) as num from " + T_Account_Note, null);
+        int count = 0;
+        try{
+            while (cursor.moveToNext()) {
+                count = cursor.getInt(cursor.getColumnIndex("num"));
+            }
+            cursor.close();
+            db.close();
+        }catch (Exception e){
+            cursor.close();
+            db.close();
+            return -1;
+        }
+        return count;
+    }
     public List<AccountBean> selectAccount(){
         return selectAccount(null,true);
     }
     public List<AccountBean> selectAccount(String searchInfo,boolean isOrderByCreateTime){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
-            orderBy=DBConstant.creatTime+" desc";
+            orderBy = DBConstant.creatTime + " desc";
         }
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         Cursor query = db.query(T_Account_Note,
                 new String[]{
                         DBConstant._id,
@@ -153,7 +170,7 @@ public class DBManager extends SQLiteOpenHelper{
                         DBConstant.dataPassword,
                         DBConstant.dataRemark,
                         DBConstant.updateTime,
-                        DBConstant.creatTime},null,null, null, null,orderBy);
+                        DBConstant.creatTime}, null, null, null, null, orderBy);
         List<AccountBean>list=new ArrayList<AccountBean>();
         AccountBean bean;
         while (query.moveToNext()){
@@ -246,6 +263,9 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return insert;
     }
+    public List<MemoBean> selectMemoCount(){
+        return selectMemo(null,true);
+    }
     public List<MemoBean> selectMemo(){
         return selectMemo(null,true);
     }
@@ -329,10 +349,44 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return insert;
     }
-    public List<JokeBean> selectJoke(){
-        return selectJoke(true);
+    public int selectTableCount(String tableName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(0) as num from "+tableName,null);
+        int count = 0;
+        try{
+            while (cursor.moveToNext()) {
+                count = cursor.getInt(cursor.getColumnIndex("num"));
+            }
+            cursor.close();
+            db.close();
+        }catch (Exception e){
+            cursor.close();
+            db.close();
+            return -1;
+        }
+        return count;
     }
-    public List<JokeBean> selectJoke(boolean isOrderByCreateTime){
+    public int selectJokeCount(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(0) as num from "+T_Joke_Note,null);
+        int count = 0;
+        try{
+            while (cursor.moveToNext()) {
+                count = cursor.getInt(cursor.getColumnIndex("num"));
+            }
+            cursor.close();
+            db.close();
+        }catch (Exception e){
+            cursor.close();
+            db.close();
+            return -1;
+        }
+        return count;
+    }
+    public List<JokeBean> selectJoke(){
+        return selectJoke(null,true);
+    }
+    public List<JokeBean> selectJoke(String searchInfo,boolean isOrderByCreateTime){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
@@ -357,9 +411,16 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setDataContent(AES.decode(dataContent));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
-            list.add(bean);
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            if(searchInfo!=null){
+                if(bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
+                        ||bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase())>=0){
+                    list.add(bean);
+                }
+            }else{
+                list.add(bean);
+            }
         }
         db.close();
         return list;

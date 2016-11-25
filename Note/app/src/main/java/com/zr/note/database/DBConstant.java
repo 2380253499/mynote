@@ -22,7 +22,7 @@ public class DBConstant {
      * "dataPassword,       --密码"
      * "dataRemark,         --备注"
      */
-    public static final String T_Account_Note = "create table "+DBManager.T_Account_Note+" (" +
+    public static final String CT_Account_Note = "create table "+DBManager.T_Account_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "dataSource TEXT," +
             "dataAccount TEXT," +
@@ -34,7 +34,7 @@ public class DBConstant {
      * dataContent  --数据内容
      * dataRemark   --备注
      */
-    public static final String T_Memo_Note = "create table "+DBManager.T_Memo_Note+" (" +
+    public static final String CT_Memo_Note = "create table "+DBManager.T_Memo_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "dataRemark TEXT," +
             "dataContent TEXT," +
@@ -43,7 +43,7 @@ public class DBConstant {
     /**
      * dataContent  --数据内容
      */
-    public static final String T_Joke_Note = "create table "+DBManager.T_Joke_Note+" (" +
+    public static final String CT_Joke_Note = "create table "+DBManager.T_Joke_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "dataRemark TEXT," +
             "dataContent TEXT," +
@@ -53,7 +53,7 @@ public class DBConstant {
      * liveSpend DOUBLE,   --生活消费
      * dataRemark TEXT,         --备注
      */
-    public static final String T_Spend_Note = "create table "+DBManager.T_Spend_Note+" (" +
+    public static final String CT_Spend_Note = "create table "+DBManager.T_Spend_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "liveSpend DOUBLE," +
             "dataRemark TEXT," +

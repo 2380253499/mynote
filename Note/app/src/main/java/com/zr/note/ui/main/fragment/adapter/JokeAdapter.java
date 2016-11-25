@@ -1,6 +1,8 @@
 package com.zr.note.ui.main.fragment.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
@@ -24,6 +26,8 @@ public class JokeAdapter extends CommonAdapter<JokeBean> {
     private SparseBooleanArray checkState;
     private boolean startCheck;
     private List<Integer> data_id;
+    private String searchInfo;
+
     public JokeAdapter(Context context, List<JokeBean> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
         checkState=new SparseBooleanArray();
@@ -36,15 +40,20 @@ public class JokeAdapter extends CommonAdapter<JokeBean> {
 
     @Override
     public void convert(final ViewHolder helper,final JokeBean item) {
+        String dataContentHTML=item.getDataContent();
+        String dataRemarkHTML=item.getDataRemark();
+        if(searchInfo!=null){//关键字搜索变色
+            dataContentHTML= getSearchColorString(item.getDataContent());
+            dataRemarkHTML=  getSearchColorString(item.getDataRemark());
+        }
         helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
-                .setText(R.id.tv_joke_content, item.getDataContent());
-
+                .setText(R.id.tv_joke_content, Html.fromHtml(dataContentHTML));
         TextView tv_reminder = helper.getTextView(R.id.tv_joke_remark);
         if (item.getDataRemark() == null || item.getDataRemark().trim().length() == 0) {
             tv_reminder.setVisibility(View.GONE);
         } else {
             tv_reminder.setVisibility(View.VISIBLE);
-            tv_reminder.setText(item.getDataRemark());
+            tv_reminder.setText(Html.fromHtml(dataRemarkHTML));
         }
 
         final CheckBox cb_check = helper.getView(R.id.cb_joke_check);
@@ -101,5 +110,21 @@ public class JokeAdapter extends CommonAdapter<JokeBean> {
     public void setData(List<JokeBean> mDatas) {
         super.setData(mDatas);
         cancelCheckAll(true);
+    }
+
+    public void setSearchInfo(String info) {
+        searchInfo=info;
+    }
+    @NonNull
+    private String getSearchColorString(String dataContentHTML) {
+        StringBuffer dataContent=new StringBuffer(dataContentHTML);
+        int indexOf = dataContentHTML.toLowerCase().indexOf(searchInfo.toLowerCase());
+        if(indexOf>=0){
+            String sameInfo= "<font color='#18B4ED'>"+dataContent.subSequence(indexOf, indexOf + searchInfo.length())+"</font>";
+            dataContent=dataContent.replace(indexOf, indexOf + searchInfo.length(), sameInfo);
+
+        }
+        dataContentHTML=  dataContent.toString();
+        return dataContentHTML;
     }
 }

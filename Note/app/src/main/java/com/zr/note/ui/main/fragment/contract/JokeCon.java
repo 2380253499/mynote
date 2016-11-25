@@ -15,6 +15,7 @@ import java.util.List;
 public interface JokeCon {
     interface View extends BaseView{
         void selectData();
+        void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
         List<JokeBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
@@ -27,5 +28,7 @@ public interface JokeCon {
         void checkAll(boolean isOrderByCreateTime);
         void cancelCheckAll(boolean isOrderByCreateTime);
         void deleteAll();
+
+        void searchJoke(String info);
     }
 }
