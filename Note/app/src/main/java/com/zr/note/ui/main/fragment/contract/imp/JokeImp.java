@@ -28,17 +28,30 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
         super(context);
     }
     @Override
-    public List<JokeBean> selectData(ListView lv_joke_list, boolean isOrderByCreateTime) {
+    public void selectData(final ListView lv_joke_list,final  boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        jokeBeanList= DBManager.getInstance(mContext).selectJoke(searchInfo,isOrderByCreateTime);
-        if(jokeAdapter==null){
-            jokeAdapter=new JokeAdapter(mContext, jokeBeanList, R.layout.item_joke);
-            lv_joke_list.setAdapter(jokeAdapter);
-        }else{
-            jokeAdapter.setData(jokeBeanList);
-            jokeAdapter.notifyDataSetChanged();
-        }
-        return jokeBeanList;
+        mView.showLoading();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jokeBeanList= DBManager.getInstance(mContext).selectJoke(searchInfo,isOrderByCreateTime);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.hideLoading();
+                        if(jokeAdapter==null){
+                            jokeAdapter=new JokeAdapter(mContext, jokeBeanList, R.layout.item_joke);
+                            lv_joke_list.setAdapter(jokeAdapter);
+                        }else{
+                            jokeAdapter.setData(jokeBeanList);
+                            jokeAdapter.notifyDataSetChanged();
+                        }
+                        mView.afterSelectData(jokeBeanList);
+                    }
+                });
+            }
+        }).start();
+
     }
 
     @Override

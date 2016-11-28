@@ -28,26 +28,40 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     }
 
     @Override
-    public List<SpendBean> selectData(ListView lv_spend_list, boolean isOrderByCreateTime) {
-        spendBeanList= DBManager.getInstance(mContext).selectSpend(isOrderByCreateTime);
-        CommonAdapter<SpendBean> commonAdapter = new CommonAdapter<SpendBean>(mContext, spendBeanList, R.layout.item_spend) {
+    public void selectData(final ListView lv_spend_list,final boolean isOrderByCreateTime) {
+        mView.showLoading();
+        new Thread(new Runnable() {
             @Override
-            public void convert(ViewHolder helper, SpendBean item) {
-                double spend=item.getLiveSpend();
-                String liveSpend;
-                if(spend>10000){
-                    liveSpend=spend/10000+"万元";
-                }else{
-                    liveSpend=spend+"元";
-                }
-                helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
-                        .setText(R.id.tv_spend, "消费:"+liveSpend);
-                TextView tv_reminder = helper.getTextView(R.id.tv_spend_date);
-                tv_reminder.setText(DateUtils.dateToString(item.getCreatTime(),"yyyy-MM-dd HH:mm"));
+            public void run() {
+                spendBeanList= DBManager.getInstance(mContext).selectSpend(isOrderByCreateTime);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.hideLoading();
+                        CommonAdapter<SpendBean> commonAdapter = new CommonAdapter<SpendBean>(mContext, spendBeanList, R.layout.item_spend) {
+                            @Override
+                            public void convert(ViewHolder helper, SpendBean item) {
+                                double spend = item.getLiveSpend();
+                                String liveSpend;
+                                if (spend > 10000) {
+                                    liveSpend = spend / 10000 + "万元";
+                                } else {
+                                    liveSpend = spend + "元";
+                                }
+                                helper.setText(R.id.tv_data_id, StringUtils.getStringLength(getCount(), helper.getPosition()) + "" + (helper.getPosition() + 1))
+                                        .setText(R.id.tv_spend, "消费:" + liveSpend);
+                                TextView tv_reminder = helper.getTextView(R.id.tv_spend_date);
+                                tv_reminder.setText(DateUtils.dateToString(item.getCreatTime(), "yyyy-MM-dd HH:mm"));
+                            }
+                        };
+                        lv_spend_list.setAdapter(commonAdapter);
+                        mView.afterSelectData(spendBeanList);
+                    }
+                });
+
             }
-        };
-        lv_spend_list.setAdapter(commonAdapter);
-        return spendBeanList;
+        }).start();
+
     }
 
     @Override

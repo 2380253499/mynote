@@ -144,7 +144,11 @@ public class MemoFragment extends BaseFragment<MemoCon.View,MemoCon.Presenter> i
 
     @Override
     public void selectData() {
-        List<MemoBean> list = mPresenter.selectData(lv_memo_list, isCreateTime);
+        mPresenter.selectData(lv_memo_list, isCreateTime);
+    }
+
+    @Override
+    public void afterSelectData(List list) {
         if(list!=null&&list.size()>0){
             et_search_memo.setVisibility(View.VISIBLE);
         }else{

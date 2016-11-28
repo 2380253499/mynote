@@ -15,10 +15,11 @@ import java.util.List;
 public interface JokeCon {
     interface View extends BaseView{
         void selectData();
+        void afterSelectData(List list);
         void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
-        List<JokeBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
+        void selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
         JokeBean copyJoke(int position);
         void deleteJokeById(MyDialog.Builder mDialog, int id);
         void deleteJokeById(MyDialog.Builder mDialog, String[] id);

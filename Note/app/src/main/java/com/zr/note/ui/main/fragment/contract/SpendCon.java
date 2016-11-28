@@ -15,9 +15,10 @@ import java.util.List;
 public interface SpendCon {
     interface View extends BaseView{
         void selectData( );
+        void afterSelectData(List list);
     }
     interface Presenter extends BasePresenter<View>{
-        List<SpendBean> selectData(ListView lv_spend_list, boolean isOrderByCreateTime);
+        void selectData(ListView lv_spend_list, boolean isOrderByCreateTime);
         SpendBean copySpend(int position);
         void deleteSpendById(MyDialog.Builder mDialog, int id);
         void deleteSpendById(MyDialog.Builder mDialog, String[] id);

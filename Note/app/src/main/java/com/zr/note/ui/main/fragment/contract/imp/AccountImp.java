@@ -50,6 +50,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
                             accountAdapter.setData(accountList);
                             accountAdapter.notifyDataSetChanged();
                         }
+                        mView.afterSelectData(accountList);
                     }
                 });
             }

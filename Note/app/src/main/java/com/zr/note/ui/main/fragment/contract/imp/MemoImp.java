@@ -30,17 +30,30 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
     }
 
     @Override
-    public List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime) {
+    public void selectData(final ListView lv_memo_list,final  boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        memoBeanList= DBManager.getInstance(mContext).selectMemo(searchInfo,isOrderByCreateTime);
-        if(memoAdapter==null){
-            memoAdapter = new MemoAdapter(mContext, memoBeanList, R.layout.item_memo);
-            lv_memo_list.setAdapter(memoAdapter);
-        }else{
-            memoAdapter.setData(memoBeanList);
-            memoAdapter.notifyDataSetChanged();
-        }
-        return memoBeanList;
+        mView.showLoading();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                memoBeanList= DBManager.getInstance(mContext).selectMemo(searchInfo,isOrderByCreateTime);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(memoAdapter==null){
+                            memoAdapter = new MemoAdapter(mContext, memoBeanList, R.layout.item_memo);
+                            lv_memo_list.setAdapter(memoAdapter);
+                        }else{
+                            memoAdapter.setData(memoBeanList);
+                            memoAdapter.notifyDataSetChanged();
+                        }
+                        mView.afterSelectData(memoBeanList);
+                    }
+                });
+
+            }
+        }).start();
+
     }
 
     @Override

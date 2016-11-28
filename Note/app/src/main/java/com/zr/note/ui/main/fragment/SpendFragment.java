@@ -20,6 +20,8 @@ import com.zr.note.ui.main.fragment.contract.imp.SpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 import com.zr.note.ui.main.inter.DateInter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -100,6 +102,11 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     @Override
     public void selectData() {
         mPresenter.selectData(lv_spend_list,isCreateTime);
+    }
+
+    @Override
+    public void afterSelectData(List list) {
+
     }
 
     @Override

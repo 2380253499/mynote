@@ -145,13 +145,18 @@ public class JokeFragment extends BaseFragment<JokeCon.View,JokeCon.Presenter> i
 
     @Override
     public void selectData() {
-        List<JokeBean> list = mPresenter.selectData(lv_joke_list, isCreateTime);
+        mPresenter.selectData(lv_joke_list, isCreateTime);
+    }
+
+    @Override
+    public void afterSelectData(List list) {
         if(list!=null&&list.size()>0){
             et_search_joke.setVisibility(View.VISIBLE);
         }else{
             et_search_joke.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void hiddenSearch(boolean isDeleteAll) {
         if(isDeleteAll){

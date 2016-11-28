@@ -15,11 +15,11 @@ import java.util.List;
 public interface MemoCon {
     interface View extends BaseView{
         void selectData();
-
+        void afterSelectData(List list);
         void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
-        List<MemoBean> selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
+        void selectData(ListView lv_memo_list, boolean isOrderByCreateTime);
         MemoBean copyMemo(int position);
         void deleteMemoById(MyDialog.Builder mDialog, int id);
         boolean dataBatchCheckNotEmpty();
