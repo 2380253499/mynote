@@ -95,11 +95,9 @@ public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureC
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(data!=null){
-			if(requestCode==IntentParam.Gesture.request_superPWD&&resultCode==RESULT_OK){
-				STActivity(MainActivity.class);
-				finish();
-			}
+		if(requestCode==IntentParam.Gesture.request_superPWD&&resultCode==RESULT_OK){
+			STActivity(MainActivity.class);
+			finish();
 		}
 	}
 

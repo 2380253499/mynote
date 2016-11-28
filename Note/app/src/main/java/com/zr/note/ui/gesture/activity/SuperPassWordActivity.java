@@ -1,6 +1,7 @@
 package com.zr.note.ui.gesture.activity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -73,8 +74,12 @@ public class SuperPassWordActivity extends BaseActivity{
 				if(TextUtils.isEmpty(superPWD)){
 					showToastS("请输入超级密码");
 				}else{
-					String time = DateUtils.dateToString(new Date(), "yyyy-MM-dd");
+					String time = DateUtils.dateToString(new Date(), "yyyyMMdd");
 					int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+					String strHour=hour+"";
+					if(hour<10){
+						strHour="0"+hour;
+					}
 					int minute = Calendar.getInstance().get(Calendar.MINUTE);
 					String strMinute="00";
 					if(minute>55){
@@ -102,11 +107,16 @@ public class SuperPassWordActivity extends BaseActivity{
 					}else if(minute>=0){
 						strMinute="00";
 					}
-					strMinute=time+""+hour+""+strMinute+"note";
+					strMinute=time+""+strHour+""+strMinute+"note";
+					Log.i("====","===="+strMinute);
 					String encode = AES.encode(strMinute);
-					et_super_pwd.setText(encode.substring(0,10));
+//					et_super_pwd.setText(encode.substring(0,10));
 					if(superPWD.equalsIgnoreCase(encode.substring(0,10))){
-						showToastS("密码正确");
+//						showToastS("密码正确");
+						setResult(RESULT_OK);
+						finish();
+					}else{
+						showToastS("超级密码不正确,请重新输入");
 					}
 				}
 				break;
@@ -116,14 +126,8 @@ public class SuperPassWordActivity extends BaseActivity{
 	}
 
 	public static void main(String[] args) {
-		System.out.println(AES.encode("201611251703note"));
-		System.out.println(AES.encode("201611251723note"));
-		System.out.println(AES.encode("201611251730note"));
-		System.out.println(AES.encode("201611251731note"));
-		System.out.println(AES.encode("201611251732note"));
-		System.out.println(AES.encode("201611251733note"));
-		System.out.println(AES.encode("201611251734note"));
-		System.out.println(AES.encode("201611251703note").substring(0,10));
+		System.out.println(AES.encode("201611280935note"));
+		System.out.println(AES.encode("201611280935note").substring(0,10));
 		if("C42B3BFE89".equalsIgnoreCase(AES.encode("201611251703note").substring(0,10))){
 			System.out.println("true");
 		}

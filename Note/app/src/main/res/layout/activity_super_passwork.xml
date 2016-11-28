@@ -33,6 +33,7 @@
         app:my_et_corner_radius="2dp"
         android:singleLine="true"
         android:maxLength="20"
+        android:hint="请输入超级密码"
         />
         <com.zr.note.base.customview.MyTextView
             android:id="@+id/tv_submit_pwd"
@@ -46,6 +47,7 @@
             app:my_tv_press="@color/c_press_bt"
             app:my_tv_solid="@color/blue_point"
             android:textColor="@color/white"
+
             />
     </LinearLayout>
 <View
