@@ -3,6 +3,7 @@ package com.zr.note.ui.main.entity;
 import com.zr.note.base.BaseEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/13.
@@ -15,6 +16,25 @@ dataRemark*/
     private String localYear;
     private String localMonth;
     private String localDay;
+    private List<SpendBean> list;
+    private double totalSpend;
+
+    public List<SpendBean> getList() {
+        return list;
+    }
+
+    public void setList(List<SpendBean> list) {
+        this.list = list;
+    }
+
+    public double getTotalSpend() {
+        return totalSpend;
+    }
+
+    public void setTotalSpend(double totalSpend) {
+        this.totalSpend = totalSpend;
+    }
+
     public String getDataRemark() {
         return dataRemark;
     }

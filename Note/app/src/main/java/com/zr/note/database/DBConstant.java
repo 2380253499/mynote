@@ -16,6 +16,9 @@ public class DBConstant {
     public static final String dataContent="dataContent";
     /**************************消费表字段************************************/
     public static final String liveSpend="liveSpend";
+    public static final String localYear="localYear";
+    public static final String localMonth="localMonth";
+    public static final String localDay="localDay";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"

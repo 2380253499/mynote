@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.SparseArray;
 
 import com.zr.note.tools.AES;
 import com.zr.note.tools.DateUtils;
@@ -521,5 +522,53 @@ public class DBManager extends SQLiteOpenHelper{
         int delete = db.delete(table, DBConstant._id + "=?", new String[]{id + ""});
         db.close();
         return delete>0?true:false;
+    }
+    public SpendBean selectSpendForTree(){
+        SparseArray<SparseArray<SparseArray<String>>>sparseArray=new SparseArray<SparseArray<SparseArray<String>>>();
+        SpendBean ySpendBean=new SpendBean();
+        List<SpendBean>yList=new ArrayList<SpendBean>();
+        SpendBean mSpendBean=new SpendBean();
+        List<SpendBean>mList=new ArrayList<SpendBean>();
+        SpendBean dSpendBean=new SpendBean();
+        List<SpendBean>dList=new ArrayList<SpendBean>();
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Spend_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.liveSpend,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime,
+                        DBConstant.localYear,
+                        DBConstant.localMonth,
+                        DBConstant.localDay,
+                }, null, null, null, null,"localYear desc,localMonth desc,localDay desc");
+        List<SpendBean>list=new ArrayList<SpendBean>();
+        SpendBean bean;
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
+            bean.set_id(id);
+            bean.setLiveSpend(liveSpend);
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            list.add(bean);
+            SparseArray<SparseArray<String>> ySparseArray = sparseArray.get(localYear);
+            if(ySparseArray==null){
+                SparseArray mSparseArray=new SparseArray<String>();
+            }else{
+
+            }
+        }
+        db.close();
+        return null;
     }
 }
