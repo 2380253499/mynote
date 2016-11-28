@@ -40,6 +40,7 @@ public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Present
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        mView.hideLoading();
                         if(memoAdapter==null){
                             memoAdapter = new MemoAdapter(mContext, memoBeanList, R.layout.item_memo);
                             lv_memo_list.setAdapter(memoAdapter);
