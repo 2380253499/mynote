@@ -42,11 +42,19 @@
         android:paddingTop="10dp"
         android:id="@+id/text_reset"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center_horizontal"
         android:layout_below="@id/gesture_container"
         android:text="@string/set_gesture_pattern_reason"
         android:textColor="#E7E7E6"
         />
-
+    <TextView
+        android:id="@+id/tv_forget_oldpwd"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_below="@id/gesture_container"
+        android:text="忘记密码?"
+        android:textColor="#E7E7E6"
+        />
 </LinearLayout>

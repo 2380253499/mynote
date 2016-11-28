@@ -1,5 +1,6 @@
 package com.zr.note.ui.gesture.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,6 +11,7 @@ import com.zr.note.base.BaseActivity;
 import com.zr.note.tools.SPUtils;
 import com.zr.note.tools.gesture.widget.GestureContentView;
 import com.zr.note.tools.gesture.widget.LockIndicator;
+import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.gesture.activity.contract.GestureCon;
 import com.zr.note.ui.gesture.activity.contract.imp.GestureImp;
 
@@ -32,6 +34,8 @@ public class GestureUpdateActivity extends BaseActivity<GestureCon.View,GestureC
 	private GestureContentView mGestureContentView;
 	@BindView(R.id.text_reset)
 	TextView text_reset;
+	@BindView(R.id.tv_forget_oldpwd)
+	TextView tv_forget_oldpwd;
 
 	@Override
 	protected GestureImp initPresenter() {
@@ -57,6 +61,7 @@ public class GestureUpdateActivity extends BaseActivity<GestureCon.View,GestureC
 	}
 	@Override
 	protected void initView() {
+		tv_forget_oldpwd.setOnClickListener(this);
 		//@string/set_gesture_pattern
 		text_reset.setClickable(false);
 		text_reset.setOnClickListener(this);
@@ -76,6 +81,9 @@ public class GestureUpdateActivity extends BaseActivity<GestureCon.View,GestureC
 	@Override
 	protected void viewOnClick(View v) {
 		switch (v.getId()) {
+			case R.id.tv_forget_oldpwd:
+				STActivityForResult(SuperPassWordActivity.class,IntentParam.Gesture.update_superPWD);
+				break;
 			case R.id.text_reset:
 				mPresenter.resetPwd();
 				tv_tip.setText(getString(R.string.set_gesture_pattern));
@@ -93,11 +101,23 @@ public class GestureUpdateActivity extends BaseActivity<GestureCon.View,GestureC
 	@Override
 	public void pwdValidationSuccess() {
 		tv_tip.setText(getString(R.string.set_gesture_pattern));
+		tv_forget_oldpwd.setVisibility(View.GONE);
+		initUpdateGesturePWD();
+	}
 
+	private void initUpdateGesturePWD() {
 		mGestureContentView = mPresenter.initUpdateGestureContentView(text_reset, tv_tip, gesture_container);
 		mPresenter.setGestureContentView(mGestureContentView);
 		mPresenter.setLockIndicator(mLockIndicator);
 		mGestureContentView.setParentView(gesture_container);
 		mLockIndicator.setPath("");
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode== IntentParam.Gesture.update_superPWD&&resultCode==RESULT_OK){
+			pwdValidationSuccess();
+		}
 	}
 }
