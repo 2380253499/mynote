@@ -55,6 +55,9 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         setSupportActionBar(toolbar);
         setToolBar();
         mPresenter= initPresenter();
+        if(mPresenter!=null){
+            mPresenter.attach((V) this);
+        }
         initView();
         initData();
     }
@@ -214,13 +217,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     @Override
     public void STActivity(Intent intent,Class clazz){
         super.STActivity(intent,clazz);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(mPresenter!=null){
-            mPresenter.attach((V) this);
-        }
     }
     @Override
     protected void onDestroy() {

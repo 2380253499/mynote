@@ -32,17 +32,28 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     }
 
     @Override
-    public List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime) {
+    public void selectData(final ListView lv_account_list,final boolean isOrderByCreateTime) {
         this.isOrderByCreateTime=isOrderByCreateTime;
-        accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
-        if(accountAdapter==null){
-            accountAdapter = new AccountAdapter(mContext, accountList, R.layout.item_account);
-            lv_account_list.setAdapter(accountAdapter);
-        }else{
-            accountAdapter.setData(accountList);
-            accountAdapter.notifyDataSetChanged();
-        }
-        return accountList;
+        mView.showLoading();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                accountList = DBManager.getInstance(mContext).selectAccount(searchInfo,isOrderByCreateTime);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.hideLoading();
+                        if(accountAdapter==null){
+                            accountAdapter = new AccountAdapter(mContext, accountList, R.layout.item_account);
+                            lv_account_list.setAdapter(accountAdapter);
+                        }else{
+                            accountAdapter.setData(accountList);
+                            accountAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }).start();
     }
     @Override
     public AccountBean copyAccount(int position) {

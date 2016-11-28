@@ -124,7 +124,11 @@ public class AccountFragment extends BaseFragment<AccountCon.View, AccountCon.Pr
     }
     @Override
     public void selectData() {
-        List<AccountBean> list = mPresenter.selectData(lv_account_list, isCreateTime);
+        mPresenter.selectData(lv_account_list, isCreateTime);
+    }
+
+    @Override
+    public void afterSelectData(List list) {
         if(list!=null&&list.size()>0){
             et_search_account.setVisibility(View.VISIBLE);
         }else{

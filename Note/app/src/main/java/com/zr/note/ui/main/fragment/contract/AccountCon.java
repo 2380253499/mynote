@@ -15,11 +15,11 @@ import java.util.List;
 public interface AccountCon {
     interface View extends BaseView{
         void selectData();
-
+        void afterSelectData(List list);
         void hiddenSearch(boolean isDeleteAll);
     }
     interface Presenter extends BasePresenter<View>{
-        List<AccountBean> selectData(ListView lv_account_list,boolean isOrderByCreateTime);
+        void selectData(ListView lv_account_list,boolean isOrderByCreateTime);
         AccountBean copyAccount(int position);
         void deleteAccountById(MyDialog.Builder mDialog, int id);
         void deleteAccountById(MyDialog.Builder mDialog,String[] id);
