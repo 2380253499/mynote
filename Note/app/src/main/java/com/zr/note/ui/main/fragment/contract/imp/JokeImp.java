@@ -175,6 +175,7 @@ public class JokeImp extends IPresenter<JokeCon.View> implements JokeCon.Present
     @Override
     public void searchJoke(String info) {
         searchInfo=info;
+        //每一次搜索，都要取消checkbox的选中
         RxBus.get().post(RxTag.dataNoSelectAll,RxTag.accountDataIndex);
         jokeBeanList= DBManager.getInstance(mContext).selectJoke(searchInfo, isOrderByCreateTime);
         jokeAdapter.setSearchInfo(searchInfo);
