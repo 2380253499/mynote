@@ -53,6 +53,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     @Override
     protected void initView() {
 
+        et_memo_content.requestFocus();
     }
 
     @Override
@@ -98,6 +99,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     public void clearData() {
         et_memo_reminder.setText(null);
         et_memo_content.setText(null);
+        et_memo_content.requestFocus();
     }
 
     @Override

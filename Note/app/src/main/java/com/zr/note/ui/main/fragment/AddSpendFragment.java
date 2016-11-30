@@ -56,6 +56,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
 
     @Override
     protected void initView() {
+        et_spend_remark.requestFocus();
 //        et_spend_amount.setFilters(new InputFilter[]{EditTextUtils.getInputFilter()});
 //        et_spend_amount.setMaxLines(9);
         et_spend_amount.addTextChangedListener(new TextWatcher() {
@@ -132,6 +133,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
     public void clearData() {
         et_spend_remark.setText(null);
         et_spend_amount.setText(null);
+        et_spend_remark.requestFocus();
     }
 
     @Override

@@ -65,6 +65,7 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     }
     @Override
     protected void initView() {
+        et_addData_source.requestFocus();
         tv_account_copy.setOnClickListener(this);
         tv_pwd_copy.setOnClickListener(this);
     }
@@ -139,6 +140,7 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
         et_addData_user.setText(null);
         et_addData_pwd.setText(null);
         et_addData_note.setText(null);
+        et_addData_source.requestFocus();
     }
 
     @Override

@@ -58,6 +58,7 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
 
     @Override
     protected void initView() {
+        et_joke_content.requestFocus();
         tv_joke_clear.setOnClickListener(this);
         tv_joke_copy.setOnClickListener(this);
     }
@@ -116,6 +117,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     public void clearData() {
         et_joke_remark.setText(null);
         et_joke_content.setText(null);
+
+        et_joke_content.requestFocus();
     }
 
     @Override
