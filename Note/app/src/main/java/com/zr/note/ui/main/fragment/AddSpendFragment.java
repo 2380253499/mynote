@@ -19,8 +19,6 @@ import com.zr.note.ui.main.fragment.contract.AddSpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
-import java.math.BigDecimal;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -90,7 +88,15 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View,AddSpendCon.
         if(spendBean !=null){
             isEdit =true;
             et_spend_remark.setText(spendBean.getDataRemark());
-            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
+//            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
+            String liveSpend = spendBean.getLiveSpend()+"";
+            String[] split = liveSpend.split("\\.");
+            if(Integer.parseInt(split[1])>0){
+                et_spend_amount.setText(spendBean.getLiveSpend()+"");
+            }else{
+                et_spend_amount.setText(split[0]);
+            }
+
         }
     }
 
