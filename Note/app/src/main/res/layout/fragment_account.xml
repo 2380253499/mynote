@@ -28,6 +28,7 @@
         app:my_et_corner_radius="4dp"
         android:layout_gravity="center"
         android:maxLength="10"
+        android:visibility="invisible"
         />
     <View
         android:layout_width="match_parent"
