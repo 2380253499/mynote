@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.zr.note.tools.AES;
@@ -16,14 +17,20 @@ import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.entity.SpendBean;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/10/11.
  */
 public class DBManager extends SQLiteOpenHelper{
+    /*
+    * version 3--消费表增加year month day三个varchar字段
+    * version 4--消费表增加year month day三个varchar字段修改为integer类型
+    * */
     private static final String dbName="MyNote";
-    private static final int version=3;
+    private static final int version=4;
     private static DBManager dbManager;
     public static final String T_Account_Note="T_Account_Note";
     public static final String T_Memo_Note="T_Memo_Note";
@@ -78,6 +85,12 @@ public class DBManager extends SQLiteOpenHelper{
                 }
             break;
             case 2:
+                if(existTable(db,T_Spend_Note)){
+                    dropTable(db,T_Spend_Note);
+                    addDataTable(db,DBConstant.CT_Spend_Note);
+                }
+            break;
+            case 3:
                 if(existTable(db,T_Spend_Note)){
                     dropTable(db,T_Spend_Note);
                     addDataTable(db,DBConstant.CT_Spend_Note);
@@ -485,12 +498,25 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.liveSpend, bean.getLiveSpend());
         values.put(DBConstant.updateTime,DateUtils.getLocalDate());
-        long insert = db.update(T_Spend_Note, values, DBConstant._id+"=?", new String[]{bean.get_id()+""});
+        long insert = db.update(T_Spend_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
         db.close();
         return insert;
     }
     public long addSpend(SpendBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.liveSpend, bean.getLiveSpend());
+//        values.put(DBConstant.localYear, bean.getLocalYear());
+//        values.put(DBConstant.localMonth, bean.getLocalMonth());
+//        values.put(DBConstant.localDay, bean.getLocalDay());
+        long insert = db.insert(T_Spend_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
+    public long addSpend2(SpendBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
@@ -522,29 +548,92 @@ public class DBManager extends SQLiteOpenHelper{
         int delete = db.delete(table, DBConstant._id + "=?", new String[]{id + ""});
         db.close();
         return delete>0?true:false;
-    }
-    public SpendBean selectSpendForTree(){
-        SparseArray<SparseArray<SparseArray<String>>>sparseArray=new SparseArray<SparseArray<SparseArray<String>>>();
-        SpendBean ySpendBean=new SpendBean();
-        List<SpendBean>yList=new ArrayList<SpendBean>();
-        SpendBean mSpendBean=new SpendBean();
-        List<SpendBean>mList=new ArrayList<SpendBean>();
-        SpendBean dSpendBean=new SpendBean();
-        List<SpendBean>dList=new ArrayList<SpendBean>();
-        SQLiteDatabase db=getWritableDatabase();
-        Cursor query = db.query(T_Spend_Note,
-                new String[]{
-                        DBConstant._id,
-                        DBConstant.dataRemark,
-                        DBConstant.liveSpend,
-                        DBConstant.updateTime,
-                        DBConstant.creatTime,
-                        DBConstant.localYear,
-                        DBConstant.localMonth,
-                        DBConstant.localDay,
-                }, null, null, null, null,"localYear desc,localMonth desc,localDay desc");
-        List<SpendBean>list=new ArrayList<SpendBean>();
+    }/**
+     * 按年份分组
+     * @return
+     */
+    public List<SpendBean> selectSpendByYear(){
+        List<SpendBean> sbList=new ArrayList<SpendBean>();
         SpendBean bean;
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="select a."+DBConstant.localYear+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
+                " group by  "+DBConstant.localYear+" order by  "+DBConstant.localYear+" desc";
+        Log.i("---","---"+sql);
+        Cursor query = db.rawQuery(sql, null);
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
+            bean.setTotalSpend(totalSpend);
+            bean.setLocalYear(localYear);
+            sbList.add(bean);
+        }
+        db.close();
+        return sbList;
+    }
+
+    /**
+     * 按月份分组
+     * @return
+     */
+    public List<SpendBean> selectSpendByMonth(int year){
+        List<SpendBean> sbList=new ArrayList<SpendBean>();
+        SpendBean bean;
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="select a."+DBConstant.localMonth+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
+                " where "+DBConstant.localYear+"=? group by  "+DBConstant.localMonth+" order by  "+DBConstant.localMonth+" desc";
+        Log.i("---","---"+sql);
+        Cursor query = db.rawQuery(sql,new String[]{year+""});
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
+            bean.setTotalSpend(totalSpend);
+            bean.setLocalMonth(localMonth);
+            sbList.add(bean);
+        }
+        db.close();
+        return sbList;
+    }
+    /**
+     * 按天分组
+     * @return
+     */
+    public List<SpendBean> selectSpendByDay(int year,int month){
+        List<SpendBean> sbList=new ArrayList<SpendBean>();
+        SpendBean bean;
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="select a."+DBConstant.localDay+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
+                " where "+DBConstant.localYear+"=? and "+DBConstant.localMonth+"=? group by  "+DBConstant.localDay+" order by  "+DBConstant.localDay+" desc";
+        Log.i("---","---"+sql);
+        Cursor query = db.rawQuery(sql,new String[]{year+"",month+""});
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
+            Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
+            bean.setTotalSpend(totalSpend);
+            bean.setLocalDay(localDay);
+            sbList.add(bean);
+        }
+        db.close();
+        return sbList;
+    }
+
+    /**
+     * 获取一天的消费记录
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
+    public List<SpendBean> selectSpendByOneDay(int year,int month,int day){
+        List<SpendBean> sbList=new ArrayList<SpendBean>();
+        SpendBean bean;
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="select * from " + DBManager.T_Spend_Note +
+                " where "+DBConstant.localYear+"=? and "+DBConstant.localMonth+"=? and "+DBConstant.localDay+"=? order by  "+DBConstant.creatTime+" desc";
+        Log.i("---","---"+sql);
+        Cursor query = db.rawQuery(sql,new String[]{year+"",month+"",day+""});
         while (query.moveToNext()){
             bean=new SpendBean();
             int id=query.getInt(query.getColumnIndex(DBConstant._id));
@@ -560,15 +649,320 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setLocalYear(localYear );
+            bean.setLocalMonth(localMonth );
+            bean.setLocalDay(localDay );
+            sbList.add(bean);
+        }
+        db.close();
+        return sbList;
+    }
+    public SpendBean selectSpendForTree3(){
+        SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Spend_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.liveSpend,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime,
+                        DBConstant.localYear,
+                        DBConstant.localMonth,
+                        DBConstant.localDay,
+                }, null, null, null, null, "localYear desc,localMonth desc,localDay desc");
+        List<SpendBean>list=new ArrayList<SpendBean>();
+        SpendBean bean;
+
+        SpendBean spendBean=new SpendBean();
+        List<SpendBean>yList=new ArrayList<SpendBean>();
+        SpendBean mSpendBean=new SpendBean();
+        List<SpendBean>mList=new ArrayList<SpendBean>();
+        SpendBean dSpendBean=new SpendBean();
+        List<SpendBean>dList=new ArrayList<SpendBean>();
+        SpendBean hSpendBean=new SpendBean();
+        List<SpendBean>hList=new ArrayList<SpendBean>();
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
+            bean.set_id(id);
+            bean.setLiveSpend(liveSpend);
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setLocalYear(localYear );
+            bean.setLocalMonth(localMonth );
+            bean.setLocalDay(localDay );
             list.add(bean);
-            SparseArray<SparseArray<String>> ySparseArray = sparseArray.get(localYear);
-            if(ySparseArray==null){
-                SparseArray mSparseArray=new SparseArray<String>();
+            SparseArray<SparseArray<List<SpendBean>>> mSparseArray;
+            SparseArray<List<SpendBean>> dSparseArray;
+            List<SpendBean> dayList;
+            if(sparseArray.get(localYear)==null){
+                Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
+                dSparseArray=new SparseArray<List<SpendBean>>();
+                mSparseArray=new SparseArray<SparseArray<List<SpendBean>>>();
+                dayList=new ArrayList<SpendBean>();
+                dayList.add(bean);
+                dSparseArray.put(localDay, dayList);
+                mSparseArray.put(localMonth, dSparseArray);
+                sparseArray.put(localYear, mSparseArray);
+                dList.add(bean);
+                /////////////////////////////////
+                hList=new ArrayList<>();
+                hList.add(bean);
+                hSpendBean=new SpendBean();
+                hSpendBean.setLocalDay(localDay);
+                hSpendBean.setList(hList);
+
+                dList=new ArrayList<>();
+                dList.add(hSpendBean);
+                dSpendBean=new SpendBean();
+                dSpendBean.setLocalMonth(localMonth);
+                dSpendBean.setList(dList);
+
+                mList=new ArrayList<>();
+                mList.add(dSpendBean);
+                mSpendBean=new SpendBean();
+                mSpendBean.setLocalYear(localYear);
+                mSpendBean.setList(mList);
+
+                yList.add(mSpendBean);
+//                spendBean=new SpendBean();
+                spendBean.setList(yList);
+                Log.i("------", "===" + bean.getLocalYear() + "-" + bean.getLocalMonth() + "-" + bean.getLocalDay());
             }else{
+                if(sparseArray.get(localYear).get(localMonth)==null){
+                    Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
+                    dSparseArray=new SparseArray<List<SpendBean>>();
+                    dayList=new ArrayList<SpendBean>();
+                    dayList.add(bean);
+                    dSparseArray.put(localDay, dayList);
+                    sparseArray.get(localYear).put(localMonth,dSparseArray);
+                    /////////////////////////////////
+                    dList=new ArrayList<>();
+                    dList.add(bean);
+                    dSpendBean=new SpendBean();
+                    dSpendBean.setList(dList);
+                    dSpendBean.setLocalMonth(localMonth);
+
+                    mList=new ArrayList<>();
+                    mList.add(dSpendBean);
+                    mSpendBean=new SpendBean();
+                    mSpendBean.setList(mList);
+                    mSpendBean.setLocalYear(localYear);
+
+                    for (int i = 0; i < spendBean.getList().size(); i++) {
+                        if(spendBean.getList().get(i).getLocalYear()==localYear){
+                            spendBean.getList().get(i).getList().add(mSpendBean);
+                            break;
+                        }
+                    }
+
+                }else{
+                    if(sparseArray.get(localYear).get(localMonth).get(localDay)==null){
+                        Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
+                        dayList=new ArrayList<SpendBean>();
+                        dayList.add(bean);
+                        sparseArray.get(localYear).get(localMonth).put(localDay,dayList);
+                        /////////////////////////////////
+                        dList=new ArrayList<>();
+                        dList.add(bean);
+                        dSpendBean=new SpendBean();
+                        dSpendBean.setList(dList);
+                        dSpendBean.setLocalMonth(localMonth);
+                        for (int i = 0; i < spendBean.getList().size(); i++) {
+                            if(spendBean.getList().get(i).getLocalYear()==localYear){
+                                for (int j = 0; j < spendBean.getList().get(i).getList().size(); j++) {
+                                    if(spendBean.getList().get(i).getList().get(j).getLocalMonth()==localMonth){
+                                        spendBean.getList().get(i).getList().get(j).getList().add(dSpendBean);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
+                        sparseArray.get(localYear).get(localMonth).get(localDay).add(bean);
+                        /////////////////////////////////
+                        for (int i = 0; i < spendBean.getList().size(); i++) {
+                            if(spendBean.getList().get(i).getLocalYear()==localYear){
+                                for (int j = 0; j < spendBean.getList().get(i).getList().size(); j++) {
+                                    if(spendBean.getList().get(i).getList().get(j).getLocalMonth()==localMonth){
+                                        for (int k = 0; k < spendBean.getList().get(i).getList().get(j).getList().size(); k++) {
+                                            if(spendBean.getList().get(i).getList().get(j).getList().get(k).getLocalDay()==localDay){
+                                                spendBean.getList().get(i).getList().get(j).getList().get(k).getList().add(bean);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
         }
         db.close();
-        return null;
+        Log.i("-----","---"+spendBean.getList().size());
+        return spendBean;
+    }
+    public SparseArray<SparseArray<SparseArray<List<SpendBean>>>> selectSpendForTree(){
+        SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Spend_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.liveSpend,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime,
+                        DBConstant.localYear,
+                        DBConstant.localMonth,
+                        DBConstant.localDay,
+                }, null, null, null, null,"localYear desc,localMonth desc,localDay desc");
+        List<SpendBean>list=new ArrayList<SpendBean>();
+        SpendBean bean;
+
+        SpendBean ySpendBean=new SpendBean();
+        List<SpendBean>yList=new ArrayList<SpendBean>();
+        SpendBean mSpendBean=new SpendBean();
+        List<SpendBean>mList=new ArrayList<SpendBean>();
+        SpendBean dSpendBean=new SpendBean();
+        List<SpendBean>dList=new ArrayList<SpendBean>();
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
+            bean.set_id(id);
+            bean.setLiveSpend(liveSpend);
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setLocalYear(localYear );
+            bean.setLocalMonth(localMonth );
+            bean.setLocalDay(localDay );
+            list.add(bean);
+            SparseArray<SparseArray<List<SpendBean>>> mSparseArray;
+            SparseArray<List<SpendBean>> dSparseArray;
+            List<SpendBean> dayList;
+            if(sparseArray.get(localYear)==null){
+                dSparseArray=new SparseArray<List<SpendBean>>();
+                mSparseArray=new SparseArray<SparseArray<List<SpendBean>>>();
+                dayList=new ArrayList<SpendBean>();
+                dayList.add(bean);
+                dSparseArray.put(localDay, dayList);
+                mSparseArray.put(localMonth,dSparseArray);
+                sparseArray.put(localYear,mSparseArray);
+                dList.add(bean);
+            }else{
+                if(sparseArray.get(localYear).get(localMonth)==null){
+                    dSparseArray=new SparseArray<List<SpendBean>>();
+                    dayList=new ArrayList<SpendBean>();
+                    dayList.add(bean);
+                    dSparseArray.put(localDay, dayList);
+                    sparseArray.get(localYear).put(localMonth,dSparseArray);
+                }else{
+                    if(sparseArray.get(localYear).get(localMonth).get(localDay)==null){
+                        dayList=new ArrayList<SpendBean>();
+                        dayList.add(bean);
+                        sparseArray.get(localYear).get(localMonth).put(localDay,dayList);
+                    }else{
+                        sparseArray.get(localYear).get(localMonth).get(localDay).add(bean);
+                    }
+                }
+            }
+        }
+        db.close();
+        return sparseArray;
+    }
+    public Map<Integer,Map<Integer,Map<Integer,List<SpendBean>>>> selectSpendForTree2(){
+//        SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
+        Map<Integer,Map<Integer,Map<Integer,List<SpendBean>>>> sparseArray=new LinkedHashMap<Integer,Map<Integer,Map<Integer,List<SpendBean>>>>();
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Spend_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.liveSpend,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime,
+                        DBConstant.localYear,
+                        DBConstant.localMonth,
+                        DBConstant.localDay,
+                }, null, null, null, null,"localYear desc,localMonth desc,localDay desc");
+        List<SpendBean>list=new ArrayList<SpendBean>();
+        SpendBean bean;
+
+        SpendBean ySpendBean=new SpendBean();
+        List<SpendBean>yList=new ArrayList<SpendBean>();
+        SpendBean mSpendBean=new SpendBean();
+        List<SpendBean>mList=new ArrayList<SpendBean>();
+        SpendBean dSpendBean=new SpendBean();
+        List<SpendBean>dList=new ArrayList<SpendBean>();
+        while (query.moveToNext()){
+            bean=new SpendBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
+            bean.set_id(id);
+            bean.setLiveSpend(liveSpend);
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setLocalYear(localYear );
+            bean.setLocalMonth(localMonth );
+            bean.setLocalDay(localDay );
+            list.add(bean);
+            Map<Integer,Map<Integer,List<SpendBean>>> mSparseArray;
+            Map<Integer,List<SpendBean>> dSparseArray;
+            List<SpendBean> dayList;
+            if(sparseArray.get(localYear)==null){
+                dSparseArray=new LinkedHashMap<Integer,List<SpendBean>>();
+                mSparseArray=new LinkedHashMap<Integer,Map<Integer,List<SpendBean>>>();
+                dayList=new ArrayList<SpendBean>();
+                dayList.add(bean);
+                dSparseArray.put(localDay, dayList);
+                mSparseArray.put(localMonth,dSparseArray);
+                sparseArray.put(localYear,mSparseArray);
+                dList.add(bean);
+            }else{
+                if(sparseArray.get(localYear).get(localMonth)==null){
+                    dSparseArray=new LinkedHashMap<Integer,List<SpendBean>>();
+                    dayList=new ArrayList<SpendBean>();
+                    dayList.add(bean);
+                    dSparseArray.put(localDay, dayList);
+                    sparseArray.get(localYear).put(localMonth,dSparseArray);
+                }else{
+                    if(sparseArray.get(localYear).get(localMonth).get(localDay)==null){
+                        dayList=new ArrayList<SpendBean>();
+                        dayList.add(bean);
+                        sparseArray.get(localYear).get(localMonth).put(localDay,dayList);
+                    }else{
+                        sparseArray.get(localYear).get(localMonth).get(localDay).add(bean);
+                    }
+                }
+            }
+        }
+        db.close();
+        return sparseArray;
     }
 }

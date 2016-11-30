@@ -61,5 +61,7 @@ dependencies {
     }
     //loading
     compile 'com.pnikosis:materialish-progress:1.7'
+    //树形菜单
+    compile 'com.github.bmelnychuk:atv:1.2.+'
 //    compile project(':zrlibrary')
 }

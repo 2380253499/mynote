@@ -227,13 +227,14 @@ public class AES {
 
     //测试用例
     public static void test1(){
-        String content = "新.浪邮箱";
+        System.out.println((int)(Math.random() * 2013));
+        /*String content = "新.浪邮箱";
         String pStr = encode(content );
         System.out.println("加密前："+content);
         System.out.println("加密后:" + pStr);
 
         String postStr = decode(pStr);
-        System.out.println(decode("E00203D35AB42B85A410A675CA096115")+"解密后："+ postStr );
+        System.out.println(decode("E00203D35AB42B85A410A675CA096115")+"解密后："+ postStr );*/
     }
 
     public static void main(String[] args) {

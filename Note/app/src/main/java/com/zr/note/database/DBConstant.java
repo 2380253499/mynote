@@ -19,6 +19,7 @@ public class DBConstant {
     public static final String localYear="localYear";
     public static final String localMonth="localMonth";
     public static final String localDay="localDay";
+    public static final String totalSpend="totalSpend";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"
@@ -60,9 +61,9 @@ public class DBConstant {
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "liveSpend DOUBLE," +
             "dataRemark TEXT," +
-            "localYear  VARCHAR2 NOT NULL DEFAULT (strftime('%Y','now'))," +
-            "localMonth VARCHAR2 NOT NULL DEFAULT (strftime('%m','now'))," +
-            "localDay   VARCHAR2 NOT NULL DEFAULT (strftime('%d','now'))," +
+            "localYear  INTEGER NOT NULL DEFAULT (strftime('%Y','now'))," +
+            "localMonth INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
+            "localDay   INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
             "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
 }

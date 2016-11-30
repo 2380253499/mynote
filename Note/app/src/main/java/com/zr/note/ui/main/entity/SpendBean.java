@@ -13,9 +13,9 @@ public class SpendBean  extends BaseEntity implements Serializable{
 dataRemark*/
     private String dataRemark;
     private double liveSpend;
-    private String localYear;
-    private String localMonth;
-    private String localDay;
+    private int localYear;
+    private int localMonth;
+    private int localDay;
     private List<SpendBean> list;
     private double totalSpend;
 
@@ -47,27 +47,27 @@ dataRemark*/
         return liveSpend;
     }
 
-    public String getLocalYear() {
+    public int getLocalYear() {
         return localYear;
     }
 
-    public void setLocalYear(String localYear) {
+    public void setLocalYear(int localYear) {
         this.localYear = localYear;
     }
 
-    public String getLocalMonth() {
+    public int getLocalMonth() {
         return localMonth;
     }
 
-    public void setLocalMonth(String localMonth) {
+    public void setLocalMonth(int localMonth) {
         this.localMonth = localMonth;
     }
 
-    public String getLocalDay() {
+    public int getLocalDay() {
         return localDay;
     }
 
-    public void setLocalDay(String localDay) {
+    public void setLocalDay(int localDay) {
         this.localDay = localDay;
     }
 
