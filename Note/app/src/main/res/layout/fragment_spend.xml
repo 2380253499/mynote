@@ -14,13 +14,4 @@
     >
 
 </LinearLayout>
-     <com.zr.note.base.customview.CustomListView
-         android:id="@+id/lv_spend_list"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:listSelector="@drawable/selector_list_item"
-         android:visibility="gone"
-         >
-
-     </com.zr.note.base.customview.CustomListView>
 </LinearLayout>

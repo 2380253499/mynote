@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.zr.note.R;
 import com.zr.note.tools.DateUtils;
+import com.zr.note.ui.main.entity.SpendBean;
 
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
             iv_icon.setVisibility(View.VISIBLE);
         }
         if(value.dateFormat!=null){
-            tv_spend_year.setText(DateUtils.dateToString(value.dateFormat,"HH:mm"));
+            tv_spend_year.setText(DateUtils.dateToString(value.dateFormat, "HH:mm"));
         }else{
             tv_spend_year.setText((value.date<10?"0"+value.date:value.date)+value.remark);
         }
@@ -62,5 +63,6 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
         public double totalSpend;
         public boolean isLast;
         public String remark;
+        public SpendBean spendBean;
     }
 }
