@@ -24,24 +24,41 @@
             android:src="@drawable/arrow_right"
             android:layout_marginLeft="10dp"
             />
-
+        <ImageView
+            android:id="@+id/iv_icon_delete"
+            android:layout_width="40dp"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_item_normal"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/tv_spend_year"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            tools:text="android"
+            android:layout_marginLeft="8dp"
+            />
+        <TextView
+            android:id="@+id/tv_spend_remark"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="android"
+            android:gravity="center_vertical|right"
+            tools:text="android"
             android:layout_marginLeft="8dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             />
-
         <TextView
             android:id="@+id/tv_total_spend"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical|right"
             tools:text="android"
             android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
             />
     </com.zr.note.base.customview.MyLinearLayout>
 </RelativeLayout>

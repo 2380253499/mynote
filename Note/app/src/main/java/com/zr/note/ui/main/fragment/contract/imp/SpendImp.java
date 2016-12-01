@@ -127,7 +127,8 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     private TreeNode.TreeNodeLongClickListener nodeLongClickListener = new TreeNode.TreeNodeLongClickListener() {
         @Override
         public boolean onLongClick(TreeNode node, Object value) {
-//            MySpendHolder.IconTreeItem item = (MySpendHolder.IconTreeItem) value;
+//            final MySpendHolder.IconTreeItem item = (MySpendHolder.IconTreeItem) value;
+
             return true;
         }
     };

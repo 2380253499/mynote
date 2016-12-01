@@ -508,9 +508,11 @@ public class DBManager extends SQLiteOpenHelper{
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.liveSpend, bean.getLiveSpend());
-//        values.put(DBConstant.localYear, bean.getLocalYear());
-//        values.put(DBConstant.localMonth, bean.getLocalMonth());
-//        values.put(DBConstant.localDay, bean.getLocalDay());
+        if(bean.getLocalYear()>0){
+            values.put(DBConstant.localYear, bean.getLocalYear());
+            values.put(DBConstant.localMonth, bean.getLocalMonth());
+            values.put(DBConstant.localDay, bean.getLocalDay());
+        }
         long insert = db.insert(T_Spend_Note, null, values);
         LogUtils.Log(insert);
         db.close();

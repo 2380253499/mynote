@@ -39,6 +39,8 @@ dependencies {
     //    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile(name: 'library2', ext: 'aar')
     compile(name: 'ToggleButtonLib', ext: 'aar')
+    //滚轮控件
+    compile(name: 'pickerview', ext: 'aar')
     compile(name: 'library', ext: 'aar')
     //findView注解
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -63,5 +65,7 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.7'
     //树形菜单
     compile 'com.github.bmelnychuk:atv:1.2.+'
+    //滚轮控件
+//    compile 'com.bigkoo:pickerview:2.1.1'
 //    compile project(':zrlibrary')
 }

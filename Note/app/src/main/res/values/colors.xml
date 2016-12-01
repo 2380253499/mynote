@@ -6,6 +6,7 @@
     <color name="colorPrimaryDark1">#87ceeb</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorText">#848484</color>
+    <color name="c_icon_normal">#848484</color>
     <color name="c_icon">#56abe4</color>
     <color name="colorPrimaryAlpha">#70000000</color>
     <color name="colorPrimaryAlpha1">#BF58C2F7</color>
