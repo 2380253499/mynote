@@ -87,6 +87,18 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
                             public void run() {
                                 Loading.dismissLoading();
                                 if (isSuccess) {
+                                    TreeNode.BaseNodeViewHolder dayViewHolder = node.getParent().getViewHolder();
+                                    TreeNode.BaseNodeViewHolder monthViewHolder = node.getParent().getParent().getViewHolder();
+                                    TreeNode.BaseNodeViewHolder yearVHolder = node.getParent().getParent().getParent().getViewHolder();
+                                    TextView dayTotalView =(TextView) dayViewHolder.getView().findViewById(R.id.tv_total_spend);
+                                    TextView monthTotalView =(TextView) monthViewHolder.getView().findViewById(R.id.tv_total_spend);
+                                    TextView yearTotalView =(TextView) yearVHolder.getView().findViewById(R.id.tv_total_spend);
+                                    double dayTotal = Double.parseDouble(dayTotalView.getText().toString().replace("￥","").replace("元",""));
+                                    double monthTotal = Double.parseDouble(monthTotalView.getText().toString().replace("￥", "").replace("元", ""));
+                                    double yearTotal = Double.parseDouble(yearTotalView.getText().toString().replace("￥", "").replace("元", ""));
+                                    dayTotalView.setText("￥"+(dayTotal - item.totalSpend)+"元");
+                                    monthTotalView.setText("￥"+(monthTotal - item.totalSpend)+"元");
+                                    yearTotalView.setText("￥"+(yearTotal - item.totalSpend)+"元");
                                     MyUtils.showToast(context, "删除成功");
                                     getTreeView().removeNode(node);
                                 } else {

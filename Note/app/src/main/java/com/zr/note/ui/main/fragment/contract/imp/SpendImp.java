@@ -118,6 +118,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     private TreeNode.TreeNodeClickListener nodeClickListener = new TreeNode.TreeNodeClickListener() {
         @Override
         public void onClick(TreeNode node, Object value) {
+
             MySpendHolder.IconTreeItem item = (MySpendHolder.IconTreeItem) value;
             if(item.isLast){
                 mView.startToEditSpend(item);

@@ -1,13 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
+            android:scrollbars="none"
               tools:context=".ui.main.fragment.AddMemoFragment"
-              android:orientation="vertical"
     >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,55 +22,60 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/asterisk_padding"
             android:text="消费说明"
             android:textSize="15sp"
-            android:paddingLeft="@dimen/asterisk_padding"
             />
+
         <com.zr.note.base.customview.MyEditText
             android:id="@+id/et_spend_remark"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/asterisk_padding"
+            android:layout_marginRight="@dimen/asterisk_padding"
             android:layout_marginTop="5dp"
-            android:maxLength="30"
-            android:singleLine="true"
             android:ellipsize="end"
+            android:maxLength="30"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textSize="15sp"
             app:my_et_border_color="@color/top_color2"
             app:my_et_border_width="1px"
             app:my_et_corner_radius="4px"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             tools:text="消费说明"
-            android:textSize="15sp"
-            android:layout_marginLeft="@dimen/asterisk_padding"
-            android:layout_marginRight="@dimen/asterisk_padding"
             />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/asterisk"
                 android:text="消费金额"
                 android:textSize="15sp"
-                android:drawableLeft="@drawable/asterisk"
                 />
+
             <TextView
                 android:id="@+id/tv_spend_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="2016-12-01"
                 android:layout_marginLeft="20dp"
+                tools:text="2016-12-01"
                 />
+
             <TextView
                 android:id="@+id/tv_update_spend_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="更改日期"
                 android:layout_marginLeft="10dp"
+                android:text="更改日期"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 />
@@ -76,21 +85,185 @@
             android:id="@+id/et_spend_amount"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/asterisk_padding"
+            android:layout_marginRight="@dimen/asterisk_padding"
             android:layout_marginTop="5dp"
-            android:maxLength="9"
-            android:singleLine="true"
             android:ellipsize="end"
+            android:hint="请填写金额"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textSize="15sp"
             app:my_et_border_color="@color/top_color2"
             app:my_et_border_width="1px"
             app:my_et_corner_radius="4px"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:hint="请填写金额"
-            android:textSize="15sp"
-            android:inputType="numberDecimal"
-            android:layout_marginLeft="@dimen/asterisk_padding"
-            android:layout_marginRight="@dimen/asterisk_padding"
             />
 
     </LinearLayout>
+
+    <com.zr.tools.customview.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="13dp"
+        android:paddingTop="13dp">
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_zaocan"
+            style="@style/add_spend_tag"
+            android:text="早餐"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"/>
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_wucan"
+            style="@style/add_spend_tag"
+            android:text="午餐"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_wancan"
+            style="@style/add_spend_tag"
+            android:text="晚餐"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_lingshi"
+            android:text="零食"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_gouwu"
+            android:text="购物"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_jiaotong"
+            android:text="交通"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_kanbingmaiyao"
+            android:layout_width="80dp"
+            android:text="看病买药"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_maishuiguo"
+            android:text="买水果"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_fangzu"
+            android:text="房租"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_wanggou"
+            android:text="网购"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_shuidian"
+            android:text="水电"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_chuxingyouwan"
+            android:text="出行游玩"
+            android:layout_width="80dp"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_xiuxianyule"
+            android:layout_width="90dp"
+            android:text="休闲娱乐"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+
+        <com.zr.note.base.customview.MyTextView
+            android:id="@+id/tv_spend_ther"
+            android:text="其他"
+            app:my_tv_border_color="@color/c_F8F8F83"
+            app:my_tv_border_width="1px"
+            app:my_tv_corner_radius="15dp"
+            app:my_tv_press="@color/c_divider"
+            app:my_tv_solid="@color/white"
+            style="@style/add_spend_tag"
+            />
+    </com.zr.tools.customview.FlowLayout>
 </LinearLayout>
+</ScrollView>

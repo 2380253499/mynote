@@ -1,5 +1,7 @@
 package com.zr.note.tools;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,5 +155,27 @@ public class StringUtils {
         a.toLowerCase();
         System.out.println("=="+a);
         System.out.println("啊Sa1sd".toLowerCase());
+    }
+
+    /**
+     * 保留小数点后几位，不四舍五入
+     * @param d
+     */
+    public static double keepDecimal(double d,int num){
+        String format="#0";
+        for (int i = 0; i < num; i++) {
+            if(i==0){
+                format=format+".#";
+            }else{
+                format=format+"#";
+            }
+        }
+        DecimalFormat formater = new DecimalFormat(format);
+        formater.setRoundingMode(RoundingMode.FLOOR);
+        double result = Double.parseDouble(formater.format(d));
+        return  result;
+    }
+    public static double keepDecimal(double d){
+        return keepDecimal(d,2);
     }
 }

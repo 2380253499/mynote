@@ -11,6 +11,7 @@ import android.util.SparseArray;
 import com.zr.note.tools.AES;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.LogUtils;
+import com.zr.note.tools.StringUtils;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.entity.MemoBean;
@@ -566,7 +567,7 @@ public class DBManager extends SQLiteOpenHelper{
             bean=new SpendBean();
             int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
             Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
-            bean.setTotalSpend(totalSpend);
+            bean.setTotalSpend(StringUtils.keepDecimal(totalSpend));
             bean.setLocalYear(localYear);
             sbList.add(bean);
         }
@@ -590,7 +591,7 @@ public class DBManager extends SQLiteOpenHelper{
             bean=new SpendBean();
             int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
             Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
-            bean.setTotalSpend(totalSpend);
+            bean.setTotalSpend(StringUtils.keepDecimal(totalSpend));
             bean.setLocalMonth(localMonth);
             sbList.add(bean);
         }
@@ -613,7 +614,7 @@ public class DBManager extends SQLiteOpenHelper{
             bean=new SpendBean();
             int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
             Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
-            bean.setTotalSpend(totalSpend);
+            bean.setTotalSpend(StringUtils.keepDecimal(totalSpend));
             bean.setLocalDay(localDay);
             sbList.add(bean);
         }

@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -130,7 +131,11 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
         if(!TextUtils.isEmpty(text)){
-            setSelection(text.length());
+            try {
+                setSelection(text.length());
+            }catch (Exception e){
+                Log.e("Exception","输入字符长度超出限制");
+            }
         }
     }
     @Override
