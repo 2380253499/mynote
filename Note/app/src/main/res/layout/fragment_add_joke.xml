@@ -59,7 +59,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="@string/joke_prompt"
+                android:text="(0/2000)"
                 android:layout_marginLeft="10dp"
                 />
             <TextView
