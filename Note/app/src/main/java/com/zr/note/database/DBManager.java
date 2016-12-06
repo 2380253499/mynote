@@ -643,6 +643,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean=new SpendBean();
             int id=query.getInt(query.getColumnIndex(DBConstant._id));
             Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
+            String liveSpendStr=query.getString(query.getColumnIndex(DBConstant.liveSpend));
+            Log.i("=======",liveSpendStr+"=======liveSpend"+liveSpend);
             String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));

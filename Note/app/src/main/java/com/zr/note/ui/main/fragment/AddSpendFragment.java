@@ -18,6 +18,7 @@ import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
 import com.zr.note.base.customview.MyTextView;
 import com.zr.note.tools.DateUtils;
+import com.zr.note.tools.StringUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.SpendBean;
@@ -25,7 +26,6 @@ import com.zr.note.ui.main.fragment.contract.AddSpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -177,14 +177,14 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
             tv_update_spend_date.setVisibility(View.GONE);
             isEdit = true;
             et_spend_remark.setText(spendBean.getDataRemark());
-            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
-            /*String liveSpend = spendBean.getLiveSpend() + "";
-            String[] split = liveSpend.split("\\.");
+
+            String divide = StringUtils.roundForBigDecimal(spendBean.getLiveSpend())+"";
+            String[] split = divide.split("\\.");
             if (Integer.parseInt(split[1]) > 0) {
                 et_spend_amount.setText(spendBean.getLiveSpend() + "");
             } else {
                 et_spend_amount.setText(split[0]);
-            }*/
+            }
             tv_spend_date.setText(spendBean.getLocalYear() + "-" + (spendBean.getLocalMonth() < 10 ? "0" + spendBean.getLocalMonth() : spendBean.getLocalMonth()) + "-" + (spendBean.getLocalDay() < 10 ? "0" + spendBean.getLocalDay() : spendBean.getLocalDay()));
         } else {
             tv_spend_date.setText(DateUtils.dateToString(new Date()));

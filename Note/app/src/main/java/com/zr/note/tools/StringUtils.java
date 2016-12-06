@@ -1,5 +1,6 @@
 package com.zr.note.tools;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -151,10 +152,18 @@ public class StringUtils {
         System.out.println(getStringType("阿"));
         System.out.println("S12".toUpperCase());
         String a="啊Sa1sd";
-        System.out.println("=="+a);
+        System.out.println("==" + a);
         a.toLowerCase();
-        System.out.println("=="+a);
+        System.out.println("==" + a);
         System.out.println("啊Sa1sd".toLowerCase());
+
+
+        BigDecimal deSource = new BigDecimal(2.52);
+
+
+        BigDecimal bigDecimal = deSource.setScale(1, BigDecimal.ROUND_HALF_UP);
+        System.out.println(bigDecimal+"");
+
     }
 
     /**
@@ -177,5 +186,25 @@ public class StringUtils {
     }
     public static double keepDecimal(double d){
         return keepDecimal(d,2);
+    }
+
+    /**
+     *
+     * @param d
+     * @param num 小数点后几位
+     * @return
+     */
+    public static String round(double d,int num){
+        String result = String.format("%."+num+"f", d);
+        return result;
+    }
+    public static String round(double d){
+        return round(d,1);
+    }
+    public static BigDecimal roundForBigDecimal(double d,int num){
+        return new BigDecimal(d).setScale(num, BigDecimal.ROUND_HALF_UP);
+    }
+    public static BigDecimal roundForBigDecimal(double d){
+        return roundForBigDecimal(d,1);
     }
 }

@@ -15,6 +15,7 @@ import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.tools.MyUtils;
+import com.zr.note.tools.StringUtils;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.view.Loading;
 
@@ -61,7 +62,8 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
         }else{
             tv_spend_year.setText((value.date<10?"0"+value.date:value.date)+value.remark);
         }
-        tv_total_spend.setText("￥" + new BigDecimal(value.totalSpend) + "元");
+        String divide = StringUtils.roundForBigDecimal(value.totalSpend)+"";
+        tv_total_spend.setText("￥" +divide+ "元");
         return view;
     }
 
@@ -97,9 +99,11 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
                                     double dayTotal = Double.parseDouble(dayTotalView.getText().toString().replace("￥","").replace("元",""));
                                     double monthTotal = Double.parseDouble(monthTotalView.getText().toString().replace("￥", "").replace("元", ""));
                                     double yearTotal = Double.parseDouble(yearTotalView.getText().toString().replace("￥", "").replace("元", ""));
+
                                     dayTotalView.setText("￥"+new BigDecimal((dayTotal - item.totalSpend))+"元");
                                     monthTotalView.setText("￥"+new BigDecimal((monthTotal - item.totalSpend))+"元");
                                     yearTotalView.setText("￥"+new BigDecimal((yearTotal - item.totalSpend))+"元");
+
                                     MyUtils.showToast(context, "删除成功");
                                     getTreeView().removeNode(node);
                                 } else {
