@@ -16,7 +16,7 @@ public class AddJokeImp extends IPresenter<AddJokeCon.View> implements AddJokeCo
     }
     @Override
     public boolean addJoke(JokeBean bean) {
-        if(DBManager.getInstance(mContext).addOrEditJoke(bean)>0){
+        if(DBManager.getNewInstance(mContext).addOrEditJoke(bean)>0){
             mView.showMsg("保存成功");
             return true;
         }else{

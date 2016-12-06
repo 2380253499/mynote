@@ -25,6 +25,7 @@ import com.zr.note.ui.main.fragment.contract.AddSpendCon;
 import com.zr.note.ui.main.fragment.contract.imp.AddSpendImp;
 import com.zr.note.ui.main.inter.AddDataInter;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -75,6 +76,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
     private int spendYear = -1, spendMonth = -1, spendDay = -1;
     TimePickerView pvTime;
 
+    private boolean isPrePareSelectData;
     @Override
     protected AddSpendImp initPresenter() {
         return new AddSpendImp(getActivity());
@@ -175,14 +177,14 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
             tv_update_spend_date.setVisibility(View.GONE);
             isEdit = true;
             et_spend_remark.setText(spendBean.getDataRemark());
-//            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
-            String liveSpend = spendBean.getLiveSpend() + "";
+            et_spend_amount.setText(new BigDecimal(spendBean.getLiveSpend())+"");
+            /*String liveSpend = spendBean.getLiveSpend() + "";
             String[] split = liveSpend.split("\\.");
             if (Integer.parseInt(split[1]) > 0) {
                 et_spend_amount.setText(spendBean.getLiveSpend() + "");
             } else {
                 et_spend_amount.setText(split[0]);
-            }
+            }*/
             tv_spend_date.setText(spendBean.getLocalYear() + "-" + (spendBean.getLocalMonth() < 10 ? "0" + spendBean.getLocalMonth() : spendBean.getLocalMonth()) + "-" + (spendBean.getLocalDay() < 10 ? "0" + spendBean.getLocalDay() : spendBean.getLocalDay()));
         } else {
             tv_spend_date.setText(DateUtils.dateToString(new Date()));
@@ -346,10 +348,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
             bean.set_id(isEdit ? spendBean.get_id() : -1);
             boolean b = mPresenter.addSpend(bean);
             if (b) {
-                mIntent.setAction(BroFilter.addData_spend);
-                mIntent.putExtra(BroFilter.isAddData, true);
-                mIntent.putExtra(BroFilter.isAddData_index, BroFilter.index_2);
-                getActivity().sendBroadcast(mIntent);
+                isPrePareSelectData=true;
             }
             return b;
         }
@@ -362,7 +361,20 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
         et_spend_amount.setText(null);
         et_spend_remark.requestFocus();
     }
+    public void prePareSelectData(){
+        mIntent.setAction(BroFilter.addData_spend);
+        mIntent.putExtra(BroFilter.isAddData, true);
+        mIntent.putExtra(BroFilter.isAddData_index, BroFilter.index_2);
+        getActivity().sendBroadcast(mIntent);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(isPrePareSelectData){
+            prePareSelectData();
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view

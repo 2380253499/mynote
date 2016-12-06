@@ -30,64 +30,64 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     @Override
     public void selectData(final ListView lv_spend_list,final boolean isOrderByCreateTime) {
         mView.showLoading();
-        new Thread(new Runnable() {
+          new Thread(new Runnable() {
             @Override
             public void run() {
                 MySpendHolder.IconTreeItem nodeItem;
                 //根据年份分组获取年份以及每年的消费总数
-                List<SpendBean> yearList = DBManager.getInstance(mContext).selectSpendByYear();
-                final TreeNode[]yearArr=new TreeNode[yearList.size()];
+                List<SpendBean> yearList = DBManager.getNewInstance(mContext).selectSpendByYear();
+                final TreeNode[] yearArr = new TreeNode[yearList.size()];
                 for (int i = 0; i < yearList.size(); i++) {
                     SpendBean bean = yearList.get(i);
                     int localYear = bean.getLocalYear();
 
                     nodeItem = new MySpendHolder.IconTreeItem();
-                    nodeItem.date=localYear;
-                    nodeItem.totalSpend=bean.getTotalSpend();
-                    nodeItem.remark ="年";
+                    nodeItem.date = localYear;
+                    nodeItem.totalSpend = bean.getTotalSpend();
+                    nodeItem.remark = "年";
                     TreeNode yearNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
 
-                    yearArr[i]=yearNode;
+                    yearArr[i] = yearNode;
                     //根据月份分组获取月份以及每月的消费总数
-                    List<SpendBean> monthList = DBManager.getInstance(mContext).selectSpendByMonth(localYear);
-                    TreeNode[]monthArr=new TreeNode[monthList.size()];
+                    List<SpendBean> monthList = DBManager.getNewInstance(mContext).selectSpendByMonth(localYear);
+                    TreeNode[] monthArr = new TreeNode[monthList.size()];
                     for (int j = 0; j < monthList.size(); j++) {
                         SpendBean monthBean = monthList.get(j);
                         int localMonth = monthBean.getLocalMonth();
 
                         nodeItem = new MySpendHolder.IconTreeItem();
-                        nodeItem.date=localMonth;
-                        nodeItem.totalSpend=monthBean.getTotalSpend();
-                        nodeItem.remark ="月";
+                        nodeItem.date = localMonth;
+                        nodeItem.totalSpend = monthBean.getTotalSpend();
+                        nodeItem.remark = "月";
                         TreeNode monthNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
 
-                        monthArr[j]=monthNode;
+                        monthArr[j] = monthNode;
                         //根据天数分组获取日期以及每天的消费总数
-                        List<SpendBean> dayList = DBManager.getInstance(mContext).selectSpendByDay(localYear, localMonth);
+                        List<SpendBean> dayList = DBManager.getNewInstance(mContext).selectSpendByDay(localYear, localMonth);
 
-                        TreeNode[]dayArr=new TreeNode[dayList.size()];
-                        for (int k = 0; k <dayList.size();k++) {
+                        TreeNode[] dayArr = new TreeNode[dayList.size()];
+                        for (int k = 0; k < dayList.size(); k++) {
                             SpendBean dayBean = dayList.get(k);
                             int localDay = dayBean.getLocalDay();
 
                             nodeItem = new MySpendHolder.IconTreeItem();
-                            nodeItem.date=localDay;
-                            nodeItem.totalSpend=dayBean.getTotalSpend();
-                            nodeItem.remark ="日";
+                            nodeItem.date = localDay;
+                            nodeItem.totalSpend = dayBean.getTotalSpend();
+                            nodeItem.remark = "日";
                             TreeNode dayNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
 
-                            dayArr[k]=dayNode;
-                            List<SpendBean> hourList = DBManager.getInstance(mContext).selectSpendByOneDay(localYear, localMonth, localDay);
-                            TreeNode[]hourArr=new TreeNode[hourList.size()];
-                            for (int l = 0; l <hourList.size(); l++) {
+                            dayArr[k] = dayNode;
+                            List<SpendBean> hourList = DBManager.getNewInstance(mContext).selectSpendByOneDay(localYear, localMonth, localDay);
+                            TreeNode[] hourArr = new TreeNode[hourList.size()];
+                            for (int l = 0; l < hourList.size(); l++) {
                                 SpendBean sBean = hourList.get(l);
                                 nodeItem = new MySpendHolder.IconTreeItem();
-                                nodeItem.dateFormat=sBean.getCreatTime();
-                                nodeItem.totalSpend=sBean.getLiveSpend();
-                                nodeItem.isLast=true;
-                                nodeItem.spendBean=sBean;
+                                nodeItem.dateFormat = sBean.getCreatTime();
+                                nodeItem.totalSpend = sBean.getLiveSpend();
+                                nodeItem.isLast = true;
+                                nodeItem.spendBean = sBean;
                                 TreeNode hourNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
-                                hourArr[l]=hourNode;
+                                hourArr[l] = hourNode;
                             }
                             dayArr[k].addChildren(hourArr);
                         }
@@ -168,6 +168,4 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
     public void deleteSpendById(MyDialog.Builder mDialog, String[] id) {
 
     }
-
-
 }

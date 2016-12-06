@@ -51,7 +51,9 @@ public class DBManager extends SQLiteOpenHelper{
         return dbManager;
     }
 
-
+    public static DBManager getNewInstance(Context context) {
+        return new DBManager(context,dbName,null,version);
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         addDataTable(db);

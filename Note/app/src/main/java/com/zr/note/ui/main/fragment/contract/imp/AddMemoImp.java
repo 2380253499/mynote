@@ -17,7 +17,7 @@ public class AddMemoImp extends IPresenter<AddMemoCon.View> implements AddMemoCo
 
     @Override
     public boolean addMemo(MemoBean bean) {
-        if(DBManager.getInstance(mContext).addOrEditMemo(bean)>0){
+        if(DBManager.getNewInstance(mContext).addOrEditMemo(bean)>0){
             mView.showMsg("保存成功");
             return true;
         }else{

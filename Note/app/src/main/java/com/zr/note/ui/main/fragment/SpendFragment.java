@@ -2,6 +2,7 @@ package com.zr.note.ui.main.fragment;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -79,6 +80,7 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
     }
     @Override
     public void afterSelectData(TreeNode[]yearArr,AndroidTreeView atView) {
+        Log.i("---------", "---------");
         ll_tree.addView(atView.getView());
     }
 
