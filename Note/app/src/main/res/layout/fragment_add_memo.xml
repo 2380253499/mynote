@@ -55,6 +55,7 @@
                 android:drawableLeft="@drawable/asterisk"
                 />
             <TextView
+                android:id="@+id/tv_memo_lengthprompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

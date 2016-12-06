@@ -1,10 +1,13 @@
 package com.zr.note.ui.main.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
@@ -25,6 +28,8 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     MyEditText et_memo_reminder;
     @BindView(R.id.et_memo_content)
     MyEditText et_memo_content;
+    @BindView(R.id.tv_memo_lengthprompt)
+    TextView tv_memo_lengthprompt;
     private boolean isEdit;
     private MemoBean memoBean;
 
@@ -54,8 +59,20 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected void initView() {
-
         et_memo_content.requestFocus();
+        et_memo_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                tv_memo_lengthprompt.setText("("+length+"/1000)");
+            }
+        });
     }
 
     @Override

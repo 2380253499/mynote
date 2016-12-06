@@ -1,7 +1,9 @@
 package com.zr.note.ui.main.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     TextView tv_joke_clear;
     @BindView(R.id.tv_joke_copy)
     TextView tv_joke_copy;
+    @BindView(R.id.tv_joke_lengthprompt)
+    TextView tv_joke_lengthprompt;
 
     private boolean isEdit;
     private JokeBean jokeBean;
@@ -64,6 +68,20 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
         et_joke_content.requestFocus();
         tv_joke_clear.setOnClickListener(this);
         tv_joke_copy.setOnClickListener(this);
+
+        et_joke_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.toString().length();
+                tv_joke_lengthprompt.setText("("+length+"/2000)");
+            }
+        });
     }
 
     @Override
