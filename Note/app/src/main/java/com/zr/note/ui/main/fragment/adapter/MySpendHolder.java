@@ -100,9 +100,9 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
                                     double monthTotal = Double.parseDouble(monthTotalView.getText().toString().replace("￥", "").replace("元", ""));
                                     double yearTotal = Double.parseDouble(yearTotalView.getText().toString().replace("￥", "").replace("元", ""));
 
-                                    dayTotalView.setText("￥"+new BigDecimal((dayTotal - item.totalSpend))+"元");
-                                    monthTotalView.setText("￥"+new BigDecimal((monthTotal - item.totalSpend))+"元");
-                                    yearTotalView.setText("￥"+new BigDecimal((yearTotal - item.totalSpend))+"元");
+                                    dayTotalView.setText("￥"+new BigDecimal((dayTotal - item.totalSpend)).setScale(1, BigDecimal.ROUND_HALF_UP)+"元");
+                                    monthTotalView.setText("￥"+new BigDecimal((monthTotal - item.totalSpend)).setScale(1,BigDecimal.ROUND_HALF_UP)+"元");
+                                    yearTotalView.setText("￥"+new BigDecimal((yearTotal - item.totalSpend)).setScale(1,BigDecimal.ROUND_HALF_UP)+"元");
 
                                     MyUtils.showToast(context, "删除成功");
                                     getTreeView().removeNode(node);

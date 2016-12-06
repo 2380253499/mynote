@@ -35,6 +35,7 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     @BindView(R.id.tv_pwd_copy)
     TextView tv_pwd_copy;
 
+    private boolean isPrePareSelectData;
     /**
      * 判断是否是编辑还是添加
      */
@@ -124,10 +125,7 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
             bean.set_id(isEdit ? accountBean.get_id() : -1);
             boolean b = mPresenter.addAccount(bean);
             if(b){
-                mIntent.setAction(BroFilter.addData_account);
-                mIntent.putExtra(BroFilter.isAddData, true);
-                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_0);
-                getActivity().sendBroadcast(mIntent);
+                isPrePareSelectData=true;
             }
             return b;
         }
@@ -141,6 +139,17 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
         et_addData_pwd.setText(null);
         et_addData_note.setText(null);
         et_addData_source.requestFocus();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(isPrePareSelectData){
+            mIntent.setAction(BroFilter.addData_account);
+            mIntent.putExtra(BroFilter.isAddData, true);
+            mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_0);
+            getActivity().sendBroadcast(mIntent);
+        }
     }
 
     @Override

@@ -28,6 +28,8 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     private boolean isEdit;
     private MemoBean memoBean;
 
+    private boolean isPrePareSelectData;
+
     public static AddMemoFragment newInstance(MemoBean bean) {
         Bundle args = new Bundle();
         if (args!=null){
@@ -84,10 +86,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
             reminderBean.set_id(isEdit ? memoBean.get_id() : -1);
             boolean b = mPresenter.addMemo(reminderBean);
             if(b){
-                mIntent.setAction(BroFilter.addData_memo);
-                mIntent.putExtra(BroFilter.isAddData,true);
-                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_1);
-                getActivity().sendBroadcast(mIntent);
+                isPrePareSelectData=true;
             }
             return b;
         }
@@ -100,6 +99,18 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
         et_memo_reminder.setText(null);
         et_memo_content.setText(null);
         et_memo_content.requestFocus();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(isPrePareSelectData){
+            mIntent.setAction(BroFilter.addData_memo);
+            mIntent.putExtra(BroFilter.isAddData,true);
+            mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_1);
+            getActivity().sendBroadcast(mIntent);
+        }
+
     }
 
     @Override

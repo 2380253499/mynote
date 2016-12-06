@@ -34,6 +34,9 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     private boolean isEdit;
     private JokeBean jokeBean;
 
+
+    private boolean isPrePareSelectData;
+
     public static AddJokeFragment newInstance(JokeBean bean) {
         Bundle args = new Bundle();
         if (args!=null){
@@ -103,10 +106,7 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             bean.set_id(isEdit ? jokeBean.get_id() : -1);
             boolean b = mPresenter.addJoke(bean);
             if(b){
-                mIntent.setAction(BroFilter.addData_joke);
-                mIntent.putExtra(BroFilter.isAddData, true);
-                mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
-                getActivity().sendBroadcast(mIntent);
+                isPrePareSelectData=true;
             }
             return b;
         }
@@ -120,7 +120,16 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
 
         et_joke_content.requestFocus();
     }
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(isPrePareSelectData){
+            mIntent.setAction(BroFilter.addData_joke);
+            mIntent.putExtra(BroFilter.isAddData, true);
+            mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_2);
+            getActivity().sendBroadcast(mIntent);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate AddMemoFragment fragment view
