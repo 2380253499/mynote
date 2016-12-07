@@ -18,9 +18,7 @@ import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.entity.SpendBean;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/10/11.
@@ -521,16 +519,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return insert;
     }
-    public long addSpend2(SpendBean bean){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues values=new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.liveSpend, bean.getLiveSpend());
-        long insert = db.insert(T_Spend_Note, null, values);
-        LogUtils.Log(insert);
-        db.close();
-        return insert;
-    }
+
     /**
      * 删除消费
      * @param id
@@ -656,7 +645,7 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
-            bean.setLocalYear(localYear );
+            bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth );
             bean.setLocalDay(localDay );
             sbList.add(bean);
@@ -821,6 +810,7 @@ public class DBManager extends SQLiteOpenHelper{
         Log.i("-----","---"+spendBean.getList().size());
         return spendBean;
     }
+
     public SparseArray<SparseArray<SparseArray<List<SpendBean>>>> selectSpendForTree(){
         SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
         SQLiteDatabase db=getWritableDatabase();
@@ -896,9 +886,8 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return sparseArray;
     }
-    public Map<Integer,Map<Integer,Map<Integer,List<SpendBean>>>> selectSpendForTree2(){
-//        SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
-        Map<Integer,Map<Integer,Map<Integer,List<SpendBean>>>> sparseArray=new LinkedHashMap<Integer,Map<Integer,Map<Integer,List<SpendBean>>>>();
+    public SparseArray<SparseArray<SparseArray<List<SpendBean>>>> selectSpendForTree2(){
+        SparseArray<SparseArray<SparseArray<List<SpendBean>>>>sparseArray=new SparseArray<SparseArray<SparseArray<List<SpendBean>>>>();
         SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Spend_Note,
                 new String[]{
@@ -939,12 +928,12 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setLocalMonth(localMonth );
             bean.setLocalDay(localDay );
             list.add(bean);
-            Map<Integer,Map<Integer,List<SpendBean>>> mSparseArray;
-            Map<Integer,List<SpendBean>> dSparseArray;
+            SparseArray<SparseArray<List<SpendBean>>> mSparseArray;
+            SparseArray<List<SpendBean>> dSparseArray;
             List<SpendBean> dayList;
             if(sparseArray.get(localYear)==null){
-                dSparseArray=new LinkedHashMap<Integer,List<SpendBean>>();
-                mSparseArray=new LinkedHashMap<Integer,Map<Integer,List<SpendBean>>>();
+                dSparseArray=new SparseArray<List<SpendBean>>();
+                mSparseArray=new SparseArray<SparseArray<List<SpendBean>>>();
                 dayList=new ArrayList<SpendBean>();
                 dayList.add(bean);
                 dSparseArray.put(localDay, dayList);
@@ -953,7 +942,7 @@ public class DBManager extends SQLiteOpenHelper{
                 dList.add(bean);
             }else{
                 if(sparseArray.get(localYear).get(localMonth)==null){
-                    dSparseArray=new LinkedHashMap<Integer,List<SpendBean>>();
+                    dSparseArray=new SparseArray<List<SpendBean>>();
                     dayList=new ArrayList<SpendBean>();
                     dayList.add(bean);
                     dSparseArray.put(localDay, dayList);
