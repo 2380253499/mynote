@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.base.customview.MyEditText;
+import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.JokeBean;
@@ -32,6 +33,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     TextView tv_joke_clear;
     @BindView(R.id.tv_joke_copy)
     TextView tv_joke_copy;
+    @BindView(R.id.tv_joke_paste)
+    TextView tv_joke_paste;
     @BindView(R.id.tv_joke_lengthprompt)
     TextView tv_joke_lengthprompt;
 
@@ -68,6 +71,7 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
         et_joke_content.requestFocus();
         tv_joke_clear.setOnClickListener(this);
         tv_joke_copy.setOnClickListener(this);
+        tv_joke_paste.setOnClickListener(this);
 
         et_joke_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,8 +109,13 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
                 if (TextUtils.isEmpty(jokeContent)) {
                     showToastS("段子内容不能为空");
                 } else {
+                    PhoneUtils.copyText(getActivity(),et_joke_content.getText().toString().trim());
                     showToastS("复制成功");
                 }
+                break;
+            case R.id.tv_joke_paste:
+                String content = PhoneUtils.pasteText(getActivity());
+                et_joke_content.setText(et_joke_content.getText()+""+content);
             break;
         }
     }

@@ -29,6 +29,11 @@
         android:maxLength="10"
         android:visibility="invisible"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/c_divider"
+        />
      <com.zr.note.base.customview.CustomListView
          android:id="@+id/lv_joke_list"
          android:layout_width="match_parent"
