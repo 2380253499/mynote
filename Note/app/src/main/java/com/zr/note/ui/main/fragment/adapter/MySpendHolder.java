@@ -63,7 +63,7 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
             tv_spend_year.setText((value.date<10?"0"+value.date:value.date)+value.remark);
         }
         String divide = StringUtils.roundForBigDecimal(value.totalSpend)+"";
-        tv_total_spend.setText("￥" +divide+ "元");
+        tv_total_spend.setText("￥" + divide + "元");
         return view;
     }
 
@@ -131,6 +131,7 @@ public class MySpendHolder extends TreeNode.BaseNodeViewHolder<MySpendHolder.Ico
     public static class IconTreeItem {
         public int icon;
         public int date;
+        public int dateTag;//0:年 1:月 2:日
         public Date dateFormat;
         public String text;
         public double totalSpend;

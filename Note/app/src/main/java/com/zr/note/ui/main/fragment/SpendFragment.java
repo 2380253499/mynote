@@ -75,6 +75,7 @@ public class SpendFragment extends BaseFragment<SpendCon.View,SpendCon.Presenter
 
     @Override
     public void selectData() {
+        mPresenter.resetItemClickSparse();
         ll_tree.removeAllViews();//再次查询时清除旧视图
         mPresenter.selectData(null, true);
     }

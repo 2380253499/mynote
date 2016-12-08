@@ -25,5 +25,7 @@ public interface SpendCon {
         SpendBean copySpend(int position);
         void deleteSpendById(MyDialog.Builder mDialog, int id);
         void deleteSpendById(MyDialog.Builder mDialog, String[] id);
+
+        void resetItemClickSparse();
     }
 }

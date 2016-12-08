@@ -52,11 +52,17 @@
             android:text="日常消费"
             style="@style/AddDataTab"/>
     </RadioGroup>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_divider"
+            />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
+
         <FrameLayout
             android:id="@+id/fl_fragment"
             android:layout_above="@+id/ll_addData_save"

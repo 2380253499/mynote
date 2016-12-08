@@ -546,7 +546,7 @@ public class DBManager extends SQLiteOpenHelper{
      * 按年份分组
      * @return
      */
-    public List<SpendBean> selectSpendByYear(){
+    public List<SpendBean> selectSpendGroupByYear(){
         List<SpendBean> sbList=new ArrayList<SpendBean>();
         SpendBean bean;
         SQLiteDatabase db=getWritableDatabase();
@@ -570,19 +570,21 @@ public class DBManager extends SQLiteOpenHelper{
      * 按月份分组
      * @return
      */
-    public List<SpendBean> selectSpendByMonth(int year){
+    public List<SpendBean> selectSpendGroupByMonth(int year){
         List<SpendBean> sbList=new ArrayList<SpendBean>();
         SpendBean bean;
         SQLiteDatabase db=getWritableDatabase();
-        String sql="select a."+DBConstant.localMonth+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
+        String sql="select a."+DBConstant.localYear+",a."+DBConstant.localMonth+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
                 " where "+DBConstant.localYear+"=? group by  "+DBConstant.localMonth+" order by  "+DBConstant.localMonth+" desc";
         Log.i("---","---"+sql);
         Cursor query = db.rawQuery(sql,new String[]{year+""});
         while (query.moveToNext()){
             bean=new SpendBean();
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
             int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
             Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
             bean.setTotalSpend(StringUtils.keepDecimal(totalSpend));
+            bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth);
             sbList.add(bean);
         }
@@ -593,19 +595,23 @@ public class DBManager extends SQLiteOpenHelper{
      * 按天分组
      * @return
      */
-    public List<SpendBean> selectSpendByDay(int year,int month){
+    public List<SpendBean> selectSpendGroupByDay(int year, int month){
         List<SpendBean> sbList=new ArrayList<SpendBean>();
         SpendBean bean;
         SQLiteDatabase db=getWritableDatabase();
-        String sql="select a."+DBConstant.localDay+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
+        String sql="select a."+DBConstant.localYear+",a."+DBConstant.localMonth+",a."+DBConstant.localDay+",sum(a."+DBConstant.liveSpend+") as "+DBConstant.totalSpend+" from " + DBManager.T_Spend_Note + " as a " +
                 " where "+DBConstant.localYear+"=? and "+DBConstant.localMonth+"=? group by  "+DBConstant.localDay+" order by  "+DBConstant.localDay+" desc";
         Log.i("---","---"+sql);
         Cursor query = db.rawQuery(sql,new String[]{year+"",month+""});
         while (query.moveToNext()){
             bean=new SpendBean();
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
             int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
             Double totalSpend=query.getDouble(query.getColumnIndex(DBConstant.totalSpend));
             bean.setTotalSpend(StringUtils.keepDecimal(totalSpend));
+            bean.setLocalYear(localYear);
+            bean.setLocalMonth(localMonth);
             bean.setLocalDay(localDay);
             sbList.add(bean);
         }

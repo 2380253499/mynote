@@ -1,5 +1,7 @@
 package com.zr.note.base;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by Administrator on 2016/9/5.
  */
