@@ -6,6 +6,7 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".base.MyApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.gesture.activity.GestureVerifyActivity"
