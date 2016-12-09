@@ -11,8 +11,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zr.customview.MyButtonC;
 import com.zr.note.R;
-import com.zr.note.base.customview.MyButtonC;
 
 
 public class MyDialog extends Dialog {

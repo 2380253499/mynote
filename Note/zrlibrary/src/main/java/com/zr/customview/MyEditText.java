@@ -1,4 +1,4 @@
-package com.zr.note.base.customview;
+package com.zr.customview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,8 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.zr.note.R;
-import com.zr.note.tools.PhoneUtils;
+import zr.note.tools.R;
 
 /**
  * Created by Administrator on 2016/9/6.
@@ -92,7 +90,7 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
             mClearDrawable = getResources().getDrawable(R.drawable.text_clear);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
-        this.setCompoundDrawablePadding(PhoneUtils.dip2px(getContext(), 5));
+        this.setCompoundDrawablePadding(dip2px(getContext(), 5));
 //        this.setPadding(0,0,15,0);
         // 默认设置隐藏图标
         setClearIconVisible(false);
@@ -147,7 +145,6 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
             setClearIconVisible(false);
         }
     }
-    @NonNull
     private TextWatcher getWatcher() {
         return new TextWatcher() {
             @Override
@@ -166,5 +163,13 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
             }
         };
     }
+    private int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 
+    private int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
 }

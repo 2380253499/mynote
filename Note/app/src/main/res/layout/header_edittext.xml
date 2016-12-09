@@ -5,7 +5,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <com.zr.note.base.customview.MyEditText
+    <com.zr.customview.MyEditText
         android:id="@+id/et_search_info"
         android:layout_width="200dp"
         android:layout_height="35dp"

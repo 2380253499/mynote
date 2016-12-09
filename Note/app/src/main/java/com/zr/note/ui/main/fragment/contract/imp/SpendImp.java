@@ -9,12 +9,12 @@ import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
+import com.zr.note.base.MySubscriber;
 import com.zr.note.database.DBManager;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.adapter.MySpendHolder;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
-import com.zr.rxjava.RxUtils;
 
 import java.util.List;
 
@@ -121,7 +121,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                     .asObservable()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new RxUtils.MySubscriber<TreeNode>() {
+                                    .subscribe(new MySubscriber<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode treeNode) {
                                             node.getViewHolder().getTreeView().addNode(node, treeNode);
@@ -163,7 +163,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                             }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .asObservable()
-                                    .subscribe(new RxUtils.MySubscriber<TreeNode>() {
+                                    .subscribe(new MySubscriber<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode dayNode) {
                                             node.getViewHolder().getTreeView().addNode(node, dayNode);
@@ -203,7 +203,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                             }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .asObservable()
-                                    .subscribe(new RxUtils.MySubscriber<TreeNode>() {
+                                    .subscribe(new MySubscriber<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode hourNode) {
                                             node.getViewHolder().getTreeView().addNode(node, hourNode);

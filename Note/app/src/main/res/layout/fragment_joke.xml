@@ -9,7 +9,7 @@
               android:focusable="true"
               android:focusableInTouchMode="true"
     >
-    <com.zr.note.base.customview.MyEditText
+    <com.zr.customview.MyEditText
         android:id="@+id/et_search_joke"
         android:layout_width="match_parent"
         android:layout_height="32dp"
@@ -34,11 +34,11 @@
         android:layout_height="2px"
         android:background="@color/c_divider"
         />
-     <com.zr.note.base.customview.CustomListView
+     <com.zr.customview.CustomListView
          android:id="@+id/lv_joke_list"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:listSelector="@drawable/selector_list_item"
          >
-     </com.zr.note.base.customview.CustomListView>
+     </com.zr.customview.CustomListView>
 </LinearLayout>

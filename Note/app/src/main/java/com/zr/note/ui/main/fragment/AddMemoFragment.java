@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zr.customview.MyEditText;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.customview.MyEditText;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;

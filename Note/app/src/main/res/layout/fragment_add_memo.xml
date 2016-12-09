@@ -22,7 +22,7 @@
             android:textSize="15sp"
             android:paddingLeft="@dimen/asterisk_padding"
             />
-        <com.zr.note.base.customview.MyEditText
+        <com.zr.customview.MyEditText
             android:id="@+id/et_memo_reminder"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 />
         </LinearLayout>
 
-            <com.zr.note.base.customview.MyEditText
+            <com.zr.customview.MyEditText
                 android:id="@+id/et_memo_content"
                 style="@style/editTextStyle"
                 android:layout_width="match_parent"

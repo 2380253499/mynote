@@ -1,4 +1,4 @@
-package com.zr.note.base.customview;
+package com.zr.customview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-import com.zr.note.R;
+import zr.note.tools.R;
+
 
 /**
  * Created by Administrator on 2016/8/29.

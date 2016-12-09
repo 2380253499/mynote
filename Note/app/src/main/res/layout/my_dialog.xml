@@ -7,7 +7,7 @@
              android:orientation="vertical"
              android:padding="20dp">
 
-    <com.zr.note.base.customview.MyLinearLayout
+    <com.zr.customview.MyLinearLayout
         android:id="@+id/ll_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:background="#ffd0d0d0"
             />
 
-        <com.zr.note.base.customview.MyLinearLayout
+        <com.zr.customview.MyLinearLayout
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_gravity="bottom"
@@ -55,7 +55,7 @@
             app:my_ll_corner_bottomLeftRadius="8dp"
             app:my_ll_corner_bottomRightRadius="8dp"
             android:orientation="horizontal" >
-            <com.zr.note.base.customview.MyButtonC
+            <com.zr.customview.MyButtonC
                 android:id="@+id/negativeButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:background="#ffd0d0d0"
                 />
-            <com.zr.note.base.customview.MyButtonC
+            <com.zr.customview.MyButtonC
                 android:id="@+id/positiveButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -86,7 +86,7 @@
                 android:textColor="@color/dodgerblue"
                 android:text="确定"
                 android:textSize="15dp" />
-        </com.zr.note.base.customview.MyLinearLayout>
-    </com.zr.note.base.customview.MyLinearLayout>
+        </com.zr.customview.MyLinearLayout>
+    </com.zr.customview.MyLinearLayout>
 
 </FrameLayout>

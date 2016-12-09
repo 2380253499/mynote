@@ -13,14 +13,14 @@
         android:layout_gravity="right"
         android:layout_marginRight="12dp"
         />
-    <com.zr.note.base.customview.MyLinearLayout
+    <com.zr.customview.MyLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:my_ll_solid="@color/white"
         app:my_ll_corner_radius="4dp"
         >
-        <com.zr.note.base.customview.MyTextView
+        <com.zr.customview.MyTextView
             android:id="@+id/tv_orderBy_create"
             android:text="↑创建时间排序"
             style="@style/main_popu_options"
@@ -34,7 +34,7 @@
             android:layout_height="1px"
             android:background="@color/c_divider"
             />
-        <com.zr.note.base.customview.MyTextView
+        <com.zr.customview.MyTextView
             android:id="@+id/tv_orderBy_update"
             app:my_tv_press="@color/c_divider"
             app:my_tv_solid="@color/white"
@@ -46,7 +46,7 @@
             android:layout_height="1px"
             android:background="@color/c_divider"
             />
-        <com.zr.note.base.customview.MyTextView
+        <com.zr.customview.MyTextView
             android:id="@+id/tv_batchDelete"
             app:my_tv_press="@color/c_divider"
             app:my_tv_solid="@color/white"
@@ -55,6 +55,6 @@
             app:my_tv_corner_bottomLeftRadius="4dp"
             app:my_tv_corner_bottomRightRadius="4dp"
             />
-    </com.zr.note.base.customview.MyLinearLayout>
+    </com.zr.customview.MyLinearLayout>
 
 </LinearLayout>

@@ -13,10 +13,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.zr.customview.MyEditText;
+import com.zr.customview.MyTextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
-import com.zr.note.base.customview.MyEditText;
-import com.zr.note.base.customview.MyTextView;
 import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.StringUtils;
 import com.zr.note.ui.constant.IntentParam;
