@@ -37,7 +37,7 @@ public class MyLinearLayout extends LinearLayout{
         init(attrs);
     }
     private void init(AttributeSet attrs) {
-        setClickable(true);
+//        setClickable(true);
         if (attrs == null) {
             return;
         }
