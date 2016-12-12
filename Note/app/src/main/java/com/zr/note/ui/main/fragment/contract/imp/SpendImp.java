@@ -9,12 +9,12 @@ import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 import com.zr.note.R;
 import com.zr.note.base.IPresenter;
-import com.zr.note.base.MySubscriber;
 import com.zr.note.database.DBManager;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.adapter.MySpendHolder;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
+import com.zr.rxjava.rxbus.MySubscriber;
 
 import java.util.List;
 
