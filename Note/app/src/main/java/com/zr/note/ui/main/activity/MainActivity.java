@@ -262,10 +262,19 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 }
                 break;
             case R.id.fab:
+                /*String absolutePath1 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                File file = new File("/data/data/" + getPackageName() + "/databases");
+                File dbfile = new File("/data/data/" + getPackageName() + "/databases/"+"");
+                File db_old = new File("/data/data/" + getPackageName() + "/databases/"+"");
+                if(db_old.exists()){
+                    db_old.delete();
+                }
+                if (!dbfile.exists()) {
+                    file.mkdirs();
+                    FileUtils.copyFileForAssets(this,"",dbfile);
+                }*/
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
                 STActivity(mIntent, AddDataActivity.class);
-//                SparseArray<SparseArray<SparseArray<List<SpendBean>>>> sparseArray = DBManager.getNewInstance(this).selectSpendForTree();
-//                Log.i("===","======"+sparseArray.size());
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);

@@ -128,7 +128,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         }
 
                                         @Override
-                                        public void onResult(int tag) {
+                                        public void onResult(boolean isComplete) {
                                             mView.hideLoading();
                                         }
                                     });
@@ -169,7 +169,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                             node.getViewHolder().getTreeView().addNode(node, dayNode);
                                         }
                                         @Override
-                                        public void onResult(int tag) {
+                                        public void onResult(boolean isComplete) {
                                             mView.hideLoading();
                                         }
                                     });
@@ -209,7 +209,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                             node.getViewHolder().getTreeView().addNode(node, hourNode);
                                         }
                                         @Override
-                                        public void onResult(int tag) {
+                                        public void onResult(boolean isComplete) {
                                             mView.hideLoading();
                                         }
                                     });

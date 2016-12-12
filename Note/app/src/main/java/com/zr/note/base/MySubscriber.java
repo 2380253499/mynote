@@ -6,21 +6,19 @@ import rx.Subscriber;
  * Created by Administrator on 2016/12/9.
  */
 public abstract class MySubscriber<T> extends Subscriber {
-    private final int isComplet=0;
-    private final int isError=-1;
-    public abstract void onMyNext(T o);
-    public void onResult(int tag) {
+    public abstract void onMyNext(T obj);
+    public void onResult(boolean isCompleted) {
     }
     @Override
     public void onCompleted() {
-        onResult(isComplet);
+        onResult(true);
     }
     @Override
     public void onError(Throwable e) {
-        onResult(isError);
+        onResult(false);
     }
     @Override
-    public void onNext(Object o) {
-        onMyNext((T)o);
+    public void onNext(Object obj) {
+        onMyNext((T)obj);
     }
 }
