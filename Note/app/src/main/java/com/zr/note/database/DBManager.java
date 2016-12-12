@@ -29,6 +29,9 @@ public class DBManager extends SQLiteOpenHelper{
     * version 4--消费表增加year month day三个varchar字段修改为integer类型
     * */
     private static final String dbName="MyNote";
+    public String getDBName(){
+        return dbName;
+    }
     private static final int version=4;
     private static DBManager dbManager;
     public static final String T_Account_Note="T_Account_Note";

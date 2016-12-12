@@ -262,16 +262,24 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 }
                 break;
             case R.id.fab:
-                /*String absolutePath1 = Environment.getExternalStorageDirectory().getAbsolutePath();
-                File file = new File("/data/data/" + getPackageName() + "/databases");
-                File dbfile = new File("/data/data/" + getPackageName() + "/databases/"+"");
-                File db_old = new File("/data/data/" + getPackageName() + "/databases/"+"");
-                if(db_old.exists()){
-                    db_old.delete();
-                }
-                if (!dbfile.exists()) {
+               /* String extSdcardPath = System.getenv("SECONDARY_STORAGE");
+                String firstExterPath = SDCardUtils.getFirstExterPath();
+                String secondExterPath = SDCardUtils.getSecondExterPath();
+                Log.i("==========","=======extSdcardPath=="+extSdcardPath);
+                Log.i("==========","=======firstExterPath=="+firstExterPath);
+                Log.i("==========","========secondExterPath="+secondExterPath);
+                Log.i("==========","========="+Environment.getExternalStorageDirectory().getAbsolutePath());
+                File file1=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/bbbbbbbbbbbbbbbbbbbbb");
+                File file=new File(extSdcardPath+"/aaaaaaaaaaaa");
+                if(!file.exists()){
                     file.mkdirs();
-                    FileUtils.copyFileForAssets(this,"",dbfile);
+                }else{
+                    Log.i("=========","====1=====");
+                }
+                if(!file1.exists()){
+                    file1.mkdirs();
+                }else{
+                    Log.i("=========","====2=====");
                 }*/
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
                 STActivity(mIntent, AddDataActivity.class);
