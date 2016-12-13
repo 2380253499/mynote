@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class DateUtils {
     public static final String ymdhm="yyyy-MM-dd HH:mm";
+    public static final String ymdhms="yyyy-MM-dd HH:mm:ss";
     //把日期转为字符串
     public static String dateToString(Date date) {
         return dateToString(date,"yyyy-MM-dd");

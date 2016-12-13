@@ -268,10 +268,10 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         if(bean.getCreatTime()!=null){
-            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhms));
         }
         if(bean.getUpdateTime()!=null){
-            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhms));
         }
         long insert = db.insert(T_Account_Note, null, values);
         LogUtils.Log(insert);
@@ -308,10 +308,10 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
         if(bean.getCreatTime()!=null){
-            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhms));
         }
         if(bean.getUpdateTime()!=null){
-            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhms));
         }
         long insert = db.insert(T_Memo_Note, null, values);
         LogUtils.Log(insert);
@@ -416,10 +416,10 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
         if(bean.getCreatTime()!=null){
-            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhms));
         }
         if(bean.getUpdateTime()!=null){
-            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhms));
         }
         long insert = db.insert(T_Joke_Note, null, values);
         LogUtils.Log(insert);
@@ -613,10 +613,10 @@ public class DBManager extends SQLiteOpenHelper{
             values.put(DBConstant.localDay, bean.getLocalDay());
         }
         if(bean.getCreatTime()!=null){
-            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhms));
         }
         if(bean.getUpdateTime()!=null){
-            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(), DateUtils.ymdhm));
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(), DateUtils.ymdhms));
         }
         long insert = db.insert(T_Spend_Note, null, values);
         LogUtils.Log(insert);

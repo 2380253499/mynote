@@ -262,24 +262,22 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                 }
                 break;
             case R.id.fab:
-               /* String extSdcardPath = System.getenv("SECONDARY_STORAGE");
-                String firstExterPath = SDCardUtils.getFirstExterPath();
-                String secondExterPath = SDCardUtils.getSecondExterPath();
-                Log.i("==========","=======extSdcardPath=="+extSdcardPath);
-                Log.i("==========","=======firstExterPath=="+firstExterPath);
-                Log.i("==========","========secondExterPath="+secondExterPath);
-                Log.i("==========","========="+Environment.getExternalStorageDirectory().getAbsolutePath());
-                File file1=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/bbbbbbbbbbbbbbbbbbbbb");
-                File file=new File(extSdcardPath+"/aaaaaaaaaaaa");
-                if(!file.exists()){
-                    file.mkdirs();
-                }else{
-                    Log.i("=========","====1=====");
-                }
-                if(!file1.exists()){
-                    file1.mkdirs();
-                }else{
-                    Log.i("=========","====2=====");
+                /*List<Integer>list=new ArrayList<>();
+                list.add(3);
+                list.add(2);
+                list.add(5);
+                list.add(1);
+                list.add(8);
+                list.add(7);
+                list.add(9);
+                Collections.sort(list, new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer lhs, Integer rhs) {
+                        return rhs.compareTo(lhs);
+                    }
+                });
+                for (int i = 0; i < list.size(); i++) {
+                    Log.i("===","==="+list.get(i));
                 }*/
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
                 STActivity(mIntent, AddDataActivity.class);
