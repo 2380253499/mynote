@@ -171,15 +171,25 @@ public class DBManager extends SQLiteOpenHelper{
         }
         return count;
     }
+    /***
+     * 查询账户
+     * @return
+     */
     public List<AccountBean> selectAccount(){
         return selectAccount(null,true);
     }
-    public List<AccountBean> selectAccount(String searchInfo,boolean isOrderByCreateTime){
+    /***
+     * 查询账户
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @param db
+     * @return
+     */
+    public List<AccountBean> selectAccount(String searchInfo,boolean isOrderByCreateTime,SQLiteDatabase db){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy = DBConstant.creatTime + " desc";
         }
-        SQLiteDatabase db = getWritableDatabase();
         Cursor query = db.query(T_Account_Note,
                 new String[]{
                         DBConstant._id,
@@ -220,6 +230,15 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return list;
     }
+    /***
+     * 查询账户
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @return
+     */
+    public List<AccountBean> selectAccount(String searchInfo,boolean isOrderByCreateTime){
+        return selectAccount(searchInfo,isOrderByCreateTime,getWritableDatabase());
+    }
     public long addOrEditAccount(AccountBean bean){
         if(bean.get_id()==-1){
             return addAccount(bean);
@@ -248,6 +267,12 @@ public class DBManager extends SQLiteOpenHelper{
         values.put(DBConstant.dataAccount,AES.encode(bean.getDataAccount()));
         values.put(DBConstant.dataPassword,AES.encode(bean.getDataPassword()));
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        if(bean.getCreatTime()!=null){
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+        }
+        if(bean.getUpdateTime()!=null){
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+        }
         long insert = db.insert(T_Account_Note, null, values);
         LogUtils.Log(insert);
         db.close();
@@ -271,28 +296,56 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return insert;
     }
+
+    /**
+     * 添加备忘录
+     * @param bean
+     * @return
+     */
     public long addMemo(MemoBean bean){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        if(bean.getCreatTime()!=null){
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+        }
+        if(bean.getUpdateTime()!=null){
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+        }
         long insert = db.insert(T_Memo_Note, null, values);
         LogUtils.Log(insert);
         db.close();
         return insert;
     }
-    public List<MemoBean> selectMemoCount(){
-        return selectMemo(null,true);
-    }
+    /***
+     * 查询备忘录
+     * @return
+     */
     public List<MemoBean> selectMemo(){
         return selectMemo(null,true);
     }
+    /***
+     * 查询备忘录
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @return
+     */
     public List<MemoBean> selectMemo(String searchInfo,boolean isOrderByCreateTime){
+        return selectMemo(searchInfo,isOrderByCreateTime,getWritableDatabase());
+    }
+    /***
+     * 查询备忘录
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @param db
+     * @return
+     */
+    public List<MemoBean> selectMemo(String searchInfo,boolean isOrderByCreateTime,SQLiteDatabase db){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
         }
-        SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Memo_Note,
                 new String[]{
                         DBConstant._id,
@@ -362,6 +415,12 @@ public class DBManager extends SQLiteOpenHelper{
         ContentValues values=new ContentValues();
         values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
         values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        if(bean.getCreatTime()!=null){
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+        }
+        if(bean.getUpdateTime()!=null){
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhm));
+        }
         long insert = db.insert(T_Joke_Note, null, values);
         LogUtils.Log(insert);
         db.close();
@@ -401,15 +460,34 @@ public class DBManager extends SQLiteOpenHelper{
         }
         return count;
     }
+    /***
+     * 查询搞笑段子
+     * @return
+     */
     public List<JokeBean> selectJoke(){
         return selectJoke(null,true);
     }
+    /***
+     * 查询搞笑段子
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @return
+     */
     public List<JokeBean> selectJoke(String searchInfo,boolean isOrderByCreateTime){
+        return selectJoke(searchInfo,isOrderByCreateTime,getWritableDatabase());
+    }
+    /***
+     * 查询搞笑段子
+     * @param searchInfo  模糊搜索关键字
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @param db
+     * @return
+     */
+    public List<JokeBean> selectJoke(String searchInfo,boolean isOrderByCreateTime,SQLiteDatabase db){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
         }
-        SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Joke_Note,
                 new String[]{
                         DBConstant._id,
@@ -454,15 +532,32 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return delete>0?true:false;
     }
+    /***
+     * 查询生活消费
+     * @return
+     */
     public List<SpendBean> selectSpend(){
         return selectSpend(true);
     }
+    /***
+     * 查询生活消费
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @return
+     */
     public List<SpendBean> selectSpend(boolean isOrderByCreateTime){
+        return selectSpend(isOrderByCreateTime,getWritableDatabase());
+    }
+    /***
+     * 查询生活消费
+     * @param isOrderByCreateTime  是否按照创建时间排序true  按照修改修改时间排序false
+     * @param db
+     * @return
+     */
+    public List<SpendBean> selectSpend(boolean isOrderByCreateTime,SQLiteDatabase db){
         String orderBy=DBConstant.updateTime+" desc";
         if(isOrderByCreateTime){
             orderBy=DBConstant.creatTime+" desc";
         }
-        SQLiteDatabase db=getWritableDatabase();
         Cursor query = db.query(T_Spend_Note,
                 new String[]{
                         DBConstant._id,
@@ -516,6 +611,12 @@ public class DBManager extends SQLiteOpenHelper{
             values.put(DBConstant.localYear, bean.getLocalYear());
             values.put(DBConstant.localMonth, bean.getLocalMonth());
             values.put(DBConstant.localDay, bean.getLocalDay());
+        }
+        if(bean.getCreatTime()!=null){
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhm));
+        }
+        if(bean.getUpdateTime()!=null){
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(), DateUtils.ymdhm));
         }
         long insert = db.insert(T_Spend_Note, null, values);
         LogUtils.Log(insert);
