@@ -131,7 +131,7 @@ public class MyLinearLayout extends LinearLayout{
 
             GradientDrawable gradientDrawable2 = new GradientDrawable();
             gradientDrawable2.setStroke((int) borderWidth, borderColor, dashWidth, dashGap);
-            gradientDrawable2.setColor(pressColor);
+            gradientDrawable2.setColor(pressColor == getDefColor() ? solidColor : pressColor);
             if (radius > 0) {
                 gradientDrawable.setCornerRadius(radius);
                 gradientDrawable2.setCornerRadius(radius);
