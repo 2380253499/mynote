@@ -2,6 +2,7 @@ package com.zr.note.ui.main.fragment.contract.imp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
@@ -11,6 +12,7 @@ import com.zr.note.database.DBManager;
 import com.zr.note.tools.ClickUtils;
 import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.gesture.activity.GestureUpdateActivity;
+import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.AccountBean;
 import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.entity.MemoBean;
@@ -214,18 +216,29 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
                         });
                         dialog.create().show();
                     }
-
                     @Override
                     public void onResult(boolean isCompleted) {
                         super.onResult(isCompleted);
                         mView.hideLoading();
                         if (isCompleted) {
                             mView.showMsg("导入成功");
+                            sendSelectDataBroadcast(BroFilter.addData_account,BroFilter.index_0);
+                            sendSelectDataBroadcast(BroFilter.addData_memo,BroFilter.index_1);
+                            sendSelectDataBroadcast(BroFilter.addData_joke,BroFilter.index_2);
+                            sendSelectDataBroadcast(BroFilter.addData_spend,BroFilter.index_3);
                         } else {
                             mView.showMsg("导入失败");
                         }
                     }
                 });
         addSubscription(subscribe1);
+    }
+
+    private void sendSelectDataBroadcast(String action,int index) {
+        Intent intent = new Intent();
+        intent.setAction(action);
+        intent.putExtra(BroFilter.isAddData, true);
+        intent.putExtra(BroFilter.isAddData_index, index);
+        mContext.sendBroadcast(intent);
     }
 }

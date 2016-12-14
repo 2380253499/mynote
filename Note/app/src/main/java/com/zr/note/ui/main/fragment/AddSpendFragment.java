@@ -364,7 +364,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
     public void prePareSelectData(){
         mIntent.setAction(BroFilter.addData_spend);
         mIntent.putExtra(BroFilter.isAddData, true);
-        mIntent.putExtra(BroFilter.isAddData_index, BroFilter.index_2);
+        mIntent.putExtra(BroFilter.isAddData_index, BroFilter.index_3);
         getActivity().sendBroadcast(mIntent);
     }
 

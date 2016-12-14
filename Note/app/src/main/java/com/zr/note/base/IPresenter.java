@@ -16,7 +16,7 @@ public abstract class IPresenter<V extends BaseView>{
     protected V mView;
     protected Handler mHandler;
     protected Context mContext;
-    protected Intent mIntent;
+    private Intent mIntent;
     protected CompositeSubscription mCSubscription;
     public IPresenter(Context context) {
         mContext=context;
