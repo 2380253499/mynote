@@ -8,12 +8,12 @@
          </item>
          <item android:id="@+id/update_import"
                android:title="导入数据文件"
-               android:icon="@drawable/left_menu_update_pwd"
+               android:icon="@drawable/left_menu_import_data"
              >
          </item>
          <item android:id="@+id/update_export"
                android:title="导出数据文件"
-               android:icon="@drawable/left_menu_update_pwd"
+               android:icon="@drawable/left_menu_export_data"
              >
          </item>
          <item android:id="@+id/update_pwd1"
