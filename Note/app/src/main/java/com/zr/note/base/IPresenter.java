@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -42,5 +43,8 @@ public abstract class IPresenter<V extends BaseView>{
     }
     protected String getStr(int resId){
         return mContext==null?"":mContext.getResources().getString(resId);
+    }
+    protected void addSubscription(Subscription subscription){
+        mCSubscription.add(subscription);
     }
 }

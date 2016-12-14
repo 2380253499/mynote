@@ -2,6 +2,7 @@ package com.zr.note.ui.main.fragment.contract.imp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.SystemClock;
 import android.util.SparseBooleanArray;
 import android.widget.ListView;
 
@@ -195,6 +196,10 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         nodeItem.isLast = true;
                                         nodeItem.spendBean = sBean;
                                         TreeNode hourNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
+                                        if(hourList.size()>12){
+                                            SystemClock.sleep(80);//数据过多treeview无法加载出来
+                                        }
+//
                                         subscriber.onNext(hourNode);
                                     }
                                     itemIsClicked.put(Integer.parseInt(YMD), true);
@@ -202,12 +207,13 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                 }
                             }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .asObservable()
+//                                    .asObservable()
                                     .subscribe(new MySubscriber<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode hourNode) {
                                             node.getViewHolder().getTreeView().addNode(node, hourNode);
                                         }
+
                                         @Override
                                         public void onResult(boolean isComplete) {
                                             mView.hideLoading();

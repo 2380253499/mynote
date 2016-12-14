@@ -215,8 +215,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.setDataAccount(AES.decode(dataAccount));
             bean.setDataPassword(AES.decode(dataPassword));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if(searchInfo!=null){
                 if(bean.getDataAccount().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
                         ||bean.getDataSource().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
@@ -365,8 +365,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setDataContent(AES.decode(dataContent));
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if(searchInfo!=null){
                 if(bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
                         ||bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase())>=0){
@@ -507,8 +507,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setDataRemark(AES.decode(dataRemark));
             bean.setDataContent(AES.decode(dataContent));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if(searchInfo!=null){
                 if(bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase())>=0
                         ||bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase())>=0){
@@ -563,6 +563,9 @@ public class DBManager extends SQLiteOpenHelper{
                         DBConstant._id,
                         DBConstant.dataRemark,
                         DBConstant.liveSpend,
+                        DBConstant.localYear,
+                        DBConstant.localMonth,
+                        DBConstant.localDay,
                         DBConstant.updateTime,
                         DBConstant.creatTime}, null, null, null, null,orderBy);
         List<SpendBean>list=new ArrayList<SpendBean>();
@@ -572,13 +575,19 @@ public class DBManager extends SQLiteOpenHelper{
             int id=query.getInt(query.getColumnIndex(DBConstant._id));
             Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
             String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            int localYear=query.getInt(query.getColumnIndex(DBConstant.localYear));
+            int localMonth=query.getInt(query.getColumnIndex(DBConstant.localMonth));
+            int localDay=query.getInt(query.getColumnIndex(DBConstant.localDay));
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhm));
+            bean.setLocalYear(localYear);
+            bean.setLocalMonth(localMonth);
+            bean.setLocalDay(localDay);
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime,DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime,DateUtils.ymdhms));
             list.add(bean);
         }
         db.close();
@@ -743,7 +752,6 @@ public class DBManager extends SQLiteOpenHelper{
             int id=query.getInt(query.getColumnIndex(DBConstant._id));
             Double liveSpend=query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
             String liveSpendStr=query.getString(query.getColumnIndex(DBConstant.liveSpend));
-            Log.i("=======",liveSpendStr+"=======liveSpend"+liveSpend);
             String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
@@ -801,8 +809,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear );
             bean.setLocalMonth(localMonth );
             bean.setLocalDay(localDay );
@@ -811,7 +819,6 @@ public class DBManager extends SQLiteOpenHelper{
             SparseArray<List<SpendBean>> dSparseArray;
             List<SpendBean> dayList;
             if(sparseArray.get(localYear)==null){
-                Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
                 dSparseArray=new SparseArray<List<SpendBean>>();
                 mSparseArray=new SparseArray<SparseArray<List<SpendBean>>>();
                 dayList=new ArrayList<SpendBean>();
@@ -842,10 +849,8 @@ public class DBManager extends SQLiteOpenHelper{
                 yList.add(mSpendBean);
 //                spendBean=new SpendBean();
                 spendBean.setList(yList);
-                Log.i("------", "===" + bean.getLocalYear() + "-" + bean.getLocalMonth() + "-" + bean.getLocalDay());
             }else{
                 if(sparseArray.get(localYear).get(localMonth)==null){
-                    Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
                     dSparseArray=new SparseArray<List<SpendBean>>();
                     dayList=new ArrayList<SpendBean>();
                     dayList.add(bean);
@@ -873,7 +878,6 @@ public class DBManager extends SQLiteOpenHelper{
 
                 }else{
                     if(sparseArray.get(localYear).get(localMonth).get(localDay)==null){
-                        Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
                         dayList=new ArrayList<SpendBean>();
                         dayList.add(bean);
                         sparseArray.get(localYear).get(localMonth).put(localDay,dayList);
@@ -894,7 +898,6 @@ public class DBManager extends SQLiteOpenHelper{
                             }
                         }
                     }else{
-                        Log.i("=========","==="+bean.getLocalYear()+"-"+bean.getLocalMonth()+"-"+bean.getLocalDay());
                         sparseArray.get(localYear).get(localMonth).get(localDay).add(bean);
                         /////////////////////////////////
                         for (int i = 0; i < spendBean.getList().size(); i++) {
@@ -917,7 +920,6 @@ public class DBManager extends SQLiteOpenHelper{
             }
         }
         db.close();
-        Log.i("-----","---"+spendBean.getList().size());
         return spendBean;
     }
 
@@ -957,8 +959,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear );
             bean.setLocalMonth(localMonth );
             bean.setLocalDay(localDay );
@@ -1032,8 +1034,8 @@ public class DBManager extends SQLiteOpenHelper{
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(AES.decode(dataRemark));
-            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
-            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear );
             bean.setLocalMonth(localMonth );
             bean.setLocalDay(localDay );

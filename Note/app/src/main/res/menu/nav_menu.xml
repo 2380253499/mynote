@@ -6,7 +6,7 @@
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>
-         <item android:id="@+id/update_importd"
+         <item android:id="@+id/update_import"
                android:title="导入数据文件"
                android:icon="@drawable/left_menu_update_pwd"
              >
