@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zr.tools.customview;
+package com.zr.customview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
