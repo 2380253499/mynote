@@ -25,10 +25,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zr.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import zr.note.tools.R;
 
 /**
  * FlowLayout will arrange child elements horizontally one next to another. If there is not enough

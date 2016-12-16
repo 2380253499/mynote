@@ -13,7 +13,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import zr.note.tools.R;
+import com.zr.R;
 
 /**
  * Created by Administrator on 2016/9/6.

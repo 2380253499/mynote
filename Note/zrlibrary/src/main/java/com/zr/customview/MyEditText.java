@@ -17,7 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import zr.note.tools.R;
+import com.zr.R;
 
 /**
  * Created by Administrator on 2016/9/6.

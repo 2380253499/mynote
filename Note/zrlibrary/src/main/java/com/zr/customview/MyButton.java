@@ -9,7 +9,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-import zr.note.tools.R;
+import com.zr.R;
 
 
 /**

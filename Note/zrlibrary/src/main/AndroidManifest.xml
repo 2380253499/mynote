@@ -1,4 +1,4 @@
-<manifest package="zr.note.tools"
+<manifest package="com.zr"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application

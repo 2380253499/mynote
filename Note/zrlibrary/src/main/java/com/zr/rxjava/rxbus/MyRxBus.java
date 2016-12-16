@@ -65,6 +65,7 @@ public class MyRxBus {
 
     /**
      * 发送一个新Sticky事件
+     * @param event
      */
     public void postSticky(Object event) {
         synchronized (mStickyEventMap) {
