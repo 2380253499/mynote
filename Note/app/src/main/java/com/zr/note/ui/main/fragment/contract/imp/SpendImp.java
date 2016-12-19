@@ -112,6 +112,9 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         nodeItem.totalSpend = monthBean.getTotalSpend();
                                         nodeItem.remark = "月";
                                         TreeNode monthNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
+                                        if(monthList.size()>12){
+                                            SystemClock.sleep(30);//数据过多treeview无法加载出来
+                                        }
                                         subscriber.onNext(monthNode);
                                     }
                                     itemIsClicked.put(item.spendBean.getLocalYear(), true);
@@ -155,6 +158,10 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         nodeItem.totalSpend = dayBean.getTotalSpend();
                                         nodeItem.remark = "日";
                                         TreeNode dayNode = new TreeNode(nodeItem).setViewHolder(new MySpendHolder(mContext));
+
+                                        if(dayList.size()>12){
+                                            SystemClock.sleep(30);//数据过多treeview无法加载出来
+                                        }
                                         subscriber.onNext(dayNode);
 
                                     }
