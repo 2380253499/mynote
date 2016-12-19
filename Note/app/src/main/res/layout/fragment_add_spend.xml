@@ -106,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-    <com.zr.tools.customview.FlowLayout
+    <com.zr.customview.FlowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="13dp"
@@ -267,6 +267,6 @@
             app:my_tv_solid="@color/white"
             style="@style/add_spend_tag"
             />
-    </com.zr.tools.customview.FlowLayout>
+    </com.zr.customview.FlowLayout>
 </LinearLayout>
 </ScrollView>
