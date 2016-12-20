@@ -45,6 +45,7 @@ dependencies {
     //滚轮控件
     compile(name: 'pickerview', ext: 'aar')
     compile(name: 'library', ext: 'aar')
+    compile(name: 'zrlibrary-release', ext: 'aar')
     //findView注解
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.jakewharton:butterknife:8.4.0'
@@ -70,7 +71,7 @@ dependencies {
     compile 'com.github.bmelnychuk:atv:1.2.+'
     //滚轮控件
 //    compile 'com.bigkoo:pickerview:2.1.1'
-    compile project(':zrlibrary')
+//    compile project(':zrlibrary')
     //内存检测
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

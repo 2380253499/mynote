@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/v_divider"
                 android:fitsSystemWindows="true"
-                tools:context=".ui.main.activity.MainActivity">
+                tools:context="com.zr.note.ui.main.activity.MainActivity">
 
                 <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
@@ -218,8 +218,8 @@
 
     <fragment
         android:id="@+id/drawerlayout_left"
-        android:name="com.fast.note.ui.main.fragment.LeftMenuFragment"
-        class="com.fast.note.ui.main.fragment.LeftMenuFragment"
+        android:name="com.zr.note.ui.main.fragment.LeftMenuFragment"
+        class="com.zr.note.ui.main.fragment.LeftMenuFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

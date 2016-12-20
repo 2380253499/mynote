@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              xmlns:app="http://schemas.android.com/apk/res-auto"
-             tools:context=".ui.main.fragment.LeftMenuFragment">
+             tools:context="com.zr.note.ui.main.fragment.LeftMenuFragment">
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_container"
