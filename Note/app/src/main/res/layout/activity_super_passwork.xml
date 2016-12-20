@@ -22,7 +22,7 @@
             android:layout_marginBottom="30dp"
             android:gravity="center"
             />
-    <com.zr.customview.MyEditText
+    <com.fast.customview.MyEditText
         android:id="@+id/et_super_pwd"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -35,7 +35,7 @@
         android:maxLength="20"
         android:hint="请输入超级密码"
         />
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_submit_pwd"
             android:layout_width="match_parent"
             android:layout_height="40dp"

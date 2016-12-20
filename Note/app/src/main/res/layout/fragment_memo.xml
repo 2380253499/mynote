@@ -8,7 +8,7 @@
               android:focusable="true"
               android:focusableInTouchMode="true"
     >
-    <com.zr.customview.MyEditText
+    <com.fast.customview.MyEditText
         android:id="@+id/et_search_memo"
         android:layout_width="match_parent"
         android:layout_height="32dp"
@@ -33,10 +33,10 @@
         android:layout_height="2px"
         android:background="@color/c_divider"
         />
-        <com.zr.customview.CustomListView
+        <com.fast.customview.CustomListView
             android:id="@+id/lv_memo_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:listSelector="@drawable/selector_list_item"
-            ></com.zr.customview.CustomListView>
+            ></com.fast.customview.CustomListView>
 </LinearLayout>

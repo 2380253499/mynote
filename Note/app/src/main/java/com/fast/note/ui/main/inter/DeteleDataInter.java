@@ -1,0 +1,8 @@
+package com.fast.note.ui.main.inter;
+
+/**
+ * Created by Administrator on 2016/10/10.
+ */
+public interface DeteleDataInter {
+    boolean deleteData();
+}

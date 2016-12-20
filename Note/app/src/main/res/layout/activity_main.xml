@@ -100,7 +100,7 @@
                     android:orientation="horizontal"
                     >
 
-                    <com.zr.customview.MyRadioButton
+                    <com.fast.customview.MyRadioButton
                         android:id="@+id/rb_main_account"
                         style="@style/radio_main"
                         android:text="@string/main_data_list"
@@ -109,7 +109,7 @@
                         app:my_radio_checked_color="@color/c_icon"
                         app:my_radio_normal="@drawable/main_data_normal"/>
 
-                    <com.zr.customview.MyRadioButton
+                    <com.fast.customview.MyRadioButton
                         android:id="@+id/rb_main_memo"
                         style="@style/radio_main"
                         android:text="@string/main_data_memo"
@@ -119,7 +119,7 @@
                         app:my_radio_normal="@drawable/memo_normal"
                         />
 
-                    <com.zr.customview.MyRadioButton
+                    <com.fast.customview.MyRadioButton
                         android:id="@+id/rb_main_joke"
                         style="@style/radio_main"
                         android:text="@string/main_data_joke"
@@ -129,7 +129,7 @@
                         app:my_radio_normal="@drawable/memo_normal"
                         />
 
-                    <com.zr.customview.MyRadioButton
+                    <com.fast.customview.MyRadioButton
                         android:id="@+id/rb_main_spend"
                         style="@style/radio_main"
                         android:text="@string/main_data_consumption"
@@ -140,7 +140,7 @@
                         />
                 </RadioGroup>
 
-                <com.zr.customview.MyLinearLayout
+                <com.fast.customview.MyLinearLayout
                     android:id="@+id/ll_data_check"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -152,7 +152,7 @@
                     app:my_ll_top_line="true"
                     >
 
-                    <com.zr.customview.MyCheckBox
+                    <com.fast.customview.MyCheckBox
                         android:id="@+id/cb_data_checkall"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -175,7 +175,7 @@
                         android:background="@color/c_divider"
                         />
 
-                    <com.zr.customview.MyTextView
+                    <com.fast.customview.MyTextView
                         android:id="@+id/tv_data_delete"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -192,7 +192,7 @@
                         android:background="@color/c_divider"
                         />
 
-                    <com.zr.customview.MyTextView
+                    <com.fast.customview.MyTextView
                         android:id="@+id/tv_date_endselect"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -202,7 +202,7 @@
                         app:my_tv_press="@color/c_divider"
                         app:my_tv_solid="@color/white"
                         />
-                </com.zr.customview.MyLinearLayout>
+                </com.fast.customview.MyLinearLayout>
             </LinearLayout>
         </RelativeLayout>
 
@@ -218,8 +218,8 @@
 
     <fragment
         android:id="@+id/drawerlayout_left"
-        android:name="com.zr.note.ui.main.fragment.LeftMenuFragment"
-        class="com.zr.note.ui.main.fragment.LeftMenuFragment"
+        android:name="com.fast.note.ui.main.fragment.LeftMenuFragment"
+        class="com.fast.note.ui.main.fragment.LeftMenuFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

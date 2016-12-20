@@ -27,7 +27,7 @@
             android:textSize="15sp"
             />
 
-        <com.zr.customview.MyEditText
+        <com.fast.customview.MyEditText
             android:id="@+id/et_spend_remark"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 />
         </LinearLayout>
 
-        <com.zr.customview.MyEditText
+        <com.fast.customview.MyEditText
             android:id="@+id/et_spend_amount"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
@@ -102,17 +102,17 @@
             />
 
     </LinearLayout>
-    <com.zr.customview.MyTextView
+    <com.fast.customview.MyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-    <com.zr.customview.FlowLayout
+    <com.fast.customview.FlowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="13dp"
         android:paddingTop="13dp">
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_zaocan"
             style="@style/add_spend_tag"
             android:text="早餐"
@@ -122,7 +122,7 @@
             app:my_tv_press="@color/c_divider"
             app:my_tv_solid="@color/white"/>
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_wucan"
             style="@style/add_spend_tag"
             android:text="午餐"
@@ -133,7 +133,7 @@
             app:my_tv_solid="@color/white"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_wancan"
             style="@style/add_spend_tag"
             android:text="晚餐"
@@ -144,7 +144,7 @@
             app:my_tv_solid="@color/white"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_lingshi"
             android:text="零食"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -155,7 +155,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_gouwu"
             android:text="购物"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -166,7 +166,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_jiaotong"
             android:text="交通"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -177,7 +177,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_kanbingmaiyao"
             android:layout_width="80dp"
             android:text="看病买药"
@@ -189,7 +189,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_maishuiguo"
             android:text="买水果"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -200,7 +200,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_fangzu"
             android:text="房租"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -211,7 +211,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_wanggou"
             android:text="网购"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -222,7 +222,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_shuidian"
             android:text="水电"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -233,7 +233,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_chuxingyouwan"
             android:text="出行游玩"
             android:layout_width="80dp"
@@ -245,7 +245,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_xiuxianyule"
             android:layout_width="90dp"
             android:text="休闲娱乐"
@@ -257,7 +257,7 @@
             style="@style/add_spend_tag"
             />
 
-        <com.zr.customview.MyTextView
+        <com.fast.customview.MyTextView
             android:id="@+id/tv_spend_ther"
             android:text="其他"
             app:my_tv_border_color="@color/c_F8F8F83"
@@ -267,6 +267,6 @@
             app:my_tv_solid="@color/white"
             style="@style/add_spend_tag"
             />
-    </com.zr.customview.FlowLayout>
+    </com.fast.customview.FlowLayout>
 </LinearLayout>
 </ScrollView>

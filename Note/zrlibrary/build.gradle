@@ -1,5 +1,27 @@
 apply plugin: 'com.android.library'
+/*ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'customview'
 
+    publishedGroupId = 'com.zr.note'
+    libraryName = 'zrlibrary'
+    artifact = 'customview'
+
+    libraryDescription = 'A wrapper for Facebook Native Like Button (LikeView) on Android'
+
+    siteUrl = 'https://github.com/2380253499/mynote/tree/master/Note'
+    gitUrl = 'https://github.com/2380253499/mynote/tree/master/Note.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'zr'
+    developerName = 'zhongrui'
+    developerEmail = 'zr20131019@sina.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}*/
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
@@ -22,6 +44,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
 }
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 /***************发布aar包的配置**********************/
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
@@ -30,9 +54,9 @@ version = "1.0"
 //def gitUrl = 'https://github.com/openproject/Note.git' // project git
 def siteUrl = 'https://github.com/2380253499/mynote/tree/master/Note'    // project homepage
 def gitUrl = 'https://github.com/2380253499/mynote/tree/master/Note.git' // project git
-group = "com.note"
+group = "com.zr.note"
 
-/*上传到jcenter至少需要四个文件，除了打包的aar之外，还需要pom和javadoc，source，否则是通不过jcenter审核的。不过不用紧张，这些我们都可以用脚本生成*/
+//上传到jcenter至少需要四个文件，除了打包的aar之外，还需要pom和javadoc，source，否则是通不过jcenter审核的。不过不用紧张，这些我们都可以用脚本生成
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -50,8 +74,8 @@ install {
                 developers {
                     developer {
                         id 'zr'
-                        name 'zr'
-                        email '2380253499@qq.com'
+                        name 'zhongrui'
+                        email 'zr20131019@qq.com'
                     }
                 }
                 scm {
@@ -63,7 +87,6 @@ install {
         }
     }
 }
-/*** 打包javadocjar和sourcejar**/
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -99,12 +122,13 @@ bintray {
     key = properties.getProperty("bintray.apikey")
     configurations = ['archives']
     pkg {
-        repo = "maven"
-        name = "customview"                // project name in jcenter
+        repo = "maven"  // 上传到maven库。
+        name = "customview"  // 发布到Bintray上的项目名字，这里的名字不是compile 'com.yanzhenjie:andserver:1.0.1'中的andserver。
+        userOrg = '2380253499' // Bintray的用户名，2016年11月更新。
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
-        publish = true
+        publish = true // 是否是公开项目。
     }
 }
 /***********************************************/
