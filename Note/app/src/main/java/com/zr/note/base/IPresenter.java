@@ -23,7 +23,6 @@ public abstract class IPresenter<V extends BaseView>{
         this.mHandler =new Handler(Looper.getMainLooper());
     }
     public void attach(V view){
-        mCSubscription=new CompositeSubscription();
         mView=view;
     }
     public void detach(){
@@ -31,9 +30,7 @@ public abstract class IPresenter<V extends BaseView>{
         this.mHandler=null;
         mIntent=null;
         mContext=null;
-        if(!mCSubscription.isUnsubscribed()){
-            mCSubscription.unsubscribe();
-        }
+        onUnSubscription();
     }
     protected Intent getmIntent(){
         return mIntent==null?new Intent():mIntent;
@@ -44,7 +41,17 @@ public abstract class IPresenter<V extends BaseView>{
     protected String getStr(int resId){
         return mContext==null?"":mContext.getResources().getString(resId);
     }
-    protected void addSubscription(Subscription subscription){
+    //RXjava注册
+    protected void addSubscription(Subscription subscription) {
+        if (mCSubscription == null) {
+            mCSubscription = new CompositeSubscription();
+        }
         mCSubscription.add(subscription);
+    }
+    //RXjava取消注册，以避免内存泄露
+    protected void onUnSubscription() {
+        if (mCSubscription != null && mCSubscription.hasSubscriptions()) {
+            mCSubscription.unsubscribe();
+        }
     }
 }
