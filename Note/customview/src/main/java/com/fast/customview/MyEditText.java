@@ -45,6 +45,9 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
         init(attrs);
     }
     private void init(AttributeSet attrs){
+        if (!isInEditMode()) {
+            return;
+        }
         setRightDrawble();
         if(attrs==null){
             return;
