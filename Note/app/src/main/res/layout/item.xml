@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:gravity="center"
+              android:gravity="center"
     >
 <TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
     android:text="asdfasfdasdfsf"
     android:gravity="center"
     />
+  <com.fast.customview.MyTextView
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:text="android"
+      app:my_tv_solid="@color/colorAccent"
+      app:my_tv_corner_radius="10dp"
+      app:my_tv_all_line="true"
+      />
+    <com.fast.customview.MyCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:my_checkbox_normal="@drawable/ic_launcher"
+        app:my_checkbox_checked="@drawable/left_menu_import_data"
+        android:checked="false"
+        />
+    <com.fast.customview.MyLinearLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:my_ll_solid="@color/colorAccent"
+        app:my_ll_corner_radius="20dp"
+        >
+
+    </com.fast.customview.MyLinearLayout>
 </LinearLayout>
