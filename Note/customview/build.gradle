@@ -29,7 +29,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 // 项目引用的版本号，比如compile 'com.yanzhenjie:andserver:1.0.1'中的1.0.1就是这里配置的。
-version = "1.0.3"
+version = "1.0.5"
 
 // 定义两个链接，下面会用到。
 //def siteUrl = 'https://github.com/yanzhenjie/AndServer' // 项目主页。
@@ -124,86 +124,3 @@ bintray {
         publish = true // 是否是公开项目。
     }
 }
-/*version = "1.0"
-//def siteUrl = 'https://github.com/openproject/Note'    // project homepage
-//def gitUrl = 'https://github.com/openproject/Note.git' // project git
-def siteUrl = 'https://github.com/2380253499/mynote/tree/master/Note'    // project homepage
-def gitUrl = 'https://github.com/2380253499/mynote/tree/master/Note.git' // project git
-group = "com.zr.note"
-
-//上传到jcenter至少需要四个文件，除了打包的aar之外，还需要pom和javadoc，source，否则是通不过jcenter审核的。不过不用紧张，这些我们都可以用脚本生成
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                name 'Less Code For Android'
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'zr'
-                        name 'zhongrui'
-                        email 'zr20131019@qq.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-javadoc {
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        author true
-        version true
-        links "http://docs.oracle.com/javase/7/docs/api"
-    }
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"  // 上传到maven库。
-        name = "customview"  // 发布到Bintray上的项目名字，这里的名字不是compile 'com.yanzhenjie:andserver:1.0.1'中的andserver。
-        userOrg = '2380253499' // Bintray的用户名，2016年11月更新。
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true // 是否是公开项目。
-    }
-}*/
-/***********************************************/
