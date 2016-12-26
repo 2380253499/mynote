@@ -34,9 +34,6 @@ public class MyCheckBox extends CheckBox{
             init(attrs);
     }
     private void init(AttributeSet attrs){
-        if (!isInEditMode()) {
-            return;
-        }
         this.setClickable(true);
         if(attrs==null){
             return;

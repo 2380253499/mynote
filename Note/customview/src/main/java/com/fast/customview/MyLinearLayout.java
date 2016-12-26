@@ -23,31 +23,19 @@ public class MyLinearLayout extends LinearLayout{
     public MyLinearLayout(Context context) {
         super(context);
         init(null);
-        if (isInEditMode()) {
-            return;
-        }
     }
     public MyLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
-        if (isInEditMode()) {
-            return;
-        }
     }
     public MyLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
-        if (isInEditMode()) {
-            return;
-        }
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MyLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
-        if (isInEditMode()) {
-            return;
-        }
     }
     private void init(AttributeSet attrs) {
 //        setClickable(true);
