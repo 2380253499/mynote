@@ -87,7 +87,7 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener {
     private void setRightDrawble() {
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            mClearDrawable = getResources().getDrawable(R.drawable.text_clear);
+            mClearDrawable = getResources().getDrawable(R.drawable.textclear);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         this.setCompoundDrawablePadding(dip2px(getContext(), 5));
