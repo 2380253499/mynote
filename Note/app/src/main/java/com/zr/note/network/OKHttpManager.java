@@ -106,12 +106,7 @@ public class OKHttpManager {
         FormBody.Builder formBody = new FormBody.Builder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             LogUtils.Log(entry.getKey(), entry.getValue());
-            if(entry.getKey().equals("other")){
-
-                formBody.addEncoded("other", "你好好好好哦啊好哦啊后22");
-            }else{
-                formBody.addEncoded(entry.getKey(), entry.getValue());
-            }
+            formBody.addEncoded(entry.getKey(), entry.getValue());
         }
         return formBody.build();
     }
