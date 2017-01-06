@@ -1,5 +1,7 @@
 package com.zr.note.network;
 
+import android.util.Log;
+
 import com.google.gson.internal.$Gson$Types;
 
 import java.lang.reflect.ParameterizedType;
@@ -18,7 +20,9 @@ public abstract class ResultCallback<T> {
     static Type getSuperclassTypeParameter(Class<?> subclass){
         Type superclass = subclass.getGenericSuperclass();
         if (superclass instanceof Class){
-            throw new RuntimeException("Missing type parameter.");
+//            throw new RuntimeException("Missing type parameter.");
+            Log.e("Type","Missing type parameter.");
+            return null;
         }
         ParameterizedType parameterized = (ParameterizedType) superclass;
         return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);

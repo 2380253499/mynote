@@ -79,13 +79,11 @@ public class OKHttpUtils {
         });
     }
     private static void callbackSuccess(ResultCallback callback,String response) {
-        if (callback.mType == String.class) {
+        if (callback.mType == String.class||callback.mType==null) {
             callback.onSuccess(response);
-        } else if(callback.mType == Object.class){
+        } else{
             Object object = GsonUtils.jsonToObject(response, callback.mType);
             callback.onSuccess(object);
-        }else{
-            callback.onSuccess(response);
         }
     }
     /**
