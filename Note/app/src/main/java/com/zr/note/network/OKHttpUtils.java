@@ -12,20 +12,19 @@ import okhttp3.Call;
  * Created by Administrator on 2016/9/28.
  */
 public class OKHttpUtils {
-    private static ResultCallback callback;
     /**
      * get异步请求
      */
-    public static void getAsyn(String url, ResultCallback resultCallback) {
-        callback = resultCallback;
+    public static void getAsyn(String url,final ResultCallback resultCallback) {
         OKHttpManager.getAsyn(url, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
-                callback.onError(call, e);
+                resultCallback.onError(call, e);
             }
+
             @Override
             public void onSuccess(String response) {
-                callbackSuccess(response);
+                callbackSuccess(resultCallback, response);
             }
         });
     }
@@ -46,18 +45,17 @@ public class OKHttpUtils {
      * @param json json对象(参数)
      * @param resultCallback 用于接口回调
      */
-    public static void postAsyn(String url, String json, ResultCallback resultCallback) {
-        callback = resultCallback;
+    public static void postAsyn(String url, String json, final ResultCallback resultCallback) {
         LogUtils.Log(json);
         OKHttpManager.postAsyn(url, json, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
-                callback.onError(call, e);
+                resultCallback.onError(call, e);
             }
 
             @Override
             public void onSuccess(String response) {
-                callbackSuccess(response);
+                callbackSuccess(resultCallback,response);
             }
         });
     }
@@ -67,26 +65,27 @@ public class OKHttpUtils {
      * @param map 参数
      * @param resultCallback 用于接口回调
      */
-    public static void postAsyn(String url, Map<String, String> map, ResultCallback resultCallback) {
-        callback = resultCallback;
+    public static void postAsyn(String url, Map<String, String> map,final ResultCallback resultCallback) {
         OKHttpManager.postAsyn(url, map, new OKHttpCallback() {
             @Override
             public void onError(Call call, Exception e) {
-                callback.onError(call, e);
+                resultCallback.onError(call, e);
             }
 
             @Override
             public void onSuccess(String response) {
-                callbackSuccess(response);
+                callbackSuccess(resultCallback,response);
             }
         });
     }
-    private static void callbackSuccess(String response) {
+    private static void callbackSuccess(ResultCallback callback,String response) {
         if (callback.mType == String.class) {
             callback.onSuccess(response);
-        } else {
+        } else if(callback.mType == Object.class){
             Object object = GsonUtils.jsonToObject(response, callback.mType);
             callback.onSuccess(object);
+        }else{
+            callback.onSuccess(response);
         }
     }
     /**
