@@ -9,7 +9,7 @@
               android:focusable="true"
               android:focusableInTouchMode="true"
     >
-    <com.fast.customview.MyEditText
+    <com.github.customview.MyEditText
         android:id="@+id/et_search_account"
         android:layout_width="match_parent"
         android:layout_height="32dp"
@@ -35,13 +35,13 @@
         android:layout_height="2px"
         android:background="@color/c_divider"
         />
-    <com.fast.customview.CustomListView
+    <com.github.customview.CustomListView
         android:id="@+id/lv_account_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="@drawable/selector_list_item"
         android:scrollbars="none"
         >
-    </com.fast.customview.CustomListView>
+    </com.github.customview.CustomListView>
 
 </LinearLayout>

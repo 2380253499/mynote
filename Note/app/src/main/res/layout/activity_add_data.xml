@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         >
-        <com.fast.customview.MyRadioButton
+        <com.github.customview.MyRadioButton
             android:id="@+id/mrb_button0"
             android:text="用户账号"
             app:my_radio_checked="@drawable/check_select"
@@ -30,21 +30,21 @@
             app:my_radio_checked_color="@color/colorPrimary"
             style="@style/AddDataTab"/>
 
-        <com.fast.customview.MyRadioButton
+        <com.github.customview.MyRadioButton
             android:id="@+id/mrb_button1"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
             app:my_radio_checked_color="@color/colorPrimary"
             android:text="日常备忘"
             style="@style/AddDataTab"/>
-        <com.fast.customview.MyRadioButton
+        <com.github.customview.MyRadioButton
             android:id="@+id/mrb_button2"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
             app:my_radio_checked_color="@color/colorPrimary"
             android:text="搞笑段子"
             style="@style/AddDataTab"/>
-        <com.fast.customview.MyRadioButton
+        <com.github.customview.MyRadioButton
             android:id="@+id/mrb_button3"
             app:my_radio_checked="@drawable/check_select"
             app:my_radio_normal="@drawable/check_normal"
@@ -76,29 +76,31 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             >
-            <com.fast.customview.MyButton
+            <com.github.customview.MyButton
                 android:id="@+id/bt_addData_clear"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                app:my_bt_normal="@drawable/save_normal"
-                app:my_bt_press="@drawable/save_press"
-                android:layout_height="match_parent"
                 android:text="清空"
                 android:textColor="@color/white"
+                app:my_bt_normal_drawable="@drawable/save_normal"
+                app:my_bt_press_drawable="@drawable/save_press"
+                android:background="@null"
                 />
             <View
                 android:layout_width="2px"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 />
-            <com.fast.customview.MyButton
+            <com.github.customview.MyButton
                 android:id="@+id/bt_addData_save"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                app:my_bt_normal="@drawable/save_normal"
-                app:my_bt_press="@drawable/save_press"
+                app:my_bt_normal_drawable="@drawable/save_normal"
+                app:my_bt_press_drawable="@drawable/save_press"
+                android:background="@null"
                 android:layout_height="match_parent"
                 android:text="保存"
                 android:textColor="@color/white"

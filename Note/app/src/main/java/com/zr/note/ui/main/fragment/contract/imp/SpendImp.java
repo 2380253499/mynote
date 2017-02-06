@@ -15,7 +15,7 @@ import com.zr.note.tools.MyDialog;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.adapter.MySpendHolder;
 import com.zr.note.ui.main.fragment.contract.SpendCon;
-import com.fast.rxjava.rxbus.MySubscriber;
+import com.github.rxjava.rxbus.MySubscriber;
 
 import java.util.List;
 
@@ -132,11 +132,11 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         }
 
                                         @Override
-                                        public void onResult(boolean isComplete) {
+                                        public void onResult(boolean isComplete, Throwable e) {
                                             mView.hideLoading();
                                         }
                                     });
-                            mCSubscription.add(subscribe);
+                            addSubscription(subscribe);
                             mView.showLoading();
                         }
 
@@ -177,11 +177,11 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                             node.getViewHolder().getTreeView().addNode(node, dayNode);
                                         }
                                         @Override
-                                        public void onResult(boolean isComplete) {
+                                        public void onResult(boolean isComplete, Throwable e) {
                                             mView.hideLoading();
                                         }
                                     });
-                            mCSubscription.add(subscribe);
+                            addSubscription(subscribe);
                             mView.showLoading();
                         }
 
@@ -222,11 +222,11 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                         }
 
                                         @Override
-                                        public void onResult(boolean isComplete) {
+                                        public void onResult(boolean isComplete, Throwable e) {
                                             mView.hideLoading();
                                         }
                                     });
-                            mCSubscription.add(subscribe);
+                            addSubscription(subscribe);
                             mView.showLoading();
                         }
                         break;

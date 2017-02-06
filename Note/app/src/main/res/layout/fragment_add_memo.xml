@@ -22,7 +22,7 @@
             android:textSize="15sp"
             android:paddingLeft="@dimen/asterisk_padding"
             />
-        <com.fast.customview.MyEditText
+        <com.github.customview.MyEditText
             android:id="@+id/et_memo_reminder"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             app:my_et_corner_radius="4px"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            tools:text="afd搭顺风"
+            tools:text="备忘说明"
             android:textSize="15sp"
             android:layout_marginLeft="@dimen/asterisk_padding"
             android:layout_marginRight="@dimen/asterisk_padding"
@@ -65,7 +65,7 @@
                 />
         </LinearLayout>
 
-            <com.fast.customview.MyEditText
+            <com.github.customview.MyEditText
                 android:id="@+id/et_memo_content"
                 style="@style/editTextStyle"
                 android:layout_width="match_parent"

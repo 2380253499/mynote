@@ -17,10 +17,18 @@ public class AddJokeImp extends IPresenter<AddJokeCon.View> implements AddJokeCo
     @Override
     public boolean addJoke(JokeBean bean) {
         if(DBManager.getNewInstance(mContext).addOrEditJoke(bean)>0){
-            mView.showMsg("保存成功");
+            if(bean.get_id()==-1){
+                mView.showMsg("保存成功");
+            }else{
+                mView.showMsg("修改成功");
+            }
             return true;
         }else{
-            mView.showMsg("保存失败");
+            if(bean.get_id()==-1){
+                mView.showMsg("保存失败");
+            }else{
+                mView.showMsg("修改失败");
+            }
             return false;
         }
     }

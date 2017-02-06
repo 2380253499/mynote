@@ -71,8 +71,8 @@ dependencies {
     compile 'com.github.bmelnychuk:atv:1.2.+'
     //滚轮控件
 //    compile 'com.bigkoo:pickerview:2.1.1'
-    compile project(':customview')
-//    compile 'com.fast:customview:1.0.5'
+//    compile project(':customview')
+    compile 'com.github:customview:1.0.5'
     //内存检测
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

@@ -26,7 +26,7 @@
             android:textSize="16sp"
             />
 
-        <com.fast.customview.MyEditText
+        <com.github.customview.MyEditText
             android:id="@+id/et_addData_source"
             style="@style/addDataEditStyle"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:textSize="16sp"
             />
 
-        <com.fast.customview.MyEditText
+        <com.github.customview.MyEditText
             android:id="@+id/et_addData_user"
             style="@style/addDataEditStyle"
             android:layout_width="0dp"
@@ -78,7 +78,14 @@
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             />
-
+        <TextView
+            android:id="@+id/tv_account_paste"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="粘贴"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            />
     </LinearLayout>
 
     <View
@@ -105,7 +112,7 @@
             android:textSize="16sp"
             />
 
-        <com.fast.customview.MyEditText
+        <com.github.customview.MyEditText
             android:id="@+id/et_addData_pwd"
             style="@style/addDataEditStyle"
             android:layout_width="0dp"
@@ -119,6 +126,14 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:text="复制"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            />
+        <TextView
+            android:id="@+id/tv_pwd_paste"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="粘贴"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             />

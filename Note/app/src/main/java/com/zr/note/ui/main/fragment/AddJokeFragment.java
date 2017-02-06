@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fast.customview.MyEditText;
+import com.github.customview.MyEditText;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.PhoneUtils;
@@ -133,6 +133,10 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             bean.set_id(isEdit ? jokeBean.get_id() : -1);
             boolean b = mPresenter.addJoke(bean);
             if(b){
+                if(!isEdit){
+                    et_joke_remark.setText(null);
+                    et_joke_content.setText(null);
+                }
                 isPrePareSelectData=true;
             }
             return b;

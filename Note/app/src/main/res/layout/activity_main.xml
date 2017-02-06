@@ -100,47 +100,47 @@
                     android:orientation="horizontal"
                     >
 
-                    <com.fast.customview.MyRadioButton
+                    <com.github.customview.MyRadioButton
                         android:id="@+id/rb_main_account"
                         style="@style/radio_main"
                         android:text="@string/main_data_list"
-                        app:my_compound_top="true"
+                        app:my_radio_checked_drawable="top"
                         app:my_radio_checked="@drawable/main_data_selector"
                         app:my_radio_checked_color="@color/c_icon"
                         app:my_radio_normal="@drawable/main_data_normal"/>
 
-                    <com.fast.customview.MyRadioButton
+                    <com.github.customview.MyRadioButton
                         android:id="@+id/rb_main_memo"
                         style="@style/radio_main"
                         android:text="@string/main_data_memo"
-                        app:my_compound_top="true"
+                        app:my_radio_checked_drawable="top"
                         app:my_radio_checked="@drawable/memo_selector"
                         app:my_radio_checked_color="@color/c_icon"
                         app:my_radio_normal="@drawable/memo_normal"
                         />
 
-                    <com.fast.customview.MyRadioButton
+                    <com.github.customview.MyRadioButton
                         android:id="@+id/rb_main_joke"
                         style="@style/radio_main"
                         android:text="@string/main_data_joke"
-                        app:my_compound_top="true"
+                        app:my_radio_checked_drawable="top"
                         app:my_radio_checked="@drawable/memo_selector"
                         app:my_radio_checked_color="@color/c_icon"
                         app:my_radio_normal="@drawable/memo_normal"
                         />
 
-                    <com.fast.customview.MyRadioButton
+                    <com.github.customview.MyRadioButton
                         android:id="@+id/rb_main_spend"
                         style="@style/radio_main"
                         android:text="@string/main_data_consumption"
-                        app:my_compound_top="true"
+                        app:my_radio_checked_drawable="top"
                         app:my_radio_checked="@drawable/consumption_selector"
                         app:my_radio_checked_color="@color/c_icon"
                         app:my_radio_normal="@drawable/consumption_normal"
                         />
                 </RadioGroup>
 
-                <com.fast.customview.MyLinearLayout
+                <com.github.customview.MyLinearLayout
                     android:id="@+id/ll_data_check"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -152,7 +152,7 @@
                     app:my_ll_top_line="true"
                     >
 
-                    <com.fast.customview.MyCheckBox
+                    <com.github.customview.MyCheckBox
                         android:id="@+id/cb_data_checkall"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -175,7 +175,7 @@
                         android:background="@color/c_divider"
                         />
 
-                    <com.fast.customview.MyTextView
+                    <com.github.customview.MyTextView
                         android:id="@+id/tv_data_delete"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -192,7 +192,7 @@
                         android:background="@color/c_divider"
                         />
 
-                    <com.fast.customview.MyTextView
+                    <com.github.customview.MyTextView
                         android:id="@+id/tv_date_endselect"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -202,7 +202,7 @@
                         app:my_tv_press="@color/c_divider"
                         app:my_tv_solid="@color/white"
                         />
-                </com.fast.customview.MyLinearLayout>
+                </com.github.customview.MyLinearLayout>
             </LinearLayout>
         </RelativeLayout>
 

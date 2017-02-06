@@ -4,11 +4,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
-import com.fast.customview.MyButton;
-import com.fast.customview.MyRadioButton;
+import com.github.customview.MyRadioButton;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.tools.MyDialog;
@@ -43,9 +43,9 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
     @BindView(R.id.fl_fragment)
     FrameLayout fl_fragment;
     @BindView(R.id.bt_addData_clear)
-    MyButton bt_addData_clear;
+    Button bt_addData_clear;
     @BindView(R.id.bt_addData_save)
-    MyButton bt_addData_save;
+    Button bt_addData_save;
 
     private int addDataInterIndex=0;
     private AddDataInter[]addDataInter=new AddDataInter[4];

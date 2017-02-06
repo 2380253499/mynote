@@ -21,7 +21,7 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccountCon.Presenter> implements AddDataInter,AddAccountCon.View {
+public class AddAccountFragment extends BaseFragment<AddAccountCon.View, AddAccountCon.Presenter> implements AddDataInter, AddAccountCon.View {
     @BindView(R.id.et_addData_source)
     EditText et_addData_source;
     @BindView(R.id.et_addData_user)
@@ -34,6 +34,10 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     TextView tv_account_copy;
     @BindView(R.id.tv_pwd_copy)
     TextView tv_pwd_copy;
+    @BindView(R.id.tv_pwd_paste)
+    TextView tv_pwd_paste;
+    @BindView(R.id.tv_account_paste)
+    TextView tv_account_paste;
 
     private boolean isPrePareSelectData;
     /**
@@ -55,27 +59,31 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     public static AddAccountFragment newInstance(AccountBean bean) {
         Bundle args = new Bundle();
         AddAccountFragment fragment = new AddAccountFragment();
-        if(bean!=null){
-            args.putSerializable(IntentParam.editAccount,bean);
+        if (bean != null) {
+            args.putSerializable(IntentParam.editAccount, bean);
         }
         fragment.setArguments(args);
         return fragment;
     }
+
     public static AddAccountFragment newInstance() {
         return newInstance(null);
     }
+
     @Override
     protected void initView() {
         et_addData_source.requestFocus();
         tv_account_copy.setOnClickListener(this);
         tv_pwd_copy.setOnClickListener(this);
+        tv_account_paste.setOnClickListener(this);
+        tv_pwd_paste.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
         accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
-        if(accountBean !=null){
-            isEdit=true;
+        if (accountBean != null) {
+            isEdit = true;
             et_addData_source.setText(accountBean.getDataSource());
             et_addData_user.setText(accountBean.getDataAccount());
             et_addData_pwd.setText(accountBean.getDataPassword());
@@ -85,47 +93,53 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
 
     @Override
     protected void viewOnClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_account_copy:
                 String account = et_addData_user.getText().toString();
-                if(TextUtils.isEmpty(account)){
+                if (TextUtils.isEmpty(account)) {
                     showToastS("请填写数据之后复制");
-                }else{
+                } else {
                     PhoneUtils.copyText(getActivity(), account);
                     showToastS("复制成功");
                 }
-            break;
+                break;
             case R.id.tv_pwd_copy:
                 String pwd = et_addData_pwd.getText().toString();
-                if(TextUtils.isEmpty(pwd)){
+                if (TextUtils.isEmpty(pwd)) {
                     showToastS("请填写数据之后复制");
                 } else {
-                    PhoneUtils.copyText(getActivity(),pwd);
+                    PhoneUtils.copyText(getActivity(), pwd);
                     showToastS("复制成功");
                 }
-            break;
+                break;
+            case R.id.tv_pwd_paste:
+                et_addData_pwd.setText(PhoneUtils.pasteText(getActivity()));
+                break;
+            case R.id.tv_account_paste:
+                et_addData_user.setText(PhoneUtils.pasteText(getActivity()));
+                break;
         }
     }
 
     @Override
     public boolean saveData() {
-        String userStr=et_addData_user.getText().toString().trim();
-        if(TextUtils.isEmpty(userStr)){
+        String userStr = et_addData_user.getText().toString().trim();
+        if (TextUtils.isEmpty(userStr)) {
             showToastS("账户不能为空");
-        }else{
+        } else {
             String source = et_addData_source.getText().toString();
             String user = et_addData_user.getText().toString();
             String pwd = et_addData_pwd.getText().toString();
             String note = et_addData_note.getText().toString();
-            AccountBean bean=new AccountBean();
+            AccountBean bean = new AccountBean();
             bean.setDataSource(source);
             bean.setDataAccount(user);
             bean.setDataPassword(pwd);
             bean.setDataRemark(note);
             bean.set_id(isEdit ? accountBean.get_id() : -1);
             boolean b = mPresenter.addAccount(bean);
-            if(b){
-                isPrePareSelectData=true;
+            if (b) {
+                isPrePareSelectData = true;
             }
             return b;
         }
@@ -144,10 +158,10 @@ public class AddAccountFragment extends BaseFragment<AddAccountCon.View,AddAccou
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(isPrePareSelectData){
+        if (isPrePareSelectData) {
             mIntent.setAction(BroFilter.addData_account);
             mIntent.putExtra(BroFilter.isAddData, true);
-            mIntent.putExtra(BroFilter.isAddData_index,BroFilter.index_0);
+            mIntent.putExtra(BroFilter.isAddData_index, BroFilter.index_0);
             getActivity().sendBroadcast(mIntent);
         }
     }

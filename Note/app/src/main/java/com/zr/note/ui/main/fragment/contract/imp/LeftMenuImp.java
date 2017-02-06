@@ -18,8 +18,8 @@ import com.zr.note.ui.main.entity.JokeBean;
 import com.zr.note.ui.main.entity.MemoBean;
 import com.zr.note.ui.main.entity.SpendBean;
 import com.zr.note.ui.main.fragment.contract.LeftMenuCon;
-import com.fast.rxjava.rxbus.MySubscriber;
-import com.fast.utils.FileUtils;
+import com.github.rxjava.rxbus.MySubscriber;
+import com.github.utils.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -117,8 +117,7 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
                     }
 
                     @Override
-                    public void onResult(boolean isCompleted) {
-                        super.onResult(isCompleted);
+                    public void onResult(boolean isCompleted, Throwable e) {
                         mView.hideLoading();
                         if (isCompleted) {
                             mView.showMsg("导出成功");
@@ -217,8 +216,7 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
                         dialog.create().show();
                     }
                     @Override
-                    public void onResult(boolean isCompleted) {
-                        super.onResult(isCompleted);
+                    public void onResult(boolean isCompleted, Throwable e) {
                         mView.hideLoading();
                         if (isCompleted) {
                             mView.showMsg("导入成功");

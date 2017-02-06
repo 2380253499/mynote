@@ -17,7 +17,7 @@ public abstract class IPresenter<V extends BaseView>{
     protected Handler mHandler;
     protected Context mContext;
     private Intent mIntent;
-    protected CompositeSubscription mCSubscription;
+    private CompositeSubscription mCSubscription;
     public IPresenter(Context context) {
         mContext=context;
         this.mHandler =new Handler(Looper.getMainLooper());

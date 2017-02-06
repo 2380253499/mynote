@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fast.customview.MyButtonC;
+import com.github.customview.MyButton;
 import com.zr.note.R;
 
 
@@ -124,7 +124,7 @@ public class MyDialog extends Dialog {
 				dialog.setOnDismissListener(onDismissListener);
 			}
 			if (positiveButtonText != null) {
-				((MyButtonC) layout.findViewById(R.id.positiveButton))
+				((MyButton) layout.findViewById(R.id.positiveButton))
 						.setText(positiveButtonText);
 				if (positiveButtonClickListener != null) {
 					layout.findViewById(R.id.positiveButton)
@@ -140,11 +140,12 @@ public class MyDialog extends Dialog {
 				layout.findViewById(R.id.positiveButton).setVisibility(
 						View.GONE);
 				layout.findViewById(R.id.v_xian).setVisibility(View.GONE);
-				((MyButtonC) layout.findViewById(R.id.negativeButton)).setBottomRightRadius(PhoneUtils.dip2px(context, 8));
+				((MyButton) layout.findViewById(R.id.negativeButton)).setBottomRightRadius(PhoneUtils.dip2px(context, 8));
+				((MyButton) layout.findViewById(R.id.negativeButton)).complete();
 			}
 			// set the cancel button
 			if (negativeButtonText != null) {
-				((MyButtonC) layout.findViewById(R.id.negativeButton))
+				((MyButton) layout.findViewById(R.id.negativeButton))
 						.setText(negativeButtonText);
 				if (negativeButtonClickListener != null) {
 					layout.findViewById(R.id.negativeButton)
@@ -160,7 +161,8 @@ public class MyDialog extends Dialog {
 				layout.findViewById(R.id.negativeButton).setVisibility(
 						View.GONE);
 				layout.findViewById(R.id.v_xian).setVisibility(View.GONE);
-				((MyButtonC) layout.findViewById(R.id.positiveButton)).setBottomLeftRadius(PhoneUtils.dip2px(context, 8));
+				((MyButton) layout.findViewById(R.id.positiveButton)).setBottomLeftRadius(PhoneUtils.dip2px(context, 8));
+				((MyButton) layout.findViewById(R.id.positiveButton)).complete();
 			}
 			// set the content message
 			if (message != null) {

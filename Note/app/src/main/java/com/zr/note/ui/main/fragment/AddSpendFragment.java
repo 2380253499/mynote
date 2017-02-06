@@ -13,8 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
-import com.fast.customview.MyEditText;
-import com.fast.customview.MyTextView;
+import com.github.customview.MyEditText;
+import com.github.customview.MyTextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.DateUtils;
@@ -348,6 +348,10 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
             bean.set_id(isEdit ? spendBean.get_id() : -1);
             boolean b = mPresenter.addSpend(bean);
             if (b) {
+                if(!isEdit){
+                    et_spend_remark.setText(null);
+                    et_spend_amount.setText(null);
+                }
                 isPrePareSelectData=true;
             }
             return b;

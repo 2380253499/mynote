@@ -9,7 +9,7 @@
     tools:context="com.zr.note.ui.main.activity.SActivity"
     android:gravity="center"
     >
-    <com.fast.customview.MyLinearLayout
+    <com.github.customview.MyLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:orientation="horizontal"
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:textColor="@color/white"
             />
-    </com.fast.customview.MyLinearLayout>
+    </com.github.customview.MyLinearLayout>
 <ImageButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

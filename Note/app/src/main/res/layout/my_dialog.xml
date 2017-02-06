@@ -7,7 +7,7 @@
              android:orientation="vertical"
              android:padding="20dp">
 
-    <com.fast.customview.MyLinearLayout
+    <com.github.customview.MyLinearLayout
         android:id="@+id/ll_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:background="#ffd0d0d0"
             />
 
-        <com.fast.customview.MyLinearLayout
+        <com.github.customview.MyLinearLayout
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_gravity="bottom"
@@ -55,14 +55,15 @@
             app:my_ll_corner_bottomLeftRadius="8dp"
             app:my_ll_corner_bottomRightRadius="8dp"
             android:orientation="horizontal" >
-            <com.fast.customview.MyButtonC
+            <com.github.customview.MyButton
                 android:id="@+id/negativeButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:my_btc_normal="@color/white"
-                app:my_btc_press="@color/c_press"
-                app:my_btc_corner_bottomLeftRadius="8dp"
+                app:my_bt_solid="@color/white"
+                app:my_bt_press="@color/c_press"
+                app:my_bt_corner_bottomLeftRadius="8dp"
+                android:background="@null"
                 android:gravity="center"
                 android:text="取消"
                 android:textColor="@color/dodgerblue"
@@ -74,19 +75,20 @@
                 android:layout_height="match_parent"
                 android:background="#ffd0d0d0"
                 />
-            <com.fast.customview.MyButtonC
+            <com.github.customview.MyButton
                 android:id="@+id/positiveButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:my_btc_normal="@color/white"
-                app:my_btc_press="@color/c_press"
-                app:my_btc_corner_bottomRightRadius="8dp"
+                app:my_bt_solid="@color/white"
+                app:my_bt_press="@color/c_press"
+                app:my_bt_corner_bottomRightRadius="8dp"
+                android:background="@null"
                 android:gravity="center"
                 android:textColor="@color/dodgerblue"
                 android:text="确定"
                 android:textSize="15dp" />
-        </com.fast.customview.MyLinearLayout>
-    </com.fast.customview.MyLinearLayout>
+        </com.github.customview.MyLinearLayout>
+    </com.github.customview.MyLinearLayout>
 
 </FrameLayout>

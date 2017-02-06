@@ -18,10 +18,18 @@ public class AddSpendImp extends IPresenter<AddSpendCon.View> implements AddSpen
     @Override
     public boolean addSpend(SpendBean bean) {
         if(DBManager.getNewInstance(mContext).addOrEditSpend(bean)>0){
-            mView.showMsg("保存成功");
+            if(bean.get_id()==-1){
+                mView.showMsg("保存成功");
+            }else{
+                mView.showMsg("修改成功");
+            }
             return true;
         }else{
-            mView.showMsg("保存失败");
+            if(bean.get_id()==-1){
+                mView.showMsg("保存失败");
+            }else{
+                mView.showMsg("修改失败");
+            }
             return false;
         }
     }

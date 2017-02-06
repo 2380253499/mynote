@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
-import com.fast.customview.MyRadioButton;
+import com.github.customview.MyRadioButton;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
