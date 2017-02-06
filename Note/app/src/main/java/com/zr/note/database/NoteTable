@@ -36,3 +36,11 @@ creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 select strftime('%Y','now');当前年
 select strftime('%m','now');当前月
 select strftime('%d','now');当前日
+
+//v4  新增secret表
+create table T_Secret_Note (
+_id INTEGER PRIMARY KEY AUTOINCREMENT,
+dataRemark TEXT,         --备注
+dataContent TEXT,   --数据内容
+updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
+creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )

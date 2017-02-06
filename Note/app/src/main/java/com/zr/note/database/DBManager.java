@@ -27,6 +27,7 @@ public class DBManager extends SQLiteOpenHelper{
     /*
     * version 3--消费表增加year month day三个varchar字段
     * version 4--消费表增加year month day三个varchar字段修改为integer类型
+    * version 5--增加secret表
     * */
     private static final String dbName="MyNote";
     public String getDBName(){
@@ -38,6 +39,7 @@ public class DBManager extends SQLiteOpenHelper{
     public static final String T_Memo_Note="T_Memo_Note";
     public static final String T_Joke_Note="T_Joke_Note";
     public static final String T_Spend_Note="T_Spend_Note";
+    public static final String T_Secret_Note="T_Secret_Note";
     private DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -77,6 +79,9 @@ public class DBManager extends SQLiteOpenHelper{
         if (noExistTable(db,T_Spend_Note)) {
             db.execSQL(DBConstant.CT_Spend_Note);
         }
+        if (noExistTable(db,T_Secret_Note)) {
+            db.execSQL(DBConstant.CT_Secret_Note);
+        }
     }
 
     @Override
@@ -87,17 +92,34 @@ public class DBManager extends SQLiteOpenHelper{
                     dropTable(db,T_Spend_Note);
                     addDataTable(db,DBConstant.CT_Spend_Note);
                 }
+                //V4增加secret表
+                if(existTable(db,T_Secret_Note)){
+                    addDataTable(db,DBConstant.CT_Secret_Note);
+                }
             break;
             case 2:
                 if(existTable(db,T_Spend_Note)){
                     dropTable(db,T_Spend_Note);
                     addDataTable(db,DBConstant.CT_Spend_Note);
                 }
+                //V4增加secret表
+                if(existTable(db,T_Secret_Note)){
+                    addDataTable(db,DBConstant.CT_Secret_Note);
+                }
             break;
             case 3:
                 if(existTable(db,T_Spend_Note)){
                     dropTable(db,T_Spend_Note);
                     addDataTable(db,DBConstant.CT_Spend_Note);
+                }
+                //V4增加secret表
+                if(existTable(db,T_Secret_Note)){
+                    addDataTable(db,DBConstant.CT_Secret_Note);
+                }
+            case 4:
+                //V4增加secret表
+                if(existTable(db,T_Secret_Note)){
+                    addDataTable(db,DBConstant.CT_Secret_Note);
                 }
             break;
         }
@@ -379,7 +401,34 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return list;
     }
-
+    public List<MemoBean> selectSecret(){
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor query = db.query(T_Secret_Note,
+                new String[]{
+                        DBConstant._id,
+                        DBConstant.dataRemark,
+                        DBConstant.dataContent,
+                        DBConstant.updateTime,
+                        DBConstant.creatTime}, null, null, null, null,null);
+        List<MemoBean>list=new ArrayList<MemoBean>();
+        MemoBean bean;
+        while (query.moveToNext()){
+            bean=new MemoBean();
+            int id=query.getInt(query.getColumnIndex(DBConstant._id));
+            String dataContent=query.getString(query.getColumnIndex(DBConstant.dataContent));
+            String dataRemark=query.getString(query.getColumnIndex(DBConstant.dataRemark));
+            String updateTime=query.getString(query.getColumnIndex(DBConstant.updateTime));
+            String creatTime=query.getString(query.getColumnIndex(DBConstant.creatTime));
+            bean.set_id(id);
+            bean.setDataContent(AES.decode(dataContent));
+            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
+            bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
+            list.add(bean);
+        }
+        db.close();
+        return list;
+    }
     /**
      * 删除备忘
      * @param id

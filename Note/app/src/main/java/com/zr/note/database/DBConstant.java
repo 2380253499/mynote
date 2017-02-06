@@ -66,4 +66,14 @@ public class DBConstant {
             "localDay   INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
             "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
             "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+    /**
+     * dataContent  --数据内容
+     * dataRemark   --备注
+     */
+    public static final String CT_Secret_Note = "create table "+DBManager.T_Secret_Note+" (" +
+            "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "dataRemark TEXT," +
+            "dataContent TEXT," +
+            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
+            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
 }

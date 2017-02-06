@@ -15,6 +15,7 @@ import com.zr.note.tools.DateUtils;
 import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.main.fragment.contract.LeftMenuCon;
 import com.zr.note.ui.main.fragment.contract.imp.LeftMenuImp;
+import com.zr.note.ui.secret.activity.SecretActivity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -53,6 +54,12 @@ public class LeftMenuFragment extends BaseFragment<LeftMenuCon.View,LeftMenuCon.
             }
         });
         tv_super_pwd= (TextView) headerView.findViewById(R.id.tv_super_pwd);
+        tv_super_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                STActivity(SecretActivity.class);
+            }
+        });
         v_click_view=headerView.findViewById(R.id.v_click_view);
         v_click_view.setOnClickListener(new View.OnClickListener() {
             @Override
