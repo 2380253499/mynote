@@ -72,6 +72,11 @@
                   android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
+        <activity android:name="com.zr.note.ui.secret.activity.AddSecretActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:windowSoftInputMode="adjustResize|stateHidden"
+            >
+        </activity>
     </application>
 
 </manifest>

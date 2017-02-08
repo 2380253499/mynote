@@ -30,6 +30,7 @@ import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
 import com.zr.note.ui.main.fragment.SpendFragment;
 import com.zr.note.ui.main.inter.DateInter;
+import com.zr.note.ui.secret.activity.AddSecretActivity;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
@@ -280,7 +281,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                     Log.i("===","==="+list.get(i));
                 }*/
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
-                STActivity(mIntent, AddDataActivity.class);
+//                STActivity(mIntent, AddDataActivity.class);
+                STActivity(mIntent, AddSecretActivity.class);
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);

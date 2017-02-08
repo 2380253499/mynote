@@ -1,5 +1,7 @@
 package com.zr.note.ui.secret.activity;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ListView;
 
@@ -17,6 +19,11 @@ public class SecretActivity extends BaseActivity<SecretContract.View,SecretContr
 
     @BindView(R.id.lv_secret_list)
     ListView lv_secret_list;
+
+    @BindView(R.id.fab_secret)
+    FloatingActionButton fab_secret;
+    public final int addDataRequestCode=100;
+
     @Override
     protected SecretImp initPresenter() {
         return new SecretImp(this);
@@ -39,7 +46,7 @@ public class SecretActivity extends BaseActivity<SecretContract.View,SecretContr
 
     @Override
     protected void initView() {
-
+        fab_secret.setOnClickListener(this);
     }
 
     @Override
@@ -49,11 +56,23 @@ public class SecretActivity extends BaseActivity<SecretContract.View,SecretContr
 
     @Override
     protected void viewOnClick(View v) {
-
+        switch (v.getId()){
+            case R.id.fab_secret:
+                STActivityForResult(mIntent, AddSecretActivity.class, addDataRequestCode);
+                break;
+        }
     }
 
     @Override
     protected void menuOnClick(int itemId) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==addDataRequestCode){
+            mPresenter.selectData(lv_secret_list);
+        }
     }
 }

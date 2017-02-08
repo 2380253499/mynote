@@ -340,6 +340,22 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
         return insert;
     }
+    public long addSecret(MemoBean bean){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(DBConstant.dataRemark,AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        if(bean.getCreatTime()!=null){
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(),DateUtils.ymdhms));
+        }
+        if(bean.getUpdateTime()!=null){
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(),DateUtils.ymdhms));
+        }
+        long insert = db.insert(T_Secret_Note, null, values);
+        LogUtils.Log(insert);
+        db.close();
+        return insert;
+    }
     /***
      * 查询备忘录
      * @return

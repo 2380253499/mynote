@@ -33,7 +33,7 @@ public class LeftMenuFragment extends BaseFragment<LeftMenuCon.View,LeftMenuCon.
     private ImageView civ_head;
     private View headerView;
     private int clickNum;
-
+    private int secretNum;
     @Override
     protected LeftMenuImp initPresenter() {
         return new LeftMenuImp(getActivity());
@@ -57,7 +57,11 @@ public class LeftMenuFragment extends BaseFragment<LeftMenuCon.View,LeftMenuCon.
         tv_super_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                STActivity(SecretActivity.class);
+                if(secretNum==2){
+                    STActivity(SecretActivity.class);
+                }else if(secretNum<2){
+                    secretNum++;
+                }
             }
         });
         v_click_view=headerView.findViewById(R.id.v_click_view);
@@ -69,6 +73,7 @@ public class LeftMenuFragment extends BaseFragment<LeftMenuCon.View,LeftMenuCon.
                     tv_super_pwd.setText(getSuperPWD());
                     tv_super_pwd.setVisibility(View.VISIBLE);
                 }else{
+                    secretNum=0;
                     tv_super_pwd.setVisibility(View.GONE);
                 }
             }
