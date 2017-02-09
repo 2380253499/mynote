@@ -22,6 +22,9 @@ import rx.Subscription;
  * Created by Administrator on 2017/2/6.
  */
 public class SecretImp extends IPresenter<SecretContract.View> implements SecretContract.Presenter {
+
+    private List<MemoBean> memoBeans;
+
     public SecretImp(Context context) {
         super(context);
     }
@@ -32,7 +35,7 @@ public class SecretImp extends IPresenter<SecretContract.View> implements Secret
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<List<MemoBean>>() {
             @Override
             public void call(Subscriber<? super List<MemoBean>> subscriber) {
-                List<MemoBean> memoBeans = DBManager.getNewInstance(mContext).selectSecret();
+                memoBeans = DBManager.getNewInstance(mContext).selectSecret();
                 subscriber.onNext(memoBeans);
                 subscriber.onCompleted();
             }
@@ -48,5 +51,12 @@ public class SecretImp extends IPresenter<SecretContract.View> implements Secret
             }
         });
         addSubscription(subscribe);
+
+
+    }
+
+    @Override
+    public void editBean(int position) {
+        mView.editBean(memoBeans,position);
     }
 }

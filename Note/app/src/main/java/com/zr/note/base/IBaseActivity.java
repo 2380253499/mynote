@@ -46,6 +46,9 @@ public class IBaseActivity extends AppCompatActivity {
         RxBus.get().register(this);
         mIntent=new Intent();
     }
+    protected Intent getmIntent(){
+        return new Intent();
+    }
     protected View inflateView(int resource,ViewGroup viewGroup){
         return LayoutInflater.from(this).inflate(resource, viewGroup);
     }

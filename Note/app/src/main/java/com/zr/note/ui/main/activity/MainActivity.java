@@ -13,10 +13,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.customview.MyRadioButton;
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
-import com.github.customview.MyRadioButton;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
@@ -30,7 +30,6 @@ import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
 import com.zr.note.ui.main.fragment.SpendFragment;
 import com.zr.note.ui.main.inter.DateInter;
-import com.zr.note.ui.secret.activity.AddSecretActivity;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
@@ -281,8 +280,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
                     Log.i("===","==="+list.get(i));
                 }*/
                 mIntent.putExtra(IntentParam.tabIndex, tabIndex);
-//                STActivity(mIntent, AddDataActivity.class);
-                STActivity(mIntent, AddSecretActivity.class);
+                STActivity(mIntent, AddDataActivity.class);
+//                STActivity(mIntent, AddSecretActivity.class);
                 break;
             case R.id.tv_orderBy_create:
                 dataManageInters[tabIndex].orderByCreateTime(true);

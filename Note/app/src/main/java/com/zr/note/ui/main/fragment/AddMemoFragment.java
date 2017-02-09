@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.customview.MyEditText;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
+import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
 import com.zr.note.ui.main.entity.MemoBean;
@@ -30,6 +31,12 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
     MyEditText et_memo_content;
     @BindView(R.id.tv_memo_lengthprompt)
     TextView tv_memo_lengthprompt;
+    @BindView(R.id.tv_memo_copy)
+    TextView tv_memo_copy;
+    @BindView(R.id.tv_memo_paste)
+    TextView tv_memo_paste;
+    @BindView(R.id.tv_memo_clear)
+    TextView tv_memo_clear;
     private boolean isEdit;
     private MemoBean memoBean;
 
@@ -59,6 +66,9 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected void initView() {
+        tv_memo_copy.setOnClickListener(this);
+        tv_memo_paste.setOnClickListener(this);
+        tv_memo_clear.setOnClickListener(this);
         et_memo_content.requestFocus();
         et_memo_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,7 +97,23 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
 
     @Override
     protected void viewOnClick(View v) {
-
+        switch (v.getId()){
+            case R.id.tv_memo_copy:
+                String memoContent = et_memo_content.getText().toString().trim();
+                if (TextUtils.isEmpty(memoContent)) {
+                    showToastS("备忘内容不能为空");
+                } else {
+                    PhoneUtils.copyText(getActivity(), et_memo_content.getText().toString().trim());
+                    showToastS("复制成功");
+                }
+            break;
+            case R.id.tv_memo_paste:
+                et_memo_content.setText(et_memo_content.getText()+""+PhoneUtils.pasteText(getActivity()));
+            break;
+            case R.id.tv_memo_clear:
+                et_memo_content.setText(null);
+            break;
+        }
     }
 
     @Override

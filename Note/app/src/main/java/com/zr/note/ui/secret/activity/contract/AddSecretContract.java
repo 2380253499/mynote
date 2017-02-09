@@ -9,9 +9,10 @@ import com.zr.note.ui.main.entity.MemoBean;
  */
 public interface AddSecretContract {
     interface View extends BaseView {
-        void addDataResult(boolean isSuccess);
+        void addDataResult(boolean isEdit,boolean isSuccess);
     }
     interface Presenter extends BasePresenter<View> {
         void addData(MemoBean bean);
+        void editData(MemoBean bean);
     }
 }

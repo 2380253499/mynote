@@ -172,7 +172,7 @@
             android:layout_weight="1"
             android:gravity="top"
             android:hint="写点什么..."
-            android:maxLength="80"
+            android:maxLength="100"
             android:minHeight="75dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"

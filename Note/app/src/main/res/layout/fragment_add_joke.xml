@@ -1,10 +1,9 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
-            android:scrollbars="none"
               tools:context="com.zr.note.ui.main.fragment.AddMemoFragment"
     >
 
@@ -60,7 +59,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="(0/2000)"
+                android:text="(0/3000)"
                 android:layout_marginLeft="5dp"
                 android:singleLine="true"
                 android:ellipsize="end"
@@ -105,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:maxLength="2000"
+            android:maxLength="3000"
             android:minHeight="250dp"
             app:my_et_border_color="@color/top_color2"
             app:my_et_border_width="1px"
@@ -118,4 +117,4 @@
             />
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
