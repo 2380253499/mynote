@@ -35,7 +35,7 @@ public class DBManager extends SQLiteOpenHelper {
         return dbName;
     }
 
-    private static final int version = 4;
+    private static final int version = 5;
     private static DBManager dbManager;
     public static final String T_Account_Note = "T_Account_Note";
     public static final String T_Memo_Note = "T_Memo_Note";
@@ -100,7 +100,7 @@ public class DBManager extends SQLiteOpenHelper {
                     addDataTable(db, DBConstant.CT_Spend_Note);
                 }
                 //V4增加secret表
-                if (existTable(db, T_Secret_Note)) {
+                if (noExistTable(db, T_Secret_Note)) {
                     addDataTable(db, DBConstant.CT_Secret_Note);
                 }
                 break;
@@ -110,7 +110,7 @@ public class DBManager extends SQLiteOpenHelper {
                     addDataTable(db, DBConstant.CT_Spend_Note);
                 }
                 //V4增加secret表
-                if (existTable(db, T_Secret_Note)) {
+                if (noExistTable(db, T_Secret_Note)) {
                     addDataTable(db, DBConstant.CT_Secret_Note);
                 }
                 break;
@@ -120,13 +120,13 @@ public class DBManager extends SQLiteOpenHelper {
                     addDataTable(db, DBConstant.CT_Spend_Note);
                 }
                 //V4增加secret表
-                if (existTable(db, T_Secret_Note)) {
+                if (noExistTable(db, T_Secret_Note)) {
                     addDataTable(db, DBConstant.CT_Secret_Note);
                 }
                 break;
             case 4:
                 //V4增加secret表
-                if (existTable(db, T_Secret_Note)) {
+                if (noExistTable(db, T_Secret_Note)) {
                     addDataTable(db, DBConstant.CT_Secret_Note);
                 }
                 break;
