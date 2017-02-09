@@ -57,6 +57,29 @@ public class SecretImp extends IPresenter<SecretContract.View> implements Secret
 
     @Override
     public void editBean(int position) {
-        mView.editBean(memoBeans,position);
+        mView.editBean(memoBeans, position);
+    }
+
+    @Override
+    public void deleteSecret(final int position) {
+        mView.showLoading();
+        Subscription subscribe = Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                boolean result = DBManager.getNewInstance(mContext).deleteSecret(memoBeans.get(position).get_id());
+                subscriber.onNext(result);
+                subscriber.onCompleted();
+            }
+        }).compose(RxUtils.appSchedulers()).subscribe(new MySubscriber<Boolean>() {
+            @Override
+            public void onMyNext(Boolean result) {
+                    mView.deleteResult(result);
+            }
+            @Override
+            public void onResult(boolean isCompleted, Throwable e) {
+                mView.hideLoading();
+            }
+        });
+        addSubscription(subscribe);
     }
 }

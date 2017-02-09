@@ -15,10 +15,14 @@ public interface SecretContract {
     interface View extends BaseView {
 
         void editBean(List<MemoBean> memoBeans,int position);
+
+        void deleteResult(boolean result);
     }
     interface Presenter extends BasePresenter<View> {
         void selectData(ListView listView);
 
         void editBean(int position);
+
+        void deleteSecret(int position);
     }
 }

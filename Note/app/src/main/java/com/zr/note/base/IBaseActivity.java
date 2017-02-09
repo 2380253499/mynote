@@ -45,6 +45,7 @@ public class IBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RxBus.get().register(this);
         mIntent=new Intent();
+        mContext=this;
     }
     protected Intent getmIntent(){
         return new Intent();

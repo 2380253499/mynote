@@ -494,6 +494,12 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
         return delete > 0 ? true : false;
     }
+    public boolean deleteSecret(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        int delete = db.delete(T_Secret_Note, DBConstant._id + "=?", new String[]{id + ""});
+        db.close();
+        return delete > 0 ? true : false;
+    }
 
     public long addOrEditJoke(JokeBean bean) {
         if (bean.get_id() == -1) {
