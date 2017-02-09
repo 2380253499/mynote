@@ -157,10 +157,13 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
                         List<JokeBean> jokeList = DBManager.getNewInstance(mContext).selectJoke(null, true, database);
                         database = SQLiteDatabase.openOrCreateDatabase(backupFileForDB, null);
                         List<SpendBean> spendList = DBManager.getNewInstance(mContext).selectSpend(true, database);
+                        database = SQLiteDatabase.openOrCreateDatabase(backupFileForDB, null);
+                        List<MemoBean> secretList = DBManager.getNewInstance(mContext).selectSecret(database);
                         dataSizeList.add(accountList.size());
                         dataSizeList.add(memoList.size());
                         dataSizeList.add(jokeList.size());
                         dataSizeList.add(spendList.size());
+                        dataSizeList.add(secretList.size());
                         Collections.sort(dataSizeList, new Comparator<Integer>() {
                             @Override
                             public int compare(Integer lhs, Integer rhs) {
@@ -179,6 +182,9 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
                             }
                             if (i < spendList.size()) {
                                 DBManager.getNewInstance(mContext).addSpend(spendList.get(i));
+                            }
+                            if (i < secretList.size()) {
+                                DBManager.getNewInstance(mContext).addSecret(secretList.get(i));
                             }
                         }
                         if (backupFileForDB.exists()) {

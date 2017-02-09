@@ -454,7 +454,9 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public List<MemoBean> selectSecret() {
-        SQLiteDatabase db = getWritableDatabase();
+        return selectSecret(getWritableDatabase());
+    }
+    public List<MemoBean> selectSecret(SQLiteDatabase db) {
         Cursor query = db.query(T_Secret_Note,
                 new String[]{
                         DBConstant._id,
