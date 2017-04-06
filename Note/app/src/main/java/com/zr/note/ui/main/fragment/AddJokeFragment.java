@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.customview.MyEditText;
@@ -37,6 +38,8 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
     TextView tv_joke_paste;
     @BindView(R.id.tv_joke_lengthprompt)
     TextView tv_joke_lengthprompt;
+    @BindView(R.id.noScrollView)
+    ScrollView noScrollView;
 
     private boolean isEdit;
     private JokeBean jokeBean;
@@ -77,15 +80,28 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.toString().length();
-                tv_joke_lengthprompt.setText("("+length+"/2000)");
+                tv_joke_lengthprompt.setText("(" + length + "/2000)");
             }
         });
+
+        /*noScrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        noScrollView.setFocusable(true);
+        noScrollView.setFocusableInTouchMode(true);
+        noScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.requestFocusFromTouch();
+                return false;
+            }
+        });*/
     }
 
     @Override

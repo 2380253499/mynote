@@ -58,6 +58,7 @@ public class LeftMenuFragment extends BaseFragment<LeftMenuCon.View,LeftMenuCon.
             @Override
             public void onClick(View v) {
                 if(secretNum==2){
+                    tv_super_pwd.setVisibility(View.GONE);
                     STActivity(SecretActivity.class);
                 }else if(secretNum<2){
                     secretNum++;
