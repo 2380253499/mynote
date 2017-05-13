@@ -80,7 +80,7 @@ public class AddMemoFragment extends BaseFragment<AddMemoCon.View,AddMemoCon.Pre
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                tv_memo_lengthprompt.setText("("+length+"/1000)");
+                tv_memo_lengthprompt.setText("("+length+"/3000)");
             }
         });
     }

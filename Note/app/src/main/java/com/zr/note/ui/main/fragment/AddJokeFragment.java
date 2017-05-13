@@ -88,7 +88,7 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.toString().length();
-                tv_joke_lengthprompt.setText("(" + length + "/2000)");
+                tv_joke_lengthprompt.setText("(" + length + "/3000)");
             }
         });
 
