@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
-    protected final List<T> mData;
+    protected  List<T> mData;
     protected final Context mContext;
     protected LayoutInflater mInflater;
     private OnItemClickListener mClickListener;
@@ -23,6 +23,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     public BaseRecyclerAdapter(Context ctx, List<T> list) {
         mData = (list != null) ? list : new ArrayList<T>();
+        mContext = ctx;
+        mInflater = LayoutInflater.from(ctx);
+    }
+    public BaseRecyclerAdapter(Context ctx) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
     }
@@ -57,14 +61,20 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData==null?0:mData.size();
     }
 
-    public void add(int pos, T item) {
+    /*public void add(int pos, T item) {
         mData.add(pos, item);
         notifyItemInserted(pos);
+    }*/
+    public void setData(List list) {
+        mData=list;
     }
-
+    public void addData(List list) {
+        mData.addAll(list);
+        notifyDataSetChanged();
+    }
     public void delete(int pos) {
         mData.remove(pos);
         notifyItemRemoved(pos);
