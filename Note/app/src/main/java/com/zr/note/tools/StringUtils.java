@@ -207,4 +207,27 @@ public class StringUtils {
     public static BigDecimal roundForBigDecimal(double d){
         return roundForBigDecimal(d,1);
     }
+
+    /**
+     *
+     * @param str 原字符串
+     * @param modelStr 需要计算下标的字符
+     * @param count 计算出现第几次的下标
+     * @return
+     */
+    public static int getFromIndex(String str, String modelStr, Integer count) {
+        //对子字符串进行匹配
+        Matcher slashMatcher = Pattern.compile(modelStr).matcher(str);
+        int index = 0;
+        //matcher.find();尝试查找与该模式匹配的输入序列的下一个子序列
+        while(slashMatcher.find()) {
+            index++;
+            //当modelStr字符第count次出现的位置
+            if(index == count){
+                break;
+            }
+        }
+        //matcher.start();返回以前匹配的初始索引。
+        return slashMatcher.start();
+    }
 }

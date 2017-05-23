@@ -24,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/v_divider"
                 android:fitsSystemWindows="true"
+                app:statusBarScrim="@null"
                 tools:context="com.zr.note.ui.main.activity.MainActivity">
 
                 <android.support.design.widget.AppBarLayout
