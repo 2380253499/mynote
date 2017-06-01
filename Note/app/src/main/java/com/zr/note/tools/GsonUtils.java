@@ -2,6 +2,7 @@ package com.zr.note.tools;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
@@ -31,5 +32,26 @@ public class GsonUtils {
     }
     public static <T extends Object> T jsonToObject(String string,Type type){
         return getInstance().gson.fromJson(string, type);
+    }
+
+    public static ParameterizedType type(final Class raw, final Type... args) {
+        return new ParameterizedType() {
+            public Type getRawType() {
+                return raw;
+            }
+            public Type[] getActualTypeArguments() {
+                return args;
+            }
+            public Type getOwnerType() {
+                return null;
+            }
+        };
+    }
+    public static Object toObj(String string,Class clazz,Class claxx) {
+        ParameterizedType pType = GsonUtils.type(clazz,claxx);
+        return new Gson().fromJson(string, pType);
+    }
+    public static Object toObj(String string,Class clzz) {
+        return new Gson().fromJson(string,clzz);
     }
 }
