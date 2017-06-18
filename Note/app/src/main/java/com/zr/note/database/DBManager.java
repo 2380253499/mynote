@@ -253,10 +253,10 @@ public class DBManager extends SQLiteOpenHelper {
             String updateTime = query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime = query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataSource(AES.decode(dataSource));
-            bean.setDataAccount(AES.decode(dataAccount));
-            bean.setDataPassword(AES.decode(dataPassword));
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataSource(AES.decode3(dataSource));
+            bean.setDataAccount(AES.decode3(dataAccount));
+            bean.setDataPassword(AES.decode3(dataPassword));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if (searchInfo != null) {
@@ -296,10 +296,10 @@ public class DBManager extends SQLiteOpenHelper {
     public long updateAccount(AccountBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataSource, AES.encode(bean.getDataSource()));
-        values.put(DBConstant.dataAccount, AES.encode(bean.getDataAccount()));
-        values.put(DBConstant.dataPassword, AES.encode(bean.getDataPassword()));
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataSource, AES.encode2(bean.getDataSource()));
+        values.put(DBConstant.dataAccount, AES.encode2(bean.getDataAccount()));
+        values.put(DBConstant.dataPassword, AES.encode2(bean.getDataPassword()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
         values.put(DBConstant.updateTime, DateUtils.getLocalDate());
         long insert = db.update(T_Account_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
@@ -310,10 +310,10 @@ public class DBManager extends SQLiteOpenHelper {
     public long addAccount(AccountBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataSource, AES.encode(bean.getDataSource()));
-        values.put(DBConstant.dataAccount, AES.encode(bean.getDataAccount()));
-        values.put(DBConstant.dataPassword, AES.encode(bean.getDataPassword()));
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataSource, AES.encode2(bean.getDataSource()));
+        values.put(DBConstant.dataAccount, AES.encode2(bean.getDataAccount()));
+        values.put(DBConstant.dataPassword, AES.encode2(bean.getDataPassword()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
         if (bean.getCreatTime() != null) {
             values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(), DateUtils.ymdhms));
         }
@@ -337,8 +337,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long updateMemo(MemoBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         values.put(DBConstant.updateTime, DateUtils.getLocalDate());
         long insert = db.update(T_Memo_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(insert);
@@ -355,8 +355,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long addMemo(MemoBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         if (bean.getCreatTime() != null) {
             values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(), DateUtils.ymdhms));
         }
@@ -372,8 +372,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long addSecret(MemoBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         if (bean.getCreatTime() != null) {
             values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(), DateUtils.ymdhms));
         }
@@ -436,8 +436,8 @@ public class DBManager extends SQLiteOpenHelper {
             String updateTime = query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime = query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataContent(AES.decode(dataContent));
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataContent(AES.decode3(dataContent));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if (searchInfo != null) {
@@ -474,8 +474,8 @@ public class DBManager extends SQLiteOpenHelper {
             String updateTime = query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime = query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataContent(AES.decode(dataContent));
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataContent(AES.decode3(dataContent));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             list.add(bean);
@@ -514,8 +514,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long updateJoke(JokeBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         values.put(DBConstant.updateTime, DateUtils.getLocalDate());
         long insert = db.update(T_Joke_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(bean.get_id() + "===" + insert);
@@ -525,8 +525,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long updateSecret(MemoBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         values.put(DBConstant.updateTime, DateUtils.getLocalDate());
         long count = db.update(T_Secret_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
         LogUtils.Log(count);
@@ -536,8 +536,8 @@ public class DBManager extends SQLiteOpenHelper {
     public long addJoke(JokeBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
-        values.put(DBConstant.dataContent, AES.encode(bean.getDataContent()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
+        values.put(DBConstant.dataContent, AES.encode2(bean.getDataContent()));
         if (bean.getCreatTime() != null) {
             values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(), DateUtils.ymdhms));
         }
@@ -636,8 +636,8 @@ public class DBManager extends SQLiteOpenHelper {
             String updateTime = query.getString(query.getColumnIndex(DBConstant.updateTime));
             String creatTime = query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
-            bean.setDataRemark(AES.decode(dataRemark));
-            bean.setDataContent(AES.decode(dataContent));
+            bean.setDataRemark(AES.decode3(dataRemark));
+            bean.setDataContent(AES.decode3(dataContent));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             if (searchInfo != null) {
@@ -721,7 +721,7 @@ public class DBManager extends SQLiteOpenHelper {
             String creatTime = query.getString(query.getColumnIndex(DBConstant.creatTime));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth);
             bean.setLocalDay(localDay);
@@ -744,7 +744,7 @@ public class DBManager extends SQLiteOpenHelper {
     public long updateSpend(SpendBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
         values.put(DBConstant.liveSpend, bean.getLiveSpend());
         values.put(DBConstant.updateTime, DateUtils.getLocalDate());
         long insert = db.update(T_Spend_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
@@ -756,7 +756,7 @@ public class DBManager extends SQLiteOpenHelper {
     public long addSpend(SpendBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBConstant.dataRemark, AES.encode(bean.getDataRemark()));
+        values.put(DBConstant.dataRemark, AES.encode2(bean.getDataRemark()));
         values.put(DBConstant.liveSpend, bean.getLiveSpend());
         if (bean.getLocalYear() > 0) {
             values.put(DBConstant.localYear, bean.getLocalYear());
@@ -912,7 +912,7 @@ public class DBManager extends SQLiteOpenHelper {
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhm));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhm));
             bean.setLocalYear(localYear);
@@ -961,7 +961,7 @@ public class DBManager extends SQLiteOpenHelper {
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear);
@@ -1111,7 +1111,7 @@ public class DBManager extends SQLiteOpenHelper {
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear);
@@ -1187,7 +1187,7 @@ public class DBManager extends SQLiteOpenHelper {
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
             bean.set_id(id);
             bean.setLiveSpend(liveSpend);
-            bean.setDataRemark(AES.decode(dataRemark));
+            bean.setDataRemark(AES.decode3(dataRemark));
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
             bean.setLocalYear(localYear);

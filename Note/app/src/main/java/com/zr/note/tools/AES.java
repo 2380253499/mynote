@@ -215,7 +215,9 @@ public class AES {
         //加密之后的字节数组,转成16进制的字符串形式输出
         return parseByte2HexStr(encrypt(content, keyBytes));
     }
-
+    public static String encode2(String content){
+        return content;
+    }
     /**
      *解密
      */
@@ -224,7 +226,9 @@ public class AES {
         byte[] b = decrypt(parseHexStr2Byte(content), keyBytes);
         return new String(b);
     }
-
+    public static String decode3(String content){
+        return content;
+    }
     //测试用例
     public static void test1(){
         System.out.println((int)(Math.random() * 2013));
