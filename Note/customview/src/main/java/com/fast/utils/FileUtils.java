@@ -22,12 +22,12 @@ public class FileUtils {
      * @return -1复制出错，0文件不存在，1复制成功
      */
     public static int copyFile(String oldPath, String newPath) {
-        if(!new File(oldPath).exists()){
+        if (!new File(oldPath).exists()) {
             return 0;//文件不存在
         }
         InputStream is = null;
         try {
-            is= new FileInputStream(oldPath); //读入原文件
+            is = new FileInputStream(oldPath); //读入原文件
             int len = 0;
             byte buffer[] = new byte[1024];
             FileOutputStream fos = new FileOutputStream(newPath);
@@ -75,7 +75,7 @@ public class FileUtils {
 
             } else//如果当前项为文件则进行文件拷贝
             {
-                CopySDCardFile(currentFiles[i].getPath(), toFile + currentFiles[i].getName());
+                copyNoChild(currentFiles[i].getPath(), toFile + currentFiles[i].getName());
             }
         }
         return 1;
@@ -88,7 +88,7 @@ public class FileUtils {
      * @param toFile
      * @return
      */
-    public static int CopySDCardFile(String fromFile, String toFile) {
+    public static int copyNoChild(String fromFile, String toFile) {
         try {
             InputStream fosfrom = new FileInputStream(fromFile);
             OutputStream fosto = new FileOutputStream(toFile);

@@ -59,8 +59,19 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
     MyTextView tvSpendKanbingmaiyao;
     @BindView(R.id.tv_spend_maishuiguo)
     MyTextView tvSpendMaishuiguo;
+
     @BindView(R.id.tv_spend_fangzu)
     MyTextView tvSpendFangzu;
+
+    @BindView(R.id.tv_spend_huafei)
+    MyTextView tv_spend_huafei;
+
+    @BindView(R.id.tv_spend_youxichongzhi)
+    MyTextView tv_spend_youxichongzhi;
+
+    @BindView(R.id.tv_spend_richangyongpin)
+    MyTextView tv_spend_richangyongpin;
+
     @BindView(R.id.tv_spend_wanggou)
     MyTextView tvSpendWanggou;
     @BindView(R.id.tv_spend_shuidian)
@@ -117,6 +128,9 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
         tvSpendChuxingyouwan.setOnClickListener(this);
         tvSpendXiuxianyule.setOnClickListener(this);
         tvSpendTher.setOnClickListener(this);
+        tv_spend_huafei.setOnClickListener(this);
+        tv_spend_youxichongzhi.setOnClickListener(this);
+        tv_spend_richangyongpin.setOnClickListener(this);
 
         tv_update_spend_date.setOnClickListener(this);
         et_spend_remark.requestFocus();
@@ -202,7 +216,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 pvTime.show();
                 break;
             case R.id.tv_spend_zaocan:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -211,7 +225,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
                 break;
             case R.id.tv_spend_wucan:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -220,7 +234,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_wancan:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -229,7 +243,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_lingshi:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -238,7 +252,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_gouwu:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -247,7 +261,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_jiaotong:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -256,7 +270,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_kanbingmaiyao:
-                if(spendRemark.trim().length()>26){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -265,7 +279,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_maishuiguo:
-                if(spendRemark.trim().length()>27){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -274,7 +288,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_fangzu:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -283,7 +297,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_wanggou:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -292,7 +306,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_shuidian:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -301,7 +315,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_chuxingyouwan:
-                if(spendRemark.trim().length()>26){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -310,7 +324,7 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_xiuxianyule:
-                if(spendRemark.trim().length()>26){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
@@ -319,15 +333,43 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 }
             break;
             case R.id.tv_spend_ther:
-                if(spendRemark.trim().length()>28){
+                if(spendRemark.trim().length()>30){
                     showToastS("输入字符长度不能超过30");
                     return;
                 }
                 if(spendRemark.indexOf("其他")<0){
                     et_spend_remark.setText(spendRemark+"其他");
                 }
+                break;
+            case R.id.tv_spend_richangyongpin:
+                if(spendRemark.trim().length()>30){
+                    showToastS("输入字符长度不能超过30");
+                    return;
+                }
+                if(spendRemark.indexOf("日常用品")<0){
+                    et_spend_remark.setText(spendRemark+"日常用品");
+                }
             break;
+            case R.id.tv_spend_huafei:
+                if(spendRemark.trim().length()>30){
+                    showToastS("输入字符长度不能超过30");
+                    return;
+                }
+                if(spendRemark.indexOf("话费")<0){
+                    et_spend_remark.setText(spendRemark+"话费");
+                }
+                break;
+            case R.id.tv_spend_youxichongzhi:
+                if(spendRemark.trim().length()>30){
+                    showToastS("输入字符长度不能超过30");
+                    return;
+                }
+                if(spendRemark.indexOf("游戏充值")<0){
+                    et_spend_remark.setText(spendRemark+"游戏充值");
+                }
+                break;
         }
+        et_spend_amount.requestFocus();
     }
 
     @Override
@@ -344,6 +386,10 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 bean.setLocalYear(spendYear);
                 bean.setLocalMonth(spendMonth);
                 bean.setLocalDay(spendDay);
+            }else{
+                bean.setLocalYear(Integer.parseInt(DateUtils.dateToString(new Date(), "yyyy")));
+                bean.setLocalMonth(Integer.parseInt(DateUtils.dateToString(new Date(), "MM")));
+                bean.setLocalDay(Integer.parseInt(DateUtils.dateToString(new Date(), "dd")));
             }
             bean.set_id(isEdit ? spendBean.get_id() : -1);
             boolean b = mPresenter.addSpend(bean);
