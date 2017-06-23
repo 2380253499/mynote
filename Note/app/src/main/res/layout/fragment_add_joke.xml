@@ -18,14 +18,66 @@
         android:orientation="vertical"
         android:padding="5dp"
         >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="段子说明"
+        android:textSize="15sp"
+        android:paddingLeft="@dimen/asterisk_padding"
+        />
+    <com.github.customview.MyTextView
+        android:id="@+id/tv_joke_gxdz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/asterisk_padding"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="搞笑段子"
+        app:my_tv_border_color="@color/c_F8F8F83"
+        app:my_tv_border_width="1px"
+        app:my_tv_corner_radius="10dp"
+        android:textSize="12sp"
+        app:my_tv_press="@color/c_divider"
+        app:my_tv_solid="@color/white"/>
+    <com.github.customview.MyTextView
+        android:id="@+id/tv_joke_ssly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/asterisk_padding"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="说说留言"
+        app:my_tv_border_color="@color/c_F8F8F83"
+        app:my_tv_border_width="1px"
+        app:my_tv_corner_radius="10dp"
+        android:textSize="12sp"
+        app:my_tv_press="@color/c_divider"
+        app:my_tv_solid="@color/white"/>
+    <com.github.customview.MyTextView
+        android:id="@+id/tv_joke_gxly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/asterisk_padding"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="搞笑留言"
+        app:my_tv_border_color="@color/c_F8F8F83"
+        app:my_tv_border_width="1px"
+        app:my_tv_corner_radius="10dp"
+        android:textSize="12sp"
+        app:my_tv_press="@color/c_divider"
+        app:my_tv_solid="@color/white"/>
+</LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="段子说明"
-            android:textSize="15sp"
-            android:paddingLeft="@dimen/asterisk_padding"
-            />
         <com.github.customview.MyEditText
             android:id="@+id/et_joke_remark"
             style="@style/editTextStyle"

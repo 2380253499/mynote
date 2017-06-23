@@ -18,6 +18,7 @@ import com.github.customview.MyTextView;
 import com.zr.note.R;
 import com.zr.note.base.BaseFragment;
 import com.zr.note.tools.DateUtils;
+import com.zr.note.tools.PhoneUtils;
 import com.zr.note.tools.StringUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.broadcast.BroFilter;
@@ -223,6 +224,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("早餐")<0){
                     et_spend_remark.setText(spendRemark+"早餐");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
                 break;
             case R.id.tv_spend_wucan:
                 if(spendRemark.trim().length()>30){
@@ -232,6 +235,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("午餐")<0){
                     et_spend_remark.setText(spendRemark+"午餐");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_wancan:
                 if(spendRemark.trim().length()>30){
@@ -241,6 +246,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("晚餐")<0){
                     et_spend_remark.setText(spendRemark+"晚餐");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_lingshi:
                 if(spendRemark.trim().length()>30){
@@ -250,6 +257,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("零食")<0){
                     et_spend_remark.setText(spendRemark+"零食");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_gouwu:
                 if(spendRemark.trim().length()>30){
@@ -259,6 +268,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("购物")<0){
                     et_spend_remark.setText(spendRemark+"购物");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_jiaotong:
                 if(spendRemark.trim().length()>30){
@@ -268,6 +279,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("交通")<0){
                     et_spend_remark.setText(spendRemark+"交通");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_kanbingmaiyao:
                 if(spendRemark.trim().length()>30){
@@ -277,6 +290,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("看病买药")<0){
                     et_spend_remark.setText(spendRemark+"看病买药");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_maishuiguo:
                 if(spendRemark.trim().length()>30){
@@ -286,6 +301,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("买水果")<0){
                     et_spend_remark.setText(spendRemark+"买水果");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_fangzu:
                 if(spendRemark.trim().length()>30){
@@ -295,6 +312,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("房租")<0){
                     et_spend_remark.setText(spendRemark+"房租");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_wanggou:
                 if(spendRemark.trim().length()>30){
@@ -304,6 +323,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("网购")<0){
                     et_spend_remark.setText(spendRemark+"网购");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_shuidian:
                 if(spendRemark.trim().length()>30){
@@ -313,6 +334,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("水电")<0){
                     et_spend_remark.setText(spendRemark+"水电");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_chuxingyouwan:
                 if(spendRemark.trim().length()>30){
@@ -322,6 +345,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("出行游玩")<0){
                     et_spend_remark.setText(spendRemark+"出行游玩");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_xiuxianyule:
                 if(spendRemark.trim().length()>30){
@@ -331,6 +356,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("休闲娱乐")<0){
                     et_spend_remark.setText(spendRemark+"休闲娱乐");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_ther:
                 if(spendRemark.trim().length()>30){
@@ -340,6 +367,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("其他")<0){
                     et_spend_remark.setText(spendRemark+"其他");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
                 break;
             case R.id.tv_spend_richangyongpin:
                 if(spendRemark.trim().length()>30){
@@ -349,6 +378,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("日常用品")<0){
                     et_spend_remark.setText(spendRemark+"日常用品");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
             break;
             case R.id.tv_spend_huafei:
                 if(spendRemark.trim().length()>30){
@@ -358,6 +389,8 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("话费")<0){
                     et_spend_remark.setText(spendRemark+"话费");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
                 break;
             case R.id.tv_spend_youxichongzhi:
                 if(spendRemark.trim().length()>30){
@@ -367,9 +400,10 @@ public class AddSpendFragment extends BaseFragment<AddSpendCon.View, AddSpendCon
                 if(spendRemark.indexOf("游戏充值")<0){
                     et_spend_remark.setText(spendRemark+"游戏充值");
                 }
+                et_spend_amount.requestFocus();
+                PhoneUtils.showKeyBoard(getActivity(),et_spend_amount);
                 break;
         }
-        et_spend_amount.requestFocus();
     }
 
     @Override

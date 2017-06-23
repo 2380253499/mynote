@@ -12,6 +12,7 @@ import com.github.customview.MyRadioButton;
 import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.tools.MyDialog;
+import com.zr.note.tools.PhoneUtils;
 import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.main.activity.contract.AddDataContract;
 import com.zr.note.ui.main.activity.contract.imp.AddDataImp;
@@ -222,10 +223,11 @@ public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataC
                     }
                 });
                 mDialog.create().show();
-
+                PhoneUtils.hiddenKeyBoard(this);
                 break;
             case R.id.bt_addData_save:
                 addDataInter[addDataInterIndex].saveData();
+                PhoneUtils.hiddenKeyBoard(this);
                 break;
         }
     }
