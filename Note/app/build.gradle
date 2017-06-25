@@ -45,6 +45,7 @@ dependencies {
     //滚轮控件
     compile(name: 'pickerview', ext: 'aar')
     compile(name: 'library', ext: 'aar')
+    compile(name: 'refresh', ext: 'aar')
 //    compile(name: 'zrlibrary-release', ext: 'aar')
     //findView注解
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
