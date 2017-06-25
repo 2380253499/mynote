@@ -23,6 +23,7 @@ import com.zr.note.ui.main.inter.AddDataInter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Presenter> implements AddDataInter,AddJokeCon.View {
 
@@ -114,9 +115,27 @@ public class AddJokeFragment extends BaseFragment<AddJokeCon.View,AddJokeCon.Pre
         }
     }
 
-    @Override
+    @OnClick({R.id.tv_joke_gxdz,R.id.tv_joke_ssly,R.id.tv_joke_gxly})
     protected void viewOnClick(View v) {
         switch (v.getId()){
+            case R.id.tv_joke_gxdz:
+                et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("搞笑段子")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"搞笑段子");
+                }
+            break;
+            case R.id.tv_joke_ssly:
+                et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("说说留言")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"说说留言");
+                }
+            break;
+            case R.id.tv_joke_gxly:
+                et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("搞笑留言")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"搞笑留言");
+                }
+            break;
             case R.id.tv_joke_clear:
                 et_joke_content.setText("");
             break;

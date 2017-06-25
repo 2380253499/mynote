@@ -38,6 +38,8 @@
             android:gravity="center_vertical"
             android:hint="请输入相关平台名称,如QQ邮箱账号"
             android:textCursorDrawable="@drawable/cursor_color"
+            android:background="@null"
+            app:my_et_hiddenClear="false"
             />
     </LinearLayout>
 
@@ -73,6 +75,8 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:hint="请输入账号"
+            android:background="@null"
+            app:my_et_hiddenClear="false"
             />
         <TextView
             android:id="@+id/tv_account_copy"
@@ -124,6 +128,8 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:hint="请输入密码"
+            android:background="@null"
+            app:my_et_hiddenClear="false"
             />
         <TextView
             android:id="@+id/tv_pwd_copy"

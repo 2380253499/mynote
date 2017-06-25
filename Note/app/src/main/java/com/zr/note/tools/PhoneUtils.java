@@ -6,8 +6,12 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by Administrator on 2016/9/6.
@@ -62,4 +66,68 @@ public class PhoneUtils {
         }
         context.startActivity(localIntent);
     }
+
+    /**
+     * 推荐使用
+     * @param context
+     * @param view
+     */
+    public static void showKeyBoard(Context context,View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
+     * 推荐使用
+     * @param activity
+     */
+    public static void hiddenKeyBoard(Activity activity){
+        ((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),0);
+    }
+    /**
+     * 只要不是通过这个方法显示出来键盘，就无法用这个方法隐藏
+     * @param context
+     */
+    @Deprecated
+    public static void showOrHiddenKeyBoard(Context context){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    public static void hiddenKeyBoard(Context context,View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+    }
+
+    public static boolean keyBoardIsOpen(Activity activity) {
+        //获取当前屏幕内容的高度
+        int screenHeight = activity.getWindow().getDecorView().getHeight();
+        //获取View可见区域的bottom
+        Rect rect = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int navigationBarHeight=0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            navigationBarHeight = getNavigationBarHeight(activity);
+        }
+        return screenHeight - rect.bottom-navigationBarHeight != 0;
+    }
+
+    public static int getNavigationBarHeight(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        //这个方法获取可能不是真实屏幕的高度(可能不包含底部导航栏高度)
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int usableHeight = metrics.heightPixels;
+        //获取当前屏幕的真实高度
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            activity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        }
+        int realHeight = metrics.heightPixels;
+        if (realHeight > usableHeight) {
+            return realHeight - usableHeight;
+        } else {
+            return 0;
+        }
+    }
+
+
 }

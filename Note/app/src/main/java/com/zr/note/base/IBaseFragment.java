@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
@@ -72,7 +75,15 @@ public class IBaseFragment extends Fragment {
     protected void dismissLoading(){
         Loading.dismissLoading();
     }
-
+    protected String getSStr(View view){
+        if(view instanceof TextView){
+            return ((TextView)view).getText().toString();
+        } else if (view instanceof EditText) {
+            return ((EditText)view).getText().toString();
+        }else{
+            return null;
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

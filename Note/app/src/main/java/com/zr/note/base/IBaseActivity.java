@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
@@ -97,11 +98,14 @@ public class IBaseActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().show(fragment).commit();
         }
     }
-    protected Handler getHandler(){
-        if(mHandler==null){
-            mHandler=new Handler(Looper.getMainLooper());
+    protected String getSStr(View view){
+        if(view instanceof TextView){
+            return ((TextView)view).getText().toString();
+        } else if (view instanceof EditText) {
+            return ((EditText)view).getText().toString();
+        }else{
+            return null;
         }
-        return mHandler;
     }
     protected void showLoading(boolean isExit){
         Loading.showForExit(this,isExit);
