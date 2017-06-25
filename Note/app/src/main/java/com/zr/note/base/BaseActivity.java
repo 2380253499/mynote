@@ -31,7 +31,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private int subTitleId=-1;
     private String subTitleString;
     private Menu mMenu;
-
+    protected int pageNum=1;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
