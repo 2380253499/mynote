@@ -2,6 +2,7 @@ package com.zr.note.ui.main.activity;
 
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -65,6 +66,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
     View view_backgroud;
     @BindView(R.id.iv_banner)
     ImageView iv_banner;
+//    @BindView(R.id.pfl)
+//    PtrFrameLayout pfl;
     private AccountFragment accountFragment;
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
@@ -78,6 +81,25 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     protected void initView() {
+       /* StoreHouseHeader header = new StoreHouseHeader(this);
+        header.setPadding(0, PhoneUtils.dip2px(this,20),0,PhoneUtils.dip2px(this,10));
+        header.initWithString("note");
+        pfl.setHeaderView(header);
+        pfl.addPtrUIHandler(header);
+        pfl.setDurationToCloseHeader(300);
+        pfl.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(final PtrFrameLayout ptrFrameLayout) {
+                pfl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ptrFrameLayout.refreshComplete();
+                    }
+                },2000);
+            }
+        });*/
+
+
         tv_data_delete.setOnClickListener(this);
         tv_date_endselect.setOnClickListener(this);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
@@ -374,8 +396,8 @@ public class MainActivity extends BaseActivity<MainContract.View, MainContract.P
 
     @Override
     public void onBackPressed() {
-        if(drawerlayout.isDrawerOpen(Gravity.START)) {
-            drawerlayout.closeDrawer(Gravity.START);
+        if(drawerlayout.isDrawerOpen(GravityCompat.START)) {
+            drawerlayout.closeDrawer(GravityCompat.START);
         }else{
             if ((System.currentTimeMillis() - mExitTime) > 1500) {
                 showToastS("再按一次退出程序");

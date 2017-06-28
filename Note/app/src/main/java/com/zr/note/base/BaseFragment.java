@@ -20,7 +20,7 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     protected abstract void initView();
     protected abstract void initData();
     protected abstract void viewOnClick(View v);
-
+    protected int pageNum=1;
     /************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

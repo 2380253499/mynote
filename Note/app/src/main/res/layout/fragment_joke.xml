@@ -4,41 +4,62 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#ffffff"
-              android:orientation="vertical"
-              tools:context="com.zr.note.ui.main.fragment.AddAccountFragment"
               android:focusable="true"
               android:focusableInTouchMode="true"
+              android:orientation="vertical"
+              tools:context="com.zr.note.ui.main.fragment.AddAccountFragment"
     >
-    <com.github.customview.MyEditText
-        android:id="@+id/et_search_joke"
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:hint="@string/search_info"
-        android:textColor="@color/colorText"
-        android:textColorHint="#B2B2B2"
-        app:my_et_border_color="@color/c_divider"
-        app:my_et_border_width="2px"
-        app:my_et_corner_radius="4dp"
-        android:layout_gravity="center"
-        android:maxLength="10"
-        android:visibility="invisible"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/c_divider"
-        />
-     <com.github.customview.CustomListView
-         android:id="@+id/lv_joke_list"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:listSelector="@drawable/selector_list_item"
-         >
-     </com.github.customview.CustomListView>
+        android:layout_height="wrap_content"
+        app:ptr_duration_to_close="300"
+        app:ptr_duration_to_close_header="2000"
+        app:ptr_keep_header_when_refresh="true"
+        app:ptr_pull_to_fresh="false"
+        app:ptr_ratio_of_header_height_to_refresh="1.2"
+        app:ptr_resistance="1.7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.github.customview.MyEditText
+                android:id="@+id/et_search_joke"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/search_info"
+                android:maxLength="10"
+                android:textColor="@color/colorText"
+                android:textColorHint="#B2B2B2"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:my_et_border_color="@color/c_divider"
+                app:my_et_border_width="2px"
+                app:my_et_corner_radius="4dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/c_divider"
+                />
+
+            <com.github.customview.CustomListView
+                android:id="@+id/lv_joke_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:listSelector="@drawable/selector_list_item"
+                >
+            </com.github.customview.CustomListView>
+        </LinearLayout>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
 </LinearLayout>
