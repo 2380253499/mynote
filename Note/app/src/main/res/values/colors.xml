@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="Theme_color">#1c8ee4</color>
+    <color name="Theme_color2">#901c8ee4</color>
+
     <color name="colorPrimary">#18B4ED</color>
     <color name="colorPrimaryDark">#18B4ED</color>
     <color name="colorPrimaryDark2">#18B4ED</color>
