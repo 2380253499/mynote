@@ -23,7 +23,7 @@ import butterknife.BindView;
 /**
  * Created by Administrator on 2017/2/6.
  */
-public class AddSecretActivity extends BaseActivity<AddSecretContract.View,AddSecretContract.Presenter> implements AddSecretContract.View {
+public class AddSecretActivity extends BaseActivity< AddSecretContract.Presenter> implements AddSecretContract.View {
 
 
     @BindView(R.id.et_secret_reminder)

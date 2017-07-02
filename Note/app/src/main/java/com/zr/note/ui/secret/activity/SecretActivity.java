@@ -22,7 +22,7 @@ import butterknife.BindView;
 /**
  * Created by Administrator on 2017/2/6.
  */
-public class SecretActivity extends BaseActivity<SecretContract.View,SecretContract.Presenter> implements SecretContract.View {
+public class SecretActivity extends BaseActivity< SecretContract.Presenter> implements SecretContract.View {
 
     @BindView(R.id.lv_secret_list)
     ListView lv_secret_list;

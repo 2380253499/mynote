@@ -77,6 +77,7 @@ dependencies {
 //    compile project(':customview')
     compile 'com.github:customview:1.0.9'
     compile 'com.github:retrofitutil:1.0.4'
+    compile 'com.github:baseclass:1.0.2'
     //内存检测
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

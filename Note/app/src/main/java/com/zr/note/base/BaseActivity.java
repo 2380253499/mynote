@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends IBaseActivity implements BaseView,View.OnClickListener{
+public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements BaseView,View.OnClickListener{
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -56,7 +56,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
         setToolBar();
         mPresenter= initPresenter();
         if(mPresenter!=null){
-            mPresenter.attach((V) this);
+            mPresenter.attach( this);
         }
         initView();
         initData();

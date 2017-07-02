@@ -24,7 +24,7 @@ import butterknife.BindView;
  * 手势绘制/校验界面
  *
  */
-public class GestureVerifyActivity extends BaseActivity<GestureCon.View,GestureCon.Presenter> implements GestureCon.View{
+public class GestureVerifyActivity extends BaseActivity< GestureCon.Presenter> implements GestureCon.View{
 	@BindView(R.id.iv_logo)
 	ImageView iv_logo;
 	@BindView(R.id.tv_phone_number)

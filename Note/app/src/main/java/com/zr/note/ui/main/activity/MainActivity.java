@@ -35,7 +35,7 @@ import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
+public class MainActivity extends BaseActivity< MainContract.Presenter> implements MainContract.View {
     @BindView(R.id.cb_data_checkall)
     CheckBox cb_data_checkall;
     @BindView(R.id.tv_data_delete)

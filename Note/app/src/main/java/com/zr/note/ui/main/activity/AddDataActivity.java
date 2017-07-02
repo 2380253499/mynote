@@ -29,7 +29,7 @@ import com.zr.note.ui.main.inter.AddDataInter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddDataActivity extends BaseActivity<AddDataContract.View, AddDataContract.Presenter> implements AddDataContract.View {
+public class AddDataActivity extends BaseActivity<AddDataContract.Presenter> implements AddDataContract.View {
 
     @BindView(R.id.rg_addData)
     RadioGroup rg_addData;
