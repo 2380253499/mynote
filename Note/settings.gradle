@@ -1,1 +1,1 @@
-include ':app', ':customview', ':bottomdialog', ':test', 'myapplication'//, ':blurdemo', ':blurringview'':app',
+include ':app', ':customview', ':bottomdialog', ':newnote'//, ':blurdemo', ':blurringview'':app',

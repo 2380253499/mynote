@@ -1,4 +1,4 @@
-package com.zr.note.base;
+package com.newnote.base;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -8,17 +8,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zr.note.R;
-import com.zr.note.tools.ClickUtils;
-import com.zr.note.tools.StatusBarUtils;
-import com.zr.note.ui.main.activity.MainActivity;
+import com.base.activity.IBaseActivity;
+import com.github.tools.ClickUtils;
+import com.github.tools.StatusBarUtils;
+import com.newnote.MainActivity;
+import com.newnote.R;
 
 import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements BaseView,View.OnClickListener{
+public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements BaseView {
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -36,19 +37,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
-    protected abstract int setContentView();
+    protected abstract int getContentView();
     protected abstract void setToolbarStyle();
     protected abstract int setOptionsMenu();
     protected abstract void initView();
     protected abstract void initData();
-    protected abstract void viewOnClick(View v);
     protected abstract void menuOnClick(int itemId);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext=this;
-        setContentView(setContentView());
-        setColorPrimaryDark();//兼容4.4
+        setContentView(getContentView());
         ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setToolbarStyle();
@@ -98,9 +97,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         }
     }
 
-    private void setColorPrimaryDark() {
-//        StatusBarCompat.compat(this, getResources().getColor(R.color.colorPrimaryDark));
-    }
     /**
      *返回键颜色
      */
@@ -137,10 +133,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         return toolbar;
     }
 
-    @Override
-    public void onClick(View v) {
-        if(!ClickUtils.isFastClick(v, 800)){
-            viewOnClick(v);
+    public void onViewClick(View v) {
+        if(ClickUtils.isFastClick(v, 850)){
+            return;
         }
     }
 
