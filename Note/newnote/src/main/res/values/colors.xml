@@ -34,6 +34,8 @@
 
     <color name="top_color">#fd4b4d</color>
     <color name="image_checked_bg">#66000000</color>
+
+    <!-- 黑色 -->
     <color name="button_ensure">#ff6000</color>
     <color name="cutting_line">#dfdfdf</color>
     <color name="orange">#FF8111</color>

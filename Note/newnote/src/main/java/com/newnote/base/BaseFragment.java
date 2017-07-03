@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zr.note.tools.ClickUtils;
+import com.base.fragment.IBaseFragment;
+import com.github.tools.ClickUtils;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -21,6 +23,7 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     protected abstract void initData();
     protected abstract void viewOnClick(View v);
     protected int pageNum=1;
+    protected Unbinder mUnBind;
     /************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,47 +48,45 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
             viewOnClick(v);
         }
     }
+    @Override
+    public void showMsg(String msg) {
 
+    }
     @Override
     public void showLoading() {
         super.showLoading();
     }
-
     @Override
     public void hideLoading() {
         dismissLoading();
     }
-
     @Override
     public void actFinish() {
         getActivity().finish();
     }
+    @Override
+    public void STActivityForResult(Class clazz, int requestCode) {
+    }
+    @Override
+    public void STActivityForResult(Intent intent, Class clazz, int requestCode) {
+    }
 
     @Override
-    public void showMsg(String msg) {
-        showToastS(msg);
+    public void STActivity(Class clazz) {
+
     }
+
     @Override
-    public void STActivityForResult(Class clazz,int requestCode){
-        super.STActivityForResult(clazz, requestCode);
+    public void STActivity(Intent intent, Class clazz) {
+
     }
-    @Override
-    public void STActivityForResult(Intent intent,Class clazz,int requestCode){
-        super.STActivityForResult(intent,clazz,requestCode);
-    }
-    @Override
-    public void STActivity(Class clazz){
-        super.STActivity(clazz);
-    }
-    @Override
-    public void STActivity(Intent intent,Class clazz){
-        super.STActivity(intent, clazz);
-    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         if(mPresenter!=null){
             mPresenter.detach();
         }
+        mUnBind.unbind();
     }
 }
