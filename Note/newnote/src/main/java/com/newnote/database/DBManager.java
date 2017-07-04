@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.github.tools.DateUtils;
-import com.github.tools.StringUtils;
+import com.github.androidtools.DateUtils;
+import com.github.androidtools.StringUtils;
 import com.newnote.module.account.entity.AccountBean;
 import com.newnote.module.joke.entity.JokeBean;
 import com.newnote.module.memo.entity.MemoBean;

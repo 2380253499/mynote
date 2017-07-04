@@ -1,7 +1,6 @@
 package com.newnote.base;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,10 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.base.activity.IBaseActivity;
-import com.github.tools.ClickUtils;
-import com.github.tools.StatusBarUtils;
-import com.newnote.MainActivity;
+import com.github.androidtools.ClickUtils;
+import com.github.androidtools.StatusBarUtils;
 import com.newnote.R;
+import com.newnote.module.home.activity.MainActivity;
 
 import butterknife.ButterKnife;
 
@@ -24,43 +23,57 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
     private int navigationIcon =-1;
-    private Drawable backColor;
-    private int logIcon=-1;
-    private Drawable logIconDrawble;
-    private int titleId=-1;
-    private String titleString;
-    private int subTitleId=-1;
-    private String subTitleString;
     private Menu mMenu;
     protected int pageNum=1;
     protected int pageSize=25;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
-    protected abstract int getContentView();
-    protected abstract void setToolbarStyle();
-    protected abstract int setOptionsMenu();
+    protected abstract int[] getContentView();
     protected abstract void initView();
     protected abstract void initData();
+    protected abstract int setOptionsMenu();
     protected abstract void menuOnClick(int itemId);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         mContext=this;
-        setContentView(getContentView());
+        setContentView(getContentView()[0]);
         ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setToolbarStyle();
-        setNavigationColor(R.color.white);
+        toolbar.setTitle(getContentView()[1]==0?R.string.default_title:getContentView()[1]);
         setSupportActionBar(toolbar);
-        setToolBar();
+        onInitToolbar();
+        setToolBarStyle();
         mPresenter= initPresenter();
         if(mPresenter!=null){
-            mPresenter.attach( this);
+            mPresenter.attach(this);
         }
         initView();
         initData();
     }
+
+    protected void setShowNavigationIcon(boolean showNavigationIcon) {
+        this.showNavigationIcon = showNavigationIcon;
+    }
+    protected void setNavigationIcon(int backIcon){
+        this.navigationIcon =backIcon;
+    }
+    protected void onInitToolbar() {
+
+    }
+    private void setToolBarStyle() {
+        if(navigationIcon==-1){
+            getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_back));
+        }else{
+            getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -69,74 +82,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
             StatusBarUtils.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
         }
     }
-
-    private void setToolBar() {
-        if(!showNavigationIcon){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(showNavigationIcon);
-        }else if(navigationIcon !=-1){//设置icon
-            getSupportActionBar().setHomeAsUpIndicator(navigationIcon);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }else if(backColor!=null){//设置箭头颜色
-            getSupportActionBar().setHomeAsUpIndicator(backColor);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        if(logIcon!=-1){
-            getSupportActionBar().setLogo(logIcon);
-        }else if(logIconDrawble!=null){
-            getSupportActionBar().setLogo(logIconDrawble);
-        }
-        if(titleId!=-1){
-            getSupportActionBar().setTitle(titleId);
-        }else if(titleString!=null){
-            getSupportActionBar().setTitle(titleString);
-        }
-        if (subTitleId != -1) {
-            getSupportActionBar().setSubtitle(subTitleId);
-        }else if(subTitleString!=null){
-            getSupportActionBar().setSubtitle(subTitleString);
-        }
-    }
-
-    /**
-     *返回键颜色
-     */
-    protected void setNavigationColor(int backColor){
-//        this.backColor = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        this.backColor = getResources().getDrawable(R.drawable.ic_back);
-//        this.backColor.setColorFilter(getResources().getColor(backColor), PorterDuff.Mode.SRC_ATOP);
-    }
-    protected void setNavigationIcon(int backIcon){
-        this.navigationIcon =backIcon;
-    }
-    protected void setHideNavigationIcon(){
-        showNavigationIcon =false;
-    }
-    protected void setLogIcon(int logIcon){
-        this.logIcon=logIcon;
-    }
-    protected void setLogIcon(Drawable logIconDrawble){
-        this.logIconDrawble=logIconDrawble;
-    }
-    protected void setToolbarTitle(int titleId){
-        this.titleId=titleId;
-    }
-    protected void setToolbarTitle(String titleString){
-        this.titleString=titleString;
-    }
-    protected void setToolbarSubTitle(int subTitleId){
-        this.subTitleId=subTitleId;
-    }
-    protected void setToolbarSubTitle(String subTitleString){
-        this.subTitleString=subTitleString;
-    }
     protected Toolbar getToolbar(){
         return toolbar;
     }
 
     public void onViewClick(View v) {
-        if(ClickUtils.isFastClick(v, 850)){
+        /*if(ClickUtils.isFastClick(v, 850)){
             return;
-        }
+        }*/
     }
 
     @Override
@@ -165,7 +118,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
             menuOnClick(itemId);
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId=item.getItemId();
@@ -198,22 +150,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     public void showMsg(String msg) {
         showToastS(msg);
     }
-    @Override
-    public void STActivityForResult(Class clazz,int requestCode){
-        super.STActivityForResult(clazz, requestCode);
-    }
-    @Override
-    public void STActivityForResult(Intent intent,Class clazz,int requestCode){
-        super.STActivityForResult(intent,clazz,requestCode);
-    }
-    @Override
-    public void STActivity(Class clazz){
-        super.STActivity(clazz);
-    }
-    @Override
-    public void STActivity(Intent intent,Class clazz){
-        super.STActivity(intent,clazz);
-    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -223,7 +160,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         if(mMenu!=null){
             mMenu=null;
         }
-
         ClickUtils.clearLastClickTime();
     }
 

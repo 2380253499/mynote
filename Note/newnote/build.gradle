@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.newnote"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -62,6 +62,6 @@ dependencies {
     compile 'com.github:customview:1.0.9'
 
 
-    compile(name: 'androidutils-release', ext: 'aar')
+    compile(name: 'androidutils-debug', ext: 'aar')
     compile(name: 'baseclass-release', ext: 'aar')
 }

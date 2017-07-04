@@ -1,13 +1,11 @@
 package com.newnote.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.fragment.IBaseFragment;
-import com.github.tools.ClickUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -15,20 +13,20 @@ import butterknife.Unbinder;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V>> extends IBaseFragment implements BaseView,View.OnClickListener{
+public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragment implements BaseView{
     protected P mPresenter;
     protected abstract P initPresenter();
-    protected abstract int setContentView();
+    protected abstract int getContentView();
     protected abstract void initView();
     protected abstract void initData();
-    protected abstract void viewOnClick(View v);
     protected int pageNum=1;
+    protected int pageSize=25;
     protected Unbinder mUnBind;
     /************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(setContentView(), container, false);
+        View view = inflater.inflate(getContentView(), container, false);
         mUnBind = ButterKnife.bind(this, view);
         return view;
     }
@@ -37,16 +35,15 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
         super.onViewCreated(view, savedInstanceState);
         mPresenter= initPresenter();
         if(mPresenter!=null){
-            mPresenter.attach((V)this);
+            mPresenter.attach(this);
         }
         initView();
         initData();
     }
-    @Override
-    public void onClick(View v) {
-        if(!ClickUtils.isFastClick(v)){
+    protected void onViewClick(View v) {
+        /*if(!ClickUtils.isFastClick(v)){
             viewOnClick(v);
-        }
+        }*/
     }
     @Override
     public void showMsg(String msg) {
@@ -64,23 +61,6 @@ public abstract class BaseFragment <V extends BaseView,P extends BasePresenter<V
     public void actFinish() {
         getActivity().finish();
     }
-    @Override
-    public void STActivityForResult(Class clazz, int requestCode) {
-    }
-    @Override
-    public void STActivityForResult(Intent intent, Class clazz, int requestCode) {
-    }
-
-    @Override
-    public void STActivity(Class clazz) {
-
-    }
-
-    @Override
-    public void STActivity(Intent intent, Class clazz) {
-
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
