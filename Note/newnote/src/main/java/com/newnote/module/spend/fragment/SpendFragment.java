@@ -1,5 +1,7 @@
 package com.newnote.module.spend.fragment;
 
+import android.os.Bundle;
+
 import com.newnote.base.BaseFragment;
 import com.newnote.base.BasePresenter;
 
@@ -8,6 +10,13 @@ import com.newnote.base.BasePresenter;
  */
 
 public class SpendFragment extends BaseFragment {
+    public static SpendFragment newInstance() {
+        Bundle args = new Bundle();
+
+        SpendFragment fragment = new SpendFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     protected BasePresenter initPresenter() {
         return null;

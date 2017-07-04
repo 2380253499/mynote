@@ -56,8 +56,6 @@ public class MainActivity extends BaseActivity {
     View view_backgroud;
     @BindView(R.id.iv_banner)
     ImageView iv_banner;
-    //    @BindView(R.id.pfl)
-//    PtrFrameLayout pfl;
     private AccountFragment accountFragment;
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
@@ -78,6 +76,7 @@ public class MainActivity extends BaseActivity {
 //        tv_data_delete.setOnClickListener(this);
 //        tv_date_endselect.setOnClickListener(this);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer_menu);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
@@ -91,13 +90,13 @@ public class MainActivity extends BaseActivity {
         ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
 
 
-//        accountFragment=AccountFragment.newInstance();
-//        dataManageInters[0]=accountFragment;
+        accountFragment=AccountFragment.newInstance();
         addFragment(R.id.fl_fragment, accountFragment);
+
         rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                addFragment(checkedId);
+                addFragmentToView(checkedId);
             }
         });
         //批量删除数据-全选
@@ -109,6 +108,74 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void addFragmentToView(int checkedId) {
+        switch (checkedId) {
+            case R.id.rb_main_account:
+                tabIndex = 0;
+                showFragment(accountFragment);
+                hideFragment(memoFragment);
+                hideFragment(jokeFragment);
+                hideFragment(spendFragment);
+                setMenuHidden();
+                break;
+            case R.id.rb_main_memo:
+                tabIndex = 1;
+                if (memoFragment == null) {
+                    memoFragment = MemoFragment.newInstance();
+                    hideFragment(accountFragment);
+                    addFragment(R.id.fl_fragment, memoFragment);
+                    hideFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    showFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+            case R.id.rb_main_joke:
+                tabIndex = 2;
+                if (jokeFragment == null) {
+                    jokeFragment = JokeFragment.newInstance();
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    addFragment(R.id.fl_fragment, jokeFragment);
+                    hideFragment(spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    showFragment(jokeFragment);
+                    hideFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+            case R.id.rb_main_spend:
+                tabIndex = 3;
+                if (spendFragment == null) {
+                    spendFragment = SpendFragment.newInstance();
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    addFragment(R.id.fl_fragment, spendFragment);
+                } else {
+                    hideFragment(accountFragment);
+                    hideFragment(memoFragment);
+                    hideFragment(jokeFragment);
+                    showFragment(spendFragment);
+                }
+                setMenuHidden();
+                break;
+        }
+
+    }
+    private void setMenuHidden() {
+        if(tabIndex==3){
+            setMenuVisible(0,false);
+        }else{
+            setMenuVisible(0);
+        }
+    }
     @Override
     protected void initData() {
 
