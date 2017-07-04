@@ -23,6 +23,7 @@ import com.newnote.module.memo.fragment.MemoFragment;
 import com.newnote.module.spend.fragment.SpendFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.cb_data_checkall)
@@ -74,12 +75,36 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+//        tv_data_delete.setOnClickListener(this);
+//        tv_date_endselect.setOnClickListener(this);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer_menu);
         getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
                 drawerlayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(this);
+        rb_main_account.setChecked(true);
+        ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
+        ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+
+
+//        accountFragment=AccountFragment.newInstance();
+//        dataManageInters[0]=accountFragment;
+        addFragment(R.id.fl_fragment, accountFragment);
+        rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                addFragment(checkedId);
+            }
+        });
+        //批量删除数据-全选
+        cb_data_checkall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                checkClick();
             }
         });
     }
@@ -87,6 +112,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @OnClick({R.id.fab})
+    public void onViewClick(View v) {
+        switch (v.getId()){
+            case R.id.fab:
+                STActivity(TestActivity.class);
+                break;
+        }
     }
 
     @Override

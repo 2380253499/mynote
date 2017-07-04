@@ -43,11 +43,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         mContext=this;
         setContentView(getContentView()[0]);
         ButterKnife.bind(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getContentView()[1]==0?R.string.default_title:getContentView()[1]);
-        setSupportActionBar(toolbar);
-        onInitToolbar();
-        setToolBarStyle();
+        if(null!=findViewById(R.id.toolbar)){
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(getContentView()[1]==0?R.string.default_title:getContentView()[1]);
+            setSupportActionBar(toolbar);
+            onInitToolbar();
+            setToolBarStyle();
+        }
         mPresenter= initPresenter();
         if(mPresenter!=null){
             mPresenter.attach(this);
