@@ -2,8 +2,8 @@ package com.newnote.module.joke.fragment;
 
 import android.os.Bundle;
 
+import com.github.baseclass.BasePresenter;
 import com.newnote.base.BaseFragment;
-import com.newnote.base.BasePresenter;
 
 /**
  * Created by Administrator on 2017/7/4.

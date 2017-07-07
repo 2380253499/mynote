@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.fragment.IBaseFragment;
+import com.github.androidtools.ClickUtils;
+import com.github.baseclass.BasePresenter;
+import com.github.baseclass.fragment.IBaseFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -13,7 +15,7 @@ import butterknife.Unbinder;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragment implements BaseView{
+public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragment implements View.OnClickListener {
     protected P mPresenter;
     protected abstract P initPresenter();
     protected abstract int getContentView();
@@ -45,22 +47,14 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
             viewOnClick(v);
         }*/
     }
-    @Override
-    public void showMsg(String msg) {
 
-    }
     @Override
-    public void showLoading() {
-        super.showLoading();
+    public void onClick(View v) {
+        if(!ClickUtils.isFastClick(v)){
+            onViewClick(v);
+        }
     }
-    @Override
-    public void hideLoading() {
-        dismissLoading();
-    }
-    @Override
-    public void actFinish() {
-        getActivity().finish();
-    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

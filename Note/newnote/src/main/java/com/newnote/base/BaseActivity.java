@@ -7,9 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.base.activity.IBaseActivity;
 import com.github.androidtools.ClickUtils;
 import com.github.androidtools.StatusBarUtils;
+import com.github.baseclass.BasePresenter;
+import com.github.baseclass.activity.IBaseActivity;
 import com.newnote.R;
 import com.newnote.module.home.activity.MainActivity;
 
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements BaseView {
+public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity {
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -132,27 +133,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         }
 //        return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void showLoading() {
-        super.showLoading();
-    }
-
-    @Override
-    public void hideLoading() {
-        dismissLoading();
-    }
-
-    @Override
-    public void actFinish() {
-        finish();
-    }
-
-    @Override
-    public void showMsg(String msg) {
-        showToastS(msg);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

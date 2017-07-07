@@ -12,9 +12,9 @@ import com.github.androidtools.AES;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
+import com.github.baseclass.BasePresenter;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
-import com.newnote.base.BasePresenter;
 
 import java.util.Calendar;
 import java.util.Date;

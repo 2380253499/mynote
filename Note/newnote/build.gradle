@@ -63,5 +63,6 @@ dependencies {
 
 
     compile(name: 'androidutils-debug', ext: 'aar')
-    compile(name: 'baseclass-release', ext: 'aar')
+    compile(name: 'baseclass-debug', ext: 'aar')
+
 }

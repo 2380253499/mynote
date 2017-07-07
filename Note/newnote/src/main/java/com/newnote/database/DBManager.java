@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -33,7 +34,7 @@ public class DBManager extends SQLiteOpenHelper {
         return dbName;
     }
 
-    private static final int version = 5;
+    private static final int version = 1;
     private static DBManager dbManager;
     public static final String T_Account_Note = "T_Account_Note";
     public static final String T_Memo_Note = "T_Memo_Note";
@@ -41,7 +42,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String T_Spend_Note = "T_Spend_Note";
     public static final String T_Secret_Note = "T_Secret_Note";
     public static final int pageSize=30;
-    private String getLimit(int page){
+    private String getLimitSql(int page){
         //小于等于0查询所有数据
         if(page<=0){
             return "";
@@ -49,19 +50,15 @@ public class DBManager extends SQLiteOpenHelper {
         String limit=String.format(" limit "+pageSize+" offset %d ",pageSize*(page-1));
         return limit;
     }
+    private String getLimit(int page){
+        //小于等于0查询所有数据
+        if(page<=0){
+            return null;
+        }
+        return pageSize*(page-1)+","+pageSize;
+    }
     private DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-    }
-
-    public static DBManager getInstance(Context context) {
-        if (dbManager == null) {
-            synchronized (DBManager.class) {
-                if (dbManager == null) {
-                    dbManager = new DBManager(context, dbName, null, version);
-                }
-            }
-        }
-        return dbManager;
     }
 
     public static DBManager getNewInstance(Context context) {
@@ -99,44 +96,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        switch (oldVersion) {
-            case 1:
-                if (existTable(db, T_Spend_Note)) {
-                    dropTable(db, T_Spend_Note);
-                    addDataTable(db, DBConstant.CT_Spend_Note);
-                }
-                //V4增加secret表
-                if (noExistTable(db, T_Secret_Note)) {
-                    addDataTable(db, DBConstant.CT_Secret_Note);
-                }
-                break;
-            case 2:
-                if (existTable(db, T_Spend_Note)) {
-                    dropTable(db, T_Spend_Note);
-                    addDataTable(db, DBConstant.CT_Spend_Note);
-                }
-                //V4增加secret表
-                if (noExistTable(db, T_Secret_Note)) {
-                    addDataTable(db, DBConstant.CT_Secret_Note);
-                }
-                break;
-            case 3:
-                if (existTable(db, T_Spend_Note)) {
-                    dropTable(db, T_Spend_Note);
-                    addDataTable(db, DBConstant.CT_Spend_Note);
-                }
-                //V4增加secret表
-                if (noExistTable(db, T_Secret_Note)) {
-                    addDataTable(db, DBConstant.CT_Secret_Note);
-                }
-                break;
-            case 4:
-                //V4增加secret表
-                if (noExistTable(db, T_Secret_Note)) {
-                    addDataTable(db, DBConstant.CT_Secret_Note);
-                }
-                break;
-        }
+
     }
 
     private boolean dropTable(SQLiteDatabase db, String table) {
@@ -196,7 +156,22 @@ public class DBManager extends SQLiteOpenHelper {
         }
         return true;
     }
-
+    public boolean deleteAccount(List id) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            for (int i = 0; i < id.size(); i++) {
+                db.delete(T_Account_Note, DBConstant._id + " =? ", new String[]{id.get(i)+""});
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            return false;
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+        return true;
+    }
     public int selectAccountCount() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select count(0) as num from " + T_Account_Note, null);
@@ -220,8 +195,8 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public List<AccountBean> selectAccount() {
-        return selectAccount(null, true);
+    public List<AccountBean> selectAccount(int page) {
+        return selectAccount(page,null, true);
     }
 
     /***
@@ -232,10 +207,23 @@ public class DBManager extends SQLiteOpenHelper {
      * @param db
      * @return
      */
-    public List<AccountBean> selectAccount(String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
+    public List<AccountBean> selectAccount(int page,String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
         String orderBy = DBConstant.updateTime + " desc";
         if (isOrderByCreateTime) {
             orderBy = DBConstant.creatTime + " desc";
+        }
+        StringBuffer searchSql=null;
+        String[]searchStr=new String[4];
+        if(!TextUtils.isEmpty(searchInfo)){
+            searchSql=new StringBuffer();
+            searchSql.append(DBConstant.dataSource+" like ? or ");
+            searchSql.append(DBConstant.dataAccount+" like ? or ");
+            searchSql.append(DBConstant.dataPassword+" like ? or ");
+            searchSql.append(DBConstant.dataRemark+" like ? ");
+            searchStr[0]=searchInfo;
+            searchStr[1]=searchInfo;
+            searchStr[2]=searchInfo;
+            searchStr[3]=searchInfo;
         }
         Cursor query = db.query(T_Account_Note,
                 new String[]{
@@ -245,7 +233,7 @@ public class DBManager extends SQLiteOpenHelper {
                         DBConstant.dataPassword,
                         DBConstant.dataRemark,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null, orderBy);
+                        DBConstant.creatTime}, searchSql!=null?searchSql.toString():null,searchSql!=null?searchStr:null, null, null, orderBy,getLimit(page));
         List<AccountBean> list = new ArrayList<AccountBean>();
         AccountBean bean;
         while (query.moveToNext()) {
@@ -264,15 +252,8 @@ public class DBManager extends SQLiteOpenHelper {
             bean.setDataRemark(dataRemark);
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
-            if (searchInfo != null) {
-                if (bean.getDataAccount().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0
-                        || bean.getDataSource().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0
-                        || bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0) {
-                    list.add(bean);
-                }
-            } else {
-                list.add(bean);
-            }
+
+            list.add(bean);
         }
         db.close();
         return list;
@@ -285,8 +266,8 @@ public class DBManager extends SQLiteOpenHelper {
      * @param isOrderByCreateTime 是否按照创建时间排序true  按照修改修改时间排序false
      * @return
      */
-    public List<AccountBean> selectAccount(String searchInfo, boolean isOrderByCreateTime) {
-        return selectAccount(searchInfo, isOrderByCreateTime, getWritableDatabase());
+    public List<AccountBean> selectAccount(int page,String searchInfo, boolean isOrderByCreateTime) {
+        return selectAccount(page,searchInfo, isOrderByCreateTime, getWritableDatabase());
     }
 
     public long addOrEditAccount(AccountBean bean) {
@@ -391,8 +372,8 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public List<MemoBean> selectMemo() {
-        return selectMemo(null, true);
+    public List<MemoBean> selectMemo(int page) {
+        return selectMemo(page,null, true);
     }
 
     /***
@@ -402,8 +383,8 @@ public class DBManager extends SQLiteOpenHelper {
      * @param isOrderByCreateTime 是否按照创建时间排序true  按照修改修改时间排序false
      * @return
      */
-    public List<MemoBean> selectMemo(String searchInfo, boolean isOrderByCreateTime) {
-        return selectMemo(searchInfo, isOrderByCreateTime, getWritableDatabase());
+    public List<MemoBean> selectMemo(int page,String searchInfo, boolean isOrderByCreateTime) {
+        return selectMemo(page,searchInfo, isOrderByCreateTime, getWritableDatabase());
     }
 
     /***
@@ -414,10 +395,19 @@ public class DBManager extends SQLiteOpenHelper {
      * @param db
      * @return
      */
-    public List<MemoBean> selectMemo(String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
+    public List<MemoBean> selectMemo(int page,String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
         String orderBy = DBConstant.updateTime + " desc";
         if (isOrderByCreateTime) {
             orderBy = DBConstant.creatTime + " desc";
+        }
+        StringBuffer searchSql=null;
+        String[]searchStr=new String[2];
+        if(!TextUtils.isEmpty(searchInfo)){
+            searchSql=new StringBuffer();
+            searchSql.append(DBConstant.dataRemark+" like ? or ");
+            searchSql.append(DBConstant.dataContent+" like ? or ");
+            searchStr[0]=searchInfo;
+            searchStr[1]=searchInfo;
         }
         Cursor query = db.query(T_Memo_Note,
                 new String[]{
@@ -425,7 +415,7 @@ public class DBManager extends SQLiteOpenHelper {
                         DBConstant.dataRemark,
                         DBConstant.dataContent,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null, orderBy);
+                        DBConstant.creatTime}, searchSql!=null?searchSql.toString():null, searchSql!=null?searchStr:null, null, null, orderBy,getLimit(page));
         List<MemoBean> list = new ArrayList<MemoBean>();
         MemoBean bean;
         while (query.moveToNext()) {
@@ -440,14 +430,7 @@ public class DBManager extends SQLiteOpenHelper {
             bean.setDataRemark(dataRemark);
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
-            if (searchInfo != null) {
-                if (bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0
-                        || bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0) {
-                    list.add(bean);
-                }
-            } else {
-                list.add(bean);
-            }
+            list.add(bean);
         }
         db.close();
         return list;
@@ -588,8 +571,8 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @return
      */
-    public List<JokeBean> selectJoke() {
-        return selectJoke(null, true);
+    public List<JokeBean> selectJoke(int page) {
+        return selectJoke(page,null, true);
     }
 
     /***
@@ -599,8 +582,8 @@ public class DBManager extends SQLiteOpenHelper {
      * @param isOrderByCreateTime 是否按照创建时间排序true  按照修改修改时间排序false
      * @return
      */
-    public List<JokeBean> selectJoke(String searchInfo, boolean isOrderByCreateTime) {
-        return selectJoke(searchInfo, isOrderByCreateTime, getWritableDatabase());
+    public List<JokeBean> selectJoke(int page,String searchInfo, boolean isOrderByCreateTime) {
+        return selectJoke(page,searchInfo, isOrderByCreateTime, getWritableDatabase());
     }
 
     /***
@@ -611,10 +594,19 @@ public class DBManager extends SQLiteOpenHelper {
      * @param db
      * @return
      */
-    public List<JokeBean> selectJoke(String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
+    public List<JokeBean> selectJoke(int page,String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
         String orderBy = DBConstant.updateTime + " desc";
         if (isOrderByCreateTime) {
             orderBy = DBConstant.creatTime + " desc";
+        }
+        StringBuffer searchSql=null;
+        String[]searchStr=new String[2];
+        if(!TextUtils.isEmpty(searchInfo)){
+            searchSql=new StringBuffer();
+            searchSql.append(DBConstant.dataRemark+" like ? or ");
+            searchSql.append(DBConstant.dataContent+" like ? or ");
+            searchStr[0]=searchInfo;
+            searchStr[1]=searchInfo;
         }
         Cursor query = db.query(T_Joke_Note,
                 new String[]{
@@ -622,7 +614,7 @@ public class DBManager extends SQLiteOpenHelper {
                         DBConstant.dataRemark,
                         DBConstant.dataContent,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null, orderBy);
+                        DBConstant.creatTime}, searchSql!=null?searchSql.toString():null, searchSql!=null?searchStr:null, null, null, orderBy,getLimit(page));
         List<JokeBean> list = new ArrayList<JokeBean>();
         JokeBean bean;
         while (query.moveToNext()) {
@@ -637,14 +629,7 @@ public class DBManager extends SQLiteOpenHelper {
             bean.setDataContent(dataContent);
             bean.setUpdateTime(DateUtils.stringToDate(updateTime, DateUtils.ymdhms));
             bean.setCreatTime(DateUtils.stringToDate(creatTime, DateUtils.ymdhms));
-            if (searchInfo != null) {
-                if (bean.getDataContent().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0
-                        || bean.getDataRemark().toLowerCase().indexOf(searchInfo.toLowerCase()) >= 0) {
-                    list.add(bean);
-                }
-            } else {
-                list.add(bean);
-            }
+            list.add(bean);
         }
         db.close();
         return list;

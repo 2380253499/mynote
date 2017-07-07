@@ -3,11 +3,11 @@ package com.newnote.module.home.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.base.adapter.LoadMoreAdapter;
-import com.base.adapter.LoadMoreViewHolder;
+import com.github.baseclass.BasePresenter;
+import com.github.baseclass.adapter.LoadMoreAdapter;
+import com.github.baseclass.adapter.LoadMoreViewHolder;
 import com.newnote.R;
 import com.newnote.base.BaseActivity;
-import com.newnote.base.BasePresenter;
 import com.newnote.module.home.inter.OnAgainInter;
 import com.newnote.view.ProgressLayout;
 
