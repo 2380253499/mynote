@@ -12,6 +12,7 @@ import com.github.androidtools.StatusBarUtils;
 import com.github.baseclass.BasePresenter;
 import com.github.baseclass.activity.IBaseActivity;
 import com.newnote.R;
+import com.newnote.database.DBManager;
 import com.newnote.module.home.activity.MainActivity;
 
 import butterknife.ButterKnife;
@@ -26,7 +27,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     private int navigationIcon =-1;
     private Menu mMenu;
     protected int pageNum=1;
-    protected int pageSize=25;
+    protected int pageSize= DBManager.pageSize;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();

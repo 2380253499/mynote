@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.github.androidtools.ClickUtils;
 import com.github.baseclass.BasePresenter;
 import com.github.baseclass.fragment.IBaseFragment;
+import com.newnote.database.DBManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,7 +23,7 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
     protected abstract void initView();
     protected abstract void initData();
     protected int pageNum=1;
-    protected int pageSize=25;
+    protected int pageSize= DBManager.pageSize;
     protected Unbinder mUnBind;
     /************************************************************/
     @Override
