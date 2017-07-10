@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements View.OnClickListener{
     /****************************Toolbar*************************/
     private Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -94,6 +94,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         /*if(ClickUtils.isFastClick(v, 850)){
             return;
         }*/
+    }
+    @Override
+    public void onClick(View v) {
+        if(!ClickUtils.isFastClick(v)){
+            onViewClick(v);
+        }
     }
 
     @Override
