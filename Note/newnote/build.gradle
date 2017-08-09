@@ -59,10 +59,10 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.7'
     //树形菜单
     compile 'com.github.bmelnychuk:atv:1.2.+'
-    compile 'com.github:customview:1.0.9'
+    compile 'com.github:customview:1.1.1'
 
 
-    compile(name: 'androidutils-debug', ext: 'aar')
+    compile(name: 'androidutils', ext: 'aar')
     compile(name: 'baseclass-debug', ext: 'aar')
 
 }
