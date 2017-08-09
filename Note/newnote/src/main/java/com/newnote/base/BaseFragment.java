@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.androidtools.ClickUtils;
 import com.github.baseclass.BasePresenter;
@@ -22,7 +24,7 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
     protected abstract int getContentView();
     protected abstract void initView();
     protected abstract void initData();
-    protected int pageNum=1;
+    protected int pageNum=2;
     protected int pageSize= DBManager.pageSize;
     protected Unbinder mUnBind;
     /************************************************************/
@@ -55,7 +57,15 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
             onViewClick(v);
         }
     }
-
+    protected String getSStr(View view){
+        if(view instanceof TextView){
+            return ((TextView)view).getText().toString();
+        } else if (view instanceof EditText) {
+            return ((EditText)view).getText().toString();
+        }else{
+            return null;
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

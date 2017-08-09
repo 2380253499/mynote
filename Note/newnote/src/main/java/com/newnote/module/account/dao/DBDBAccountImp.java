@@ -1,4 +1,4 @@
-package com.newnote.database.dao.imp;
+package com.newnote.module.account.dao;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,6 @@ import com.github.androidtools.DateUtils;
 import com.newnote.base.BaseDao;
 import com.newnote.database.DBConstant;
 import com.newnote.database.DBManager;
-import com.newnote.database.dao.AccountDao;
 import com.newnote.module.account.entity.AccountBean;
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/25.
  */
-public class AccountImp extends BaseDao implements AccountDao {
-    public AccountImp(Context context) {
+public class DBDBAccountImp extends BaseDao implements DBAccount {
+    public DBDBAccountImp(Context context) {
         super(context);
     }
     @Override

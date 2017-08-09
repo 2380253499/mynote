@@ -64,8 +64,9 @@ public class MainActivity extends BaseActivity {
         return null;
     }
     @Override
-    protected int[] getContentView() {
-        return new int[]{R.layout.activity_main, R.string.title_note};
+    protected int getContentView() {
+        setAppTitle(getString(R.string.title_note));
+        return R.layout.activity_main;
     }
     @Override
     protected void initView() {

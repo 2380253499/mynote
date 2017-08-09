@@ -32,8 +32,9 @@ public class TestActivity extends BaseActivity implements OnAgainInter{
     }
 
     @Override
-    protected int[] getContentView() {
-        return new int[]{R.layout.act_test_view,R.string.title_note};
+    protected int getContentView() {
+        setAppTitle(getString(R.string.title_note));
+        return R.layout.act_test_view;
     }
 
     @Override
@@ -71,12 +72,7 @@ public class TestActivity extends BaseActivity implements OnAgainInter{
 
             list.add("第"+i+1+"个");
         }
-        LoadMoreAdapter<String> loadMoreAdapter = new LoadMoreAdapter<String>(this, 10) {
-            @Override
-            public int getItemLayoutId(int i) {
-                return R.layout.item_view;
-            }
-
+        LoadMoreAdapter<String> loadMoreAdapter = new LoadMoreAdapter<String>(this,R.layout.item_view, 10) {
             @Override
             public void bindData(LoadMoreViewHolder loadMoreViewHolder, int i, String bean) {
                 loadMoreViewHolder.setText(R.id.item_text, bean);

@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.androidtools.ClickUtils;
 import com.github.androidtools.StatusBarUtils;
@@ -26,28 +28,37 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     private boolean showNavigationIcon =true;
     private int navigationIcon =-1;
     private Menu mMenu;
-    protected int pageNum=1;
+    protected int pageNum=2;
     protected int pageSize= DBManager.pageSize;
+
+    protected long mExitTime;
     /************************************************************/
     protected P mPresenter;
     protected abstract P initPresenter();
-    protected abstract int[] getContentView();
+    protected abstract int getContentView();
     protected abstract void initView();
     protected abstract void initData();
     protected abstract int setOptionsMenu();
     protected abstract void menuOnClick(int itemId);
+    protected String appTitle;
+
+    public void setAppTitle(String appTitle) {
+        this.appTitle = appTitle;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        setTheme(R.style.AppTheme_NoActionBar);
         mContext=this;
-        setContentView(getContentView()[0]);
+        setContentView(getContentView());
         ButterKnife.bind(this);
         if(null!=findViewById(R.id.toolbar)){
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle(getContentView()[1]==0?R.string.default_title:getContentView()[1]);
+            toolbar.setTitle(appTitle);
             setSupportActionBar(toolbar);
             onInitToolbar();
             setToolBarStyle();
@@ -139,6 +150,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
             return true;
         }
 //        return super.onOptionsItemSelected(item);
+    }
+    protected String getSStr(View view){
+        if(view instanceof TextView){
+            return ((TextView)view).getText().toString();
+        } else if (view instanceof EditText) {
+            return ((EditText)view).getText().toString();
+        }else{
+            return null;
+        }
     }
     @Override
     protected void onDestroy() {

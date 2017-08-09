@@ -3,7 +3,7 @@ package com.newnote.module.account.fragment.contract.imp;
 import android.content.Context;
 
 import com.github.baseclass.IPresenter;
-import com.newnote.database.DBManager;
+import com.newnote.module.account.dao.DBDBAccountImp;
 import com.newnote.module.account.entity.AccountBean;
 import com.newnote.module.account.fragment.contract.AccountCon;
 import com.newnote.tools.MyIOCallBack;
@@ -17,9 +17,10 @@ import rx.Subscriber;
  */
 
 public class AccountImp extends IPresenter<AccountCon.View> implements AccountCon.Presenter {
-
+    DBDBAccountImp dbAccountImp;
     public AccountImp(Context context) {
         super(context);
+        dbAccountImp=new DBDBAccountImp(context);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
         mView.RXStart(new MyIOCallBack<List<AccountBean>>(mContext,noLoading) {
             @Override
             public void call(Subscriber sub) {
-                List<AccountBean> accountBeen = DBManager.getNewInstance(mContext).selectAccount(page, search, orderByCreateTime);
+                List<AccountBean> accountBeen = dbAccountImp.selectAccount(page, search, orderByCreateTime);
                 sub.onNext(accountBeen);
                 sub.onCompleted();
             }

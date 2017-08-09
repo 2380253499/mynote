@@ -2,7 +2,7 @@ package com.newnote.tools;
 
 import android.content.Context;
 
-import com.github.androidtools.rx.IOCallBack;
+import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.Loading;
 
 import rx.Subscriber;
@@ -11,7 +11,7 @@ import rx.Subscriber;
  * Created by Administrator on 2017/7/7.
  */
 
-public abstract class MyIOCallBack<T> extends IOCallBack<T>{
+public abstract class MyIOCallBack<T> extends IOCallBack<T> {
     public MyIOCallBack(Context context) {
         Loading.show(context);
     }
