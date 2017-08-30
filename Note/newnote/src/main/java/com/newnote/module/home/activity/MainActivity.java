@@ -2,6 +2,7 @@ package com.newnote.module.home.activity;
 
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -53,6 +54,8 @@ public class MainActivity extends BaseActivity {
     View view_backgroud;
     @BindView(R.id.iv_banner)
     ImageView iv_banner;
+//    @BindView(R.id.toolbar_main)
+    Toolbar toolbar_main;
     private AccountFragment accountFragment;
     private MemoFragment memoFragment;
     private JokeFragment jokeFragment;
@@ -72,9 +75,12 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
 //        tv_data_delete.setOnClickListener(this);
 //        tv_date_endselect.setOnClickListener(this);
+        toolbar_main= (Toolbar) findViewById(R.id.toolbar_main);
         Glide.with(this).load(R.drawable.zr5).crossFade(600).into(iv_banner);
+        setSupportActionBar(toolbar_main);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.drawer_menu);
-        getToolbar().setNavigationOnClickListener(new MyOnClickListener() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar_main.setNavigationOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
                 drawerlayout.openDrawer(Gravity.LEFT);
@@ -111,7 +117,6 @@ public class MainActivity extends BaseActivity {
                 hideFragment(memoFragment);
                 hideFragment(jokeFragment);
                 hideFragment(spendFragment);
-                setMenuHidden();
                 break;
             case R.id.rb_main_memo:
                 tabIndex = 1;
@@ -127,7 +132,6 @@ public class MainActivity extends BaseActivity {
                     hideFragment(jokeFragment);
                     hideFragment(spendFragment);
                 }
-                setMenuHidden();
                 break;
             case R.id.rb_main_joke:
                 tabIndex = 2;
@@ -143,7 +147,6 @@ public class MainActivity extends BaseActivity {
                     showFragment(jokeFragment);
                     hideFragment(spendFragment);
                 }
-                setMenuHidden();
                 break;
             case R.id.rb_main_spend:
                 tabIndex = 3;
@@ -159,18 +162,11 @@ public class MainActivity extends BaseActivity {
                     hideFragment(jokeFragment);
                     showFragment(spendFragment);
                 }
-                setMenuHidden();
                 break;
         }
 
     }
-    private void setMenuHidden() {
-        if(tabIndex==3){
-            setMenuVisible(0,false);
-        }else{
-            setMenuVisible(0);
-        }
-    }
+
     @Override
     protected void initData() {
 
@@ -180,18 +176,8 @@ public class MainActivity extends BaseActivity {
     public void onViewClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                STActivity(TestActivity.class);
                 break;
         }
     }
 
-    @Override
-    protected int setOptionsMenu() {
-        return 0;
-    }
-
-    @Override
-    protected void menuOnClick(int itemId) {
-
-    }
 }

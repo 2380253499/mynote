@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/25.
  */
-public class DBDBAccountImp extends BaseDao implements DBAccount {
-    public DBDBAccountImp(Context context) {
+public class DBAccountImp extends BaseDao implements DBAccount {
+    public DBAccountImp(Context context) {
         super(context);
     }
     @Override

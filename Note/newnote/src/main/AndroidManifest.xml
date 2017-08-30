@@ -28,7 +28,6 @@
         <activity android:name=".module.gesture.activity.SuperPassWordActivity" />
 
 
-        <activity android:name="com.newnote.module.home.activity.TestActivity" />
     </application>
 
 </manifest>

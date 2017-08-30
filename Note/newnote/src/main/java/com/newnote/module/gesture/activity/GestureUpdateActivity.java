@@ -53,10 +53,6 @@ public class GestureUpdateActivity extends BaseActivity< GestureCon.Presenter> i
 	}
 
 	@Override
-	protected int setOptionsMenu() {
-		return 0;
-	}
-	@Override
 	protected void initView() {
 		tv_forget_oldpwd.setOnClickListener(this);
 		//@string/set_gesture_pattern
@@ -90,10 +86,6 @@ public class GestureUpdateActivity extends BaseActivity< GestureCon.Presenter> i
 		}
 	}
 
-	@Override
-	protected void menuOnClick(int itemId) {
-
-	}
 
 	@Override
 	public void pwdValidationSuccess() {

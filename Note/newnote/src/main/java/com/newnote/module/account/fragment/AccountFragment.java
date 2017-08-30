@@ -12,14 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.adapter.LoadMoreLAdapter;
+import com.github.baseclass.adapter.ListLoadAdapter;
 import com.github.baseclass.view.MyPopupwindow;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
 import com.newnote.module.account.adapter.AccountAdapter;
 import com.newnote.module.account.entity.AccountBean;
-import com.newnote.module.account.fragment.contract.AccountCon;
-import com.newnote.module.account.fragment.contract.imp.AccountImp;
+import com.newnote.module.account.contract.AccountCon;
+import com.newnote.module.account.contract.imp.AccountImp;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/7/4.
  */
 
-public class AccountFragment extends BaseFragment<AccountCon.Presenter> implements AccountCon.View,LoadMoreLAdapter.OnLoadMoreListener{
+public class AccountFragment extends BaseFragment<AccountCon.Presenter> implements AccountCon.View,ListLoadAdapter.OnLoadMoreListener{
     @BindView(R.id.et_search_account)
     EditText et_search_account;
 
@@ -39,7 +39,7 @@ public class AccountFragment extends BaseFragment<AccountCon.Presenter> implemen
     private AccountBean accountBean;
     private AccountAdapter accountAdapter;
 
-    private boolean orderByCreateTime=true;
+    private boolean orderByCreateTime;
     private String searchInfo;
 
     public static AccountFragment newInstance() {
@@ -101,13 +101,12 @@ public class AccountFragment extends BaseFragment<AccountCon.Presenter> implemen
     }
     @Override
     protected void initData() {
-        accountAdapter=new AccountAdapter(getActivity(),R.layout.item_account,lv_account_list,pageSize);
-        mPresenter.getAccountList(1,null,true);
+        accountAdapter=new AccountAdapter(getActivity(),lv_account_list,R.layout.item_account,pageSize);
+        mPresenter.getAccountList(1,null,orderByCreateTime);
     }
 
     @Override
     protected void onViewClick(View v) {
-        super.onViewClick(v);
         switch (v.getId()){
             case R.id.tv_menu_copyAccount:
                 mPopupwindow.dismiss();

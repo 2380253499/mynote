@@ -1,6 +1,7 @@
 package com.newnote.module.joke.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.baseclass.BasePresenter;
 import com.newnote.base.BaseFragment;
@@ -34,6 +35,11 @@ public class JokeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void onViewClick(View v) {
 
     }
 }

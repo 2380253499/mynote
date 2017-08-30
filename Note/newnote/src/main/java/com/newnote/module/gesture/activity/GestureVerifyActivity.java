@@ -61,10 +61,6 @@ public class GestureVerifyActivity extends BaseActivity< GestureCon.Presenter> i
 		setAppTitle("输入手势密码");
 		return R.layout.activity_gesture_verify;
 	}
-	@Override
-	protected int setOptionsMenu() {
-		return 0;
-	}
 
 	@Override
 	protected void initView() {
@@ -95,10 +91,6 @@ public class GestureVerifyActivity extends BaseActivity< GestureCon.Presenter> i
 			STActivity(MainActivity.class);
 			finish();
 		}
-	}
-	@Override
-	protected void menuOnClick(int itemId) {
-
 	}
 	private void setUpViews() {
 		// 初始化一个显示各个点的viewGroup

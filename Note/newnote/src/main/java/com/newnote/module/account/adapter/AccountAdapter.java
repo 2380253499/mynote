@@ -6,7 +6,7 @@ import android.text.Html;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
-import com.github.baseclass.adapter.LoadMoreLAdapter;
+import com.github.baseclass.adapter.ListLoadAdapter;
 import com.github.baseclass.adapter.ViewHolder;
 import com.newnote.R;
 import com.newnote.module.account.entity.AccountBean;
@@ -15,9 +15,9 @@ import com.newnote.module.account.entity.AccountBean;
  * Created by Administrator on 2017/7/7.
  */
 
-public class AccountAdapter extends LoadMoreLAdapter<AccountBean> {
-    public AccountAdapter(Context context, int itemLayoutId, ListView listView, int pageSize) {
-        super(context, itemLayoutId, listView, pageSize);
+public class AccountAdapter extends ListLoadAdapter<AccountBean> {
+    public AccountAdapter(Context context, ListView listView,int itemLayoutId,  int pageSize) {
+        super(context, listView, itemLayoutId, pageSize);
     }
     private String searchInfo;
     @Override
@@ -34,6 +34,7 @@ public class AccountAdapter extends LoadMoreLAdapter<AccountBean> {
             dataAccountHTML= getSearchColorString(item.getDataAccount());
             dataSourceHTML=  getSearchColorString(item.getDataSource());
         }
+
 
         final CheckBox cb_check = helper.getView(R.id.cb_check);
         helper.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position)

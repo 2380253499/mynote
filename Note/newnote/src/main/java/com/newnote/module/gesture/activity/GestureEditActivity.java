@@ -48,10 +48,6 @@ public class GestureEditActivity extends BaseActivity< GestureCon.Presenter> imp
 	}
 
 	@Override
-	protected int setOptionsMenu() {
-		return 0;
-	}
-	@Override
 	protected void initView() {
 		boolean isUpdatePwd = getIntent().getBooleanExtra(Constant.Gesture.isUpdatePwd, false);
 		if(!isUpdatePwd){
@@ -85,10 +81,6 @@ public class GestureEditActivity extends BaseActivity< GestureCon.Presenter> imp
 		}
 	}
 
-	@Override
-	protected void menuOnClick(int itemId) {
-
-	}
 	@Override
 	public void onBackPressed() {
 		if ((System.currentTimeMillis() - mExitTime) > 1500) {

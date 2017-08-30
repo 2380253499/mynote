@@ -1,4 +1,4 @@
-package com.newnote.module.account.fragment.contract;
+package com.newnote.module.account.contract;
 
 import com.github.baseclass.BasePresenter;
 import com.github.baseclass.BaseView;

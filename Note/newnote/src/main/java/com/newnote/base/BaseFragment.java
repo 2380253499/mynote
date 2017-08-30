@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.github.androidtools.ClickUtils;
 import com.github.baseclass.BasePresenter;
 import com.github.baseclass.fragment.IBaseFragment;
+import com.github.baseclass.rx.RxBus;
 import com.newnote.database.DBManager;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,13 +24,20 @@ import butterknife.Unbinder;
 public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragment implements View.OnClickListener {
     protected P mPresenter;
     protected abstract P initPresenter();
+    /************************************************************/
+    protected int pageNum=2;
+    protected int pageSize=DBManager.pageSize;
+
+    private boolean isFirstLoadData=true;
+    private boolean isPrepared;
+    /************************************************/
     protected abstract int getContentView();
     protected abstract void initView();
     protected abstract void initData();
-    protected int pageNum=2;
-    protected int pageSize= DBManager.pageSize;
+    protected abstract void onViewClick(View v);
+    protected void initRxBus(){};
     protected Unbinder mUnBind;
-    /************************************************************/
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,18 +53,22 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
             mPresenter.attach(this);
         }
         initView();
-        initData();
+        initRxBus();
+        isPrepared=true;
+        setUserVisibleHint(true);
     }
-    protected void onViewClick(View v) {
-        /*if(!ClickUtils.isFastClick(v)){
-            viewOnClick(v);
-        }*/
-    }
-
     @Override
     public void onClick(View v) {
         if(!ClickUtils.isFastClick(v)){
             onViewClick(v);
+        }
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isFirstLoadData&&isPrepared&&getUserVisibleHint()&&isVisibleToUser){
+            initData();
+            isFirstLoadData=false;
         }
     }
     protected String getSStr(View view){
@@ -73,5 +87,12 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
             mPresenter.detach();
         }
         mUnBind.unbind();
+        RxBus.getInstance().removeAllStickyEvents();
+    }
+    protected boolean isEmpty(List list){
+        return list == null || list.size() == 0;
+    }
+    protected boolean notEmpty(List list){
+        return !(list == null || list.size() == 0);
     }
 }

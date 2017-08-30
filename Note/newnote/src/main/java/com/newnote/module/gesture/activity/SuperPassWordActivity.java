@@ -45,10 +45,6 @@ public class SuperPassWordActivity extends BaseActivity {
 	}
 
 	@Override
-	protected int setOptionsMenu() {
-		return 0;
-	}
-	@Override
 	protected void initView() {
 
 		tv_copy_qq.setOnClickListener(this);
@@ -128,9 +124,5 @@ public class SuperPassWordActivity extends BaseActivity {
 		if("C42B3BFE89".equalsIgnoreCase(AES.encode("201611251703note").substring(0,10))){
 			System.out.println("true");
 		}
-	}
-	@Override
-	protected void menuOnClick(int itemId) {
-
 	}
 }
