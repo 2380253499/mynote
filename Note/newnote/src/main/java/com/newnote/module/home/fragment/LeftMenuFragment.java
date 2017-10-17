@@ -12,16 +12,17 @@ import com.github.androidtools.AES;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.BasePresenter;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
+import com.newnote.module.home.contract.MainCon;
+import com.newnote.module.home.contract.imp.MainImp;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
 
-public class LeftMenuFragment extends BaseFragment {
+public class LeftMenuFragment extends BaseFragment<MainImp> implements MainCon.View{
     @BindView(R.id.nav_container)
     NavigationView nav_container;
 
@@ -34,8 +35,8 @@ public class LeftMenuFragment extends BaseFragment {
     private int clickNum;
     private int secretNum;
     @Override
-    protected BasePresenter initPresenter() {
-        return null;
+    protected MainImp initPresenter() {
+        return new MainImp(mContext);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class LeftMenuFragment extends BaseFragment {
         nav_container.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-//                mPresenter.itemClick(item.getItemId());
+                mPresenter.itemClick(item.getItemId());
                 return false;
             }
         });
@@ -149,4 +150,6 @@ public class LeftMenuFragment extends BaseFragment {
         String encode = AES.encode(strMinute);
         return encode.substring(0,10);
     }
+
+
 }

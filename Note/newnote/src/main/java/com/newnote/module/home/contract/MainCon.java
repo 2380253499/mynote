@@ -13,5 +13,6 @@ public interface MainCon {
     }
     interface Presenter extends BasePresenter<View>{
 
+        void itemClick(int itemId);
     }
 }

@@ -21,7 +21,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/7/4.
  */
 
-public class MemoFragment extends BaseFragment<MemoCon.Presenter> implements MemoCon.View,ListLoadAdapter.OnLoadMoreListener{
+public class MemoFragment extends BaseFragment<MemoImp> implements MemoCon.View,ListLoadAdapter.OnLoadMoreListener{
     @BindView(R.id.et_search_memo)
     EditText et_search_memo;
     @BindView(R.id.lv_memo_list)

@@ -29,7 +29,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/7/4.
  */
 
-public class AccountFragment extends BaseFragment<AccountCon.Presenter> implements AccountCon.View,ListLoadAdapter.OnLoadMoreListener{
+public class AccountFragment extends BaseFragment<AccountImp> implements AccountCon.View,ListLoadAdapter.OnLoadMoreListener{
     @BindView(R.id.et_search_account)
     EditText et_search_account;
 

@@ -13,6 +13,7 @@ import com.github.baseclass.fragment.IBaseFragment;
 import com.github.baseclass.rx.RxBus;
 import com.newnote.database.DBManager;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -45,10 +46,21 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
         mUnBind = ButterKnife.bind(this, view);
         return view;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter= initPresenter();
+//        mPresenter= initPresenter();
+        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class<P> clazz = (Class<P>) pt.getActualTypeArguments()[0];
+// 通过反射创建model的实例
+        try {
+            mPresenter= clazz.newInstance();
+//            clazz.getConstructor()
+        } catch (Exception e) {
+//            mPresenter= initPresenter();
+            e.printStackTrace();
+        }
         if(mPresenter!=null){
             mPresenter.attach(this);
         }
