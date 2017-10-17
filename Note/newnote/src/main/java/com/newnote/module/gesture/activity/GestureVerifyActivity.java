@@ -24,7 +24,7 @@ import butterknife.BindView;
  * 手势绘制/校验界面
  *
  */
-public class GestureVerifyActivity extends BaseActivity< GestureCon.Presenter> implements GestureCon.View{
+public class GestureVerifyActivity extends BaseActivity<GestureCon.Presenter> implements GestureCon.View{
 	@BindView(R.id.iv_logo)
 	ImageView iv_logo;
 	@BindView(R.id.tv_phone_number)
@@ -64,7 +64,8 @@ public class GestureVerifyActivity extends BaseActivity< GestureCon.Presenter> i
 
 	@Override
 	protected void initView() {
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		hiddenBackIcon();
+//		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		setUpViews();
 		tv_forget_gesture.setOnClickListener(this);
 	}

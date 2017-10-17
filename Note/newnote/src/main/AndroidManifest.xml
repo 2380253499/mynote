@@ -25,7 +25,7 @@
         <!--修改密码-->
         <activity android:name=".module.gesture.activity.GestureUpdateActivity" />
         <!--超级密码-->
-        <activity android:name=".module.gesture.activity.SuperPassWordActivity" />
+        <activity android:name=".module.gesture.activity.SuperPassWordActivity" android:windowSoftInputMode="adjustNothing"/>
 
 
     </application>

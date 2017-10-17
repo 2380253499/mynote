@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -37,25 +38,21 @@ public class SuperPassWordActivity extends BaseActivity {
 	protected BasePresenter initPresenter() {
 		return null;
 	}
-
 	@Override
 	protected int getContentView() {
 		setAppTitle("超级密码");
 		return R.layout.activity_super_passwork;
 	}
-
 	@Override
 	protected void initView() {
 
-		tv_copy_qq.setOnClickListener(this);
-		tv_submit_pwd.setOnClickListener(this);
 	}
 
 	@Override
 	protected void initData() {
 
 	}
-	@Override
+	@OnClick({R.id.tv_copy_qq,R.id.tv_submit_pwd})
 	public void onViewClick(View v) {
 		switch (v.getId()) {
 			case R.id.tv_copy_qq:

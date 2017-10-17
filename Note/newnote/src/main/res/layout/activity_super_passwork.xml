@@ -4,7 +4,6 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/white"
               android:orientation="vertical"
-              android:fitsSystemWindows="true"
     >
 <include layout="@layout/app_title"/>
     <LinearLayout
