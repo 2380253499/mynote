@@ -49,10 +49,13 @@ public class GestureImp extends IPresenter<GestureCon.View> implements GestureCo
     private Timer timer;
     private TimerTask tt_task;
     private GestureContentView gestureContentView;
-    public GestureImp(Context context) {
-        super(context);
+    public GestureImp( ) {
         errorNum=countErrorNum;
         countDown=countDownLength;
+    }
+    @Override
+    public void initContext(Context context) {
+
     }
 
     @Override

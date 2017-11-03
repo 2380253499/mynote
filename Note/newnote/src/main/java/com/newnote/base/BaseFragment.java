@@ -8,12 +8,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.androidtools.ClickUtils;
-import com.github.baseclass.BasePresenter;
+import com.github.baseclass.IPresenter;
 import com.github.baseclass.fragment.IBaseFragment;
 import com.github.baseclass.rx.RxBus;
 import com.newnote.database.DBManager;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -22,9 +23,11 @@ import butterknife.Unbinder;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragment implements View.OnClickListener {
+public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment implements View.OnClickListener {
     protected P mPresenter;
-    protected abstract P initPresenter();
+    protected P initPresenter(){
+        return null;
+    };
     /************************************************************/
     protected int pageNum=2;
     protected int pageSize=DBManager.pageSize;
@@ -46,22 +49,35 @@ public abstract class BaseFragment <P extends BasePresenter> extends IBaseFragme
         mUnBind = ButterKnife.bind(this, view);
         return view;
     }
-
+    private void getPresenter(){
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if(genericSuperclass instanceof ParameterizedType){
+            //参数化类型
+            ParameterizedType parameterizedType= (ParameterizedType) genericSuperclass;
+            //返回表示此类型实际类型参数的 Type 对象的数组
+            Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            try {
+                mPresenter=((Class<P>)actualTypeArguments[0]).newInstance();
+            } catch (java.lang.InstantiationException e) {
+                mPresenter=null;
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                mPresenter=null;
+                e.printStackTrace();
+            }
+        }else{
+            mPresenter=null;
+        }
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        mPresenter= initPresenter();
-        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
-        Class<P> clazz = (Class<P>) pt.getActualTypeArguments()[0];
-// 通过反射创建model的实例
-        try {
-            mPresenter= clazz.newInstance();
-//            clazz.getConstructor()
-        } catch (Exception e) {
-//            mPresenter= initPresenter();
-            e.printStackTrace();
+        getPresenter();
+        if (initPresenter() != null) {
+            mPresenter= initPresenter();
         }
         if(mPresenter!=null){
+            mPresenter.setContext(mContext);
             mPresenter.attach(this);
         }
         initView();

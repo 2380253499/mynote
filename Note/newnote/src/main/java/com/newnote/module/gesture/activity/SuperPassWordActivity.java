@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.github.androidtools.AES;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.BasePresenter;
 import com.newnote.R;
 import com.newnote.base.BaseActivity;
 
@@ -34,10 +33,7 @@ public class SuperPassWordActivity extends BaseActivity {
 	@BindView(R.id.tv_copy_qq)
 	TextView tv_copy_qq;
 
-	@Override
-	protected BasePresenter initPresenter() {
-		return null;
-	}
+
 	@Override
 	protected int getContentView() {
 		setAppTitle("超级密码");

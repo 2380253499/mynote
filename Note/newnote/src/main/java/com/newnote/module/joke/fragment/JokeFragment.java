@@ -3,7 +3,6 @@ package com.newnote.module.joke.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.github.baseclass.BasePresenter;
 import com.newnote.base.BaseFragment;
 
 /**
@@ -18,10 +17,7 @@ public class JokeFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-    @Override
-    protected BasePresenter initPresenter() {
-        return null;
-    }
+
 
     @Override
     protected int getContentView() {

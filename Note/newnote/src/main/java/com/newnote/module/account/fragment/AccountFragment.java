@@ -48,10 +48,12 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
         fragment.setArguments(args);
         return fragment;
     }
-    @Override
+
+    /*@Override
     protected AccountImp initPresenter() {
         return new AccountImp(mContext);
-    }
+    }*/
+
     @Override
     protected int getContentView() {
         return R.layout.fragment_account;

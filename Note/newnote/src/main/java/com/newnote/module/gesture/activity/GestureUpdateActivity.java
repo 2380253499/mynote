@@ -23,7 +23,7 @@ import butterknife.BindView;
  * 修改手势密码界面
  *
  */
-public class GestureUpdateActivity extends BaseActivity< GestureCon.Presenter> implements GestureCon.View{
+public class GestureUpdateActivity extends BaseActivity<GestureImp> implements GestureCon.View{
 
 	@BindView(R.id.lock_indicator)
 	LockIndicator mLockIndicator;
@@ -39,7 +39,7 @@ public class GestureUpdateActivity extends BaseActivity< GestureCon.Presenter> i
 
 	@Override
 	protected GestureImp initPresenter() {
-		return new GestureImp(this);
+		return new GestureImp( );
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

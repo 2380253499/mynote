@@ -5,7 +5,6 @@ import com.github.androidtools.DateUtils;
 
 import org.junit.Test;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,10 +20,11 @@ public class ExampleUnitTest {
     }
     @Test
     public void getPWD() throws Exception {
-        A a = new A();
-        A a1 = a.getA();
-        System.out.println(a1.b);
-        superPWD();
+//        superPWD();
+//        com.newnote.A a = new MyTest<com.newnote.A>().getA();
+//        System.out.println(a.b);
+        MyTest t=new MyTest();
+        t.getA();
     }
 
     public abstract class  A<T extends A >{
@@ -32,20 +32,6 @@ public class ExampleUnitTest {
         public A a;
 
         public A( ) {
-        }
-
-        public   T getA(){
-/*//            ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
-            Class<T> clazz = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-//            Class<T> clazz =      (Class<T>) pt.getActualTypeArguments()[0];
-            T  mPresenter= null;
-            try {
-                mPresenter = clazz.newInstance();
-                mPresenter.b="aa";
-            } catch ( Exception e) {
-                e.printStackTrace();
-            }*/
-            return GenericsUtils.getSuperClassGenricType(this, 0);;
         }
     }
     public void superPWD(){

@@ -13,6 +13,7 @@ import com.newnote.module.memo.contract.MemoCon;
 import com.newnote.module.memo.contract.imp.MemoImp;
 import com.newnote.module.memo.entity.MemoBean;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,7 +41,7 @@ public class MemoFragment extends BaseFragment<MemoImp> implements MemoCon.View,
     }
     @Override
     protected MemoImp initPresenter() {
-        return new MemoImp(mContext);
+        return new MemoImp( );
     }
 
     @Override
@@ -50,6 +51,7 @@ public class MemoFragment extends BaseFragment<MemoImp> implements MemoCon.View,
 
     @Override
     protected void initView() {
+        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
 
     }
 

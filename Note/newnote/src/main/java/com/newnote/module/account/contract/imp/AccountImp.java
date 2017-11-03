@@ -3,9 +3,9 @@ package com.newnote.module.account.contract.imp;
 import android.content.Context;
 
 import com.github.baseclass.IPresenter;
+import com.newnote.module.account.contract.AccountCon;
 import com.newnote.module.account.dao.DBAccountImp;
 import com.newnote.module.account.entity.AccountBean;
-import com.newnote.module.account.contract.AccountCon;
 import com.newnote.tools.MyIOCallBack;
 
 import java.util.List;
@@ -18,11 +18,12 @@ import rx.Subscriber;
 
 public class AccountImp extends IPresenter<AccountCon.View> implements AccountCon.Presenter {
     DBAccountImp dbAccountImp;
-    public AccountImp(Context context) {
-        super(context);
+    public AccountImp( ) {
+    }
+    @Override
+    public void initContext(Context context) {
         dbAccountImp=new DBAccountImp(context);
     }
-
     @Override
     public void getAccountList(final int page,String search,boolean orderByCreateTime) {
         getAccountList(page,search,orderByCreateTime,false);

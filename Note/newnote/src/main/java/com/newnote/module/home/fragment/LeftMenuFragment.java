@@ -36,7 +36,7 @@ public class LeftMenuFragment extends BaseFragment<MainImp> implements MainCon.V
     private int secretNum;
     @Override
     protected MainImp initPresenter() {
-        return new MainImp(mContext);
+        return new MainImp( );
     }
 
     @Override

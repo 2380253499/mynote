@@ -10,8 +10,13 @@ import com.newnote.module.memo.contract.MemoCon;
  */
 
 public class MemoImp extends IPresenter<MemoCon.View> implements MemoCon.Presenter {
-    public MemoImp(Context context) {
-        super(context);
+    public MemoImp( ) {
+
+    }
+
+    @Override
+    public void initContext(Context context) {
+
     }
 
     @Override

@@ -25,7 +25,6 @@ public class DBMemoImp extends BaseDao implements DBMemo {
     public List<MemoBean> selectMemo(int page) {
         return selectMemo(page,null, true);
     }
-
     @Override
     public List<MemoBean> selectMemo(int page, String searchInfo, boolean isOrderByCreateTime) {
         return selectMemo(page,searchInfo, isOrderByCreateTime,getWritableDatabase());

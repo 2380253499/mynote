@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.BasePresenter;
+import com.github.baseclass.view.Loading;
 import com.github.customview.MyRadioButton;
 import com.newnote.R;
 import com.newnote.base.BaseActivity;
@@ -62,10 +62,7 @@ public class MainActivity extends BaseActivity {
     private SpendFragment spendFragment;
     private int tabIndex=0;
 
-    @Override
-    protected BasePresenter initPresenter() {
-        return null;
-    }
+
     @Override
     protected int getContentView() {
         setAppTitle(getString(R.string.title_note));
@@ -176,6 +173,7 @@ public class MainActivity extends BaseActivity {
     public void onViewClick(View v) {
         switch (v.getId()){
             case R.id.fab:
+                Loading.show(mContext);
                 break;
         }
     }

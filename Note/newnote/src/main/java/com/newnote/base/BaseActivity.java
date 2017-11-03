@@ -20,12 +20,14 @@ import com.github.androidtools.ClickUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.StatusBarUtils;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.BasePresenter;
+import com.github.baseclass.IPresenter;
 import com.github.baseclass.activity.IBaseActivity;
 import com.newnote.R;
 import com.newnote.database.DBManager;
 import com.newnote.module.home.activity.MainActivity;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Random;
 
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivity implements View.OnClickListener{
+public abstract class BaseActivity<P extends IPresenter> extends IBaseActivity implements View.OnClickListener{
     /*************************************************/
     protected Toolbar toolbar;
     private boolean showNavigationIcon =true;
@@ -63,7 +65,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
     protected long mExitTime;
     /************************************************************/
     protected P mPresenter;
-    protected abstract P initPresenter();
+    protected P initPresenter(){
+        return null;
+    };
 
     protected void setAppTitle(String title){
         appTitle=title;
@@ -107,7 +111,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         }
         setTheme(R.style.AppTheme_NoActionBar);
         mContext=this;
-        setContentView(getContentView());
+        if(getContentView()!=0){
+            setContentView(getContentView());
+            ButterKnife.bind(this);
+        }
         if(Build.VERSION.SDK_INT< Build.VERSION_CODES.LOLLIPOP){
 //            StatusBarUtils.setTransparent(this);
             if(!(mContext instanceof MainActivity)){
@@ -117,7 +124,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
 
         }
 
-        ButterKnife.bind(this);
         if(null!=findViewById(R.id.status_bar)){
             status_bar = findViewById(R.id.status_bar);
             int statusBarHeight = StatusBarUtils.getStatusBarHeight(this);
@@ -183,8 +189,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
             pl_load = (ProgressLayout) findViewById(R.id.pl_load);
             pl_load.setInter(this);
         }*/
-        mPresenter= initPresenter();
+        getPresenter();
+        if (initPresenter() != null) {
+//            mPresenter.se
+            mPresenter=initPresenter();
+        }
         if(mPresenter!=null){
+            mPresenter.setContext(mContext);
             mPresenter.attach( this);
         }
         setInput();
@@ -201,7 +212,26 @@ public abstract class BaseActivity<P extends BasePresenter> extends IBaseActivit
         }
         initData();
     }
-
+    private void getPresenter(){
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if(genericSuperclass instanceof ParameterizedType){
+            //参数化类型
+            ParameterizedType parameterizedType= (ParameterizedType) genericSuperclass;
+            //返回表示此类型实际类型参数的 Type 对象的数组
+            Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            try {
+                mPresenter=((Class<P>)actualTypeArguments[0]).newInstance();
+            } catch (java.lang.InstantiationException e) {
+                mPresenter=null;
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                mPresenter=null;
+                e.printStackTrace();
+            }
+        }else{
+            mPresenter=null;
+        }
+    }
     protected void setBackIcon(int resId){
         navigationIcon=resId;
     }

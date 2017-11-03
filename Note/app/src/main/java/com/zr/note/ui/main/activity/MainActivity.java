@@ -22,7 +22,6 @@ import com.zr.note.R;
 import com.zr.note.base.BaseActivity;
 import com.zr.note.inter.MyOnClickListener;
 import com.zr.note.tools.PhoneUtils;
-import com.zr.note.ui.constant.IntentParam;
 import com.zr.note.ui.constant.RxTag;
 import com.zr.note.ui.main.activity.contract.MainContract;
 import com.zr.note.ui.main.activity.contract.imp.MainImp;
@@ -31,6 +30,7 @@ import com.zr.note.ui.main.fragment.JokeFragment;
 import com.zr.note.ui.main.fragment.MemoFragment;
 import com.zr.note.ui.main.fragment.SpendFragment;
 import com.zr.note.ui.main.inter.DateInter;
+import com.zr.note.view.Loading;
 import com.zr.note.view.MyPopupwindow;
 
 import butterknife.BindView;
@@ -284,6 +284,7 @@ public class MainActivity extends BaseActivity< MainContract.Presenter> implemen
                 }
                 break;
             case R.id.fab:
+                Loading.show(mContext);
                 /*List<Integer>list=new ArrayList<>();
                 list.add(3);
                 list.add(2);
@@ -301,8 +302,8 @@ public class MainActivity extends BaseActivity< MainContract.Presenter> implemen
                 for (int i = 0; i < list.size(); i++) {
                     Log.i("===","==="+list.get(i));
                 }*/
-                mIntent.putExtra(IntentParam.tabIndex, tabIndex);
-                STActivity(mIntent, AddDataActivity.class);
+//                mIntent.putExtra(IntentParam.tabIndex, tabIndex);
+//                STActivity(mIntent, AddDataActivity.class);
 //                STActivity(mIntent, AddSecretActivity.class);
                 break;
             case R.id.tv_orderBy_create:

@@ -11,10 +11,13 @@ import com.newnote.module.home.contract.MainCon;
  */
 
 public class MainImp extends IPresenter<MainCon.View> implements MainCon.Presenter{
-    public MainImp(Context context) {
-        super(context);
-    }
+    public MainImp( ) {
 
+    }
+    @Override
+    public void initContext(Context context) {
+
+    }
     @Override
     public void itemClick(int itemId) {
         Log.i("===","===");
