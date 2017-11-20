@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.github.androidtools.ClickUtils;
 import com.github.baseclass.IPresenter;
+import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.fragment.IBaseFragment;
 import com.github.baseclass.rx.RxBus;
 import com.newnote.database.DBManager;
+import com.newnote.module.home.inter.OnAgainInter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -23,7 +25,7 @@ import butterknife.Unbinder;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment implements View.OnClickListener {
+public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment implements View.OnClickListener,LoadMoreAdapter.OnLoadMoreListener,OnAgainInter {
     protected P mPresenter;
     protected P initPresenter(){
         return null;
@@ -41,7 +43,7 @@ public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment 
     protected abstract void onViewClick(View v);
     protected void initRxBus(){};
     protected Unbinder mUnBind;
-
+    protected LoadMoreAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +87,12 @@ public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment 
         isPrepared=true;
         setUserVisibleHint(true);
     }
+
+    @Override
+    public void again() {
+        initData();
+    }
+
     @Override
     public void onClick(View v) {
         if(!ClickUtils.isFastClick(v)){
@@ -122,5 +130,10 @@ public abstract class BaseFragment <P extends IPresenter> extends IBaseFragment 
     }
     protected boolean notEmpty(List list){
         return !(list == null || list.size() == 0);
+    }
+
+    @Override
+    public void loadMore() {
+
     }
 }

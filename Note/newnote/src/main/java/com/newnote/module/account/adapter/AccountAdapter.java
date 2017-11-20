@@ -2,12 +2,12 @@ package com.newnote.module.account.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.widget.CheckBox;
-import android.widget.ListView;
 
-import com.github.baseclass.adapter.ListLoadAdapter;
-import com.github.baseclass.adapter.ViewHolder;
+import com.github.baseclass.adapter.LoadMoreAdapter;
+import com.github.baseclass.adapter.LoadMoreViewHolder;
 import com.newnote.R;
 import com.newnote.module.account.entity.AccountBean;
 
@@ -15,33 +15,14 @@ import com.newnote.module.account.entity.AccountBean;
  * Created by Administrator on 2017/7/7.
  */
 
-public class AccountAdapter extends ListLoadAdapter<AccountBean> {
-    public AccountAdapter(Context context, ListView listView,int itemLayoutId,  int pageSize) {
-        super(context, listView, itemLayoutId, pageSize);
-    }
+public class AccountAdapter extends LoadMoreAdapter<AccountBean> {
+
     private String searchInfo;
-    @Override
-    public void convert(final ViewHolder helper,final AccountBean item) {
-        int countLength = String.valueOf(getCount()).length();
-        int position=helper.getPosition()+1;
-        StringBuffer stringBuffer=new StringBuffer();
-        for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
-            stringBuffer.append("0");
-        }
-        String dataAccountHTML=item.getDataAccount();
-        String dataSourceHTML=item.getDataSource();
-        if(searchInfo!=null){//关键字搜索变色
-            dataAccountHTML= getSearchColorString(item.getDataAccount());
-            dataSourceHTML=  getSearchColorString(item.getDataSource());
-        }
 
-
-        final CheckBox cb_check = helper.getView(R.id.cb_check);
-        helper.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position)
-                .setText(R.id.tv_source, Html.fromHtml(dataSourceHTML))
-                .setText(R.id.tv_account,Html.fromHtml(dataAccountHTML));
-
+    public AccountAdapter(Context mContext, int layoutId, int pageSize, NestedScrollView nestedScrollView) {
+        super(mContext, layoutId, pageSize, nestedScrollView);
     }
+
     public void setSearchInfo(String info) {
         searchInfo=info;
     }
@@ -56,5 +37,25 @@ public class AccountAdapter extends ListLoadAdapter<AccountBean> {
         }
         dataContentHTML=  dataContent.toString();
         return dataContentHTML;
+    }
+
+    @Override
+    public void bindData(LoadMoreViewHolder holder, int position, AccountBean item) {
+        int countLength = String.valueOf(getItemCount()).length();
+        int index=position+1;
+        StringBuffer stringBuffer=new StringBuffer();
+        for (int i = 0; i < countLength-String.valueOf(index).length(); i++) {
+            stringBuffer.append("0");
+        }
+        String dataAccountHTML=item.getDataAccount();
+        String dataSourceHTML=item.getDataSource();
+        if(searchInfo!=null){//关键字搜索变色
+            dataAccountHTML= getSearchColorString(item.getDataAccount());
+            dataSourceHTML=  getSearchColorString(item.getDataSource());
+        }
+        final CheckBox cb_check = (CheckBox) holder.getView(R.id.cb_check);
+        holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + index)
+                .setText(R.id.tv_source, Html.fromHtml(dataSourceHTML)+"")
+                .setText(R.id.tv_account,Html.fromHtml(dataAccountHTML)+"");
     }
 }

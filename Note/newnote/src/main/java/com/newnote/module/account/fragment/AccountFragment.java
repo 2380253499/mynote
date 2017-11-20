@@ -1,25 +1,24 @@
 package com.newnote.module.account.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.adapter.ListLoadAdapter;
+import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.view.MyPopupwindow;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
 import com.newnote.module.account.adapter.AccountAdapter;
-import com.newnote.module.account.entity.AccountBean;
 import com.newnote.module.account.contract.AccountCon;
 import com.newnote.module.account.contract.imp.AccountImp;
+import com.newnote.module.account.entity.AccountBean;
 
 import java.util.List;
 
@@ -29,12 +28,14 @@ import butterknife.BindView;
  * Created by Administrator on 2017/7/4.
  */
 
-public class AccountFragment extends BaseFragment<AccountImp> implements AccountCon.View,ListLoadAdapter.OnLoadMoreListener{
+public class AccountFragment extends BaseFragment<AccountImp> implements AccountCon.View {
     @BindView(R.id.et_search_account)
     EditText et_search_account;
 
-    @BindView(R.id.lv_account_list)
-    ListView lv_account_list;
+    @BindView(R.id.rv_account)
+    RecyclerView rv_account;
+
+
 
     private AccountBean accountBean;
     private AccountAdapter accountAdapter;
@@ -48,12 +49,6 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
         fragment.setArguments(args);
         return fragment;
     }
-
-    /*@Override
-    protected AccountImp initPresenter() {
-        return new AccountImp(mContext);
-    }*/
-
     @Override
     protected int getContentView() {
         return R.layout.fragment_account;
@@ -69,23 +64,7 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
         tv_menu_deleteAccount.setOnClickListener(this);
 
         mPopupwindow = new MyPopupwindow(getActivity(), menu);
-        lv_account_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                accountBean = accountAdapter.getList().get(position);
-                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
-                return true;
-            }
-        });
-        lv_account_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*AccountBean accountBean = (AccountBean) parent.getItemAtPosition(position);
-                mIntent.putExtra(IntentParam.tabIndex, 0);
-                mIntent.putExtra(IntentParam.editAccount, accountBean);
-                STActivity(mIntent, AddDataActivity.class);*/
-            }
-        });
+
         et_search_account.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,11 +79,32 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
                 mPresenter.getAccountList(1,searchInfo,orderByCreateTime);
             }
         });
+
+
     }
     @Override
     protected void initData() {
-        accountAdapter=new AccountAdapter(getActivity(),lv_account_list,R.layout.item_account,pageSize);
+        accountAdapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,null);
+        accountAdapter.setOnLoadMoreListener(this);
+        accountAdapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                accountBean = accountAdapter.getList().get(position);
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
+            }
+        });
+        accountAdapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                /*AccountBean accountBean = (AccountBean) parent.getItemAtPosition(position);
+                mIntent.putExtra(IntentParam.tabIndex, 0);
+                mIntent.putExtra(IntentParam.editAccount, accountBean);
+                STActivity(mIntent, AddDataActivity.class);*/
+            }
+        });
         mPresenter.getAccountList(1,null,orderByCreateTime);
+        rv_account.setNestedScrollingEnabled(false);
+        rv_account.setAdapter(accountAdapter);
     }
 
     @Override
@@ -137,8 +137,8 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
         accountAdapter.setSearchInfo(searchInfo);
         if(page==1){
             this.pageNum=2;
-            accountAdapter.setList(item);
-            lv_account_list.setAdapter(accountAdapter);
+            accountAdapter.setList(item,true);
+//            lv_account_list.setAdapter(accountAdapter);
         }else{
             this.pageNum++;
             accountAdapter.addList(item,true);
