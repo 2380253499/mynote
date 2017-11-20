@@ -63,5 +63,7 @@ dependencies {
 
     compile(name: 'baseclass-debug', ext: 'aar')
     compile(name: 'androidutils', ext: 'aar')
+    //滚轮控件
+    compile(name: 'pickerview', ext: 'aar')
 
 }

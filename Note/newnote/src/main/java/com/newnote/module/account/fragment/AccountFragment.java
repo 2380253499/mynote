@@ -35,8 +35,6 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
     @BindView(R.id.rv_account)
     RecyclerView rv_account;
 
-
-
     private AccountBean accountBean;
     private AccountAdapter accountAdapter;
 
@@ -79,11 +77,6 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
                 mPresenter.getAccountList(1,searchInfo,orderByCreateTime);
             }
         });
-
-
-    }
-    @Override
-    protected void initData() {
         accountAdapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,null);
         accountAdapter.setOnLoadMoreListener(this);
         accountAdapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
@@ -102,9 +95,15 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
                 STActivity(mIntent, AddDataActivity.class);*/
             }
         });
-        mPresenter.getAccountList(1,null,orderByCreateTime);
         rv_account.setNestedScrollingEnabled(false);
         rv_account.setAdapter(accountAdapter);
+
+    }
+    @Override
+    protected void initData() {
+
+        mPresenter.getAccountList(1,null,orderByCreateTime);
+
     }
 
     @Override
@@ -138,7 +137,6 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
         if(page==1){
             this.pageNum=2;
             accountAdapter.setList(item,true);
-//            lv_account_list.setAdapter(accountAdapter);
         }else{
             this.pageNum++;
             accountAdapter.addList(item,true);

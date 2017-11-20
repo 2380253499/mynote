@@ -1,5 +1,6 @@
 package com.newnote.module.home.activity;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +14,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.view.Loading;
 import com.github.customview.MyRadioButton;
 import com.newnote.R;
 import com.newnote.base.BaseActivity;
 import com.newnote.module.account.fragment.AccountFragment;
+import com.newnote.module.home.Constant;
 import com.newnote.module.joke.fragment.JokeFragment;
 import com.newnote.module.memo.fragment.MemoFragment;
 import com.newnote.module.spend.fragment.SpendFragment;
@@ -173,7 +174,9 @@ public class MainActivity extends BaseActivity {
     public void onViewClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                Loading.show(mContext);
+                Intent intent=new Intent();
+                intent.putExtra(Constant.IParam.tabIndex, tabIndex);
+                STActivity(intent, AddDataActivity.class);
                 break;
         }
     }
