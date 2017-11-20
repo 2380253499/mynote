@@ -24,6 +24,23 @@ public class AccountImp extends IPresenter<AccountCon.View> implements AccountCo
     public void initContext(Context context) {
         dbAccountImp=new DBAccountImp(context);
     }
+
+    @Override
+    public void addOrEditAccount(AccountBean bean) {
+        mView.RXStart(new MyIOCallBack<String>(mContext) {
+            @Override
+            public void call(Subscriber sub) {
+
+                sub.onNext("添加成功");
+                sub.onCompleted();
+            }
+            @Override
+            public void onMyNext(String msg) {
+                mView.showMsg(msg);
+            }
+        });
+    }
+
     @Override
     public void getAccountList(final int page,String search,boolean orderByCreateTime) {
         getAccountList(page,search,orderByCreateTime,false);

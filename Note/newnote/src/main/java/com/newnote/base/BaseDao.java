@@ -10,6 +10,7 @@ import com.newnote.database.DBManager;
  */
 public abstract class BaseDao {
     protected Context mContext;
+    protected String TAG=this.getClass().getSimpleName();
     public BaseDao(Context context) {
         this.mContext=context;
     }

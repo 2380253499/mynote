@@ -8,13 +8,15 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyRadioButton;
 import com.newnote.R;
 import com.newnote.base.BaseActivity;
 import com.newnote.module.account.entity.AccountBean;
 import com.newnote.module.home.Constant;
-import com.newnote.module.home.fragment.AddAccountFragment;
+import com.newnote.module.home.event.AddDataEvent;
+import com.newnote.module.account.fragment.AddAccountFragment;
 import com.newnote.module.home.fragment.AddJokeFragment;
 import com.newnote.module.home.fragment.AddMemoFragment;
 import com.newnote.module.home.fragment.AddSpendFragment;
@@ -43,7 +45,7 @@ public class AddDataActivity extends BaseActivity {
     @BindView(R.id.bt_addData_save)
     Button bt_addData_save;
 
-    private int addDataInterIndex=0;
+    private int addDataIndex =0;
     private AddAccountFragment addAccountFragment;
     private AddMemoFragment addMemoFragment;
     private AddJokeFragment addJokeFragment;
@@ -62,13 +64,12 @@ public class AddDataActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        int tabIndex = getIntent().getIntExtra(Constant.IParam.tabIndex, 0);
+        addDataIndex = getIntent().getIntExtra(Constant.IParam.tabIndex, 0);
         accountBean= (AccountBean) getIntent().getSerializableExtra(Constant.IParam.editAccount);
         memoBean= (MemoBean) getIntent().getSerializableExtra(Constant.IParam.editMemoBean);
         jokeBean= (JokeBean) getIntent().getSerializableExtra(Constant.IParam.editJokeBean);
         spendBean= (SpendBean) getIntent().getSerializableExtra(Constant.IParam.editSpendBean);
-        addDataInterIndex=tabIndex;
-        setCheckDiffTab(tabIndex);
+        setCheckDiffTab(addDataIndex);
         bt_addData_clear.setOnClickListener(this);
         bt_addData_save.setOnClickListener(this);
         rg_addData.setOnCheckedChangeListener(getChangeListener());
@@ -107,7 +108,7 @@ public class AddDataActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.mrb_button0:
-                        addDataInterIndex=0;
+                        addDataIndex =0;
                         if (addAccountFragment == null) {
                             addAccountFragment = AddAccountFragment.newInstance();
                             addFragment(R.id.fl_fragment, addAccountFragment);
@@ -122,7 +123,7 @@ public class AddDataActivity extends BaseActivity {
                         }
                         break;
                     case R.id.mrb_button1:
-                        addDataInterIndex=1;
+                        addDataIndex =1;
                         if (addMemoFragment == null) {
                             addMemoFragment = AddMemoFragment.newInstance();
                             hideFragment(addAccountFragment);
@@ -137,7 +138,7 @@ public class AddDataActivity extends BaseActivity {
                         }
                         break;
                     case R.id.mrb_button2:
-                        addDataInterIndex=2;
+                        addDataIndex =2;
                         if (addJokeFragment == null) {
                             addJokeFragment = AddJokeFragment.newInstance();
                             hideFragment(addAccountFragment);
@@ -152,7 +153,7 @@ public class AddDataActivity extends BaseActivity {
                         }
                         break;
                     case R.id.mrb_button3:
-                        addDataInterIndex=3;
+                        addDataIndex =3;
                         if (addSpendFragment == null) {
                             addSpendFragment = AddSpendFragment.newInstance();
                             hideFragment(addAccountFragment);
@@ -186,6 +187,7 @@ public class AddDataActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        RxBus.getInstance().post(new AddDataEvent(addDataIndex,false));
                     }
                 });
                 mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
@@ -199,10 +201,8 @@ public class AddDataActivity extends BaseActivity {
                 break;
             case R.id.bt_addData_save:
                 PhoneUtils.hiddenKeyBoard(this);
+                RxBus.getInstance().post(new AddDataEvent(addDataIndex,true));
                 break;
         }
     }
-
-
-
 }

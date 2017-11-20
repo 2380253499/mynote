@@ -14,11 +14,14 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.StringUtils;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.github.customview.MyEditText;
 import com.github.customview.MyTextView;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
 import com.newnote.module.home.Constant;
+import com.newnote.module.home.event.AddDataEvent;
 import com.newnote.module.spend.entity.SpendBean;
 
 import java.util.Calendar;
@@ -175,6 +178,23 @@ public class AddSpendFragment extends BaseFragment {
             }
         });
 
+    }
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        RxBus.getInstance().getEvent(AddDataEvent.class, new MySubscriber<AddDataEvent>(){
+            @Override
+            public void onMyNext(AddDataEvent event) {
+                if(event.index!=3){
+                    return;
+                }
+                if (event.isAddData) {
+                    saveData();
+                }else{
+                    clearData();
+                }
+            }
+        });
     }
 
     @Override

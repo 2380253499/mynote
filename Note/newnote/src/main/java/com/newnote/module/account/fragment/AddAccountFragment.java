@@ -1,4 +1,4 @@
-package com.newnote.module.home.fragment;
+package com.newnote.module.account.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,14 +7,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
+import com.newnote.module.account.contract.imp.AccountImp;
 import com.newnote.module.account.entity.AccountBean;
 import com.newnote.module.home.Constant;
+import com.newnote.module.home.event.AddDataEvent;
 
 import butterknife.BindView;
 
-public class AddAccountFragment extends BaseFragment {
+public class AddAccountFragment extends BaseFragment<AccountImp> {
     @BindView(R.id.et_addData_source)
     EditText et_addData_source;
     @BindView(R.id.et_addData_user)
@@ -69,6 +73,24 @@ public class AddAccountFragment extends BaseFragment {
     }
 
     @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        RxBus.getInstance().getEvent(AddDataEvent.class, new MySubscriber<AddDataEvent>(){
+            @Override
+            public void onMyNext(AddDataEvent event) {
+                if(event.index!=0){
+                    return;
+                }
+                if (event.isAddData) {
+                    saveData();
+                }else{
+                    clearData();
+                }
+            }
+        });
+    }
+
+    @Override
     protected void initData() {
         accountBean = (AccountBean) getArguments().getSerializable(Constant.IParam.editAccount);
         if (accountBean != null) {
@@ -110,7 +132,7 @@ public class AddAccountFragment extends BaseFragment {
         }
     }
 
-    public boolean saveData() {
+    public void saveData() {
         String userStr = et_addData_user.getText().toString().trim();
         if (TextUtils.isEmpty(userStr)) {
             showToastS("账户不能为空");
@@ -125,13 +147,9 @@ public class AddAccountFragment extends BaseFragment {
             bean.setDataPassword(pwd);
             bean.setDataRemark(note);
             bean.set_id(isEdit ? accountBean.get_id() : -1);
-            boolean b =true;// mPresenter.addAccount(bean);
-            if (b) {
-                isPrePareSelectData = true;
-            }
-            return b;
+            mPresenter.addOrEditAccount(bean);
         }
-        return false;
+
     }
 
 
@@ -146,5 +164,6 @@ public class AddAccountFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
 
 }

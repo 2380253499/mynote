@@ -9,10 +9,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.github.customview.MyEditText;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
 import com.newnote.module.home.Constant;
+import com.newnote.module.home.event.AddDataEvent;
 import com.newnote.module.joke.entity.JokeBean;
 
 import butterknife.BindView;
@@ -92,6 +95,23 @@ public class AddJokeFragment extends BaseFragment   {
                 return false;
             }
         });*/
+    }
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        RxBus.getInstance().getEvent(AddDataEvent.class, new MySubscriber<AddDataEvent>(){
+            @Override
+            public void onMyNext(AddDataEvent event) {
+                if(event.index!=2){
+                    return;
+                }
+                if (event.isAddData) {
+                    saveData();
+                }else{
+                    clearData();
+                }
+            }
+        });
     }
 
     @Override

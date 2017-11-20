@@ -1,23 +1,27 @@
 package com.newnote.module.account.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.github.androidtools.DateUtils;
 import com.newnote.base.BaseDao;
 import com.newnote.database.DBConstant;
-import com.newnote.database.DBManager;
 import com.newnote.module.account.entity.AccountBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.newnote.database.DBManager.T_Account_Note;
+
 /**
  * Created by Administrator on 2017/7/25.
  */
 public class DBAccountImp extends BaseDao implements DBAccount {
+
     public DBAccountImp(Context context) {
         super(context);
     }
@@ -49,7 +53,7 @@ public class DBAccountImp extends BaseDao implements DBAccount {
             searchStr[2]=searchInfo;
             searchStr[3]=searchInfo;
         }
-        Cursor query = db.query(DBManager.T_Account_Note,
+        Cursor query = db.query(T_Account_Note,
                 new String[]{
                         DBConstant._id,
                         DBConstant.dataSource,
@@ -81,5 +85,45 @@ public class DBAccountImp extends BaseDao implements DBAccount {
         }
         db.close();
         return list;
+    }
+    @Override
+    public boolean addOrEditAccount(AccountBean bean) {
+        if (bean.get_id() == -1) {
+            return addAccount(bean)>0;
+        } else {
+            return updateAccount(bean)>0;
+        }
+    }
+    public long updateAccount(AccountBean bean) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBConstant.dataSource, bean.getDataSource());
+        values.put(DBConstant.dataAccount, bean.getDataAccount());
+        values.put(DBConstant.dataPassword, bean.getDataPassword());
+        values.put(DBConstant.dataRemark, bean.getDataRemark());
+        values.put(DBConstant.updateTime, DateUtils.getLocalDate());
+        long insert = db.update(T_Account_Note, values, DBConstant._id + "=?", new String[]{bean.get_id() + ""});
+        Log.i(TAG,insert+"");
+        db.close();
+        return insert;
+    }
+
+    public long addAccount(AccountBean bean) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBConstant.dataSource, bean.getDataSource());
+        values.put(DBConstant.dataAccount, bean.getDataAccount());
+        values.put(DBConstant.dataPassword, bean.getDataPassword());
+        values.put(DBConstant.dataRemark, bean.getDataRemark());
+        if (bean.getCreatTime() != null) {
+            values.put(DBConstant.creatTime, DateUtils.dateToString(bean.getCreatTime(), DateUtils.ymdhms));
+        }
+        if (bean.getUpdateTime() != null) {
+            values.put(DBConstant.updateTime, DateUtils.dateToString(bean.getUpdateTime(), DateUtils.ymdhms));
+        }
+        long insert = db.insert(T_Account_Note, null, values);
+        Log.i(TAG,insert+"");
+        db.close();
+        return insert;
     }
 }

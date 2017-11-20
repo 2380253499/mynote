@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.github.customview.MyEditText;
 import com.newnote.R;
 import com.newnote.base.BaseFragment;
 import com.newnote.module.home.Constant;
+import com.newnote.module.home.event.AddDataEvent;
 import com.newnote.module.memo.entity.MemoBean;
 
 import butterknife.BindView;
@@ -70,6 +73,23 @@ public class AddMemoFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 tv_memo_lengthprompt.setText("("+length+"/3000)");
+            }
+        });
+    }
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        RxBus.getInstance().getEvent(AddDataEvent.class, new MySubscriber<AddDataEvent>(){
+            @Override
+            public void onMyNext(AddDataEvent event) {
+                if(event.index!=1){
+                    return;
+                }
+                if (event.isAddData) {
+                    saveData();
+                }else{
+                    clearData();
+                }
             }
         });
     }

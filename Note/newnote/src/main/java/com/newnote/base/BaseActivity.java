@@ -275,7 +275,7 @@ public abstract class BaseActivity<P extends IPresenter> extends IBaseActivity i
         final View rootView = ((ViewGroup) this.findViewById(android.R.id.content))
                 .getChildAt(0);
         final View decorView = getWindow().getDecorView();
-        if(decorView==null){
+        if(rootView==null||decorView==null){
             return;
         }
         decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -15,6 +15,8 @@ public interface AccountCon {
         void getAccountList(int page, List<AccountBean> item);
     }
     interface Presenter extends BasePresenter<View>{
+        //添加账户
+        void addOrEditAccount(AccountBean bean);
         void getAccountList(int page,String search,boolean orderByCreateTime);
         void getAccountList(int page,String search,boolean orderByCreateTime,boolean noLoading);
     }

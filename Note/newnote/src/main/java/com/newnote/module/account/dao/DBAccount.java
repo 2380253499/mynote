@@ -14,4 +14,5 @@ public interface DBAccount {
     List<AccountBean> selectAccount(int page);
     List<AccountBean> selectAccount(int page,String searchInfo, boolean isOrderByCreateTime);
     List<AccountBean> selectAccount(int page,String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db);
+    boolean addOrEditAccount(AccountBean bean);
 }
