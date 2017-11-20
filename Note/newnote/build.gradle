@@ -41,10 +41,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.+'
+    compile 'com.android.support:design:25.+'
+    compile 'com.android.support:support-v4:25.+'
+    compile 'com.android.support:recyclerview-v7:25.+'
 
     //findView注解
     compile 'com.jakewharton:butterknife:8.5.1'
@@ -62,7 +62,6 @@ dependencies {
     compile 'com.github:customview:1.1.1'
 
     compile(name: 'baseclass-debug', ext: 'aar')
-
     compile(name: 'androidutils', ext: 'aar')
 
 }

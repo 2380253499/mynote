@@ -196,7 +196,7 @@ public abstract class BaseActivity<P extends IPresenter> extends IBaseActivity i
         }
         if(mPresenter!=null){
             mPresenter.setContext(mContext);
-            mPresenter.attach( this);
+            mPresenter.attach(this);
         }
         setInput();
         initRxBus();
