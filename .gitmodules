@@ -1,0 +1,3 @@
+[submodule "Note/baselibrary"]
+	path = Note/baselibrary
+	url = git@github.com:zhongruiAndroid/baselibrary.git
