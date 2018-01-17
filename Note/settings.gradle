@@ -1,1 +1,1 @@
-include ':app', ':newnote', ':baselibrary'//, ':blurringview'':app',
+include ':app', ':newnote', ':baselibrary', ':mynote'//, ':blurringview'':app',
