@@ -1,7 +1,6 @@
 package com.mynote.module.gesture.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.github.androidtools.SPUtils;
 import com.mynote.AppXml;
-import com.mynote.Constant;
+import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.tools.gesture.widget.GestureContentView;
@@ -35,7 +34,7 @@ public class GestureUpdateActivity extends BaseActivity {
 	@BindView(R.id.lock_indicator)
 	LockIndicator mLockIndicator;
 	@BindView(R.id.tv_tip)
-	TextView tv_verify_tip;
+	TextView tv_tip;
 	@BindView(R.id.gesture_container)
 	FrameLayout gesture_container;
 	private GestureContentView gestureContentView;
@@ -66,10 +65,6 @@ public class GestureUpdateActivity extends BaseActivity {
 	private TimerTask tt_task;
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
 
 	@Override
 	protected int getContentView() {
@@ -84,7 +79,7 @@ public class GestureUpdateActivity extends BaseActivity {
 		text_reset.setClickable(false);
 		text_reset.setOnClickListener(this);
 		// 初始化一个显示各个点的viewGroup
-		gestureContentView =new GestureContentView(mContext,true,SPUtils.getString(mContext, AppXml.gesturePWD,null), new GestureDrawline.GestureCallBack() {
+		gestureContentView = new GestureContentView(mContext,true,SPUtils.getString(mContext,AppXml.gesturePWD,null), new GestureDrawline.GestureCallBack() {
 			@Override
 			public void onGestureCodeInput(String inputCode) {
 
@@ -98,31 +93,30 @@ public class GestureUpdateActivity extends BaseActivity {
 			}
 			@Override
 			public void checkedFail() {
-				tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>原手势密码错误,请重新绘制</font>"));
+				tv_tip.setText(Html.fromHtml("<font color='#E7E7E6'>原手势密码错误,请重新绘制</font>"));
 				Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
-				tv_verify_tip.startAnimation(shakeAnimation);
-				tv_verify_tip.postDelayed(new Runnable() {
+				tv_tip.startAnimation(shakeAnimation);
+				tv_tip.postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						tv_verify_tip.setText(Html.fromHtml("<font color='#58c2f7'>请绘制原手势密码</font>"));
+						tv_tip.setText(Html.fromHtml("<font color='#58c2f7'>请绘制原手势密码</font>"));
 					}
 				},1000);
 //                mView.showMsg("原手势密码验证失败,请重新绘制");
 				mLockIndicator.setPath("");
 				gestureContentView.clearDrawlineState(900L);
 			}
-		});
+		});;
 		// 设置手势解锁显示到哪个布局里面
 		gestureContentView.setParentView(gesture_container);
 		mLockIndicator.setPath("");
 	}
-
 	@Override
 	protected void initData() {
 
 	}
 	public void pwdValidationSuccess() {
-		tv_verify_tip.setText(getString(R.string.set_gesture_pattern));
+		tv_tip.setText(getString(R.string.set_gesture_pattern));
 		tv_forget_oldpwd.setVisibility(View.GONE);
 		initUpdateGesturePWD();
 	}
@@ -130,19 +124,21 @@ public class GestureUpdateActivity extends BaseActivity {
 	public void onViewClick(View v) {
 		switch (v.getId()) {
 			case R.id.tv_forget_oldpwd:
-				STActivityForResult(SuperPassWordActivity.class, Constant.IParam.update_superPWD);
+				STActivityForResult(SuperPassWordActivity.class, IntentParam.update_superPWD);
 				break;
 			case R.id.text_reset:
-				mIsFirstInput = true;
-				updateCodeList("");
-				tv_verify_tip.setText(getString(R.string.set_gesture_pattern));
+				resetPwd();
+				tv_tip.setText(getString(R.string.set_gesture_pattern));
 				break;
 			default:
 				break;
 		}
 	}
 
-
+	public void resetPwd() {
+		mIsFirstInput = true;
+		updateCodeList("");
+	}
 	/**
 	 * 设置小图案提示
 	 * @param inputCode
@@ -158,11 +154,11 @@ public class GestureUpdateActivity extends BaseActivity {
 		return true;
 	}
 	private void initUpdateGesturePWD() {
-		gestureContentView=new GestureContentView(mContext,false,null, new GestureDrawline.GestureCallBack() {
+		gestureContentView = new GestureContentView(mContext,false,null, new GestureDrawline.GestureCallBack() {
 			@Override
 			public void onGestureCodeInput(String inputCode) {
 				if (!isInputPassValidate(inputCode)) {
-					tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>最少链接4个点,请重新输入</font>"));
+					tv_tip.setText(Html.fromHtml("<font color='#E7E7E6'>最少链接4个点,请重新输入</font>"));
 					gestureContentView.clearDrawlineState(0L);
 					return;
 				}
@@ -176,13 +172,13 @@ public class GestureUpdateActivity extends BaseActivity {
 					if (inputCode.equals(mFirstPassword)) {
 						showMsg("设置成功");
 						gestureContentView.clearDrawlineState(0L);
-						SPUtils.setPrefString(mContext,AppXml.gesturePWD, inputCode);
+						SPUtils.setPrefString(mContext, AppXml.gesturePWD,inputCode);
 						actFinish();
 					} else {
-						tv_verify_tip.setText(Html.fromHtml("<font color='#E7E7E6'>与上一次绘制不一致，请重新绘制</font>"));
+						tv_tip.setText(Html.fromHtml("<font color='#E7E7E6'>与上一次绘制不一致，请重新绘制</font>"));
 						// 左右移动动画
 						Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
-						tv_verify_tip.startAnimation(shakeAnimation);
+						tv_tip.startAnimation(shakeAnimation);
 						// 保持绘制的线，1.5秒后清除
 						gestureContentView.clearDrawlineState(1300L);
 					}
@@ -202,10 +198,11 @@ public class GestureUpdateActivity extends BaseActivity {
 		mLockIndicator.setPath("");
 	}
 
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode== Constant.IParam.update_superPWD&&resultCode==RESULT_OK){
+		if(requestCode== IntentParam.update_superPWD&&resultCode==RESULT_OK){
 			pwdValidationSuccess();
 		}
 	}

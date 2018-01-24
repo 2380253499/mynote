@@ -34,22 +34,19 @@ public class SuperPassWordActivity extends BaseActivity {
 	TextView tv_copy_qq;
 
 
-	@Override
 	protected int getContentView() {
 		setAppTitle("超级密码");
 		return R.layout.activity_super_passwork;
 	}
 	@Override
 	protected void initView() {
-
 	}
-
 	@Override
 	protected void initData() {
-
 	}
+
 	@OnClick({R.id.tv_copy_qq,R.id.tv_submit_pwd})
-	public void onViewClick(View v) {
+	protected void onViewClick(View v) {
 		switch (v.getId()) {
 			case R.id.tv_copy_qq:
 				PhoneUtils.copyText(this, "2380253499");
@@ -118,4 +115,5 @@ public class SuperPassWordActivity extends BaseActivity {
 			System.out.println("true");
 		}
 	}
+
 }

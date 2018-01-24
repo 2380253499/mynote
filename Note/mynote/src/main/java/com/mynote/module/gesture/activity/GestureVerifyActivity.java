@@ -23,6 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -70,7 +71,7 @@ public class GestureVerifyActivity extends BaseActivity {
 	private String gesturePWD;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		gesturePWD = SPUtils.getString(this, AppXml.gesture_pwd,null);
+		gesturePWD = SPUtils.getString(this, AppXml.gesturePWD,null);
 		super.onCreate(savedInstanceState);
 		if(gesturePWD==null){
 			Intent mIntent=new Intent();
@@ -90,9 +91,7 @@ public class GestureVerifyActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		hiddenBackIcon();
-//		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		setUpViews();
-		tv_forget_gesture.setOnClickListener(this);
 	}
 
 	@Override
@@ -100,7 +99,7 @@ public class GestureVerifyActivity extends BaseActivity {
 
 	}
 
-	@Override
+	@OnClick({R.id.tv_forget_gesture})
 	public void onViewClick(View v) {
 		switch (v.getId()){
 			case R.id.tv_forget_gesture:
@@ -119,7 +118,7 @@ public class GestureVerifyActivity extends BaseActivity {
 		}
 	}
 	private void setUpViews() {
-		gestureContentView = new GestureContentView(mContext, true, gesturePWD,
+		gestureContentView =new GestureContentView(mContext, true, gesturePWD,
 				new GestureDrawline.GestureCallBack() {
 					@Override
 					public void onGestureCodeInput(String inputCode) {
@@ -127,7 +126,6 @@ public class GestureVerifyActivity extends BaseActivity {
 					@Override
 					public void checkedSuccess() {
 						gestureContentView.clearDrawlineState(0L);
-//                        mView.showMsg("密码正确");
 						STActivity(MainActivity.class);
 						actFinish();
 					}
@@ -149,6 +147,8 @@ public class GestureVerifyActivity extends BaseActivity {
 						}
 					}
 				});
+
+
 		// 设置手势解锁显示到哪个布局里面
 		gestureContentView.setParentView(fl_gesture_container);
 	}
