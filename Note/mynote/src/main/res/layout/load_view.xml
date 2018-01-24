@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:background="@color/white"
+              android:paddingBottom="50dp"
+    >
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/no_network"
+    android:scaleType="fitCenter"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您的网络走丢啦"
+        />
+    <com.github.customview.MyTextView
+        android:id="@+id/again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重新加载"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        app:my_tv_all_line="true"
+        app:my_tv_border_color="#ff634d"
+        app:my_tv_corner_radius="4dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#ff634d"
+        android:textSize="15sp"
+        />
+</LinearLayout>

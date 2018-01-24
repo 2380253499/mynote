@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 26
     buildToolsVersion "27.0.3"
@@ -24,6 +24,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 configurations.all {
@@ -50,7 +54,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //图片加载
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
+    //树形菜单
+    compile 'com.github.bmelnychuk:atv:1.2.+'
 
     compile project(':baselibrary')
 

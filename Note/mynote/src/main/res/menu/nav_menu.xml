@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+     <group>
+         <item android:id="@+id/update_pwd"
+               android:title="修改手势密码"
+               android:icon="@drawable/left_menu_update_pwd"
+             >
+         </item>
+         <item android:id="@+id/update_import"
+               android:title="导入数据文件"
+               android:icon="@drawable/left_menu_import_data"
+             >
+         </item>
+         <item android:id="@+id/update_export"
+               android:title="导出数据文件"
+               android:icon="@drawable/left_menu_export_data"
+             >
+         </item>
+         <item android:id="@+id/update_pwd1"
+               android:title="如果您有什么好的建议"
+               android:icon="@drawable/left_menu_update_pwd"
+             >
+         </item>
+         <item android:id="@+id/update_pwd2"
+               android:title="可以以邮件的方式告诉我"
+               android:icon="@drawable/left_menu_update_pwd"
+             >
+         </item>
+     </group>
+</menu>

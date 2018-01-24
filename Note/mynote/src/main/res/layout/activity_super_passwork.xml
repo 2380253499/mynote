@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical"
+    >
+<include layout="@layout/app_title"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_copy_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如果不知道超级密码\n加作者QQ:2380253499(点击复制)"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            />
+    <com.github.customview.MyEditText
+        android:id="@+id/et_super_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:my_et_border_color="@color/c_divider"
+        app:my_et_border_width="2px"
+        app:my_et_corner_radius="2dp"
+        android:singleLine="true"
+        android:maxLength="20"
+        android:hint="请输入超级密码"
+        />
+        <com.github.customview.MyTextView
+            android:id="@+id/tv_submit_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="确定"
+            android:gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            app:my_tv_press="@color/c_press_bt"
+            app:my_tv_solid="@color/blue_point"
+            android:textColor="@color/white"
+
+            />
+    </LinearLayout>
+<View
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    />
+
+
+</LinearLayout>

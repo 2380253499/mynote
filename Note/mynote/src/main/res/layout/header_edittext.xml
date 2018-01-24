@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <com.github.customview.MyEditText
+        android:id="@+id/et_search_info"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:hint="@string/search_info"
+        android:textColor="@color/colorText"
+        android:textColorHint="#B2B2B2"
+        app:my_et_border_color="@color/c_divider"
+        app:my_et_border_width="2px"
+        app:my_et_corner_radius="4dp"
+        />
+</LinearLayout>

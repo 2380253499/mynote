@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+    <com.github.customview.MyLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        app:my_ll_corner_radius="4dp"
+        app:my_ll_solid="@color/colorPrimaryAlpha"
+        >
+        <TextView
+            android:id="@+id/tv_menu_copyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="复制账号"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            />
+        <TextView
+            android:id="@+id/tv_menu_copyPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="复制密码"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            />
+        <TextView
+            android:id="@+id/tv_menu_deleteAccount"
+            android:layout_width="wrap_content"
+            android:minWidth="40dp"
+            android:layout_height="match_parent"
+            android:text=" 删除 "
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+    </com.github.customview.MyLinearLayout>
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/triangle_black_bottom"
+    android:background="@null"
+    />
+</LinearLayout>
