@@ -14,15 +14,29 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-    repositories {
-        flatDir {
-            dirs 'libs'
+    signingConfigs {
+        release {
+            storeFile file("../myapp.jks")
+            storePassword "zhongrui"
+            keyAlias "zhongrui"
+            keyPassword "zhongrui"
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
         }
     }
     compileOptions {
@@ -58,8 +72,6 @@ dependencies {
     compile 'com.github.bmelnychuk:atv:1.2.+'
 
     compile project(':baselibrary')
-
-
 
     compile(name: 'mylibrary', ext: 'aar')
     compile(name: 'baseclass', ext: 'aar')

@@ -13,7 +13,10 @@ import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.rx.RxUtils;
 import com.library.base.MyBaseActivity;
 import com.mynote.BuildConfig;
+import com.mynote.Constant;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -25,15 +28,41 @@ import rx.functions.Func1;
  * Created by Administrator on 2017/12/18.
  */
 
-public abstract class BaseActivity extends MyBaseActivity {
+public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity {
     protected final String TAG = this.getClass().getSimpleName();
     protected long mExitTime=0;
     protected Handler mHandler;
-
+    protected I mDaoImp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pageSize= Constant.pageSize;
+        pagesize= Constant.pageSize;
+        mDaoImp= getDaoImp();
+        mDaoImp.setContext(mContext);
         super.onCreate(savedInstanceState);
         mHandler=new Handler(getMainLooper());
+    }
+
+    private I getDaoImp(){
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if(genericSuperclass instanceof ParameterizedType){
+            //参数化类型
+            ParameterizedType parameterizedType= (ParameterizedType) genericSuperclass;
+            //返回表示此类型实际类型参数的 Type 对象的数组
+            Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            try {
+                mDaoImp=((Class<I>)actualTypeArguments[0]).newInstance();
+            } catch (java.lang.InstantiationException e) {
+                mDaoImp=null;
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                mDaoImp=null;
+                e.printStackTrace();
+            }
+        }else{
+            mDaoImp=null;
+        }
+        return mDaoImp;
     }
 
     @Override
@@ -43,7 +72,6 @@ public abstract class BaseActivity extends MyBaseActivity {
             app_title.setOnClickListener(new MyOnClickListener() {
                 @Override
                 protected void onNoDoubleClick(View v) {
-
                 }
             });
         }

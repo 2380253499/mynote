@@ -11,6 +11,7 @@ import android.util.SparseArray;
 
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.StringUtils;
+import com.mynote.Constant;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.joke.bean.JokeBean;
 import com.mynote.module.memo.bean.MemoBean;
@@ -41,7 +42,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String T_Joke_Note = "T_Joke_Note";
     public static final String T_Spend_Note = "T_Spend_Note";
     public static final String T_Secret_Note = "T_Secret_Note";
-    public static final int pageSize=30;
+    public static final int pageSize= Constant.pageSize;
     private String getLimitSql(int page){
         //小于等于0查询所有数据
         if(page<=0){

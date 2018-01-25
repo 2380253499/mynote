@@ -5,6 +5,7 @@ package com.mynote;
  */
 
 public class Constant {
+    public static final int pageSize=30;
     public static class IParam{
         public static final String isFirstIntoApp="isFirstIntoApp";
         public static final String isUpdatePwd="isUpdatePwd";

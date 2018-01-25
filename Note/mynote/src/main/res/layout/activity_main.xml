@@ -7,229 +7,139 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <!--<in.srain.cube.views.ptr.PtrFrameLayout
-        android:id="@+id/pfl"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ptr_duration_to_close="300"
-        app:ptr_duration_to_close_header="2000"
-        app:ptr_keep_header_when_refresh="true"
-        app:ptr_pull_to_fresh="false"
-        app:ptr_ratio_of_header_height_to_refresh="1.2"
-        app:ptr_resistance="1.7"
-        >-->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        >
 
-        <RelativeLayout
-            android:id="@+id/fl"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <android.support.design.widget.CoordinatorLayout
+            android:layout_above="@+id/v_divider"
+            android:fitsSystemWindows="true"
+            app:statusBarScrim="@null"
+            tools:context="com.zr.note.ui.main.activity.MainActivity">
+
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/v_divider"
+                android:layout_height="200dp"
                 android:fitsSystemWindows="true"
-                app:statusBarScrim="@null"
-                tools:context="com.zr.note.ui.main.activity.MainActivity">
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-                <android.support.design.widget.AppBarLayout
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/ctl_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
-                    android:theme="@style/AppTheme.AppBarOverlay">
+                    app:contentScrim="@color/colorPrimaryDark"
+                    app:expandedTitleMarginStart="48dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    >
 
-                    <android.support.design.widget.CollapsingToolbarLayout
-                        android:id="@+id/ctl_layout"
+                    <ImageView
+                        android:id="@+id/iv_banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fitsSystemWindows="true"
-                        app:contentScrim="@color/colorPrimaryDark"
-                        app:expandedTitleMarginStart="48dp"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                        >
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/zr5"/>
 
-                        <ImageView
-                            android:id="@+id/iv_banner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fitsSystemWindows="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/zr5"/>
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/app_title_height"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                        />
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
 
-                        <android.support.v7.widget.Toolbar
-                            android:id="@+id/toolbar_main"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/app_title_height"
-                            app:layout_collapseMode="pin"
-                            app:popupTheme="@style/AppTheme.PopupOverlay"
-                            />
-                    </android.support.design.widget.CollapsingToolbarLayout>
-                </android.support.design.widget.AppBarLayout>
-
-                <include
-                    layout="@layout/content_main"
-                    />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:src="@drawable/main_note_selector"
-                    app:backgroundTint="@color/white"/>
-
-            </android.support.design.widget.CoordinatorLayout>
-
-            <View
-                android:id="@+id/v_divider"
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:layout_above="@+id/ll_bottom"
-                android:background="@color/c_divider"
+            <include
+                layout="@layout/content_main"
                 />
 
-            <LinearLayout
-                android:id="@+id/ll_bottom"
-                android:layout_width="match_parent"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical"
-                >
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/main_note_selector"
+                app:backgroundTint="@color/white"/>
 
-                <RadioGroup
-                    android:id="@+id/rg_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <com.github.customview.MyRadioButton
-                        android:id="@+id/rb_main_account"
-                        style="@style/radio_main"
-                        android:text="@string/main_data_list"
-                        app:my_radio_checked_drawable="top"
-                        app:my_radio_checked="@drawable/main_data_selector"
-                        app:my_radio_checked_color="@color/c_icon"
-                        app:my_radio_normal="@drawable/main_data_normal"/>
-
-                    <com.github.customview.MyRadioButton
-                        android:id="@+id/rb_main_memo"
-                        style="@style/radio_main"
-                        android:text="@string/main_data_memo"
-                        app:my_radio_checked_drawable="top"
-                        app:my_radio_checked="@drawable/memo_selector"
-                        app:my_radio_checked_color="@color/c_icon"
-                        app:my_radio_normal="@drawable/memo_normal"
-                        />
-
-                    <com.github.customview.MyRadioButton
-                        android:id="@+id/rb_main_joke"
-                        style="@style/radio_main"
-                        android:text="@string/main_data_joke"
-                        app:my_radio_checked_drawable="top"
-                        app:my_radio_checked="@drawable/memo_selector"
-                        app:my_radio_checked_color="@color/c_icon"
-                        app:my_radio_normal="@drawable/memo_normal"
-                        />
-
-                    <com.github.customview.MyRadioButton
-                        android:id="@+id/rb_main_spend"
-                        style="@style/radio_main"
-                        android:text="@string/main_data_consumption"
-                        app:my_radio_checked_drawable="top"
-                        app:my_radio_checked="@drawable/consumption_selector"
-                        app:my_radio_checked_color="@color/c_icon"
-                        app:my_radio_normal="@drawable/consumption_normal"
-                        />
-                </RadioGroup>
-
-                <com.github.customview.MyLinearLayout
-                    android:id="@+id/ll_data_check"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="2px"
-                    android:visibility="gone"
-                    app:my_ll_border_width="1px"
-                    app:my_ll_top_line="true"
-                    >
-
-                    <com.github.customview.MyCheckBox
-                        android:id="@+id/cb_data_checkall"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:button="@null"
-                        android:drawablePadding="15dp"
-                        android:paddingLeft="10dp"
-                        android:text="全选"
-                        app:my_checkbox_checked="@drawable/check_select"
-                        app:my_checkbox_checked_color="@color/colorText"
-                        app:my_checkbox_checked_drawable="left"
-                        app:my_checkbox_normal="@drawable/check_normal"
-                        app:my_checkbox_normal_color="@color/colorText"
-                        />
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/c_divider"
-                        />
-
-                    <com.github.customview.MyTextView
-                        android:id="@+id/tv_data_delete"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="删除"
-                        app:my_tv_press="@color/c_divider"
-                        app:my_tv_solid="@color/white"
-                        />
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/c_divider"
-                        />
-
-                    <com.github.customview.MyTextView
-                        android:id="@+id/tv_date_endselect"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="取消"
-                        app:my_tv_press="@color/c_divider"
-                        app:my_tv_solid="@color/white"
-                        />
-                </com.github.customview.MyLinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
 
         <View
-            android:id="@+id/view_backgroud"
+            android:id="@+id/v_divider"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.3"
-            android:background="@android:color/black"
-            android:visibility="gone"
+            android:layout_height="2px"
+            android:layout_above="@+id/ll_bottom"
+            android:background="@color/c_divider"
             />
-    </FrameLayout>
-    <!--</in.srain.cube.views.ptr.PtrFrameLayout>-->
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <RadioGroup
+                android:id="@+id/rg_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <com.github.customview.MyRadioButton
+                    android:id="@+id/rb_main_account"
+                    style="@style/radio_main"
+                    android:text="@string/main_data_list"
+                    app:my_radio_checked="@drawable/main_data_selector"
+                    app:my_radio_checked_color="@color/c_icon"
+                    app:my_radio_checked_drawable="top"
+                    app:my_radio_normal="@drawable/main_data_normal"/>
+
+                <com.github.customview.MyRadioButton
+                    android:id="@+id/rb_main_memo"
+                    style="@style/radio_main"
+                    android:text="@string/main_data_memo"
+                    app:my_radio_checked="@drawable/memo_selector"
+                    app:my_radio_checked_color="@color/c_icon"
+                    app:my_radio_checked_drawable="top"
+                    app:my_radio_normal="@drawable/memo_normal"
+                    />
+
+                <com.github.customview.MyRadioButton
+                    android:id="@+id/rb_main_joke"
+                    style="@style/radio_main"
+                    android:text="@string/main_data_joke"
+                    app:my_radio_checked="@drawable/memo_selector"
+                    app:my_radio_checked_color="@color/c_icon"
+                    app:my_radio_checked_drawable="top"
+                    app:my_radio_normal="@drawable/memo_normal"
+                    />
+
+                <com.github.customview.MyRadioButton
+                    android:id="@+id/rb_main_spend"
+                    style="@style/radio_main"
+                    android:text="@string/main_data_consumption"
+                    app:my_radio_checked="@drawable/consumption_selector"
+                    app:my_radio_checked_color="@color/c_icon"
+                    app:my_radio_checked_drawable="top"
+                    app:my_radio_normal="@drawable/consumption_normal"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/drawerlayout_left"
-        android:name="com.newnote.module.home.fragment.LeftMenuFragment"
-        class="com.newnote.module.home.fragment.LeftMenuFragment"
+        android:name="com.mynote.module.home.fragment.LeftMenuFragment"
+        class="com.mynote.module.home.fragment.LeftMenuFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

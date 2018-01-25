@@ -5,21 +5,22 @@ package com.mynote.database;
  */
 public class DBConstant {
     /**************************账户表字段************************************/
-    public static final String _id="_id";
-    public static final String dataSource="dataSource";
-    public static final String dataAccount="dataAccount";
-    public static final String dataPassword="dataPassword";
-    public static final String dataRemark="dataRemark";
-    public static final String updateTime="updateTime";
-    public static final String creatTime="creatTime";
+    public static final String _id="_id";//自增长
+    public static final String uid="uid";//多表情况的唯一标识
+    public static final String dataSource="dataSource";//来源
+    public static final String dataAccount="dataAccount";//账户
+    public static final String dataPassword="dataPassword";//密码
+    public static final String dataRemark="dataRemark";//备注
+    public static final String updateTime="updateTime";//修改时间 时间戳
+    public static final String creatTime="creatTime";//创建时间 时间戳
     /**************************备忘录表字段************************************/
-    public static final String dataContent="dataContent";
+    public static final String dataContent="dataContent";//备忘内容
     /**************************消费表字段************************************/
-    public static final String liveSpend="liveSpend";
-    public static final String localYear="localYear";
-    public static final String localMonth="localMonth";
-    public static final String localDay="localDay";
-    public static final String totalSpend="totalSpend";
+    public static final String liveSpend="liveSpend";//消费
+    public static final String localYear="localYear";//年
+    public static final String localMonth="localMonth";//月
+    public static final String localDay="localDay";//日
+    public static final String totalSpend="totalSpend";//统计总消费时用到
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"
@@ -27,53 +28,58 @@ public class DBConstant {
      * "dataRemark,         --备注"
      */
     public static final String CT_Account_Note = "create table "+DBManager.T_Account_Note+" (" +
-            "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataSource TEXT," +
-            "dataAccount TEXT," +
-            "dataPassword TEXT," +
-            "dataRemark TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
-            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+            _id+" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            dataSource+" NTEXT," +
+            dataAccount+"  NTEXT," +
+            dataPassword+"  NTEXT," +
+            dataRemark+"  NTEXT," +
+            updateTime+"  NTEXT NOT NULL ," +
+            creatTime+"  NTEXT NOT NULL )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
      */
     public static final String CT_Memo_Note = "create table "+DBManager.T_Memo_Note+" (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataRemark TEXT," +
-            "dataContent TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
-            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+            uid+" varchar," +
+            dataRemark+" NTEXT," +
+            dataContent+" NTEXT," +
+            updateTime+" NTEXT NOT NULL," +
+            creatTime+" NTEXT NOT NULL)";
     /**
      * dataContent  --数据内容
      */
     public static final String CT_Joke_Note = "create table "+DBManager.T_Joke_Note+" (" +
-            "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataRemark TEXT," +
-            "dataContent TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
-            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+            _id+" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            dataRemark+" NTEXT," +
+            dataContent+" NTEXT," +
+            updateTime+" NTEXT NOT NULL  ," +
+            creatTime+" NTEXT NOT NULL  )";
     /**
      * liveSpend DOUBLE,   --生活消费
-     * dataRemark TEXT,         --备注
+     * dataRemark NTEXT,         --备注
      */
     public static final String CT_Spend_Note = "create table "+DBManager.T_Spend_Note+" (" +
-            "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "liveSpend DOUBLE," +
-            "dataRemark TEXT," +
-            "localYear  INTEGER NOT NULL DEFAULT (strftime('%Y','now'))," +
-            "localMonth INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
-            "localDay   INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
-            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+            _id        +"INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            liveSpend  +"DOUBLE," +
+            dataRemark +"NTEXT," +
+            localYear  +"INTEGER NOT NULL DEFAULT (strftime('%Y','now'))," +
+            localMonth +"INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
+            localDay   +"INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
+            updateTime +"NTEXT NOT NULL    ," +
+            creatTime  +"NTEXT NOT NULL    )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
      */
     public static final String CT_Secret_Note = "create table "+DBManager.T_Secret_Note+" (" +
-            "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "dataRemark TEXT," +
-            "dataContent TEXT," +
-            "updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ," +
-            "creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )";
+            _id         +"INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            dataRemark  +"NTEXT," +
+            dataContent +"NTEXT," +
+            updateTime  +"NTEXT NOT NULL   ," +
+            creatTime   +"NTEXT NOT NULL  )";
 }
