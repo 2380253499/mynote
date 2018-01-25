@@ -30,6 +30,7 @@ public abstract class BaseDaoImp {
         }
         return DBManager.pageSize*(page-1)+","+DBManager.pageSize;
     }
+
     public SQLiteDatabase getWritableDatabase(){
         return DBManager.getNewInstance(mContext).getWritableDatabase();
     }

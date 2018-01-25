@@ -1,15 +1,15 @@
 package com.mynote.base;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Administrator on 2016/10/13.
  */
 public class BaseEntity implements Serializable {
     private int _id;
-    private Date updateTime;
-    private Date creatTime;
+    private String uid;
+    private long updateTime;
+    private long creatTime;
 
     public int get_id() {
         return _id;
@@ -19,19 +19,27 @@ public class BaseEntity implements Serializable {
         this._id = _id;
     }
 
-    public Date getUpdateTime() {
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 
-    public Date getCreatTime() {
+    public long getCreatTime() {
         return creatTime;
     }
 
-    public void setCreatTime(Date creatTime) {
+    public void setCreatTime(long creatTime) {
         this.creatTime = creatTime;
     }
 }
