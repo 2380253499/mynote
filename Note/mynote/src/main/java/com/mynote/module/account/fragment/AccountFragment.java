@@ -45,6 +45,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,nsv);
         adapter.setOnLoadMoreListener(this);
         rv_account.setAdapter(adapter);
+        rv_account.setNestedScrollingEnabled(false);
     }
 
     @Override

@@ -10,6 +10,15 @@ public class BaseEntity implements Serializable {
     private String uid;
     private long updateTime;
     private long creatTime;
+    private boolean isCheck;
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
 
     public int get_id() {
         return _id;
