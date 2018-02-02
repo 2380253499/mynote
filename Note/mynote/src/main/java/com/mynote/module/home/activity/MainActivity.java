@@ -1,5 +1,6 @@
 package com.mynote.module.home.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -8,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 import com.github.customview.MyRadioButton;
+import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.module.account.fragment.AccountFragment;
@@ -40,6 +42,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.drawerlayout)
     DrawerLayout drawerlayout;
 
+    private int tabIndex=0;
 
     AccountFragment accountFragment;
     MemoFragment    memoFragment;
@@ -66,19 +69,29 @@ public class MainActivity extends BaseActivity {
     @OnClick({R.id.rb_main_account,
             R.id.rb_main_memo,
             R.id.rb_main_joke,
+            R.id.fab,
             R.id.rb_main_spend})
     protected void onViewClick(View v) {
         switch (v.getId()){
+            case R.id.fab:
+                Intent intent=new Intent();
+                intent.putExtra(IntentParam.tabIndex, tabIndex);
+                STActivity(intent,AddDataActivity.class);
+            break;
             case R.id.rb_main_account:
+                tabIndex=0;
                 selectFragment(rb_main_account,accountFragment);
             break;
             case R.id.rb_main_memo:
+                tabIndex=1;
                 selectFragment(rb_main_memo,memoFragment);
             break;
             case R.id.rb_main_joke:
+                tabIndex=2;
                 selectFragment(rb_main_joke,jokeFragment);
             break;
             case R.id.rb_main_spend:
+                tabIndex=3;
                 selectFragment(rb_main_spend,spendFragment);
             break;
         }

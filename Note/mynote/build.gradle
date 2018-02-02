@@ -71,9 +71,12 @@ dependencies {
     //树形菜单
     compile 'com.github.bmelnychuk:atv:1.2.+'
 
+
+
     compile project(':baselibrary')
 
     compile(name: 'mylibrary', ext: 'aar')
     compile(name: 'baseclass', ext: 'aar')
-    compile 'com.github:androidutils:1.0.4'
+    compile(name: 'androidutils', ext: 'aar')
+//    compile 'com.github:androidutils:1.0.4'
 }

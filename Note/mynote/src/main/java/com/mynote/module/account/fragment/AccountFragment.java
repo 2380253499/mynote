@@ -10,11 +10,15 @@ import com.github.baseclass.rx.IOCallBack;
 import com.github.customview.MyEditText;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.module.account.bean.AccountBean;
+import com.mynote.module.account.dao.imp.AccountImp;
+
+import java.util.List;
 
 import butterknife.BindView;
 import rx.Subscriber;
 
-public class AccountFragment extends BaseFragment {
+public class AccountFragment extends BaseFragment<AccountImp> {
     @BindView(R.id.et_search_account)
     MyEditText et_search_account;
 
@@ -39,9 +43,9 @@ public class AccountFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        adapter=new LoadMoreAdapter<String>(mContext,R.layout._item_,pageSize,nsv) {
+        adapter=new LoadMoreAdapter<AccountBean>(mContext,R.layout.item_account,pageSize,nsv) {
             @Override
-            public void bindData(LoadMoreViewHolder holder, int position, String bean) {
+            public void bindData(LoadMoreViewHolder holder, int position, AccountBean bean) {
 
             }
         };
@@ -58,18 +62,25 @@ public class AccountFragment extends BaseFragment {
     @Override
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
-        RXStart(new IOCallBack<String>() {
+        RXStart(pl_load,new IOCallBack<List<AccountBean>>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
-
+            public void call(Subscriber<? super List<AccountBean>> subscriber) {
+                List<AccountBean> accountList = mDaoImp.selectAccount(page, searchInfo, isOrderByCreateTime);
+                subscriber.onNext(accountList);
+                subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(String s) {
-
+            public void onMyNext(List<AccountBean> list) {
+                if(isLoad){
+                    pageNum++;
+                    adapter.addList(list,true);
+                }else{
+                    pageNum=2;
+                    adapter.setList(list,true);
+                }
             }
         });
     }
-
     @Override
     protected void onViewClick(View v) {
         switch (v.getId()) {

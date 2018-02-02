@@ -98,6 +98,7 @@ public class AccountImp extends BaseDaoImp{
         Cursor query = db.query(DBManager.T_Account_Note,
                 new String[]{
                         DBConstant._id,
+                        DBConstant.uid,
                         DBConstant.dataSource,
                         DBConstant.dataAccount,
                         DBConstant.dataPassword,
@@ -170,8 +171,9 @@ public class AccountImp extends BaseDaoImp{
         values.put(DBConstant.dataAccount,bean.getDataAccount());
         values.put(DBConstant.dataPassword,bean.getDataPassword());
         values.put(DBConstant.dataRemark,bean.getDataRemark());
-        if(TextUtils.isEmpty(bean.getUid().trim())){
+        if(TextUtils.isEmpty(bean.getUid())){
             bean.setUid(System.nanoTime()+"");
+            values.put(DBConstant.uid, bean.getUid());
         }
         if (bean.getCreatTime() != 0) {
             values.put(DBConstant.creatTime, bean.getCreatTime() );

@@ -62,24 +62,24 @@ public class DBConstant {
      * dataRemark NTEXT,         --备注
      */
     public static final String CT_Spend_Note = "create table "+DBManager.T_Spend_Note+" (" +
-            _id        +"INTEGER PRIMARY KEY AUTOINCREMENT," +
-            uid+" varchar," +
-            liveSpend  +"DOUBLE," +
-            dataRemark +"NTEXT," +
-            localYear  +"INTEGER NOT NULL DEFAULT (strftime('%Y','now'))," +
-            localMonth +"INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
-            localDay   +"INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
-            updateTime +"NTEXT NOT NULL    ," +
-            creatTime  +"NTEXT NOT NULL    )";
+            _id +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar, " +
+            liveSpend  +" DOUBLE, " +
+            dataRemark +" NTEXT, " +
+            localYear  +" INTEGER NOT NULL DEFAULT (strftime('%Y','now'))," +
+            localMonth +" INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
+            localDay   +" INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
+            updateTime +" NTEXT NOT NULL    ," +
+            creatTime  +" NTEXT NOT NULL    )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
      */
     public static final String CT_Secret_Note = "create table "+DBManager.T_Secret_Note+" (" +
-            _id         +"INTEGER PRIMARY KEY AUTOINCREMENT," +
+            _id         +" INTEGER PRIMARY KEY AUTOINCREMENT," +
             uid+" varchar," +
-            dataRemark  +"NTEXT," +
-            dataContent +"NTEXT," +
-            updateTime  +"NTEXT NOT NULL   ," +
-            creatTime   +"NTEXT NOT NULL  )";
+            dataRemark  +"  NTEXT," +
+            dataContent +" NTEXT," +
+            updateTime  +" NTEXT NOT NULL   ," +
+            creatTime   +" NTEXT NOT NULL  )";
 }

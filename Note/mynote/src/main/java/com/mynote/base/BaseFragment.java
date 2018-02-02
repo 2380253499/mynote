@@ -7,11 +7,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.github.baseclass.rx.IOCallBack;
+import com.github.baseclass.view.Loading;
 import com.library.base.MyBaseFragment;
+import com.library.base.ProgressLayout;
 import com.mynote.Constant;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/12/18.
@@ -20,12 +29,16 @@ import java.lang.reflect.Type;
 public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment {
     protected final String TAG = this.getClass().getSimpleName();
     protected I mDaoImp;
+    protected String searchInfo;
+    protected boolean isOrderByCreateTime;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         pageSize= Constant.pageSize;
         pagesize= Constant.pageSize;
         mDaoImp= getDaoImp();
-        mDaoImp.setContext(mContext);
+        if (mDaoImp != null) {
+            mDaoImp.setContext(getActivity());
+        }
         super.onCreate(savedInstanceState);
     }
     private I getDaoImp(){
@@ -88,6 +101,39 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
             Log.e("VersionInfo", "Exception", e);
         }
         return versionName;
+    }
+
+
+    public <T> void RXStart(final IOCallBack<T> callBack) {
+        RXStart(callBack);
+    }
+    public <T> void RXStart(ProgressLayout progressLayout, final IOCallBack<T> callBack) {
+        Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
+            public void call(Subscriber<? super T> subscriber) {
+                callBack.call(subscriber);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<T>() {
+            public void onCompleted() {
+                if(progressLayout!=null){
+                    progressLayout.showContent();
+                }
+                Loading.dismissLoading();
+                callBack.onMyCompleted();
+            }
+
+            public void onError(Throwable e) {
+                if(progressLayout!=null){
+                    progressLayout.showErrorText();
+                }
+                Loading.dismissLoading();
+                callBack.onMyError(e);
+            }
+
+            public void onNext(T t) {
+                callBack.onMyNext(t);
+            }
+        });
+        this.addSubscription(subscribe);
     }
 
 }
