@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.github.baseclass.adapter.LoadMoreAdapter;
-import com.github.baseclass.adapter.LoadMoreViewHolder;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.customview.MyEditText;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 
@@ -25,7 +24,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     @BindView(R.id.rv_account)
     RecyclerView rv_account;
 
-    LoadMoreAdapter adapter;
+    AccountAdapter adapter;
 
     public static AccountFragment newInstance() {
         Bundle args = new Bundle();
@@ -43,12 +42,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
 
     @Override
     protected void initView() {
-        adapter=new LoadMoreAdapter<AccountBean>(mContext,R.layout.item_account,pageSize,nsv) {
-            @Override
-            public void bindData(LoadMoreViewHolder holder, int position, AccountBean bean) {
-
-            }
-        };
+        adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,nsv);
         adapter.setOnLoadMoreListener(this);
         rv_account.setAdapter(adapter);
     }
