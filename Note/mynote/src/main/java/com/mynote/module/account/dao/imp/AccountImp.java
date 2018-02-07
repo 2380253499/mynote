@@ -148,7 +148,6 @@ public class AccountImp extends BaseDaoImp{
         } else {
             return updateAccount(bean);
         }
-
     }
 
     public long updateAccount(AccountBean bean) {

@@ -1,7 +1,7 @@
 package com.mynote.module.account.fragment;
 
 import android.content.DialogInterface;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +18,7 @@ import com.github.baseclass.rx.MySubscriber;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
+import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
@@ -49,12 +50,10 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         return fragment;
     }
 
-
     @Override
     protected int getContentView() {
         return R.layout.fragment_account;
     }
-
 
     @Override
     protected void initView() {
@@ -65,9 +64,10 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             @Override
             public void onItemClick(View view, int position) {
                 AccountBean accountBean = adapter.getList().get(position);
-//                mIntent.putExtra(IntentParam.tabIndex, 0);
-//                mIntent.putExtra(IntentParam.editAccount, accountBean);
-                STActivity(null, AddDataActivity.class);
+                Intent intent=new Intent();
+                intent.putExtra(IntentParam.tabIndex, 0);
+                intent.putExtra(IntentParam.editAccount, accountBean);
+                STActivity(intent, AddDataActivity.class);
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
@@ -94,9 +94,6 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         tv_menu_deleteAccount.setOnClickListener(this);
         mPopupwindow = new MyPopupwindow(getActivity(), menu);
         mPopupwindow.setBackground(R.color.transparent);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mPopupwindow.setElevation(0);
-        }
     }
 
     @Override

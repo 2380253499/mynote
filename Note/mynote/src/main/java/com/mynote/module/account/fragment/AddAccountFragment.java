@@ -73,11 +73,12 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
 
     @Override
     protected void initView() {
-        et_addData_source.requestFocus();
+//        et_addData_source.requestFocus();
         tv_account_copy.setOnClickListener(this);
         tv_pwd_copy.setOnClickListener(this);
         tv_account_paste.setOnClickListener(this);
         tv_pwd_paste.setOnClickListener(this);
+//        PhoneUtils.hiddenKeyBoard(mContext,et_addData_note);
     }
 
     @Override
@@ -95,21 +96,23 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
                         String user = et_addData_user.getText().toString();
                         String pwd = et_addData_pwd.getText().toString();
                         String note = et_addData_note.getText().toString();
-                        AccountBean bean = new AccountBean();
-                        bean.setDataSource(source);
-                        bean.setDataAccount(user);
-                        bean.setDataPassword(pwd);
-                        bean.setDataRemark(note);
-//                        bean.set_id(isEdit ? accountBean.get_id() : -1);
+                        AccountBean bean ;
                         if(isEdit){
-
+                            bean=accountBean;
+                            bean.setDataSource(source);
+                            bean.setDataAccount(user);
+                            bean.setDataPassword(pwd);
+                            bean.setDataRemark(note);
+                            editAccount(bean);
                         }else{
+                            bean=new AccountBean();
+                            bean.set_id(-1);
+                            bean.setDataSource(source);
+                            bean.setDataAccount(user);
+                            bean.setDataPassword(pwd);
+                            bean.setDataRemark(note);
                             addAccount(bean);
                         }
-                        /*boolean b = mPresenter.addAccount(bean);
-                        if (b) {
-                            isPrePareSelectData = true;
-                        }*/
                     }
                 }
             }
@@ -124,6 +127,23 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
                     et_addData_note.setText(null);
                     et_addData_source.requestFocus();
                 }
+            }
+        });
+    }
+
+    private void editAccount(AccountBean bean) {
+        showLoading();
+        RXStart(pl_load,new IOCallBack<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                long count = mDaoImp.updateAccount(bean);
+                subscriber.onNext(count>0?"修改成功":"修改失败");
+                subscriber.onCompleted();
+            }
+            @Override
+            public void onMyNext(String msg) {
+                addDataSuccess=true;
+                showMsg(msg);
             }
         });
     }
