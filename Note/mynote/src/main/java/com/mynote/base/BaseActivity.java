@@ -150,9 +150,12 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
     }
 
     public <T> void RXStart(final IOCallBack<T> callBack) {
-        RXStart(callBack);
+        RXStart(null,callBack,false);
     }
-    public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
+    public <T> void RXStart(final IOCallBack<T> callBack,boolean hiddenLoading) {
+        RXStart(null,callBack,hiddenLoading);
+    }
+    public <T> void RXStart(ProgressLayout progressLayout, final IOCallBack<T> callBack,boolean hiddenLoading) {
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
             public void call(Subscriber<? super T> subscriber) {
                 callBack.call(subscriber);
@@ -162,15 +165,18 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
                 if(progressLayout!=null){
                     progressLayout.showContent();
                 }
-                Loading.dismissLoading();
+                if(!hiddenLoading){
+                    Loading.dismissLoading();
+                }
                 callBack.onMyCompleted();
             }
-
             public void onError(Throwable e) {
                 if(progressLayout!=null){
                     progressLayout.showErrorText();
                 }
-                Loading.dismissLoading();
+                if(!hiddenLoading){
+                    Loading.dismissLoading();
+                }
                 callBack.onMyError(e);
             }
 

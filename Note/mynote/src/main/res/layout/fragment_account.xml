@@ -51,12 +51,12 @@
                     android:background="@color/background_f2"
                     />
 
-                <com.library.base.view.MyRecyclerView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_account"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
-                </com.library.base.view.MyRecyclerView>
+                </android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

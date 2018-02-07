@@ -1,16 +1,30 @@
 package com.mynote.module.account.fragment;
 
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
+import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.BaseDividerListItem;
+import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.rx.IOCallBack;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.view.MyDialog;
+import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.event.GetDataEvent;
 import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
+import com.mynote.module.home.activity.AddDataActivity;
 
 import java.util.List;
 
@@ -25,6 +39,8 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     RecyclerView rv_account;
 
     AccountAdapter adapter;
+    private MyPopupwindow mPopupwindow;
+    private AccountBean accountBean;
 
     public static AccountFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,16 +58,65 @@ public class AccountFragment extends BaseFragment<AccountImp> {
 
     @Override
     protected void initView() {
+        setPopupwindow();
         adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,nsv);
         adapter.setOnLoadMoreListener(this);
-        rv_account.setAdapter(adapter);
+        adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                AccountBean accountBean = adapter.getList().get(position);
+//                mIntent.putExtra(IntentParam.tabIndex, 0);
+//                mIntent.putExtra(IntentParam.editAccount, accountBean);
+                STActivity(null, AddDataActivity.class);
+            }
+        });
+        adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                accountBean =adapter.getList().get(position);
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
+            }
+        });
         rv_account.setNestedScrollingEnabled(false);
+        BaseDividerListItem dividerListItem=new BaseDividerListItem(mContext,2);
+        rv_account.addItemDecoration(dividerListItem);
+        rv_account.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_account.setAdapter(adapter);
+    }
+
+    private void setPopupwindow() {
+        View menu = LayoutInflater.from(getActivity()).inflate(R.layout.popu_account_menu, null);
+        TextView tv_menu_copyAccount= (TextView) menu.findViewById(R.id.tv_menu_copyAccount);
+        TextView tv_menu_copyPwd= (TextView) menu.findViewById(R.id.tv_menu_copyPwd);
+        TextView tv_menu_deleteAccount= (TextView) menu.findViewById(R.id.tv_menu_deleteAccount);
+        tv_menu_copyAccount.setOnClickListener(this);
+        tv_menu_copyPwd.setOnClickListener(this);
+        tv_menu_deleteAccount.setOnClickListener(this);
+        mPopupwindow = new MyPopupwindow(getActivity(), menu);
+        mPopupwindow.setBackground(R.color.transparent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPopupwindow.setElevation(0);
+        }
     }
 
     @Override
     protected void initData() {
         showProgress();
         getData(1,false);
+    }
+
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
+            @Override
+            public void onMyNext(GetDataEvent event) {
+                if(event.index==GetDataEvent.accountIndex){
+                    showLoading();
+                    getData(1,false);
+                }
+            }
+        });
     }
 
     @Override
@@ -79,7 +144,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     @Override
     protected void onViewClick(View v) {
         switch (v.getId()) {
-            /*case R.id.tv_menu_copyAccount:
+            case R.id.tv_menu_copyAccount:
                 mPopupwindow.dismiss();
                 if(!TextUtils.isEmpty(accountBean.getDataAccount())){
                     PhoneUtils.copyText(getActivity(), accountBean.getDataAccount());
@@ -97,9 +162,41 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             break;
             case R.id.tv_menu_deleteAccount:
                 mPopupwindow.dismiss();
-                mPresenter.deleteAccountById(mDialog,accountBean.get_id());
-            break;*/
+                mDialog=new MyDialog.Builder(mContext);
+                mDialog.setMessage(mContext.getString(R.string.delete_data));
+                mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        deleteData(accountBean.get_id());
+                    }
+                });
+                mDialog.create().show();
+            break;
         }
+    }
+
+    private void deleteData(int id) {
+        showLoading();
+        RXStart(true,new IOCallBack<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                boolean b = mDaoImp.deleteAccount(id);
+                subscriber.onNext(b?"删除成功":"删除失败");
+                subscriber.onCompleted();
+            }
+            @Override
+            public void onMyNext(String s) {
+                showMsg(s);
+                getData(1,false);
+            }
+        });
     }
 
 

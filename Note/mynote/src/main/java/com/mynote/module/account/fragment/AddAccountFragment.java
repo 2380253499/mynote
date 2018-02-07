@@ -9,10 +9,12 @@ import android.widget.TextView;
 import com.github.androidtools.PhoneUtils;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.ClearDataEvent;
+import com.mynote.event.GetDataEvent;
 import com.mynote.event.SaveDataEvent;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
@@ -44,6 +46,8 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
     @BindView(R.id.tv_account_paste)
     TextView tv_account_paste;
 
+    //用于更新数据
+    private boolean addDataSuccess;
     /**
      * 判断是否是编辑还是添加
      */
@@ -125,7 +129,7 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
     }
 
     private void addAccount(AccountBean bean) {
-//        showLoading();
+        showLoading();
         RXStart(pl_load,new IOCallBack<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
@@ -135,6 +139,7 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
             }
             @Override
             public void onMyNext(List<String> list) {
+                addDataSuccess=true;
                 et_addData_source.setText(null);
                 et_addData_user.setText(null);
                 et_addData_pwd.setText(null);
@@ -186,6 +191,11 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
         }
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(addDataSuccess){
+            RxBus.getInstance().post(new GetDataEvent(GetDataEvent.accountIndex));
+        }
+    }
 }
