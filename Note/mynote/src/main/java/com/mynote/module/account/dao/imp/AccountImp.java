@@ -170,7 +170,7 @@ public class AccountImp extends BaseDaoImp{
         values.put(DBConstant.dataAccount,bean.getDataAccount());
         values.put(DBConstant.dataPassword,bean.getDataPassword());
         values.put(DBConstant.dataRemark,bean.getDataRemark());
-        if(TextUtils.isEmpty(bean.getUid())){
+        if(TextUtils.isEmpty(bean.getUid())||"-1".equals(bean.getUid())){
             bean.setUid(System.nanoTime()+"");
             values.put(DBConstant.uid, bean.getUid());
         }

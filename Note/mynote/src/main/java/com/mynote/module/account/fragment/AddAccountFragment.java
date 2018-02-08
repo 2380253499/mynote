@@ -106,7 +106,6 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
                             editAccount(bean);
                         }else{
                             bean=new AccountBean();
-                            bean.set_id(-1);
                             bean.setDataSource(source);
                             bean.setDataAccount(user);
                             bean.setDataPassword(pwd);
