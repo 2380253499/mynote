@@ -10,7 +10,7 @@ import com.github.baseclass.adapter.LoadMoreAdapter;
  */
 
 public abstract class MyAdapter<T> extends LoadMoreAdapter<T> {
-
+    protected final String TAG=this.getClass().getSimpleName();
     public MyAdapter(Context mContext, int layoutId, int pageSize) {
         super(mContext, layoutId, pageSize);
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
+import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.mynote.module.account.bean.AccountBean;
 
 public class AccountAdapter extends MyAdapter<AccountBean> {
     private String searchInfo;
+    private boolean isEdit;
     public AccountAdapter(Context mContext, int layoutId, int pageSize) {
         super(mContext, layoutId, pageSize);
     }
@@ -42,6 +45,20 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
         }
 
         final CheckBox cb_check = (CheckBox) holder.getView(R.id.cb_check);
+        if(isEdit){
+            cb_check.setVisibility(View.VISIBLE);
+            cb_check.setChecked(item.isCheck());
+            cb_check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG+"===","==="+cb_check.isChecked());
+                    item.setCheck(cb_check.isChecked());
+                }
+            });
+        }else{
+            cb_check.setVisibility(View.GONE);
+        }
+
         holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position);
 
         TextView tv_source = holder.getTextView(R.id.tv_source);
@@ -54,6 +71,15 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
     public void setSearchInfo(String info) {
         searchInfo=info;
     }
+
+    public void setEdit(boolean edit) {
+        isEdit = edit;
+    }
+
+    public boolean isEdit() {
+        return isEdit;
+    }
+
     @NonNull
     private String getSearchColorString(String dataContentHTML) {
         StringBuffer dataContent=new StringBuffer(dataContentHTML);

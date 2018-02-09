@@ -47,12 +47,22 @@
                         android:src="@drawable/zr5"/>
 
                     <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar_main"
+                        android:id="@id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/app_title_height"
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/AppTheme.PopupOverlay"
-                        />
+                        >
+                        <ImageView
+                            android:id="@id/app_right_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:maxHeight="?attr/actionBarSize"
+                            android:paddingRight="10dp"
+                            android:visibility="gone"
+                            />
+                    </android.support.v7.widget.Toolbar>
                 </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 
@@ -134,6 +144,43 @@
                     />
             </RadioGroup>
         </LinearLayout>
+        <com.github.customview.MyLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            app:my_ll_solid="@color/c_press"
+            app:my_ll_top_line="true"
+            app:my_ll_border_width="2px"
+            android:paddingTop="2px"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="删 除"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginRight="2px"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="完 成"
+                android:gravity="center"
+                android:background="@color/white"
+                />
+        </com.github.customview.MyLinearLayout>
+        <View
+            android:id="@+id/view_backgroud"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.3"
+            android:background="@android:color/black"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <fragment

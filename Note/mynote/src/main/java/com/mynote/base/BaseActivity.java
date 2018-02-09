@@ -17,6 +17,7 @@ import com.library.base.MyBaseActivity;
 import com.library.base.ProgressLayout;
 import com.mynote.BuildConfig;
 import com.mynote.Constant;
+import com.mynote.R;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -47,6 +48,7 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
         if(mDaoImp!=null){
             mDaoImp.setContext(this);
         }
+        setTitleBackgroud(R.color.colorPrimaryDark);
         super.onCreate(savedInstanceState);
         mHandler=new Handler(getMainLooper());
     }

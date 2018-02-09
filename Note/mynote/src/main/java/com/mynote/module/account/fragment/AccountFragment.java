@@ -26,6 +26,7 @@ import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.home.activity.AddDataActivity;
+import com.mynote.module.home.event.OptionEvent;
 
 import java.util.List;
 
@@ -111,6 +112,33 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                 if(event.index==GetDataEvent.accountIndex){
                     showLoading();
                     getData(1,false);
+                }
+            }
+        });
+        getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
+            @Override
+            public void onMyNext(OptionEvent event) {
+                if(event.index==0){
+                    //0创建时间排序
+                    //1修改时间排序
+                    //2批量删除
+                    switch (event.flag){
+                        case 0:
+                            isOrderByCreateTime=true;
+                            showLoading();
+                            getData(1,false);
+                        break;
+                        case 1:
+                            isOrderByCreateTime=false;
+                            showLoading();
+                            getData(1,false);
+                        break;
+                        case 2:
+                            adapter.setEdit(true);
+                            adapter.notifyDataSetChanged();
+                        break;
+                    }
+
                 }
             }
         });
