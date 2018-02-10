@@ -28,7 +28,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
             android:text="来源:"
-            android:textSize="16sp"
+            android:textSize="14sp"
             />
 
         <com.github.customview.MyEditText
@@ -65,7 +65,7 @@
             android:drawableLeft="@drawable/asterisk"
             android:gravity="center_vertical"
             android:text="账号:"
-            android:textSize="16sp"
+            android:textSize="14sp"
             />
 
         <com.github.customview.MyEditText
@@ -118,7 +118,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
             android:text="密码:"
-            android:textSize="16sp"
+            android:textSize="14sp"
             />
 
         <com.github.customview.MyEditText
@@ -172,7 +172,7 @@
             android:paddingLeft="8dp"
             android:paddingTop="5dp"
             android:text="备注:"
-            android:textSize="16sp"
+            android:textSize="14sp"
             />
 
         <EditText
