@@ -20,7 +20,7 @@
         <activity android:name=".module.gesture.activity.GestureEditActivity"/>
         <activity android:name=".module.gesture.activity.GestureUpdateActivity"/>
         <activity android:name=".module.gesture.activity.SuperPassWordActivity"/>
-        <activity android:name=".module.home.activity.MainActivity"/>
+        <activity android:name=".module.home.activity.MainActivity" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".module.home.activity.AddDataActivity"/>
     </application>
 

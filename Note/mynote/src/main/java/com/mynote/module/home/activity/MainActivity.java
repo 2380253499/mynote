@@ -2,9 +2,9 @@ package com.mynote.module.home.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -33,8 +33,8 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity {
 
 
-    @BindView(R.id.ctl_layout)
-    CollapsingToolbarLayout ctl_layout;
+//    @BindView(R.id.ctl_layout)
+//    CollapsingToolbarLayout ctl_layout;
     @BindView(R.id.fl_content)
     FrameLayout fl_content;
     @BindView(R.id.fab)
@@ -97,9 +97,9 @@ public class MainActivity extends BaseActivity {
             }
         });
         getSupportActionBar().setTitle("Note");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
-        ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTitleTextColor(ContextCompat.getColor(mContext,R.color.white));
+//        ctl_layout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
+//        ctl_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
 
         selectView=rb_main_account;
         accountFragment=AccountFragment.newInstance();
