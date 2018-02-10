@@ -9,7 +9,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
@@ -37,6 +39,8 @@ import butterknife.BindView;
 import rx.Subscriber;
 
 public class AccountFragment extends BaseFragment<AccountImp> {
+    @BindView(R.id.ll_view)
+    LinearLayout ll_view;
     @BindView(R.id.et_search_account)
     MyEditText et_search_account;
 
@@ -62,7 +66,16 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     @Override
     protected void initView() {
         setPopupwindow();
-        rv_account.setFocusable(false);
+        rv_account.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+                    ll_view.requestFocusFromTouch();
+                    PhoneUtils.hiddenKeyBoard(mContext,et_search_account);
+                }
+                return false;
+            }
+        });
         adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize);
         adapter.setOnLoadMoreListener(this);
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {

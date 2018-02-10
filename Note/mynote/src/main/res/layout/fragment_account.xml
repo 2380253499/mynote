@@ -4,8 +4,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#ffffff"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
               android:orientation="vertical"
     >
     <com.library.base.ProgressLayout
@@ -18,9 +16,12 @@
             android:fillViewport="true"
             >
             <LinearLayout
+                android:id="@+id/ll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 >
                 <com.github.customview.MyEditText
                     android:id="@+id/et_search_account"
@@ -48,7 +49,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/background_f2"
+                    android:background="@color/c_divider"
                     />
 
                 <android.support.v7.widget.RecyclerView
