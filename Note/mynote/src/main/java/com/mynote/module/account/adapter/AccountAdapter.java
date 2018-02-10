@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -64,7 +65,7 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
         TextView tv_source = holder.getTextView(R.id.tv_source);
         TextView tv_account = holder.getTextView(R.id.tv_account);
 
-        tv_source.setText(Html.fromHtml(dataSourceHTML));
+        tv_source.setText(Html.fromHtml(dataSourceHTML==null?"":dataSourceHTML));
         tv_account.setText(Html.fromHtml(dataAccountHTML));
 
     }
@@ -82,6 +83,9 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
 
     @NonNull
     private String getSearchColorString(String dataContentHTML) {
+        if(TextUtils.isEmpty(dataContentHTML)){
+            return dataContentHTML;
+        }
         StringBuffer dataContent=new StringBuffer(dataContentHTML);
         int indexOf = dataContentHTML.toLowerCase().indexOf(searchInfo.toLowerCase());
         if(indexOf>=0){

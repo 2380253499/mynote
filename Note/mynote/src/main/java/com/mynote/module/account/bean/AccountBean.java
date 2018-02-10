@@ -15,11 +15,19 @@ dataPassword TEXT,
 dataRemark TEXT,
 updateTime TimeStamp
 creatTime TimeStamp */
+    private int adapterIndex;
     private String dataSource;
     private String dataAccount;
     private String dataPassword;
     private String dataRemark;
 
+    public int getAdapterIndex() {
+        return adapterIndex;
+    }
+
+    public void setAdapterIndex(int adapterIndex) {
+        this.adapterIndex = adapterIndex;
+    }
 
     public String getDataSource() {
         return dataSource;

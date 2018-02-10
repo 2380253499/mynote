@@ -62,7 +62,8 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     @Override
     protected void initView() {
         setPopupwindow();
-        adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize,nsv);
+        rv_account.setFocusable(false);
+        adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize);
         adapter.setOnLoadMoreListener(this);
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
@@ -78,6 +79,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             @Override
             public void onItemLongClick(View view, int position) {
                 accountBean =adapter.getList().get(position);
+                accountBean.setAdapterIndex(position);
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
             }
         });
@@ -212,6 +214,11 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         RXStart(pl_load,new IOCallBack<List<AccountBean>>() {
             @Override
             public void call(Subscriber<? super List<AccountBean>> subscriber) {
+               /* for (int i = 0; i < 200; i++) {
+                    AccountBean accountBean = new AccountBean();
+                    accountBean.setDataAccount(i+"asfd"+new Random().nextInt(10)+20);
+                    mDaoImp.addAccount(accountBean);
+                }*/
                 List<AccountBean> accountList = mDaoImp.selectAccount(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(accountList);
                 subscriber.onCompleted();
@@ -295,9 +302,26 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         });
     }
     private void deleteData(int id) {
-        List<Integer>list=new ArrayList<>();
-        list.add(id);
-        deleteData(list);
+        showLoading();
+        RXStart(new IOCallBack<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                mDaoImp.deleteAccount(id);
+                subscriber.onNext("删除成功");
+                subscriber.onCompleted();
+            }
+            @Override
+            public void onMyNext(String s) {
+                showMsg(s);
+                adapter.getList().remove(accountBean.getAdapterIndex());
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onMyError(Throwable e) {
+                super.onMyError(e);
+                showMsg("删除失败");
+            }
+        });
     }
 
 

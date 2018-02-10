@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.mynote.BuildConfig;
 import com.mynote.database.DBManager;
 
 import java.util.List;
@@ -40,6 +41,8 @@ public abstract class BaseDaoImp {
     }
 
     public void formatList(List list){
-        Log.i(TAG+"===","==="+new Gson().toJson(list));
+        if(BuildConfig.DEBUG){
+            Log.i(TAG+"===","==="+new Gson().toJson(list));
+        }
     }
 }
