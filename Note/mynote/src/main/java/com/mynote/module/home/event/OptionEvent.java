@@ -11,12 +11,10 @@ public class OptionEvent {
     public final static int flag_1=1;
     //批量删除
     public final static int flag_prepare_delete=2;
-    //取消批量删除
+    //完成并退出批量删除
     public final static int flag_cancel_delete=3;
-    //退出批量删除
-    public final static int flag_exit_delete=4;
     //进行批量删除
-    public final static int flag_start_delete=5;
+    public final static int flag_start_delete=4;
     public int flag;
     public int index;
     public OptionEvent(int flag,int index) {

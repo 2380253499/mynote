@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 
@@ -50,6 +51,10 @@ public class MainActivity extends BaseActivity {
     RadioGroup rg_main;
     @BindView(R.id.view_backgroud)
     View view_backgroud;
+
+    @BindView(R.id.ll_home_operation)
+    LinearLayout ll_home_operation;
+
     private MyRadioButton selectView;
 
     @BindView(R.id.drawerlayout)
@@ -68,6 +73,19 @@ public class MainActivity extends BaseActivity {
         setAppRightImg(R.drawable.main_more);
         return R.layout.activity_main;
     }
+
+    /*@Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_MOVE:
+                fab.setVisibility(View.GONE);
+            break;
+            case MotionEvent.ACTION_UP:
+                fab.setVisibility(View.VISIBLE);
+            break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }*/
 
     @Override
     protected void initView() {
@@ -117,20 +135,38 @@ public class MainActivity extends BaseActivity {
             @Override
             protected void onNoDoubleClick(View view) {
                 mPopupwindow.dismiss();
+                if(flag==OptionEvent.flag_prepare_delete){
+                    showOperation(true);
+                }
                 RxBus.getInstance().post(new OptionEvent(flag,tabIndex));
             }
         };
     }
-
+    public void showOperation(boolean isShow){
+        rg_main.setVisibility(isShow?View.GONE:View.VISIBLE);
+        ll_home_operation.setVisibility(isShow?View.VISIBLE:View.GONE);
+        fab.setVisibility(isShow?View.GONE:View.VISIBLE);
+    }
     @OnClick({R.id.rb_main_account,
             R.id.rb_main_memo,
             R.id.rb_main_joke,
             R.id.fab,
             R.id.rb_main_spend,
-            R.id.app_right_iv
+            R.id.app_right_iv,
+            R.id.tv_home_operation_delete,
+            R.id.tv_home_operation_complete
     })
     protected void onViewClick(View v) {
         switch (v.getId()){
+            case R.id.tv_home_operation_delete:
+                //批量删除-删除
+                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_start_delete,tabIndex));
+                break;
+            case R.id.tv_home_operation_complete:
+                //批量删除-完成
+                showOperation(false);
+                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_cancel_delete,tabIndex));
+                break;
             case R.id.app_right_iv:
                 showSeting();
                 break;
@@ -157,6 +193,8 @@ public class MainActivity extends BaseActivity {
             break;
         }
     }
+
+
     public void selectFragment(MyRadioButton myRadioButton, Fragment fragment){
         if(selectView==myRadioButton){
             return;

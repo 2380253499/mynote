@@ -90,10 +90,10 @@ public class AccountImp extends BaseDaoImp{
             searchSql.append(DBConstant.dataAccount+" like ? or ");
             searchSql.append(DBConstant.dataPassword+" like ? or ");
             searchSql.append(DBConstant.dataRemark+" like ? ");
-            searchStr[0]=searchInfo;
-            searchStr[1]=searchInfo;
-            searchStr[2]=searchInfo;
-            searchStr[3]=searchInfo;
+            searchStr[0]="%"+searchInfo+"%";
+            searchStr[1]="%"+searchInfo+"%";
+            searchStr[2]="%"+searchInfo+"%";
+            searchStr[3]="%"+searchInfo+"%";
         }
         Cursor query = db.query(DBManager.T_Account_Note,
                 new String[]{
@@ -128,6 +128,7 @@ public class AccountImp extends BaseDaoImp{
             list.add(bean);
         }
         db.close();
+        formatList(list);
         return list;
     }
 

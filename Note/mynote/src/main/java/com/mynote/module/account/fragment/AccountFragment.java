@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.home.event.OptionEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,6 +86,24 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         rv_account.addItemDecoration(dividerListItem);
         rv_account.setLayoutManager(new LinearLayoutManager(mContext));
         rv_account.setAdapter(adapter);
+
+
+
+        et_search_account.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchInfo=s.toString().replace(" ","");
+                getData(1,false);
+            }
+        });
     }
 
     private void setPopupwindow() {
@@ -123,27 +144,68 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     //1修改时间排序
                     //2批量删除
                     switch (event.flag){
-                        case 0:
+                        case OptionEvent.flag_0:
                             isOrderByCreateTime=true;
                             showLoading();
                             getData(1,false);
                         break;
-                        case 1:
+                        case OptionEvent.flag_1:
                             isOrderByCreateTime=false;
                             showLoading();
                             getData(1,false);
                         break;
-                        case 2:
+                        case OptionEvent.flag_prepare_delete:
                             adapter.setEdit(true);
                             adapter.notifyDataSetChanged();
                         break;
+                        case OptionEvent.flag_cancel_delete:
+                            adapter.setEdit(false);
+                            adapter.notifyDataSetChanged();
+                        break;
+                        case OptionEvent.flag_start_delete:
+                            if(isEmpty(adapter.getList())){
+                                showMsg("暂无数据可删除");
+                                return;
+                            }
+                            boolean flag=false;
+                            List<Integer>list=new ArrayList<>();
+                            for (int i = 0; i < adapter.getList().size(); i++) {
+                                AccountBean bean = adapter.getList().get(i);
+                                if(bean.isCheck()){
+                                    flag=true;
+                                    list.add(bean.get_id());
+                                }
+                            }
+                            if(flag==false){
+                                showMsg("请选择数据");
+                                return;
+                            }
+                            promptForDelete(list);
+                            break;
                     }
 
                 }
             }
         });
     }
-
+    private void promptForDelete(List<Integer>list) {
+        MyDialog.Builder mDialog=new MyDialog.Builder(mContext);
+        mDialog.setMessage("确认删除所选数据吗?");
+        mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                deleteData(list);
+            }
+        });
+        mDialog.create().show();
+    }
     @Override
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
@@ -163,6 +225,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     pageNum=2;
                     adapter.setList(list,true);
                 }
+                adapter.setSearchInfo(searchInfo);
             }
         });
     }
@@ -207,13 +270,15 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         }
     }
 
-    private void deleteData(int id) {
+    private void deleteData(List<Integer> list) {
         showLoading();
         RXStart(true,new IOCallBack<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                boolean b = mDaoImp.deleteAccount(id);
-                subscriber.onNext(b?"删除成功":"删除失败");
+                for (int i = 0; i < list.size(); i++) {
+                    mDaoImp.deleteAccount(list.get(i));
+                }
+                subscriber.onNext("删除成功");
                 subscriber.onCompleted();
             }
             @Override
@@ -221,7 +286,18 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                 showMsg(s);
                 getData(1,false);
             }
+            @Override
+            public void onMyError(Throwable e) {
+                super.onMyError(e);
+                showMsg("删除失败");
+                getData(1,false);
+            }
         });
+    }
+    private void deleteData(int id) {
+        List<Integer>list=new ArrayList<>();
+        list.add(id);
+        deleteData(list);
     }
 
 

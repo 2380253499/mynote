@@ -111,7 +111,9 @@
                     app:my_radio_checked="@drawable/main_data_selector"
                     app:my_radio_checked_color="@color/c_icon"
                     app:my_radio_checked_drawable="top"
-                    app:my_radio_normal="@drawable/main_data_normal"/>
+                    app:my_radio_normal="@drawable/main_data_normal"
+                    android:checked="true"
+                    />
 
                 <com.github.customview.MyRadioButton
                     android:id="@+id/rb_main_memo"
@@ -143,36 +145,39 @@
                     app:my_radio_normal="@drawable/consumption_normal"
                     />
             </RadioGroup>
+            <LinearLayout
+                android:id="@+id/ll_home_operation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:background="@color/c_press"
+                >
+                <com.github.customview.MyTextView
+                    android:id="@+id/tv_home_operation_delete"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="删 除"
+                    android:gravity="center"
+                    android:layout_marginRight="2px"
+                    app:my_tv_solid="@color/white"
+                    app:my_tv_press="@color/c_press"
+                    />
+                <com.github.customview.MyTextView
+                    android:id="@+id/tv_home_operation_complete"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="完 成"
+                    android:gravity="center"
+                    app:my_tv_solid="@color/white"
+                    app:my_tv_press="@color/c_press"
+                    />
+            </LinearLayout>
         </LinearLayout>
-        <com.github.customview.MyLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            app:my_ll_solid="@color/c_press"
-            app:my_ll_top_line="true"
-            app:my_ll_border_width="2px"
-            android:paddingTop="2px"
-            android:gravity="center_vertical"
-            android:layout_alignParentBottom="true"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="删 除"
-                android:gravity="center"
-                android:background="@color/white"
-                android:layout_marginRight="2px"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="完 成"
-                android:gravity="center"
-                android:background="@color/white"
-                />
-        </com.github.customview.MyLinearLayout>
+
         <View
             android:id="@+id/view_backgroud"
             android:layout_width="match_parent"

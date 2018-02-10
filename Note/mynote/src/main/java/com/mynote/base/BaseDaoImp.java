@@ -2,8 +2,12 @@ package com.mynote.base;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.mynote.database.DBManager;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/1/25.
@@ -33,5 +37,9 @@ public abstract class BaseDaoImp {
 
     public SQLiteDatabase getWritableDatabase(){
         return DBManager.getNewInstance(mContext).getWritableDatabase();
+    }
+
+    public void formatList(List list){
+        Log.i(TAG+"===","==="+new Gson().toJson(list));
     }
 }

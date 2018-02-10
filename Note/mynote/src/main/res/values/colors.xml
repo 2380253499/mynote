@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#18B4ED</color>
     <color name="colorPrimaryDark2">#18B4ED</color>
     <color name="colorPrimaryDark1">#87ceeb</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#C0C5CA</color>
+    <color name="colorAccent1">#FF4081</color>
     <color name="colorText">#848484</color>
     <color name="c_icon_normal">#848484</color>
     <color name="c_icon">#56abe4</color>
