@@ -1,4 +1,4 @@
-package com.mynote.module.account.fragment;
+package com.mynote.module.spend.fragment;
 
 import android.os.Bundle;
 import android.view.View;

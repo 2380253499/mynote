@@ -177,11 +177,11 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_memo_copy:
-                String account = et_memo_content.getText().toString();
-                if (TextUtils.isEmpty(account)) {
+                String content = et_memo_content.getText().toString();
+                if (TextUtils.isEmpty(content)) {
                     showToastS("请填写数据之后复制");
                 } else {
-                    PhoneUtils.copyText(getActivity(), account);
+                    PhoneUtils.copyText(getActivity(), content);
                     showToastS("复制成功");
                 }
                 break;

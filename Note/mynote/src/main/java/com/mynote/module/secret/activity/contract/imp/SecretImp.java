@@ -25,7 +25,7 @@ public class SecretImp extends IPresenter<SecretContract.View> implements Secret
         }).compose(RxUtils.appSchedulers()).subscribe(new MySubscriber<List<MemoBean>>() {
             @Override
             public void onMyNext(List<MemoBean> obj) {
-                MemoAdapter memoAdapter = new MemoAdapter(mContext, obj, R.layout.item_memo);
+                JokeAdapter memoAdapter = new JokeAdapter(mContext, obj, R.layout.item_memo);
                 listView.setAdapter(memoAdapter);
             }
             @Override

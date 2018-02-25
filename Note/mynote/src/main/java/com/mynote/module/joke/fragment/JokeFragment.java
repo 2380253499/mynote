@@ -1,4 +1,4 @@
-package com.mynote.module.memo.fragment;
+package com.mynote.module.joke.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,9 +29,9 @@ import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
 import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.event.OptionEvent;
-import com.mynote.module.memo.adapter.MemoAdapter;
-import com.mynote.module.memo.bean.MemoBean;
-import com.mynote.module.memo.dao.imp.MemoImp;
+import com.mynote.module.joke.adapter.JokeAdapter;
+import com.mynote.module.joke.bean.JokeBean;
+import com.mynote.module.joke.dao.imp.JokeImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,70 +39,70 @@ import java.util.List;
 import butterknife.BindView;
 import rx.Subscriber;
 
-public class MemoFragment extends BaseFragment<MemoImp> {
+public class JokeFragment extends BaseFragment<JokeImp> {
     @BindView(R.id.ll_view)
     LinearLayout ll_view;
-    @BindView(R.id.et_search_memo)
-    MyEditText et_search_memo;
+    @BindView(R.id.et_search_joke)
+    MyEditText et_search_joke;
 
-    @BindView(R.id.rv_memo)
-    RecyclerView rv_memo;
+    @BindView(R.id.rv_joke)
+    RecyclerView rv_joke;
 
-    MemoAdapter adapter;
+    JokeAdapter adapter;
     private MyPopupwindow mPopupwindow;
-    private MemoBean memoBean;
+    private JokeBean  jokeBean;
 
-    public static MemoFragment newInstance() {
+
+    public static JokeFragment newInstance() {
         Bundle args = new Bundle();
-        MemoFragment fragment = new MemoFragment();
+        JokeFragment fragment = new JokeFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    @Override
     protected int getContentView() {
-        return R.layout.fragment_memo;
+        return R.layout.fragment_joke;
     }
     @Override
     protected void initView() {
         setPopupwindow();
-        rv_memo.setOnTouchListener(new View.OnTouchListener() {
+        rv_joke.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
                     ll_view.requestFocusFromTouch();
-                    PhoneUtils.hiddenKeyBoard(mContext, et_search_memo);
+                    PhoneUtils.hiddenKeyBoard(mContext, et_search_joke);
                 }
                 return false;
             }
         });
-        adapter=new MemoAdapter(mContext,R.layout.item_memo,pageSize);
+        adapter=new JokeAdapter(mContext,R.layout.item_joke,pageSize);
         adapter.setOnLoadMoreListener(this);
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                MemoBean memoBean = adapter.getList().get(position);
+                JokeBean jokeBean = adapter.getList().get(position);
                 Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, GetDataEvent.memoIndex);
-                intent.putExtra(IntentParam.editMemoBean, memoBean);
+                intent.putExtra(IntentParam.tabIndex, GetDataEvent.jokeIndex);
+                intent.putExtra(IntentParam.editJokeBean, jokeBean);
                 STActivity(intent, AddDataActivity.class);
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
-                memoBean =adapter.getList().get(position);
-                memoBean.setAdapterIndex(position);
-                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 50), -PhoneUtils.dip2px(getActivity(), 80));
+                jokeBean =adapter.getList().get(position);
+                jokeBean.setAdapterIndex(position);
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(),50), -PhoneUtils.dip2px(getActivity(), 80));
             }
         });
         BaseDividerListItem dividerListItem=new BaseDividerListItem(mContext,2);
-        rv_memo.addItemDecoration(dividerListItem);
-        rv_memo.setLayoutManager(new LinearLayoutManager(mContext));
-        rv_memo.setAdapter(adapter);
+        rv_joke.addItemDecoration(dividerListItem);
+        rv_joke.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_joke.setAdapter(adapter);
 
 
 
-        et_search_memo.addTextChangedListener(new TextWatcher() {
+        et_search_joke.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -119,11 +119,11 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         });
     }
     private void setPopupwindow() {
-        View menu = LayoutInflater.from(getActivity()).inflate(R.layout.popu_memo_menu, null);
-        TextView tv_menu_copyMemoContent= (TextView) menu.findViewById(R.id.tv_menu_copyMemoContent);
-        TextView tv_menu_deleteMemo= (TextView) menu.findViewById(R.id.tv_menu_deleteMemo);
-        tv_menu_copyMemoContent.setOnClickListener(this);
-        tv_menu_deleteMemo.setOnClickListener(this);
+        View menu = LayoutInflater.from(getActivity()).inflate(R.layout.popu_joke_menu, null);
+        TextView tv_menu_copyJokeContent= (TextView) menu.findViewById(R.id.tv_menu_copyJokeContent);
+        TextView tv_menu_deleteJoke= (TextView) menu.findViewById(R.id.tv_menu_deleteJoke);
+        tv_menu_copyJokeContent.setOnClickListener(this);
+        tv_menu_deleteJoke.setOnClickListener(this);
         mPopupwindow = new MyPopupwindow(getActivity(), menu);
         mPopupwindow.setBackground(R.color.transparent);
     }
@@ -133,13 +133,14 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         showProgress();
         getData(1,false);
     }
+
     @Override
     protected void initRxBus() {
         super.initRxBus();
         getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
             @Override
             public void onMyNext(GetDataEvent event) {
-                if(event.index==GetDataEvent.memoIndex){
+                if(event.index==GetDataEvent.jokeIndex){
                     showLoading();
                     getData(1,false);
                 }
@@ -148,7 +149,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
             @Override
             public void onMyNext(OptionEvent event) {
-                if(event.index==GetDataEvent.memoIndex){
+                if(event.index==GetDataEvent.jokeIndex){
                     //0创建时间排序
                     //1修改时间排序
                     //2批量删除
@@ -179,7 +180,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
                             boolean flag=false;
                             List<Integer> list=new ArrayList<>();
                             for (int i = 0; i < adapter.getList().size(); i++) {
-                                MemoBean bean = adapter.getList().get(i);
+                                JokeBean bean = adapter.getList().get(i);
                                 if(bean.isCheck()){
                                     flag=true;
                                     list.add(bean.get_id());
@@ -218,26 +219,26 @@ public class MemoFragment extends BaseFragment<MemoImp> {
     @Override
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
-        RXStart(pl_load,new IOCallBack<List<MemoBean>>() {
+        RXStart(pl_load,new IOCallBack<List<JokeBean>>() {
             @Override
-            public void call(Subscriber<? super List<MemoBean>> subscriber) {
-               /* for (int i = 0; i < 200; i++) {
-                    MemoBean memoBean = new MemoBean();
-                    memoBean.setDataContent(i+"memo"+new Random().nextInt(10)+20);
-                    mDaoImp.addMemo(memoBean);
+            public void call(Subscriber<? super List<JokeBean>> subscriber) {
+                /*for (int i = 0; i < 200; i++) {
+                    JokeBean jokeBean = new JokeBean();
+                    jokeBean.setDataContent(i+"asfd"+(new Random().nextInt(10)+20));
+                    mDaoImp.addJoke(jokeBean);
                 }*/
-                dataCount = mDaoImp.selectMemoCount();
-                List<MemoBean> memoList = mDaoImp.selectMemo(page, searchInfo, isOrderByCreateTime);
-                subscriber.onNext(memoList);
+                dataCount = mDaoImp.selectJokeCount();
+                List<JokeBean> jokeList = mDaoImp.selectJoke(page, searchInfo, isOrderByCreateTime);
+                subscriber.onNext(jokeList);
                 subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(List<MemoBean> list) {
+            public void onMyNext(List<JokeBean> list) {
                 if(isLoad){
                     pageNum++;
                     adapter.addList(list,true);
                 }else{
-                    RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.memoIndex));
+                    RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.jokeIndex));
                     pageNum=2;
                     adapter.setList(list,true);
                 }
@@ -245,17 +246,17 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             }
         });
     }
-    @Override
     protected void onViewClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_menu_copyMemoContent:
+            case R.id.tv_menu_copyJokeContent:
                 mPopupwindow.dismiss();
-                if(!TextUtils.isEmpty(memoBean.getDataContent())){
-                    PhoneUtils.copyText(getActivity(), memoBean.getDataContent());
-                    showToastS("复制内容成功");
+                String jokeContent = jokeBean.getDataContent();
+                if (!TextUtils.isEmpty(jokeContent)) {
+                    PhoneUtils.copyText(getActivity(),jokeContent);
+                    showToastS("复制成功");
                 }
                 break;
-            case R.id.tv_menu_deleteMemo:
+            case R.id.tv_menu_deleteJoke:
                 mPopupwindow.dismiss();
                 mDialog=new MyDialog.Builder(mContext);
                 mDialog.setMessage(mContext.getString(R.string.delete_data));
@@ -269,11 +270,11 @@ public class MemoFragment extends BaseFragment<MemoImp> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        deleteData(memoBean.get_id());
+                        deleteData(jokeBean.get_id());
                     }
                 });
                 mDialog.create().show();
-                break;
+            break;
         }
     }
 
@@ -283,7 +284,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 for (int i = 0; i < list.size(); i++) {
-                    mDaoImp.deleteMemo(list.get(i));
+                    mDaoImp.deleteJoke(list.get(i));
                 }
                 subscriber.onNext("删除成功");
                 subscriber.onCompleted();
@@ -306,16 +307,16 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         RXStart(new IOCallBack<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                mDaoImp.deleteMemo(id);
-                dataCount = mDaoImp.selectMemoCount();
+                mDaoImp.deleteJoke(id);
+                dataCount = mDaoImp.selectJokeCount();
                 subscriber.onNext("删除成功");
                 subscriber.onCompleted();
             }
             @Override
             public void onMyNext(String s) {
-                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.memoIndex));
+                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.jokeIndex));
                 showMsg(s);
-                adapter.getList().remove(memoBean.getAdapterIndex());
+                adapter.getList().remove(jokeBean.getAdapterIndex());
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -325,5 +326,9 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             }
         });
     }
+
+
+
+
 
 }

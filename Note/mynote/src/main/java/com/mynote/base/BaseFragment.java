@@ -31,6 +31,12 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
     protected I mDaoImp;
     protected String searchInfo;
     protected boolean isOrderByCreateTime;
+    protected int dataCount;
+
+    public int getDataCount() {
+        return dataCount;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         pageSize= Constant.pageSize;

@@ -1,4 +1,4 @@
-package com.mynote.module.home.event;
+package com.mynote.event;
 
 /**
  * Created by Administrator on 2018/2/9.
@@ -15,6 +15,8 @@ public class OptionEvent {
     public final static int flag_cancel_delete=3;
     //进行批量删除
     public final static int flag_start_delete=4;
+    //获取数据量
+    public final static int flag_get_data_count=5;
     public int flag;
     public int index;
     public OptionEvent(int flag,int index) {

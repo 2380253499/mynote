@@ -95,12 +95,12 @@
             <com.github.customview.MyButton
                 android:id="@+id/bt_addData_save"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 app:my_bt_normal_drawable="@drawable/save_normal"
                 app:my_bt_press_drawable="@drawable/save_press"
                 android:background="@null"
-                android:layout_height="match_parent"
                 android:text="保存"
                 android:textColor="@color/white"
                 />

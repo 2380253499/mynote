@@ -5,7 +5,6 @@
               android:layout_height="match_parent"
               android:background="@color/white"
             android:id="@+id/noScrollView"
-              tools:context="com.zr.note.ui.main.fragment.AddMemoFragment"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="段子说明"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:paddingLeft="@dimen/asterisk_padding"
         />
     <com.github.customview.MyTextView
@@ -92,7 +91,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             tools:text="段子说明"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:layout_marginLeft="@dimen/asterisk_padding"
             android:layout_marginRight="@dimen/asterisk_padding"
             />
@@ -107,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="请填写搞笑段子"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:drawableLeft="@drawable/asterisk"
                 />
             <TextView
@@ -126,8 +125,8 @@
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:text="复制"
-                android:textSize="15sp"
-                android:layout_marginRight="3dp"
+                android:textSize="14sp"
+                android:layout_marginRight="5dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic"
                 android:gravity="center"
@@ -137,8 +136,8 @@
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:text="粘贴"
-                android:textSize="15sp"
-                android:layout_marginRight="3dp"
+                android:textSize="14sp"
+                android:layout_marginRight="5dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic"
                 android:gravity="center"
@@ -148,8 +147,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="清除"
-                android:textSize="15sp"
-                android:layout_marginRight="13dp"
+                android:textSize="14sp"
+                android:layout_marginRight="8dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic"
                 />

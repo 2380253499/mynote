@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,17 +16,18 @@ import android.widget.RadioGroup;
 
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
+import com.github.baseclass.rx.MySubscriber;
 import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyRadioButton;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.event.OptionEvent;
 import com.mynote.module.account.fragment.AccountFragment;
-import com.mynote.module.account.fragment.JokeFragment;
+import com.mynote.module.joke.fragment.JokeFragment;
 import com.mynote.module.memo.fragment.MemoFragment;
-import com.mynote.module.account.fragment.SpendFragment;
-import com.mynote.module.home.event.OptionEvent;
+import com.mynote.module.spend.fragment.SpendFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,7 +69,7 @@ public class MainActivity extends BaseActivity {
     JokeFragment    jokeFragment;
     SpendFragment   spendFragment;
     private MyPopupwindow mPopupwindow;
-
+    private String[]dataCountStr=new String[4];
     @Override
     protected int getContentView() {
         setAppRightImg(R.drawable.main_more);
@@ -110,6 +112,37 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
 
     }
+
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
+            @Override
+            public void onMyNext(OptionEvent event) {
+                //获取数据量
+                if(event.flag==OptionEvent.flag_get_data_count){
+                    int dataCount=0;
+                    switch (event.index){
+                        case 0:
+                            dataCount=accountFragment.getDataCount();
+                            break;
+                        case 1:
+                            dataCount=memoFragment.getDataCount();
+                            break;
+                        case 2:
+                            dataCount=jokeFragment.getDataCount();
+                            break;
+                        case 3:
+                            dataCount=spendFragment.getDataCount();
+                            break;
+                    }
+                    dataCountStr[event.index]=dataCount+"";
+                    getSupportActionBar().setTitle("Note("+dataCount+")");
+                }
+            }
+        });
+    }
+
     private void showSeting() {
         View view = inflateView(R.layout.popu_options, null);
         mPopupwindow = new MyPopupwindow(this,view);
@@ -232,6 +265,9 @@ public class MainActivity extends BaseActivity {
             hideFragment(accountFragment);
             hideFragment(memoFragment);
             hideFragment(jokeFragment);
+        }
+        if(!TextUtils.isEmpty(dataCountStr[tabIndex])){
+            getSupportActionBar().setTitle("Note("+dataCountStr[tabIndex]+")");
         }
     }
 }

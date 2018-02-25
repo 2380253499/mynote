@@ -19,6 +19,7 @@ import com.github.baseclass.BaseDividerListItem;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
@@ -30,7 +31,7 @@ import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.home.activity.AddDataActivity;
-import com.mynote.module.home.event.OptionEvent;
+import com.mynote.event.OptionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,6 +233,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     accountBean.setDataAccount(i+"asfd"+new Random().nextInt(10)+20);
                     mDaoImp.addAccount(accountBean);
                 }*/
+                dataCount = mDaoImp.selectAccountCount();
                 List<AccountBean> accountList = mDaoImp.selectAccount(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(accountList);
                 subscriber.onCompleted();
@@ -242,6 +244,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     pageNum++;
                     adapter.addList(list,true);
                 }else{
+                    RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.accountIndex));
                     pageNum=2;
                     adapter.setList(list,true);
                 }
@@ -320,11 +323,13 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 mDaoImp.deleteAccount(id);
+                dataCount = mDaoImp.selectAccountCount();
                 subscriber.onNext("删除成功");
                 subscriber.onCompleted();
             }
             @Override
             public void onMyNext(String s) {
+                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.accountIndex));
                 showMsg(s);
                 adapter.getList().remove(accountBean.getAdapterIndex());
                 adapter.notifyDataSetChanged();

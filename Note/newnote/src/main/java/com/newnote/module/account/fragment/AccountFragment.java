@@ -40,7 +40,7 @@ public class AccountFragment extends BaseFragment<AccountImp> implements Account
 
     private boolean orderByCreateTime;
     private String searchInfo;
-
+    MyPopupwindow mPopupwindow;
     public static AccountFragment newInstance() {
         Bundle args = new Bundle();
         AccountFragment fragment = new AccountFragment();
