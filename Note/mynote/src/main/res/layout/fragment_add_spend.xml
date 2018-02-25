@@ -105,6 +105,7 @@
     </LinearLayout>
 
     <com.github.customview.FlowLayout
+        android:id="@+id/fl_spend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="13dp"
@@ -116,7 +117,7 @@
             android:text="早餐"
             app:my_tv_border_color="@color/c_F8F8F83"
             app:my_tv_border_width="1px"
-            app:my_tv_corner_radius="15dp"
+            app:my_tv_corner_radius="14dp"
             app:my_tv_press="@color/c_divider"
             app:my_tv_solid="@color/white"/>
 

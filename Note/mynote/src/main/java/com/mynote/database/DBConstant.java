@@ -75,6 +75,17 @@ public class DBConstant {
      * dataContent  --数据内容
      * dataRemark   --备注
      */
+    public static final String CT_Spend_Dic_Note = "create table "+DBManager.T_Spend_Dic_Note+" (" +
+            _id         +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            dataRemark  +"  NTEXT," +
+            dataContent +" NTEXT," +
+            updateTime  +" NTEXT NOT NULL   ," +
+            creatTime   +" NTEXT NOT NULL  )";
+    /**
+     * dataContent  --数据内容
+     * dataRemark   --备注
+     */
     public static final String CT_Secret_Note = "create table "+DBManager.T_Secret_Note+" (" +
             _id         +" INTEGER PRIMARY KEY AUTOINCREMENT," +
             uid+" varchar," +
@@ -82,4 +93,6 @@ public class DBConstant {
             dataContent +" NTEXT," +
             updateTime  +" NTEXT NOT NULL   ," +
             creatTime   +" NTEXT NOT NULL  )";
+
+
 }

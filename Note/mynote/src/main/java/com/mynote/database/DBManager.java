@@ -40,6 +40,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String T_Memo_Note = "T_Memo_Note";
     public static final String T_Joke_Note = "T_Joke_Note";
     public static final String T_Spend_Note = "T_Spend_Note";
+    public static final String T_Spend_Dic_Note = "T_Spend_Dic_Note";
     public static final String T_Secret_Note = "T_Secret_Note";
     public static final int pageSize= Constant.pageSize;
     private String getLimitSql(int page){
@@ -91,6 +92,9 @@ public class DBManager extends SQLiteOpenHelper {
         }
         if (noExistTable(db, T_Secret_Note)) {
             db.execSQL(DBConstant.CT_Secret_Note);
+        }
+        if (noExistTable(db, T_Spend_Dic_Note)) {
+            db.execSQL(DBConstant.CT_Spend_Dic_Note);
         }
     }
 
