@@ -11,7 +11,14 @@ public class BaseEntity implements Serializable {
     private long updateTime;
     private long creatTime;
     private boolean isCheck;
+    private int adapterIndex;
+    public int getAdapterIndex() {
+        return adapterIndex;
+    }
 
+    public void setAdapterIndex(int adapterIndex) {
+        this.adapterIndex = adapterIndex;
+    }
     public boolean isCheck() {
         return isCheck;
     }

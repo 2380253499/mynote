@@ -23,7 +23,7 @@ import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.module.account.fragment.AccountFragment;
 import com.mynote.module.account.fragment.JokeFragment;
-import com.mynote.module.account.fragment.MemoFragment;
+import com.mynote.module.memo.fragment.MemoFragment;
 import com.mynote.module.account.fragment.SpendFragment;
 import com.mynote.module.home.event.OptionEvent;
 

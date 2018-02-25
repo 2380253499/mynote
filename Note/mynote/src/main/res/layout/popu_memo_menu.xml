@@ -6,7 +6,6 @@
     android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.zr.note.ui.main.activity.SActivity"
     android:gravity="center"
     >
     <com.github.customview.MyLinearLayout

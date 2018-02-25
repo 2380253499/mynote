@@ -5,38 +5,62 @@
               android:layout_height="match_parent"
               android:background="#ffffff"
               android:orientation="vertical"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
     >
-    <com.github.customview.MyEditText
-        android:id="@+id/et_search_memo"
+    <com.library.base.ProgressLayout
+        android:id="@id/pl_load"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:hint="@string/search_info"
-        android:textColor="@color/colorText"
-        android:textColorHint="#B2B2B2"
-        app:my_et_border_color="@color/c_divider"
-        app:my_et_border_width="2px"
-        app:my_et_corner_radius="4dp"
-        android:layout_gravity="center"
-        android:maxLength="10"
-        android:visibility="invisible"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/c_divider"
-        />
-        <com.github.customview.CustomListView
-            android:id="@+id/lv_memo_list"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:listSelector="@drawable/selector_list_item"
-            ></com.github.customview.CustomListView>
+            android:fillViewport="true"
+            >
+            <LinearLayout
+                android:id="@+id/ll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+                <com.github.customview.MyEditText
+                    android:id="@+id/et_search_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:hint="@string/search_info"
+                    android:maxLength="10"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="#B2B2B2"
+                    android:textSize="14sp"
+                    app:my_et_border_color="@color/c_divider"
+                    app:my_et_border_width="2px"
+                    app:my_et_corner_radius="4dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/c_divider"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.library.base.ProgressLayout>
+
 </LinearLayout>

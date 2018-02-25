@@ -4,15 +4,15 @@ package com.mynote.database;
  * Created by Administrator on 2016/10/11.
  */
 public class DBConstant {
-    /**************************账户表字段************************************/
     public static final String _id="_id";//自增长
     public static final String uid="uid";//多表情况的唯一标识
-    public static final String dataSource="dataSource";//来源
-    public static final String dataAccount="dataAccount";//账户
-    public static final String dataPassword="dataPassword";//密码
     public static final String dataRemark="dataRemark";//备注
     public static final String updateTime="updateTime";//修改时间 时间戳
     public static final String creatTime="creatTime";//创建时间 时间戳
+    /**************************账户表字段************************************/
+    public static final String dataSource="dataSource";//来源
+    public static final String dataAccount="dataAccount";//账户
+    public static final String dataPassword="dataPassword";//密码
     /**************************备忘录表字段************************************/
     public static final String dataContent="dataContent";//备忘内容
     /**************************消费表字段************************************/
