@@ -154,7 +154,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
             @Override
             public void onMyNext(OptionEvent event) {
-                if(event.index==0){
+                if(event.index==GetDataEvent.accountIndex){
                     //0创建时间排序
                     //1修改时间排序
                     //2批量删除

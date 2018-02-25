@@ -148,7 +148,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
             @Override
             public void onMyNext(OptionEvent event) {
-                if(event.index==0){
+                if(event.index==GetDataEvent.memoIndex){
                     //0创建时间排序
                     //1修改时间排序
                     //2批量删除
