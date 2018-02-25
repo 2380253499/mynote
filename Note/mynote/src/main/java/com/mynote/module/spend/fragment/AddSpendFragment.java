@@ -3,6 +3,7 @@ package com.mynote.module.spend.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.module.spend.bean.SpendBean;
 
@@ -13,7 +14,7 @@ import com.mynote.module.spend.bean.SpendBean;
 public class AddSpendFragment extends BaseFragment {
     @Override
     protected int getContentView() {
-        return 0;
+        return R.layout.fragment_add_spend;
     }
 
     public static AddSpendFragment newInstance( ) {

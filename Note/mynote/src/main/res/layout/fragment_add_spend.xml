@@ -5,7 +5,6 @@
               android:layout_height="match_parent"
               android:background="@color/white"
             android:scrollbars="none"
-              tools:context="com.zr.note.ui.main.fragment.AddMemoFragment"
     >
 <LinearLayout
     android:layout_width="match_parent"
@@ -24,13 +23,14 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/asterisk_padding"
             android:text="消费说明"
-            android:textSize="15sp"
+            android:textSize="14sp"
             />
 
         <com.github.customview.MyEditText
             android:id="@+id/et_spend_remark"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_marginLeft="@dimen/asterisk_padding"
             android:layout_marginRight="@dimen/asterisk_padding"
             android:layout_marginTop="5dp"
@@ -39,11 +39,11 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:singleLine="true"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:my_et_border_color="@color/top_color2"
             app:my_et_border_width="1px"
             app:my_et_corner_radius="4px"
-            tools:text="消费说明"
+            android:hint="消费说明"
             />
 
         <LinearLayout
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/asterisk"
                 android:text="消费金额"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 />
 
             <TextView
@@ -85,6 +85,7 @@
             android:id="@+id/et_spend_amount"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_marginLeft="@dimen/asterisk_padding"
             android:layout_marginRight="@dimen/asterisk_padding"
             android:layout_marginTop="5dp"
@@ -95,17 +96,14 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:singleLine="true"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:my_et_border_color="@color/top_color2"
             app:my_et_border_width="1px"
             app:my_et_corner_radius="4px"
             />
 
     </LinearLayout>
-    <com.github.customview.MyTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
     <com.github.customview.FlowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

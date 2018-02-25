@@ -4,8 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#ffffff"
-              android:orientation="vertical"
-              tools:context="com.zr.note.ui.main.fragment.AddAccountFragment">
+              android:orientation="vertical" >
 <LinearLayout
     android:id="@+id/ll_tree"
     android:layout_width="match_parent"
