@@ -89,7 +89,7 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
             public void onMyNext(SaveDataEvent event) {
                 if(event.index== SaveDataEvent.jokeIndex){
                     String content = et_joke_content.getText().toString();
-                    if (TextUtils.isEmpty(content)) {
+                    if (TextUtils.isEmpty(content)||content.trim().length()<=0) {
                         showToastS("内容不能为空");
                     } else {
                         String remark = et_joke_remark.getText().toString();
@@ -195,10 +195,20 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_joke_gxdz:
+                et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("搞笑段子")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"搞笑段子");
+                }
                 break;
-            case R.id.tv_joke_ssly:
+            case R.id.tv_joke_ssly:et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("说说留言")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"说说留言");
+                }
                 break;
-            case R.id.tv_joke_gxly:
+            case R.id.tv_joke_gxly:et_joke_remark.setText(et_joke_remark.getText());
+                if(getSStr(et_joke_remark).indexOf("搞笑留言")<0){
+                    et_joke_remark.setText(getSStr(et_joke_remark)+"搞笑留言");
+                }
                 break;
             case R.id.tv_joke_copy:
                 String content = et_joke_content.getText().toString();

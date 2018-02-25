@@ -26,7 +26,7 @@
             android:id="@+id/et_memo_reminder"
             style="@style/editTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:maxLength="30"
             android:singleLine="true"

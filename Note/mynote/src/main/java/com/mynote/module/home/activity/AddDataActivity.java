@@ -126,13 +126,11 @@ public class AddDataActivity extends BaseActivity {
             case 1:
                 mrb_button1.setChecked(true);
                 addMemoFragment = AddMemoFragment.newInstance(memoBean);
-//                addDataInter[1] = addMemoFragment;
                 addFragment(R.id.fl_fragment, addMemoFragment);
                 break;
             case 2:
                 mrb_button2.setChecked(true);
                 addJokeFragment =   AddJokeFragment.newInstance(jokeBean);
-//                addDataInter[2] = addJokeFragment;
                 addFragment(R.id.fl_fragment, addJokeFragment);
                 break;
             case 3:

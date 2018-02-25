@@ -86,7 +86,7 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
             public void onMyNext(SaveDataEvent event) {
                 if(event.index== SaveDataEvent.accountIndex){
                     String userStr = et_addData_user.getText().toString().trim();
-                    if (TextUtils.isEmpty(userStr)) {
+                    if (TextUtils.isEmpty(userStr)||userStr.trim().length()<=0) {
                         showToastS("账户不能为空");
                     } else {
                         String source = et_addData_source.getText().toString();

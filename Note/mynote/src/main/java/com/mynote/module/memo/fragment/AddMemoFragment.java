@@ -80,7 +80,7 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
             public void onMyNext(SaveDataEvent event) {
                 if(event.index== SaveDataEvent.memoIndex){
                     String content = et_memo_content.getText().toString();
-                    if (TextUtils.isEmpty(content)) {
+                    if (TextUtils.isEmpty(content)||content.trim().length()<=0) {
                         showToastS("内容不能为空");
                     } else {
                         String remark = et_memo_reminder.getText().toString();
