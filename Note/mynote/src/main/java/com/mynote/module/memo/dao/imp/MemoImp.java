@@ -87,7 +87,7 @@ public class MemoImp extends BaseDaoImp {
         if(!TextUtils.isEmpty(searchInfo)){
             searchSql=new StringBuffer();
             searchSql.append(DBConstant.dataRemark+" like ? or ");
-            searchSql.append(DBConstant.dataContent+" like ? or ");
+            searchSql.append(DBConstant.dataContent+" like ?  ");
             searchStr[0]="%"+searchInfo+"%";
             searchStr[1]="%"+searchInfo+"%";
         }

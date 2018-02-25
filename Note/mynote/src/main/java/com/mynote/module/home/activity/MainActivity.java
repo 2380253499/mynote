@@ -177,18 +177,33 @@ public class MainActivity extends BaseActivity {
             break;
             case R.id.rb_main_account:
                 tabIndex=0;
+                if (accountFragment == null) {
+                    accountFragment=AccountFragment.newInstance();
+                }
                 selectFragment(rb_main_account,accountFragment);
             break;
             case R.id.rb_main_memo:
                 tabIndex=1;
+                if (memoFragment == null) {
+                    memoFragment=MemoFragment.newInstance();
+                    addFragment(R.id.fl_content,memoFragment);
+                }
                 selectFragment(rb_main_memo,memoFragment);
             break;
             case R.id.rb_main_joke:
                 tabIndex=2;
+                if (jokeFragment == null) {
+                    jokeFragment=JokeFragment.newInstance();
+                    addFragment(R.id.fl_content,jokeFragment);
+                }
                 selectFragment(rb_main_joke,jokeFragment);
             break;
             case R.id.rb_main_spend:
                 tabIndex=3;
+                if (spendFragment == null) {
+                    spendFragment=SpendFragment.newInstance();
+                    addFragment(R.id.fl_content,spendFragment);
+                }
                 selectFragment(rb_main_spend,spendFragment);
             break;
         }
@@ -200,18 +215,6 @@ public class MainActivity extends BaseActivity {
             return;
         }
         selectView = myRadioButton;
-        if (fragment == null) {
-            if(fragment instanceof AccountFragment){
-                fragment=AccountFragment.newInstance();
-            }else if(fragment instanceof MemoFragment){
-                fragment=MemoFragment.newInstance();
-            }else if(fragment instanceof JokeFragment){
-                fragment=JokeFragment.newInstance();
-            }else if(fragment instanceof SpendFragment){
-                fragment=SpendFragment.newInstance();
-            }
-            addFragment(R.id.fl_content, fragment);
-        }
         showFragment(fragment);
         if(fragment instanceof AccountFragment){
             hideFragment(memoFragment);

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,10 +43,10 @@ public class MemoFragment extends BaseFragment<MemoImp> {
     @BindView(R.id.ll_view)
     LinearLayout ll_view;
     @BindView(R.id.et_search_memo)
-    MyEditText et_search_account;
+    MyEditText et_search_memo;
 
     @BindView(R.id.rv_memo)
-    RecyclerView rv_account;
+    RecyclerView rv_memo;
 
     MemoAdapter adapter;
     private MyPopupwindow mPopupwindow;
@@ -64,12 +65,12 @@ public class MemoFragment extends BaseFragment<MemoImp> {
     @Override
     protected void initView() {
         setPopupwindow();
-        rv_account.setOnTouchListener(new View.OnTouchListener() {
+        rv_memo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
                     ll_view.requestFocusFromTouch();
-                    PhoneUtils.hiddenKeyBoard(mContext,et_search_account);
+                    PhoneUtils.hiddenKeyBoard(mContext, et_search_memo);
                 }
                 return false;
             }
@@ -95,13 +96,13 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             }
         });
         BaseDividerListItem dividerListItem=new BaseDividerListItem(mContext,2);
-        rv_account.addItemDecoration(dividerListItem);
-        rv_account.setLayoutManager(new LinearLayoutManager(mContext));
-        rv_account.setAdapter(adapter);
+        rv_memo.addItemDecoration(dividerListItem);
+        rv_memo.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_memo.setAdapter(adapter);
 
 
 
-        et_search_account.addTextChangedListener(new TextWatcher() {
+        et_search_memo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -217,13 +218,14 @@ public class MemoFragment extends BaseFragment<MemoImp> {
     @Override
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
+        Log.i(TAG+"===","==="+page);
         RXStart(pl_load,new IOCallBack<List<MemoBean>>() {
             @Override
             public void call(Subscriber<? super List<MemoBean>> subscriber) {
                /* for (int i = 0; i < 200; i++) {
                     MemoBean memoBean = new MemoBean();
-                    memoBean.setDataAccount(i+"asfd"+new Random().nextInt(10)+20);
-                    mDaoImp.addAccount(memoBean);
+                    memoBean.setDataContent(i+"memo"+new Random().nextInt(10)+20);
+                    mDaoImp.addMemo(memoBean);
                 }*/
                 List<MemoBean> memoList = mDaoImp.selectMemo(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(memoList);
