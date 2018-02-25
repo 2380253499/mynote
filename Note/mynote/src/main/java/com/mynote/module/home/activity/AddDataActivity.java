@@ -111,7 +111,6 @@ public class AddDataActivity extends BaseActivity {
                 break;
             case R.id.bt_addData_save:
                 RxBus.getInstance().post(new SaveDataEvent(addDataInterIndex));
-//                addDataInter[addDataInterIndex].saveData();
                 PhoneUtils.hiddenKeyBoard(this);
                 break;
         }
@@ -127,7 +126,7 @@ public class AddDataActivity extends BaseActivity {
             case 1:
                 mrb_button1.setChecked(true);
                 addMemoFragment = AddMemoFragment.newInstance(memoBean);
-                addDataInter[1] = addMemoFragment;
+//                addDataInter[1] = addMemoFragment;
                 addFragment(R.id.fl_fragment, addMemoFragment);
                 break;
             case 2:
@@ -171,7 +170,6 @@ public class AddDataActivity extends BaseActivity {
                         addDataInterIndex=1;
                         if (addMemoFragment == null) {
                             addMemoFragment = AddMemoFragment.newInstance();
-                            addDataInter[1] = addMemoFragment;
                             hideFragment(addAccountFragment);
                             addFragment(R.id.fl_fragment, addMemoFragment);
                             hideFragment(addJokeFragment);

@@ -22,6 +22,7 @@ import com.mynote.module.account.dao.imp.AccountImp;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -58,6 +59,8 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
         return R.layout.fragment_add_account;
     }
 
+
+
     public static AddAccountFragment newInstance() {
        return newInstance(null);
     }
@@ -73,14 +76,8 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
 
     @Override
     protected void initView() {
-//        et_addData_source.requestFocus();
-        tv_account_copy.setOnClickListener(this);
-        tv_pwd_copy.setOnClickListener(this);
-        tv_account_paste.setOnClickListener(this);
-        tv_pwd_paste.setOnClickListener(this);
-//        PhoneUtils.hiddenKeyBoard(mContext,et_addData_note);
-    }
 
+    }
     @Override
     protected void initRxBus() {
         super.initRxBus();
@@ -180,7 +177,12 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
         }
     }
 
-    @Override
+    @OnClick({
+            R.id.tv_account_copy,
+            R.id.tv_pwd_copy,
+            R.id.tv_account_paste,
+           R.id.tv_pwd_paste
+    })
     protected void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.tv_account_copy:

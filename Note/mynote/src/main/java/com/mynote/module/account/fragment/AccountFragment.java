@@ -83,7 +83,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             public void onItemClick(View view, int position) {
                 AccountBean accountBean = adapter.getList().get(position);
                 Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, 0);
+                intent.putExtra(IntentParam.tabIndex, GetDataEvent.accountIndex);
                 intent.putExtra(IntentParam.editAccount, accountBean);
                 STActivity(intent, AddDataActivity.class);
             }
@@ -93,7 +93,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             public void onItemLongClick(View view, int position) {
                 accountBean =adapter.getList().get(position);
                 accountBean.setAdapterIndex(position);
-                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(),80), -PhoneUtils.dip2px(getActivity(), 80));
             }
         });
         rv_account.setNestedScrollingEnabled(false);

@@ -82,8 +82,8 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             public void onItemClick(View view, int position) {
                 MemoBean memoBean = adapter.getList().get(position);
                 Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, 0);
-                intent.putExtra(IntentParam.editAccount, memoBean);
+                intent.putExtra(IntentParam.tabIndex, GetDataEvent.memoIndex);
+                intent.putExtra(IntentParam.editMemoBean, memoBean);
                 STActivity(intent, AddDataActivity.class);
             }
         });
@@ -92,7 +92,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             public void onItemLongClick(View view, int position) {
                 memoBean =adapter.getList().get(position);
                 memoBean.setAdapterIndex(position);
-                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 90), -PhoneUtils.dip2px(getActivity(), 80));
+                mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(), 50), -PhoneUtils.dip2px(getActivity(), 80));
             }
         });
         BaseDividerListItem dividerListItem=new BaseDividerListItem(mContext,2);
@@ -139,7 +139,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
             @Override
             public void onMyNext(GetDataEvent event) {
-                if(event.index==GetDataEvent.accountIndex){
+                if(event.index==GetDataEvent.memoIndex){
                     showLoading();
                     getData(1,false);
                 }
