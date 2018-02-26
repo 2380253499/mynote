@@ -209,6 +209,7 @@ public class MainActivity extends BaseActivity {
                 STActivity(intent,AddDataActivity.class);
             break;
             case R.id.rb_main_account:
+                showMenu(true);
                 tabIndex=0;
                 if (accountFragment == null) {
                     accountFragment=AccountFragment.newInstance();
@@ -216,6 +217,7 @@ public class MainActivity extends BaseActivity {
                 selectFragment(rb_main_account,accountFragment);
             break;
             case R.id.rb_main_memo:
+                showMenu(true);
                 tabIndex=1;
                 if (memoFragment == null) {
                     memoFragment=MemoFragment.newInstance();
@@ -224,6 +226,7 @@ public class MainActivity extends BaseActivity {
                 selectFragment(rb_main_memo,memoFragment);
             break;
             case R.id.rb_main_joke:
+                showMenu(true);
                 tabIndex=2;
                 if (jokeFragment == null) {
                     jokeFragment=JokeFragment.newInstance();
@@ -232,6 +235,7 @@ public class MainActivity extends BaseActivity {
                 selectFragment(rb_main_joke,jokeFragment);
             break;
             case R.id.rb_main_spend:
+                showMenu(false);
                 tabIndex=3;
                 if (spendFragment == null) {
                     spendFragment=SpendFragment.newInstance();
@@ -242,7 +246,9 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
+    private void showMenu(boolean flag){
+        app_right_iv.setVisibility(flag?View.VISIBLE:View.GONE);
+    }
     public void selectFragment(MyRadioButton myRadioButton, Fragment fragment){
         if(selectView==myRadioButton){
             return;
@@ -266,6 +272,7 @@ public class MainActivity extends BaseActivity {
             hideFragment(memoFragment);
             hideFragment(jokeFragment);
         }
+
         if(tabIndex!=3&&!TextUtils.isEmpty(dataCountStr[tabIndex])){
             getSupportActionBar().setTitle("Note("+dataCountStr[tabIndex]+")");
         }else{

@@ -5,6 +5,7 @@ package com.mynote;
  */
 
 public class Constant {
+    public static final String rootFileName="amynote";
     public static final int pageSize=30;
     public static class IParam{
         public static final String isFirstIntoApp="isFirstIntoApp";

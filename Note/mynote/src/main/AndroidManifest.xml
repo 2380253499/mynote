@@ -22,6 +22,7 @@
         <activity android:name=".module.gesture.activity.SuperPassWordActivity"/>
         <activity android:name=".module.home.activity.MainActivity" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".module.home.activity.AddDataActivity"/>
+        <activity android:name=".module.home.activity.ImportDataActivity"/>
     </application>
 
 </manifest>

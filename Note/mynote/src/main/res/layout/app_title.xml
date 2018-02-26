@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="19sp"
+            android:textSize="@dimen/app_title_size"
             tools:text="title"
             />
 
@@ -50,7 +50,7 @@
             android:layout_marginRight="10dp"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="@dimen/app_right_title_size"
             tools:text="right_title"
             />
     </android.support.v7.widget.Toolbar>

@@ -1,6 +1,8 @@
 package com.mynote.module.home.fragment;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,16 +11,26 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.AES;
+import com.github.androidtools.ClickUtils;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
+import com.github.baseclass.rx.IOCallBack;
+import com.github.baseclass.view.MyDialog;
+import com.github.utils.FileUtils;
+import com.mynote.Constant;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.database.DBManager;
+import com.mynote.module.gesture.activity.GestureUpdateActivity;
+import com.mynote.module.home.activity.ImportDataActivity;
 import com.mynote.module.secret.activity.SecretActivity;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
+import rx.Subscriber;
 
 public class LeftMenuFragment extends BaseFragment {
     @BindView(R.id.nav_container)
@@ -79,7 +91,51 @@ public class LeftMenuFragment extends BaseFragment {
         nav_container.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-//                mPresenter.itemClick(item.getItemId());
+                if (!ClickUtils.isFastClickById(item.getItemId())) {
+                    switch (item.getItemId()) {
+                        case R.id.update_pwd:
+                            STActivity(GestureUpdateActivity.class);
+                            break;
+                        case R.id.update_import:
+                            STActivity(ImportDataActivity.class);
+                            /*MyDialog.Builder dialog=new MyDialog.Builder(mContext);
+                            dialog.setMessage("是否导入数据?");
+                            dialog.setNegativeButton(new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.setPositiveButton(new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+//                                    importData();
+                                }
+                            });
+                            dialog.create().show();*/
+                            break;
+                        case R.id.update_export:
+                            MyDialog.Builder exportDialog=new MyDialog.Builder(mContext);
+                            exportDialog.setMessage("是否导出数据->手机根目录"+ Constant.rootFileName+"文件夹下?");
+                            exportDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            exportDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    exportData();
+                                }
+                            });
+                            exportDialog.create().show();
+                            break;
+                    }
+                }
                 return false;
             }
         });
@@ -90,7 +146,41 @@ public class LeftMenuFragment extends BaseFragment {
     protected void initData() {
 
     }
+    private void exportData() {
+        showLoading();
+        RXStart(new IOCallBack<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                File exportFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName);
+                File exportFileName = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
+                File dbFile = new File("/data/data/" + mContext.getPackageName() + "/databases/" + DBManager.getNewInstance(mContext).getDBName());
+                if (dbFile.exists()) {
+                    if (!exportFileName.exists()) {
+                        exportFile.mkdirs();
+                    }
+                    FileUtils.copyFile(dbFile.getPath(), exportFileName.getPath());
+                } else {
+                    subscriber.onNext(null);
+                }
+                subscriber.onCompleted();
+            }
+            @Override
+            public void onMyNext(String s) {
+                showMsg("暂无数据文件");
+            }
+            @Override
+            public void onMyCompleted() {
+                super.onMyCompleted();
+                showMsg("导出成功");
+            }
+            @Override
+            public void onMyError(Throwable e) {
+                super.onMyError(e);
+                showMsg("导出失败");
+            }
+        });
 
+    }
     @Override
     protected void onViewClick(View v) {
         switch (v.getId()){

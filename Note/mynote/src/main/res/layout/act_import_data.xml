@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_f2"
+    >
+<include layout="@layout/app_title"/>
+    <com.library.base.ProgressLayout
+        android:id="@id/pl_load"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/background_f2"
+            android:layout_above="@+id/bt_table_import"
+            >
+            <!--your view-->
+            <com.library.base.view.MyRecyclerView
+                android:id="@+id/rv_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </com.library.base.view.MyRecyclerView>
+
+        </LinearLayout>
+        <com.github.customview.MyButton
+            android:id="@+id/bt_table_import"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:my_bt_normal_drawable="@drawable/save_normal"
+            app:my_bt_press_drawable="@drawable/save_press"
+            android:background="@null"
+            android:text="开始导入"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+    </com.library.base.ProgressLayout>
+</LinearLayout>
