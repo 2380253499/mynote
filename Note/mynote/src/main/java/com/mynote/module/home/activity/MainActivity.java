@@ -266,8 +266,10 @@ public class MainActivity extends BaseActivity {
             hideFragment(memoFragment);
             hideFragment(jokeFragment);
         }
-        if(!TextUtils.isEmpty(dataCountStr[tabIndex])){
+        if(tabIndex!=3&&!TextUtils.isEmpty(dataCountStr[tabIndex])){
             getSupportActionBar().setTitle("Note("+dataCountStr[tabIndex]+")");
+        }else{
+            getSupportActionBar().setTitle("Note");
         }
     }
 }

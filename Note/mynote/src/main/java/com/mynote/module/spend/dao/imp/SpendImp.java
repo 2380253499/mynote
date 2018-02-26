@@ -43,6 +43,7 @@ public class SpendImp extends BaseDaoImp {
             sbList.add(bean);
         }
         db.close();
+        formatList(sbList);
         return sbList;
     }
 
@@ -70,6 +71,7 @@ public class SpendImp extends BaseDaoImp {
             sbList.add(bean);
         }
         db.close();
+        formatList(sbList);
         return sbList;
     }
 
@@ -99,6 +101,7 @@ public class SpendImp extends BaseDaoImp {
             sbList.add(bean);
         }
         db.close();
+        formatList(sbList);
         return sbList;
     }
 
@@ -140,6 +143,7 @@ public class SpendImp extends BaseDaoImp {
             sbList.add(bean);
         }
         db.close();
+        formatList(sbList);
         return sbList;
     }
     /**

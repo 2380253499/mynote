@@ -58,7 +58,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
         getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
             @Override
             public void onMyNext(GetDataEvent event) {
-                if(event.index==GetDataEvent.memoIndex){
+                if(event.index==GetDataEvent.spendIndex){
                     showLoading();
                     getData(1,false);
                 }
@@ -91,6 +91,8 @@ public class SpendFragment extends BaseFragment<SpendImp> {
 
                     yearArr[i] = yearNode;
                 }
+                subscriber.onNext(yearArr);
+                subscriber.onCompleted();
             }
             @Override
             public void onMyNext(TreeNode[] yearArr) {
