@@ -5,10 +5,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.androidtools.StatusBarUtil;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.RxUtils;
@@ -50,6 +52,7 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
         }
         setTitleBackgroud(R.color.colorPrimaryDark);
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(mContext, com.library.R.color.colorPrimaryDark),0);
         mHandler=new Handler(getMainLooper());
     }
 
