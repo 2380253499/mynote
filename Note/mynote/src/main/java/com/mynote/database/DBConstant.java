@@ -21,6 +21,13 @@ public class DBConstant {
     public static final String localMonth="localMonth";//月
     public static final String localDay="localDay";//日
     public static final String totalSpend="totalSpend";//统计总消费时用到
+    /**************************生日表字段************************************/
+    public static final String peopleName="peopleName";
+    public static final String peopleYear="peopleYear";
+    public static final String peopleMonth="peopleMonth";
+    public static final String peopleDay="peopleDay";
+    public static final String distanceDay="distanceDay";
+    public static final String tiXing="tiXing";
     /**
      * "dataSource,         --账号所属平台或者来源"
      * "dataAccount,        --账号"

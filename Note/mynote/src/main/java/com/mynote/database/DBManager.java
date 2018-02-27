@@ -42,6 +42,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String T_Spend_Note = "T_Spend_Note";
     public static final String T_Spend_Dic_Note = "T_Spend_Dic_Note";
     public static final String T_Secret_Note = "T_Secret_Note";
+    public static final String T_Birthday_Note = "T_Birthday_Note";
     public static final int pageSize= Constant.pageSize;
     private String getLimitSql(int page){
         //小于等于0查询所有数据

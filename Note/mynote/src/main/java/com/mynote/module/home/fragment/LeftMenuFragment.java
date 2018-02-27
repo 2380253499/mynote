@@ -221,19 +221,33 @@ public class LeftMenuFragment extends BaseFragment {
                         for (int i = 0; i < dataSizeList.get(0); i++) {
                             if (i < accountList.size()) {
                                 AccountBean bean = accountList.get(i);
-                                accountImp.addAccount(bean);
+                                if(accountImp.selectTableCount(DBManager.T_Account_Note,bean.getUid())==0){
+                                    accountImp.addAccount(bean);
+                                }
                             }
                             if (i < memoList.size()) {
-                                memoImp.addMemo(memoList.get(i));
+                                MemoBean memoBean = memoList.get(i);
+                                if(memoImp.selectTableCount(DBManager.T_Memo_Note,memoBean.getUid())==0){
+                                    memoImp.addMemo(memoBean);
+                                }
                             }
                             if (i < jokeList.size()) {
-                                jokeImp.addJoke(jokeList.get(i));
+                                JokeBean jokeBean = jokeList.get(i);
+                                if(jokeImp.selectTableCount(DBManager.T_Joke_Note,jokeBean.getUid())==0){
+                                    jokeImp.addJoke(jokeBean);
+                                }
                             }
                             if (i < spendList.size()) {
-                                spendImp.addSpend(spendList.get(i));
+                                SpendBean spendBean = spendList.get(i);
+                                if(spendImp.selectTableCount(DBManager.T_Spend_Note,spendBean.getUid())==0){
+                                    spendImp.addSpend(spendBean);
+                                }
                             }
                             if (i < secretList.size()) {
-                                secretImp.addSecret(secretList.get(i));
+                                SecretBean secretBean = secretList.get(i);
+                                if(secretImp.selectTableCount(DBManager.T_Secret_Note,secretBean.getUid())==0){
+                                    secretImp.addSecret(secretBean);
+                                }
                             }
                         }
                         if (backupFileForDB.exists()) {

@@ -1,12 +1,15 @@
 package com.mynote.base;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.androidtools.DateUtils;
 import com.google.gson.Gson;
 import com.mynote.BuildConfig;
+import com.mynote.database.DBConstant;
 import com.mynote.database.DBManager;
 
 import java.util.Date;
@@ -50,5 +53,32 @@ public abstract class BaseDaoImp {
     public long string2Date(String s){
         Date date = DateUtils.stringToDate(s,"yyy-MM-dd HH:mm:ss");
         return date.getTime();
+    }
+
+    public int selectTableCount(String tableName,String uid) {
+        String sql="select count(0) as num from " + tableName;
+        String[] param=null;
+        if(!TextUtils.isEmpty(uid)&&uid.trim().length()>0){
+            sql="select count(0) as num from " + tableName+" where "+ DBConstant.uid+"=?";
+            param[0]=uid;
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, param);
+        int count = 0;
+        try {
+            while (cursor.moveToNext()) {
+                count = cursor.getInt(cursor.getColumnIndex("num"));
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            cursor.close();
+            db.close();
+            return -1;
+        }
+        return count;
+    }
+    public int selectTableCount(String tableName) {
+        return selectTableCount(tableName,null);
     }
 }
