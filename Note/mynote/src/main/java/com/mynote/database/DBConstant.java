@@ -101,5 +101,17 @@ public class DBConstant {
             updateTime  +" NTEXT NOT NULL   ," +
             createTime +" NTEXT NOT NULL  )";
 
+    public static final String CT_Birthday_Note = "create table "+DBManager.T_Birthday_Note+" (" +
+            _id         +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+            uid+" varchar," +
+            dataRemark  +"  NTEXT," +
+            peopleName +" NTEXT," +
+            peopleYear +" NTEXT," +
+            peopleMonth +" NTEXT," +
+            peopleDay +" NTEXT," +
+            distanceDay +" NTEXT," +
+            tiXing +" varchar," +
+            updateTime  +" NTEXT NOT NULL," +
+            createTime +" NTEXT NOT NULL  )";
 
 }

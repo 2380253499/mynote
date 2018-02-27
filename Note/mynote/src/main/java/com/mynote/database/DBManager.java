@@ -97,6 +97,9 @@ public class DBManager extends SQLiteOpenHelper {
         if (noExistTable(db, T_Spend_Dic_Note)) {
             db.execSQL(DBConstant.CT_Spend_Dic_Note);
         }
+        if (noExistTable(db, T_Birthday_Note)) {
+            db.execSQL(DBConstant.CT_Birthday_Note);
+        }
     }
 
     @Override
