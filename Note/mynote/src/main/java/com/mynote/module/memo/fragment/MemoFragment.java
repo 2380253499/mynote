@@ -222,7 +222,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
             @Override
             public void call(Subscriber<? super List<MemoBean>> subscriber) {
                /* for (int i = 0; i < 200; i++) {
-                    MemoBean memoBean = new MemoBean();
+                    SecretBean memoBean = new SecretBean();
                     memoBean.setDataContent(i+"memo"+new Random().nextInt(10)+20);
                     mDaoImp.addMemo(memoBean);
                 }*/

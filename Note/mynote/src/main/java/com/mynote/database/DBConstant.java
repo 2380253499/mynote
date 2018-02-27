@@ -8,7 +8,7 @@ public class DBConstant {
     public static final String uid="uid";//多表情况的唯一标识
     public static final String dataRemark="dataRemark";//备注
     public static final String updateTime="updateTime";//修改时间 时间戳
-    public static final String creatTime="creatTime";//创建时间 时间戳
+    public static final String createTime ="creatTime";//创建时间 时间戳
     /**************************账户表字段************************************/
     public static final String dataSource="dataSource";//来源
     public static final String dataAccount="dataAccount";//账户
@@ -35,7 +35,7 @@ public class DBConstant {
             dataPassword+"  NTEXT," +
             dataRemark+"  NTEXT," +
             updateTime+"  NTEXT NOT NULL ," +
-            creatTime+"  NTEXT NOT NULL )";
+            createTime +"  NTEXT NOT NULL )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
@@ -46,7 +46,7 @@ public class DBConstant {
             dataRemark+" NTEXT," +
             dataContent+" NTEXT," +
             updateTime+" NTEXT NOT NULL," +
-            creatTime+" NTEXT NOT NULL)";
+            createTime +" NTEXT NOT NULL)";
     /**
      * dataContent  --数据内容
      */
@@ -56,7 +56,7 @@ public class DBConstant {
             dataRemark+" NTEXT," +
             dataContent+" NTEXT," +
             updateTime+" NTEXT NOT NULL  ," +
-            creatTime+" NTEXT NOT NULL  )";
+            createTime +" NTEXT NOT NULL  )";
     /**
      * liveSpend DOUBLE,   --生活消费
      * dataRemark NTEXT,         --备注
@@ -70,7 +70,7 @@ public class DBConstant {
             localMonth +" INTEGER NOT NULL DEFAULT (strftime('%m','now'))," +
             localDay   +" INTEGER NOT NULL DEFAULT (strftime('%d','now'))," +
             updateTime +" NTEXT NOT NULL    ," +
-            creatTime  +" NTEXT NOT NULL    )";
+            createTime +" NTEXT NOT NULL    )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
@@ -81,7 +81,7 @@ public class DBConstant {
             dataRemark  +"  NTEXT," +
             dataContent +" NTEXT," +
             updateTime  +" NTEXT NOT NULL   ," +
-            creatTime   +" NTEXT NOT NULL  )";
+            createTime +" NTEXT NOT NULL  )";
     /**
      * dataContent  --数据内容
      * dataRemark   --备注
@@ -92,7 +92,7 @@ public class DBConstant {
             dataRemark  +"  NTEXT," +
             dataContent +" NTEXT," +
             updateTime  +" NTEXT NOT NULL   ," +
-            creatTime   +" NTEXT NOT NULL  )";
+            createTime +" NTEXT NOT NULL  )";
 
 
 }

@@ -5,8 +5,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.github.androidtools.DateUtils;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.Loading;
 import com.library.base.MyBaseFragment;
@@ -15,6 +19,7 @@ import com.mynote.Constant;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Date;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -150,6 +155,17 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
             }
         });
         this.addSubscription(subscribe);
+    }
+
+
+    public void setCreateTime(LinearLayout ll_update_time, TextView tv_create_time,  TextView tv_update_time, boolean isEdit,BaseEntity entity){
+        ll_update_time.setVisibility(isEdit? View.VISIBLE:View.GONE);
+        if(isEdit){
+            tv_update_time.setText(DateUtils.dateToString(new Date(entity.getCreateTime()),DateUtils.ymdhms));
+            tv_create_time.setText(DateUtils.dateToString(new Date(entity.getUpdateTime()),DateUtils.ymdhms));
+        }else{
+            tv_create_time.setText(DateUtils.dateToString(new Date(),DateUtils.ymdhms));
+        }
     }
 
 }

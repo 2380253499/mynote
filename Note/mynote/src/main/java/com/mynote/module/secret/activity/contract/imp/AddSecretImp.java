@@ -8,7 +8,7 @@ package com.mynote.module.secret.activity.contract.imp;
         super(context);
     }
     @Override
-    public void addData(final MemoBean bean) {
+    public void addData(final SecretBean bean) {
         mView.showLoading();
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<Long>() {
             @Override
@@ -35,7 +35,7 @@ package com.mynote.module.secret.activity.contract.imp;
     }
 
     @Override
-    public void editData(final MemoBean bean) {
+    public void editData(final SecretBean bean) {
         mView.showLoading();
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<Long>() {
             @Override

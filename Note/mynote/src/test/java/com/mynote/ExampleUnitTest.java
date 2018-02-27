@@ -1,8 +1,9 @@
 package com.mynote;
 
+import com.github.androidtools.DateUtils;
+
 import org.junit.Test;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -19,30 +20,9 @@ public class ExampleUnitTest {
     }
     @Test
     public void asdf() throws Exception {
-//        System.out.println(SystemClock.currentThreadTimeMillis());
-        System.out.println(System.nanoTime());
-        System.out.println(System.currentTimeMillis());
-        System.out.println(new Timestamp(new Date().getTime())+"");
-        System.out.println(new Date().getTime());
+        String s="2018-02-07 17:48:51.";
+        Date date = DateUtils.stringToDate(s,"yyy-MM-dd HH:mm:ss");
+        System.out.println(date.getTime());
     }
-    public class a{
-        private long a;
-        private String b;
 
-        public String getB() {
-            return b;
-        }
-
-        public void setB(String b) {
-            this.b = b;
-        }
-
-        public long getA() {
-            return a;
-        }
-
-        public void setA(long a) {
-            this.a = a;
-        }
-    }
 }

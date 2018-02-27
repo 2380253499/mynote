@@ -80,7 +80,7 @@ public class MemoImp extends BaseDaoImp {
     public List<MemoBean> selectMemo(int page,String searchInfo, boolean isOrderByCreateTime, SQLiteDatabase db) {
         String orderBy = DBConstant.updateTime + " desc";
         if (isOrderByCreateTime) {
-            orderBy = DBConstant.creatTime + " desc";
+            orderBy = DBConstant.createTime + " desc";
         }
         StringBuffer searchSql=null;
         String[]searchStr=new String[2];
@@ -94,27 +94,30 @@ public class MemoImp extends BaseDaoImp {
         Cursor query = db.query(DBManager.T_Memo_Note,
                 new String[]{
                         DBConstant._id,
-                        DBConstant.uid,
+//                        DBConstant.uid,
                         DBConstant.dataRemark,
                         DBConstant.dataContent,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, searchSql!=null?searchSql.toString():null,searchSql!=null?searchStr:null, null, null, orderBy,getLimit(page));
+                        DBConstant.createTime}, searchSql!=null?searchSql.toString():null,searchSql!=null?searchStr:null, null, null, orderBy,getLimit(page));
         List<MemoBean> list = new ArrayList<MemoBean>();
         MemoBean bean;
         while (query.moveToNext()) {
             bean = new MemoBean();
             int id = query.getInt(query.getColumnIndex(DBConstant._id));
-            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
+//            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String dataContent = query.getString(query.getColumnIndex(DBConstant.dataContent));
-            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-            long creatTime = query.getLong(query.getColumnIndex(DBConstant.creatTime));
+//            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
+//            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
+
+            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
+            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
             bean.set_id(id);
-            bean.setUid(uid);
+//            bean.setUid(uid);
             bean.setDataContent(dataContent);
             bean.setDataRemark(dataRemark);
             bean.setUpdateTime(updateTime);
-            bean.setCreatTime(creatTime);
+            bean.setCreateTime(creatTime);
             list.add(bean);
         }
         db.close();
@@ -161,10 +164,10 @@ public class MemoImp extends BaseDaoImp {
             bean.setUid(System.nanoTime()+"");
             values.put(DBConstant.uid, bean.getUid());
         }
-        if (bean.getCreatTime() != 0) {
-            values.put(DBConstant.creatTime, bean.getCreatTime() );
+        if (bean.getCreateTime() != 0) {
+            values.put(DBConstant.createTime, bean.getCreateTime() );
         }else{
-            values.put(DBConstant.creatTime, new Date().getTime() );
+            values.put(DBConstant.createTime, new Date().getTime() );
         }
         if (bean.getUpdateTime() != 0) {
             values.put(DBConstant.updateTime,bean.getUpdateTime() );

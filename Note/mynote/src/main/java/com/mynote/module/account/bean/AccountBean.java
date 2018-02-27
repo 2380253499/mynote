@@ -14,7 +14,7 @@ dataAccount TEXT,
 dataPassword TEXT,
 dataRemark TEXT,
 updateTime TimeStamp
-creatTime TimeStamp */
+createTime TimeStamp */
     private String dataSource;
     private String dataAccount;
     private String dataPassword;

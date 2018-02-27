@@ -95,7 +95,7 @@ public class SecretActivity extends BaseActivity {
         }
     }
 //    @Override
-//    public void editBean(List<MemoBean> memoBeans,int position) {
+//    public void editBean(List<SecretBean> memoBeans,int position) {
 //        Intent intent = getmIntent().putExtra(IntentParam.editData, memoBeans.get(position));
 //        STActivityForResult(intent, AddSecretActivity.class, addDataRequestCode);
 //    }

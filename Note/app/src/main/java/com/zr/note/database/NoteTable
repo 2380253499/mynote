@@ -5,7 +5,7 @@ dataAccount  TEXT,        --账号
 dataPassword TEXT,       --密码
 dataRemark   TEXT,         --备注
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
-creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+createTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 
 
 create table T_Memo_Note (
@@ -13,7 +13,7 @@ _id INTEGER PRIMARY KEY AUTOINCREMENT,
 dataRemark TEXT,         --备注
 dataContent TEXT,   --数据内容
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
-creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+createTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 
 
 create table T_Joke_Note (
@@ -21,7 +21,7 @@ _id INTEGER PRIMARY KEY AUTOINCREMENT,
 dataRemark TEXT,         --备注
 dataContent TEXT,   --数据内容
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
-creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+createTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 
 
 
@@ -30,7 +30,7 @@ _id INTEGER PRIMARY KEY AUTOINCREMENT,
 liveSpend DOUBLE,   --生活消费
 dataRemark TEXT,         --备注
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
-creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+createTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
 
 //v3  新增year,month,day三个字段
 select strftime('%Y','now');当前年
@@ -43,4 +43,4 @@ _id INTEGER PRIMARY KEY AUTOINCREMENT,
 dataRemark TEXT,         --备注
 dataContent TEXT,   --数据内容
 updateTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) ,
-creatTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )
+createTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime') ) )

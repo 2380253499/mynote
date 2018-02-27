@@ -1,4 +1,4 @@
-package com.mynote.module.memo.bean;
+package com.mynote.module.secret.bean;
 
 
 import com.mynote.base.BaseEntity;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class MemoBean extends BaseEntity implements Serializable{
+public class SecretBean extends BaseEntity implements Serializable{
 
     /*dataContent
     dataRemark

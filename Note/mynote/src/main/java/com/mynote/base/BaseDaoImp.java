@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.github.androidtools.DateUtils;
 import com.google.gson.Gson;
 import com.mynote.BuildConfig;
 import com.mynote.database.DBManager;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,5 +46,9 @@ public abstract class BaseDaoImp {
         if(BuildConfig.DEBUG){
             Log.i(TAG+"===","==="+new Gson().toJson(list));
         }
+    }
+    public long string2Date(String s){
+        Date date = DateUtils.stringToDate(s,"yyy-MM-dd HH:mm:ss");
+        return date.getTime();
     }
 }

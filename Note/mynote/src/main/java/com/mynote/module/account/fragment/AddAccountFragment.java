@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
@@ -47,6 +48,14 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
     @BindView(R.id.tv_account_paste)
     TextView tv_account_paste;
 
+
+    @BindView(R.id.ll_update_time)
+    LinearLayout ll_update_time;
+    @BindView(R.id.tv_create_time)
+    TextView tv_create_time;
+    @BindView(R.id.tv_update_time)
+    TextView tv_update_time;
+
     //用于更新数据
     private boolean addDataSuccess;
     /**
@@ -76,8 +85,10 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
 
     @Override
     protected void initView() {
-
+        accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,accountBean );
     }
+
     @Override
     protected void initRxBus() {
         super.initRxBus();
@@ -167,7 +178,6 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
 
     @Override
     protected void initData() {
-        accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
         if (accountBean != null) {
             isEdit = true;
             et_addData_source.setText(accountBean.getDataSource());

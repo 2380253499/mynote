@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="5dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dp"
             android:focusableInTouchMode="true"
             android:focusable="true"
             >
@@ -186,8 +186,12 @@
                 app:my_et_border_width="1px"
                 app:my_et_corner_radius="4px"
                 app:my_et_hiddenClear="true"
+                android:textSize="14sp"
                 />
 
         </LinearLayout>
+
+
+        <include layout="@layout/item_create_time" />
     </LinearLayout>
 </ScrollView>

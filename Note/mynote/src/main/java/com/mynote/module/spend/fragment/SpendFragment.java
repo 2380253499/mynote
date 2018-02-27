@@ -219,7 +219,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                                         SpendBean sBean = hourList.get(l);
                                         MySpendHolder.IconTreeItem nodeItem = new MySpendHolder.IconTreeItem();
                                         nodeItem.spendBean = sBean;
-                                        nodeItem.dateFormat = new Date(sBean.getCreatTime());
+                                        nodeItem.dateFormat = new Date(sBean.getCreateTime());
                                         nodeItem.totalSpend = sBean.getLiveSpend();
                                         nodeItem.dateTag = 3;
                                         nodeItem.isLast = true;

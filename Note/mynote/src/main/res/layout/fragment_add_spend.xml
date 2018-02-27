@@ -299,5 +299,13 @@
             style="@style/add_spend_tag"
             />
     </com.github.customview.FlowLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        >
+        <include layout="@layout/item_create_time"  />
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

@@ -118,7 +118,7 @@ public class SpendImp extends BaseDaoImp {
         SpendBean bean;
         SQLiteDatabase db = getWritableDatabase();
         String sql = "select * from " + DBManager.T_Spend_Note +
-                " where " + DBConstant.localYear + "=? and " + DBConstant.localMonth + "=? and " + DBConstant.localDay + "=? order by  " + DBConstant.creatTime + " desc";
+                " where " + DBConstant.localYear + "=? and " + DBConstant.localMonth + "=? and " + DBConstant.localDay + "=? order by  " + DBConstant.createTime + " desc";
         Log.i("---", "---" + sql);
         Cursor query = db.rawQuery(sql, new String[]{year + "", month + "", day + ""});
         while (query.moveToNext()) {
@@ -128,7 +128,7 @@ public class SpendImp extends BaseDaoImp {
             String liveSpendStr = query.getString(query.getColumnIndex(DBConstant.liveSpend));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
             long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-            long creatTime = query.getLong(query.getColumnIndex(DBConstant.creatTime));
+            long creatTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
             int localYear = query.getInt(query.getColumnIndex(DBConstant.localYear));
             int localMonth = query.getInt(query.getColumnIndex(DBConstant.localMonth));
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
@@ -136,7 +136,7 @@ public class SpendImp extends BaseDaoImp {
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark( dataRemark) ;
             bean.setUpdateTime( updateTime );
-            bean.setCreatTime( creatTime );
+            bean.setCreateTime( creatTime );
             bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth);
             bean.setLocalDay(localDay);
@@ -210,41 +210,44 @@ public class SpendImp extends BaseDaoImp {
     public List<SpendBean> selectSpend(int page,boolean isOrderByCreateTime, SQLiteDatabase db) {
         String orderBy = DBConstant.updateTime + " desc";
         if (isOrderByCreateTime) {
-            orderBy = DBConstant.creatTime + " desc";
+            orderBy = DBConstant.createTime + " desc";
         }
         Cursor query = db.query(DBManager.T_Spend_Note,
                 new String[]{
                         DBConstant._id,
-                        DBConstant.uid,
+//                        DBConstant.uid,
                         DBConstant.dataRemark,
                         DBConstant.liveSpend,
                         DBConstant.localYear,
                         DBConstant.localMonth,
                         DBConstant.localDay,
                         DBConstant.updateTime,
-                        DBConstant.creatTime}, null, null, null, null, orderBy,getLimit(page));
+                        DBConstant.createTime}, null, null, null, null, orderBy,getLimit(page));
         List<SpendBean> list = new ArrayList<SpendBean>();
         SpendBean bean;
         while (query.moveToNext()) {
             bean = new SpendBean();
             int id = query.getInt(query.getColumnIndex(DBConstant._id));
-            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
+//            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
             Double liveSpend = query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
             int localYear = query.getInt(query.getColumnIndex(DBConstant.localYear));
             int localMonth = query.getInt(query.getColumnIndex(DBConstant.localMonth));
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
-            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-            long creatTime = query.getLong(query.getColumnIndex(DBConstant.creatTime));
+//            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
+//            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
+
+            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
+            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
             bean.set_id(id);
-            bean.setUid(uid);
+//            bean.setUid(uid);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(dataRemark);
             bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth);
             bean.setLocalDay(localDay);
             bean.setUpdateTime( updateTime );
-            bean.setCreatTime( creatTime );
+            bean.setCreateTime( creatTime );
             list.add(bean);
         }
         db.close();
@@ -294,10 +297,10 @@ public class SpendImp extends BaseDaoImp {
             values.put(DBConstant.localMonth, bean.getLocalMonth());
             values.put(DBConstant.localDay, bean.getLocalDay());
         }
-        if (bean.getCreatTime() != 0) {
-            values.put(DBConstant.creatTime, bean.getCreatTime() );
+        if (bean.getCreateTime() != 0) {
+            values.put(DBConstant.createTime, bean.getCreateTime() );
         }else{
-            values.put(DBConstant.creatTime, new Date().getTime() );
+            values.put(DBConstant.createTime, new Date().getTime() );
         }
         if (bean.getUpdateTime() != 0) {
             values.put(DBConstant.updateTime, bean.getUpdateTime());

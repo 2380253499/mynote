@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
@@ -51,6 +52,14 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
     TextView tv_joke_clear;
     @BindView(R.id.et_joke_content)
     MyEditText et_joke_content;
+
+
+    @BindView(R.id.ll_update_time)
+    LinearLayout ll_update_time;
+    @BindView(R.id.tv_create_time)
+    TextView tv_create_time;
+    @BindView(R.id.tv_update_time)
+    TextView tv_update_time;
 
 
 
@@ -175,6 +184,10 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
     @Override
     protected void initData() {
         jokeBean = (JokeBean) getArguments().getSerializable(IntentParam.editJokeBean);
+
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,jokeBean );
+
+
         if (jokeBean != null) {
             isEdit = true;
             et_joke_remark.setText(jokeBean.getDataRemark());

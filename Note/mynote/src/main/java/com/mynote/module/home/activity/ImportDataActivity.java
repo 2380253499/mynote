@@ -176,7 +176,7 @@ public class ImportDataActivity extends BaseActivity {
                         SecretImp secretImp=new SecretImp();
                         secretImp.setContext(mContext);
                         database = SQLiteDatabase.openOrCreateDatabase(backupFileForDB, null);
-//                        List<MemoBean> secretList = secretImp.selectSecret(database);
+//                        List<SecretBean> secretList = secretImp.selectSecret(database);
 
                         dataSizeList.add(accountList.size());
                         dataSizeList.add(memoList.size());

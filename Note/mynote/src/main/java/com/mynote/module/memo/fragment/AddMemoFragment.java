@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
@@ -44,6 +45,15 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
     TextView tv_memo_paste;
     @BindView(R.id.tv_memo_clear)
     TextView tv_memo_clear;
+
+
+
+    @BindView(R.id.ll_update_time)
+    LinearLayout ll_update_time;
+    @BindView(R.id.tv_create_time)
+    TextView tv_create_time;
+    @BindView(R.id.tv_update_time)
+    TextView tv_update_time;
 
 
     //用于更新数据
@@ -166,6 +176,9 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
     @Override
     protected void initData() {
         memoBean = (MemoBean) getArguments().getSerializable(IntentParam.editMemoBean);
+
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,memoBean );
+
         if (memoBean != null) {
             isEdit = true;
             et_memo_reminder.setText(memoBean.getDataRemark());

@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -56,6 +57,13 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
     @BindView(R.id.tv_update_spend_date)
     TextView tv_update_spend_date;
 
+
+    @BindView(R.id.ll_update_time)
+    LinearLayout ll_update_time;
+    @BindView(R.id.tv_create_time)
+    TextView tv_create_time;
+    @BindView(R.id.tv_update_time)
+    TextView tv_update_time;
 
     //用于更新数据
     private boolean addDataSuccess;
@@ -250,6 +258,9 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
     protected void initData() {
 
         spendBean = (SpendBean) getArguments().getSerializable(IntentParam.editSpendBean);
+
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,spendBean );
+
         if (spendBean != null) {
             tv_update_spend_date.setVisibility(View.GONE);
             isEdit = true;

@@ -9,7 +9,7 @@ public class BaseEntity implements Serializable {
     private int _id;
     private String uid;
     private long updateTime;
-    private long creatTime;
+    private long createTime;
     private boolean isCheck;
     private int adapterIndex;
     public int getAdapterIndex() {
@@ -51,11 +51,11 @@ public class BaseEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public long getCreatTime() {
-        return creatTime;
+    public long getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(long creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

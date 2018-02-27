@@ -6,7 +6,7 @@ package com.mynote.module.secret.activity.contract.imp;
 /*
 public class SecretImp extends IPresenter<SecretContract.View> implements SecretContract.Presenter {
 
-    private List<MemoBean> memoBeans;
+    private List<SecretBean> memoBeans;
 
     public SecretImp(Context context) {
         super(context);
@@ -15,16 +15,16 @@ public class SecretImp extends IPresenter<SecretContract.View> implements Secret
     @Override
     public void selectData(final ListView listView) {
         mView.showLoading();
-        Subscription subscribe = Observable.create(new Observable.OnSubscribe<List<MemoBean>>() {
+        Subscription subscribe = Observable.create(new Observable.OnSubscribe<List<SecretBean>>() {
             @Override
-            public void call(Subscriber<? super List<MemoBean>> subscriber) {
+            public void call(Subscriber<? super List<SecretBean>> subscriber) {
                 memoBeans = DBManager.getNewInstance(mContext).selectSecret();
                 subscriber.onNext(memoBeans);
                 subscriber.onCompleted();
             }
-        }).compose(RxUtils.appSchedulers()).subscribe(new MySubscriber<List<MemoBean>>() {
+        }).compose(RxUtils.appSchedulers()).subscribe(new MySubscriber<List<SecretBean>>() {
             @Override
-            public void onMyNext(List<MemoBean> obj) {
+            public void onMyNext(List<SecretBean> obj) {
                 JokeAdapter memoAdapter = new JokeAdapter(mContext, obj, R.layout.item_memo);
                 listView.setAdapter(memoAdapter);
             }

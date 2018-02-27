@@ -32,7 +32,9 @@
         app:my_et_corner_radius="2dp"
         android:singleLine="true"
         android:maxLength="20"
-        android:hint="请输入超级密码"
+        android:hint="请输入超级密码(字母忽略大小写)"
+        android:inputType="textWebEditText"
+        android:imeOptions="actionNext"
         />
         <com.github.customview.MyTextView
             android:id="@+id/tv_submit_pwd"
