@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -277,6 +278,19 @@ public class MainActivity extends BaseActivity {
             getSupportActionBar().setTitle("Note("+dataCountStr[tabIndex]+")");
         }else{
             getSupportActionBar().setTitle("Note");
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if(drawerlayout.isDrawerOpen(GravityCompat.START)) {
+            drawerlayout.closeDrawer(GravityCompat.START);
+        }else{
+            if ((System.currentTimeMillis() - mExitTime) > 1500) {
+                showToastS("再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 }

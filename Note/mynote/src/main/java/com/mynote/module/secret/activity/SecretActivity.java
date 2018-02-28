@@ -30,11 +30,11 @@ import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
-import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.secret.adapter.SecretAdapter;
 import com.mynote.module.secret.bean.SecretBean;
 import com.mynote.module.secret.dao.imp.SecretImp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,7 +63,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
     RecyclerView rv_secret;
 
     SecretAdapter adapter;
-    private MyPopupwindow mPopupwindow;
+    private MyPopupwindow mPopupwindow,optionPopupwindow;
     private SecretBean secretBean;
     private int dataCount;
 
@@ -97,7 +97,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                 Intent intent=new Intent();
                 intent.putExtra(IntentParam.tabIndex, GetDataEvent.secretIndex);
                 intent.putExtra(IntentParam.editSecretBean, secretBean);
-                STActivity(intent, AddDataActivity.class);
+                STActivityForResult(intent, AddSecretActivity.class,1000);
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
@@ -157,7 +157,6 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                     secretBean.setDataContent(i+"secret"+new Random().nextInt(10)+20);
                     mDaoImp.addSecret(secretBean);
                 }*/
-                dataCount = mDaoImp.selectSecretCount();
                 List<SecretBean> secretList = mDaoImp.selectSecret(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(secretList);
                 subscriber.onCompleted();
@@ -168,7 +167,6 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                     pageNum++;
                     adapter.addList(list,true);
                 }else{
-                    RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.secretIndex));
                     pageNum=2;
                     adapter.setList(list,true);
                 }
@@ -195,15 +193,40 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         mDialog.create().show();
     }
 
-    @OnClick({R.id.fab_secret,R.id.app_right_iv})
+    @OnClick({R.id.fab_secret,R.id.app_right_iv,R.id.tv_home_operation_delete,
+            R.id.tv_home_operation_complete})
     protected void onViewClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_home_operation_delete:
+                if(isEmpty(adapter.getList())){
+                    showMsg("暂无数据可删除");
+                    return;
+                }
+                boolean flag=false;
+                List<Integer> list=new ArrayList<>();
+                for (int i = 0; i < adapter.getList().size(); i++) {
+                    SecretBean bean = adapter.getList().get(i);
+                    if(bean.isCheck()){
+                        flag=true;
+                        list.add(bean.get_id());
+                    }
+                }
+                if(flag==false){
+                    showMsg("请选择数据");
+                    return;
+                }
+                promptForDelete(list);
+                break;
+            case R.id.tv_home_operation_complete:
+                adapter.setEdit(false);
+                adapter.notifyDataSetChanged();
+                showOperation(false);
+                break;
             case R.id.app_right_iv:
                 showSeting();
                 break;
             case R.id.fab_secret:
                 Intent intent=new Intent();
-                intent.putExtra(IntentParam.editSecretBean,secretBean);
                 STActivityForResult(intent,AddSecretActivity.class,1000);
                 break;
             case R.id.tv_menu_copyMemoContent:
@@ -236,20 +259,20 @@ public class SecretActivity extends BaseActivity<SecretImp> {
     }
     private void showSeting() {
         View view = inflateView(R.layout.popu_options, null);
-        mPopupwindow = new MyPopupwindow(this,view);
+        optionPopupwindow = new MyPopupwindow(this,view);
         view.findViewById(R.id.tv_orderBy_create).setOnClickListener(getSetListener(OptionEvent.flag_0));
         view.findViewById(R.id.tv_orderBy_update).setOnClickListener(getSetListener(OptionEvent.flag_1));
         view.findViewById(R.id.tv_batchDelete).setOnClickListener(getSetListener(OptionEvent.flag_prepare_delete));
 
         int xoff = PhoneUtils.getPhoneWidth(this) - PhoneUtils.dip2px(this, 125);
-        mPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        optionPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 view_backgroud.setVisibility(View.GONE);
             }
         });
-        mPopupwindow.setBackground(R.color.transparent);
-        mPopupwindow.showAsDropDown(toolbar, xoff,0);
+        optionPopupwindow.setBackground(R.color.transparent);
+        optionPopupwindow.showAsDropDown(toolbar, xoff,0);
         view_backgroud.setVisibility(View.VISIBLE);
     }
     @NonNull
@@ -257,10 +280,32 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         return new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
-                mPopupwindow.dismiss();
+                optionPopupwindow.dismiss();
                 if(flag==OptionEvent.flag_prepare_delete){
                     showOperation(true);
                 }
+                    //0创建时间排序
+                    //1修改时间排序
+                    //2批量删除
+                    switch (flag){
+                        case OptionEvent.flag_0:
+                            isOrderByCreateTime=true;
+                            showLoading();
+                            getData(1,false);
+                            break;
+                        case OptionEvent.flag_1:
+                            isOrderByCreateTime=false;
+                            showLoading();
+                            getData(1,false);
+                            break;
+                        case OptionEvent.flag_prepare_delete:
+                            adapter.setEdit(true);
+                            adapter.notifyDataSetChanged();
+                            break;
+
+                    }
+
+
             }
         };
     }
