@@ -8,8 +8,10 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.androidtools.DateUtils;
 import com.github.androidtools.StatusBarUtil;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.rx.IOCallBack;
@@ -23,6 +25,7 @@ import com.mynote.R;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -157,8 +160,11 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
     public <T> void RXStart(final IOCallBack<T> callBack) {
         RXStart(null,callBack,false);
     }
-    public <T> void RXStart(final IOCallBack<T> callBack,boolean hiddenLoading) {
+    public <T> void RXStart(boolean hiddenLoading,final IOCallBack<T> callBack) {
         RXStart(null,callBack,hiddenLoading);
+    }
+    public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
+        RXStart(progressLayout,callBack,false);
     }
     public <T> void RXStart(ProgressLayout progressLayout, final IOCallBack<T> callBack,boolean hiddenLoading) {
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
@@ -175,6 +181,7 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
                 }
                 callBack.onMyCompleted();
             }
+
             public void onError(Throwable e) {
                 if(progressLayout!=null){
                     progressLayout.showErrorText();
@@ -190,6 +197,16 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
             }
         });
         this.addSubscription(subscribe);
+    }
+
+    public void setCreateTime(LinearLayout ll_update_time, TextView tv_create_time, TextView tv_update_time, boolean isEdit, BaseEntity entity){
+        ll_update_time.setVisibility(isEdit? View.VISIBLE:View.GONE);
+        if(isEdit){
+            tv_update_time.setText(DateUtils.dateToString(new Date(entity.getCreateTime()),DateUtils.ymdhms));
+            tv_create_time.setText(DateUtils.dateToString(new Date(entity.getUpdateTime()),DateUtils.ymdhms));
+        }else{
+            tv_create_time.setText(DateUtils.dateToString(new Date(),DateUtils.ymdhms));
+        }
     }
 }
 

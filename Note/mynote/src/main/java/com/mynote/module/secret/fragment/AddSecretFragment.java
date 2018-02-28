@@ -1,6 +1,6 @@
-package com.mynote.module.secret.activity;
+package com.mynote.module.secret.fragment;
 
-import android.content.DialogInterface;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,11 +10,15 @@ import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
 import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.view.MyDialog;
+import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.rx.RxBus;
 import com.github.customview.MyEditText;
 import com.mynote.IntentParam;
 import com.mynote.R;
-import com.mynote.base.BaseActivity;
+import com.mynote.base.BaseFragment;
+import com.mynote.event.ClearDataEvent;
+import com.mynote.event.GetDataEvent;
+import com.mynote.event.SaveDataEvent;
 import com.mynote.module.secret.bean.SecretBean;
 import com.mynote.module.secret.dao.imp.SecretImp;
 
@@ -25,10 +29,10 @@ import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
- * Created by Administrator on 2017/2/6.
+ * Created by Administrator on 2018/2/2.
  */
-public class AddSecretActivity extends BaseActivity<SecretImp> {
 
+public class AddSecretFragment extends BaseFragment<SecretImp>  {
     @BindView(R.id.et_secret_reminder)
     MyEditText et_secret_reminder;
     @BindView(R.id.et_secret_content)
@@ -62,8 +66,60 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
 
     @Override
     protected int getContentView() {
-        setAppTitle("添加数据");
-        return R.layout.activity_add_secret;
+        return R.layout.fragment_add_secret;
+    }
+
+    public static AddSecretFragment newInstance() {
+        return newInstance(null);
+    }
+
+    public static AddSecretFragment newInstance(SecretBean bean) {
+        Bundle args = new Bundle();
+        if (bean != null) {
+            args.putSerializable(IntentParam.editSecretBean, bean);
+        }
+        AddSecretFragment fragment = new AddSecretFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Override
+    protected void initRxBus() {
+        super.initRxBus();
+        getRxBusEvent(SaveDataEvent.class, new MySubscriber<SaveDataEvent>() {
+            @Override
+            public void onMyNext(SaveDataEvent event) {
+                if(event.index== SaveDataEvent.secretIndex){
+                    String content = et_secret_content.getText().toString();
+                    if (TextUtils.isEmpty(content)||content.trim().length()<=0) {
+                        showToastS("内容不能为空");
+                    } else {
+                        String remark = et_secret_reminder.getText().toString();
+                        SecretBean bean ;
+                        if(isEdit){
+                            bean=secretBean;
+                            bean.setDataContent(content);
+                            bean.setDataRemark(remark);
+                            editSecret(bean);
+                        }else{
+                            bean=new SecretBean();
+                            bean.setDataContent(content);
+                            bean.setDataRemark(remark);
+                            addSecret(bean);
+                        }
+                    }
+                }
+            }
+        });
+        getRxBusEvent(ClearDataEvent.class, new MySubscriber<ClearDataEvent>() {
+            @Override
+            public void onMyNext(ClearDataEvent event) {
+                if(event.index== SaveDataEvent.secretIndex){
+                    et_secret_reminder.setText(null);
+                    et_secret_content.setText(null);
+                    tv_secret_lengthprompt.setText("(0/3000)");
+                }
+            }
+        });
     }
     private void editSecret(SecretBean bean) {
         showLoading();
@@ -119,7 +175,7 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
 
     @Override
     protected void initData() {
-        secretBean= (SecretBean) getIntent().getSerializableExtra(IntentParam.editSecretBean);
+        secretBean = (SecretBean) getArguments().getSerializable(IntentParam.editSecretBean);
 
         setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,secretBean );
 
@@ -130,59 +186,20 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
             tv_secret_lengthprompt.setText("("+secretBean.getDataContent().length()+"/3000)");
         }
     }
-    @OnClick({R.id.tv_secret_copy, R.id.tv_secret_paste, R.id.tv_secret_clear,R.id.bt_addData_clear,R.id.bt_addData_save})
+    @OnClick({R.id.tv_secret_copy, R.id.tv_secret_paste, R.id.tv_secret_clear})
     public void onViewClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_addData_clear:
-                mDialog=new MyDialog.Builder(this);
-                mDialog.setMessage("确定清空页面已输入的数据吗?");
-                mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        et_secret_reminder.setText(null);
-                        et_secret_content.setText(null);
-                    }
-                });
-                mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                mDialog.create().show();
-                break;
-            case R.id.bt_addData_save:
-                String content = et_secret_content.getText().toString();
-                if (TextUtils.isEmpty(content)||content.trim().length()<=0) {
-                    showToastS("内容不能为空");
-                } else {
-                    String remark = et_secret_reminder.getText().toString();
-                    SecretBean bean ;
-                    if(isEdit){
-                        bean=secretBean;
-                        bean.setDataContent(content);
-                        bean.setDataRemark(remark);
-                        editSecret(bean);
-                    }else{
-                        bean=new SecretBean();
-                        bean.setDataContent(content);
-                        bean.setDataRemark(remark);
-                        addSecret(bean);
-                    }
-                }
-                break;
             case R.id.tv_secret_copy:
-                String jokeContent = et_secret_content.getText().toString().trim();
-                if (TextUtils.isEmpty(jokeContent)) {
-                    showToastS("数据内容不能为空");
+                String content = et_secret_content.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    showToastS("请填写数据之后复制");
                 } else {
-                    PhoneUtils.copyText(this, et_secret_content.getText().toString().trim());
+                    PhoneUtils.copyText(getActivity(), content);
                     showToastS("复制成功");
                 }
                 break;
             case R.id.tv_secret_paste:
-                et_secret_content.setText(et_secret_content.getText()+""+PhoneUtils.pasteText(this));
+                et_secret_content.setText(et_secret_content.getText()+""+PhoneUtils.pasteText(getActivity()));
                 break;
             case R.id.tv_secret_clear:
                 et_secret_content.setText(null);
@@ -190,12 +207,11 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
         }
     }
 
-
     @Override
-    public void finish() {
+    public void onDestroy() {
+        super.onDestroy();
         if(addDataSuccess){
-            setResult(RESULT_OK);
+            RxBus.getInstance().post(new GetDataEvent(GetDataEvent.secretIndex));
         }
-        super.finish();
     }
 }

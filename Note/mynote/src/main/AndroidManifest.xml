@@ -26,6 +26,8 @@
         <activity android:name=".module.home.activity.MainActivity" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".module.home.activity.AddDataActivity"/>
         <activity android:name=".module.home.activity.ImportDataActivity"/>
+        <activity android:name=".module.secret.activity.SecretActivity" android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".module.secret.activity.AddSecretActivity"/>
     </application>
 
 </manifest>
