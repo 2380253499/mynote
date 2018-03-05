@@ -96,6 +96,7 @@ public class MainActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PhoneUtils.hiddenKeyBoard(mContext);
                 drawerlayout.openDrawer(Gravity.LEFT);
             }
         });
@@ -208,7 +209,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent=new Intent();
                 intent.putExtra(IntentParam.tabIndex, tabIndex);
                 STActivity(intent,AddDataActivity.class);
-            break;
+                break;
             case R.id.rb_main_account:
                 showMenu(true);
                 tabIndex=0;
