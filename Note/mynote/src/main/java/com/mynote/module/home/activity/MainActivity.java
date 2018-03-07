@@ -1,6 +1,6 @@
 package com.mynote.module.home.activity;
 
-import android.content.Intent;
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,11 +17,11 @@ import android.widget.RadioGroup;
 
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
+import com.github.baseclass.permission.PermissionCallback;
 import com.github.baseclass.rx.MySubscriber;
 import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyRadioButton;
-import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.event.OptionEvent;
@@ -206,9 +206,19 @@ public class MainActivity extends BaseActivity {
                 showSeting();
                 break;
             case R.id.fab:
-                Intent intent=new Intent();
+                requestPermission(Manifest.permission.ACCESS_WIFI_STATE, new PermissionCallback() {
+                    @Override
+                    public void onGranted() {
+                        showMsg("成功");
+                    }
+                    @Override
+                    public void onDenied(String s) {
+                        showMsg("失败"+s);
+                    }
+                });
+               /* Intent intent=new Intent();
                 intent.putExtra(IntentParam.tabIndex, tabIndex);
-                STActivity(intent,AddDataActivity.class);
+                STActivity(intent,AddDataActivity.class);*/
                 break;
             case R.id.rb_main_account:
                 showMenu(true);

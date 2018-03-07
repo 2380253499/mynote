@@ -70,6 +70,8 @@ public class ExampleUnitTest {
         String s="2018-02-07 17:48:51.";
         Date date = DateUtils.stringToDate(s,"yyy-MM-dd HH:mm:ss");
         System.out.println(date.getTime());
+
+        System.out.println(new String[]{"a","b"}.toString());
     }
 
 }
