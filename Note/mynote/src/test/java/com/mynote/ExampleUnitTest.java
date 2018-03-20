@@ -7,8 +7,10 @@ import com.library.base.tools.has.Solar;
 
 import org.junit.Test;
 
+import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
@@ -71,7 +73,31 @@ public class ExampleUnitTest {
         Date date = DateUtils.stringToDate(s,"yyy-MM-dd HH:mm:ss");
         System.out.println(date.getTime());
 
-        System.out.println(new String[]{"a","b"}.toString());
+        System.out.println(genNonceStr());
+    }
+    private String genNonceStr() {
+        Random random = new Random();
+        return getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
     }
 
+    public static final String getMessageDigest(byte[] buffer) {
+        char[] hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        try {
+            MessageDigest e = MessageDigest.getInstance("MD5");
+            e.update(buffer);
+            byte[] md = e.digest();
+            int j = md.length;
+            char[] str = new char[j * 2];
+            int k = 0;
+
+            for(int i = 0; i < j; ++i) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 15];
+                str[k++] = hexDigits[byte0 & 15];
+            }
+            return new String(str);
+        } catch (Exception var9) {
+            return null;
+        }
+    }
 }

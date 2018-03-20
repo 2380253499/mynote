@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.StatusBarUtil;
 import com.github.androidtools.inter.MyOnClickListener;
+import com.github.baseclass.adapter.MyLoadMoreAdapter;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.RxUtils;
 import com.github.baseclass.view.Loading;
@@ -40,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/12/18.
  */
 
-public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity {
+public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity implements MyLoadMoreAdapter.OnLoadMoreListener {
     protected final String TAG = this.getClass().getSimpleName();
     protected long mExitTime=0;
     protected Handler mHandler;
@@ -208,5 +209,6 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
             tv_create_time.setText(DateUtils.dateToString(new Date(),DateUtils.ymdhms));
         }
     }
+
 }
 
