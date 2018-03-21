@@ -42,7 +42,7 @@ public class GestureVerifyActivity extends BaseActivity<GestureImp> implements G
 	private String gesturePWD;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		gesturePWD = SPUtils.getPrefString(this, Constant.SP.gesture_pwd,null);
+		gesturePWD = SPUtils.getString(this, Constant.SP.gesture_pwd,null);
 		super.onCreate(savedInstanceState);
 		if(gesturePWD==null){
 			Intent mIntent=new Intent();

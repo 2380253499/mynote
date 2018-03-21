@@ -59,7 +59,7 @@ public class GestureUpdateActivity extends BaseActivity<GestureImp> implements G
 		text_reset.setClickable(false);
 		text_reset.setOnClickListener(this);
 		// 初始化一个显示各个点的viewGroup
-		mGestureContentView = mPresenter.initVerifyOldGestureContentView(SPUtils.getPrefString(this, Constant.SP.gesture_pwd,null),text_reset, tv_tip, gesture_container);
+		mGestureContentView = mPresenter.initVerifyOldGestureContentView(SPUtils.getString(this, Constant.SP.gesture_pwd,null),text_reset, tv_tip, gesture_container);
 		mPresenter.setGestureContentView(mGestureContentView);
 		mPresenter.setLockIndicator(mLockIndicator);
 		// 设置手势解锁显示到哪个布局里面
