@@ -25,6 +25,7 @@ import com.mynote.database.DBManager;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.gesture.activity.GestureUpdateActivity;
+import com.mynote.module.home.bean.DataCountBean;
 import com.mynote.module.joke.bean.JokeBean;
 import com.mynote.module.joke.dao.imp.JokeImp;
 import com.mynote.module.memo.bean.MemoBean;
@@ -38,8 +39,6 @@ import com.mynote.module.spend.dao.imp.SpendImp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -160,9 +159,9 @@ public class LeftMenuFragment extends BaseFragment {
     }
     private void importData() {
         showLoading();
-        RXStart(new IOCallBack<String>() {
+        RXStart(new IOCallBack<DataCountBean>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(Subscriber<? super DataCountBean> subscriber) {
                 File file = new File("/data/data/" + mContext.getPackageName() + "/databases");
                 File backupFileForTemp = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
                 File backupFileForDB = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".db");
@@ -204,51 +203,53 @@ public class LeftMenuFragment extends BaseFragment {
                         database = SQLiteDatabase.openOrCreateDatabase(backupFileForDB, null);
                         List<SecretBean> secretList = secretImp.selectSecret(0,null, true,database);
 
-                        dataSizeList.add(accountList.size());
-                        dataSizeList.add(memoList.size());
-                        dataSizeList.add(jokeList.size());
-                        dataSizeList.add(spendList.size());
-                        dataSizeList.add(secretList.size());
-                        Collections.sort(dataSizeList, new Comparator<Integer>() {
-                            @Override
-                            public int compare(Integer lhs, Integer rhs) {
-                                return rhs - lhs;
-                            }
-                        });
+                        int allDataCount=accountList.size()+memoList.size()+jokeList.size()+spendList.size()+secretList.size();
+                        DataCountBean dataCountBean = new DataCountBean();
+                        dataCountBean.setAllDataCount(allDataCount);
                         //等价于i <= dataSizeList.get(0)-1
                         //i <= memoList.size()-1
-                        for (int i = 0; i < dataSizeList.get(0); i++) {
-                            if (i < accountList.size()) {
-                                AccountBean bean = accountList.get(i);
-                                if(accountImp.selectTableCount(DBManager.T_Account_Note,bean.getUid())==0){
-                                    accountImp.addAccount(bean);
-                                }
+                        for (int i = 0; i < accountList.size(); i++) {
+                            AccountBean bean = accountList.get(i);
+                            if(true||accountImp.selectTableCount(DBManager.T_Account_Note,bean.getUid())==0){
+                                accountImp.addAccount(bean);
                             }
-                            if (i < memoList.size()) {
-                                MemoBean memoBean = memoList.get(i);
-                                if(memoImp.selectTableCount(DBManager.T_Memo_Note,memoBean.getUid())==0){
-                                    memoImp.addMemo(memoBean);
-                                }
-                            }
-                            if (i < jokeList.size()) {
-                                JokeBean jokeBean = jokeList.get(i);
-                                if(jokeImp.selectTableCount(DBManager.T_Joke_Note,jokeBean.getUid())==0){
-                                    jokeImp.addJoke(jokeBean);
-                                }
-                            }
-                            if (i < spendList.size()) {
-                                SpendBean spendBean = spendList.get(i);
-                                if(spendImp.selectTableCount(DBManager.T_Spend_Note,spendBean.getUid())==0){
-                                    spendImp.addSpend(spendBean);
-                                }
-                            }
-                            if (i < secretList.size()) {
-                                SecretBean secretBean = secretList.get(i);
-                                if(secretImp.selectTableCount(DBManager.T_Secret_Note,secretBean.getUid())==0){
-                                    secretImp.addSecret(secretBean);
-                                }
-                            }
+                            dataCountBean.setProgress(dataCountBean.getProgress()+1);
+                            subscriber.onNext(dataCountBean);
                         }
+                        for (int i = 0; i < memoList.size(); i++) {
+                            MemoBean memoBean = memoList.get(i);
+                            if(true||memoImp.selectTableCount(DBManager.T_Memo_Note,memoBean.getUid())==0){
+                                memoImp.addMemo(memoBean);
+                            }
+                            dataCountBean.setProgress(dataCountBean.getProgress()+1);
+                            subscriber.onNext(dataCountBean);
+                        }
+
+                        for (int i = 0; i < jokeList.size(); i++) {
+                            JokeBean jokeBean = jokeList.get(i);
+                            if(true||jokeImp.selectTableCount(DBManager.T_Joke_Note,jokeBean.getUid())==0){
+                                jokeImp.addJoke(jokeBean);
+                            }
+                            dataCountBean.setProgress(dataCountBean.getProgress()+1);
+                            subscriber.onNext(dataCountBean);
+                        }
+                        for (int i = 0; i < spendList.size(); i++) {
+                            SpendBean spendBean = spendList.get(i);
+                            if(true||spendImp.selectTableCount(DBManager.T_Spend_Note,spendBean.getUid())==0){
+                                spendImp.addSpend(spendBean);
+                            }
+                            dataCountBean.setProgress(dataCountBean.getProgress()+1);
+                            subscriber.onNext(dataCountBean);
+                        }
+                        for (int i = 0; i < secretList.size(); i++) {
+                            SecretBean secretBean = secretList.get(i);
+                            if(true||secretImp.selectTableCount(DBManager.T_Secret_Note,secretBean.getUid())==0){
+                                secretImp.addSecret(secretBean);
+                            }
+                            dataCountBean.setProgress(dataCountBean.getProgress()+1);
+                            subscriber.onNext(dataCountBean);
+                        }
+
                         if (backupFileForDB.exists()) {
                             backupFileForDB.renameTo(backupFileForTemp);
                         }
@@ -262,22 +263,27 @@ public class LeftMenuFragment extends BaseFragment {
                 }
             }
             @Override
-            public void onMyNext(String s) {
-                MyDialog.Builder dialog = new MyDialog.Builder(mContext);
-                dialog.setMessage("文件不存在,请把需要复制的文件放在手机根部目录(非SD卡)下的"+ Constant.rootFileName+"文件夹下,文件名为" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
-                dialog.setNegativeButton(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setPositiveButton(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.create().show();
+            public void onMyNext(DataCountBean bean) {
+                if(bean==null){
+                    MyDialog.Builder dialog = new MyDialog.Builder(mContext);
+                    dialog.setMessage("文件不存在,请把需要复制的文件放在手机根部目录(非SD卡)下的"+ Constant.rootFileName+"文件夹下,文件名为" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
+                    dialog.setNegativeButton(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setPositiveButton(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.create().show();
+                }else{
+
+                }
+
             }
             @Override
             public void onMyCompleted() {

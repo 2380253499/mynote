@@ -8,7 +8,7 @@ public class DBConstant {
     public static final String uid="uid";//多表情况的唯一标识
     public static final String dataRemark="dataRemark";//备注
     public static final String updateTime="updateTime";//修改时间 时间戳
-    public static final String createTime ="creatTime";//创建时间 时间戳
+    public static final String createTime ="createTime";//创建时间 时间戳
     /**************************账户表字段************************************/
     public static final String dataSource="dataSource";//来源
     public static final String dataAccount="dataAccount";//账户
