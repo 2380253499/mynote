@@ -57,13 +57,11 @@ public abstract class BaseDaoImp {
 
     public int selectTableCount(String tableName,String uid) {
         String sql="select count(0) as num from " + tableName;
-        String[] param=new String[1];
         if(!TextUtils.isEmpty(uid)&&uid.trim().length()>0){
             sql="select count(0) as num from " + tableName+" where "+ DBConstant.uid+"=?";
-            param[0]=uid;
         }
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(sql, param);
+        Cursor cursor = db.rawQuery(sql,uid==null?null:new String[]{uid});
         int count = 0;
         try {
             while (cursor.moveToNext()) {

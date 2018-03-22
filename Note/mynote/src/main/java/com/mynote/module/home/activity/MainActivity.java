@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -156,11 +157,17 @@ public class MainActivity extends BaseActivity {
         mPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+                alphaAnimation.setDuration(300);//持续时间
+                view_backgroud.setAnimation(alphaAnimation);
                 view_backgroud.setVisibility(View.GONE);
             }
         });
         mPopupwindow.setBackground(R.color.transparent);
         mPopupwindow.showAsDropDown(toolbar, xoff,0);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+        alphaAnimation.setDuration(300);//持续时间
+        view_backgroud.setAnimation(alphaAnimation);
         view_backgroud.setVisibility(View.VISIBLE);
     }
 

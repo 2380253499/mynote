@@ -28,6 +28,7 @@ import com.github.customview.MyEditText;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.database.DBManager;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.secret.adapter.SecretAdapter;
@@ -66,6 +67,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
     private MyPopupwindow mPopupwindow,optionPopupwindow;
     private SecretBean secretBean;
     private int dataCount;
+    private int tableCount;
 
 
     @Override
@@ -157,6 +159,9 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                     secretBean.setDataContent(i+"secret"+new Random().nextInt(10)+20);
                     mDaoImp.addSecret(secretBean);
                 }*/
+               if(page==1){
+                   tableCount = mDaoImp.selectTableCount(DBManager.T_Secret_Note);
+               }
                 List<SecretBean> secretList = mDaoImp.selectSecret(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(secretList);
                 subscriber.onCompleted();
@@ -169,6 +174,8 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                 }else{
                     pageNum=2;
                     adapter.setList(list,true);
+
+                    setAppTitle("数据列表("+tableCount+")");
                 }
                 adapter.setSearchInfo(searchInfo);
             }

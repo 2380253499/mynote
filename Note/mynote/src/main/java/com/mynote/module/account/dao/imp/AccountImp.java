@@ -44,13 +44,11 @@ public class AccountImp extends BaseDaoImp{
     }
     public int selectAccountCount(String uid) {
         String sql="select count(0) as num from " + DBManager.T_Account_Note;
-        String[] param=null;
         if(!TextUtils.isEmpty(uid)&&uid.trim().length()>0){
             sql="select count(0) as num from " + DBManager.T_Account_Note+" where "+DBConstant.uid+"=?";
-            param[0]=uid;
         }
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(sql, param);
+        Cursor cursor = db.rawQuery(sql,uid==null?null:new String[]{uid});
         int count = 0;
         try {
             while (cursor.moveToNext()) {
