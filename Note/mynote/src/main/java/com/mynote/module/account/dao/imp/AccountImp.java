@@ -107,7 +107,7 @@ public class AccountImp extends BaseDaoImp{
         Cursor query = db.query(DBManager.T_Account_Note,
                 new String[]{
                         DBConstant._id,
-//                        DBConstant.uid,
+                        DBConstant.uid,
                         DBConstant.dataSource,
                         DBConstant.dataAccount,
                         DBConstant.dataPassword,
@@ -119,24 +119,24 @@ public class AccountImp extends BaseDaoImp{
         while (query.moveToNext()) {
             bean = new AccountBean();
             int id = query.getInt(query.getColumnIndex(DBConstant._id));
-//            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
+            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
             String dataSource = query.getString(query.getColumnIndex(DBConstant.dataSource));
             String dataAccount = query.getString(query.getColumnIndex(DBConstant.dataAccount));
             String dataPassword = query.getString(query.getColumnIndex(DBConstant.dataPassword));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
-//            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-//            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
+            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
+            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
 
-            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
-            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
+//            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
+//            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
             bean.set_id(id);
-//            bean.setUid(uid);
+            bean.setUid(uid);
             bean.setDataSource(dataSource);
             bean.setDataAccount(dataAccount);
             bean.setDataPassword(dataPassword);
             bean.setDataRemark(dataRemark);
             bean.setUpdateTime(updateTime);
-            bean.setCreateTime(creatTime);
+            bean.setCreateTime(createTime);
             list.add(bean);
         }
         db.close();

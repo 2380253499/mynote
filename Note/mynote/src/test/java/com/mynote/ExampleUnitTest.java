@@ -25,6 +25,12 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
     @Test
+    public void asdfsa() throws Exception {
+        //2018-02-07 17:48:51.
+        Date date = DateUtils.stringToDate("2018-02-07 17:48:51.","yyy-MM-dd HH:mm:ss");
+        System.out.println(date.getTime());
+    }
+    @Test
     public void yy() throws Exception {
         LunarSolar lunarSolar=new LunarSolar();
         Calendar a = Calendar.getInstance();

@@ -177,7 +177,6 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
     protected void initData() {
         memoBean = (MemoBean) getArguments().getSerializable(IntentParam.editMemoBean);
 
-        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,memoBean );
 
         if (memoBean != null) {
             isEdit = true;
@@ -185,6 +184,7 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
             et_memo_content.setText(memoBean.getDataContent());
             tv_memo_lengthprompt.setText("("+memoBean.getDataContent().length()+"/3000)");
         }
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,memoBean );
     }
     @OnClick({R.id.tv_memo_copy, R.id.tv_memo_paste, R.id.tv_memo_clear})
     public void onViewClick(View view) {

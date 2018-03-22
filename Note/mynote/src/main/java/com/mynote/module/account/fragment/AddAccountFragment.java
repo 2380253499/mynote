@@ -86,7 +86,6 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
     @Override
     protected void initView() {
         accountBean = (AccountBean) getArguments().getSerializable(IntentParam.editAccount);
-        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,accountBean );
     }
 
     @Override
@@ -185,6 +184,8 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
             et_addData_pwd.setText(accountBean.getDataPassword());
             et_addData_note.setText(accountBean.getDataRemark());
         }
+
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,accountBean );
     }
 
     @OnClick({

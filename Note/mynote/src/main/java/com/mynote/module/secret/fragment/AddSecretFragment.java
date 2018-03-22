@@ -177,7 +177,6 @@ public class AddSecretFragment extends BaseFragment<SecretImp>  {
     protected void initData() {
         secretBean = (SecretBean) getArguments().getSerializable(IntentParam.editSecretBean);
 
-        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,secretBean );
 
         if (secretBean != null) {
             isEdit = true;
@@ -185,6 +184,7 @@ public class AddSecretFragment extends BaseFragment<SecretImp>  {
             et_secret_content.setText(secretBean.getDataContent());
             tv_secret_lengthprompt.setText("("+secretBean.getDataContent().length()+"/3000)");
         }
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,secretBean );
     }
     @OnClick({R.id.tv_secret_copy, R.id.tv_secret_paste, R.id.tv_secret_clear})
     public void onViewClick(View view) {

@@ -161,8 +161,8 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
     public void setCreateTime(LinearLayout ll_update_time, TextView tv_create_time,  TextView tv_update_time, boolean isEdit,BaseEntity entity){
         ll_update_time.setVisibility(isEdit? View.VISIBLE:View.GONE);
         if(isEdit){
-            tv_update_time.setText(DateUtils.dateToString(new Date(entity.getCreateTime()),DateUtils.ymdhms));
-            tv_create_time.setText(DateUtils.dateToString(new Date(entity.getUpdateTime()),DateUtils.ymdhms));
+            tv_create_time.setText(DateUtils.dateToString(new Date(entity.getCreateTime()),DateUtils.ymdhms));
+            tv_update_time.setText(DateUtils.dateToString(new Date(entity.getUpdateTime()),DateUtils.ymdhms));
         }else{
             tv_create_time.setText(DateUtils.dateToString(new Date(),DateUtils.ymdhms));
         }

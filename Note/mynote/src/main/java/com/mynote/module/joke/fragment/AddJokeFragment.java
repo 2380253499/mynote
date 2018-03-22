@@ -185,7 +185,6 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
     protected void initData() {
         jokeBean = (JokeBean) getArguments().getSerializable(IntentParam.editJokeBean);
 
-        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,jokeBean );
 
 
         if (jokeBean != null) {
@@ -194,6 +193,8 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
             et_joke_content.setText(jokeBean.getDataContent());
             tv_joke_lengthprompt.setText("("+jokeBean.getDataContent().length()+"/3000)");
         }
+
+        setCreateTime(ll_update_time,tv_create_time, tv_update_time,isEdit,jokeBean );
     }
 
 

@@ -215,7 +215,7 @@ public class SpendImp extends BaseDaoImp {
         Cursor query = db.query(DBManager.T_Spend_Note,
                 new String[]{
                         DBConstant._id,
-//                        DBConstant.uid,
+                        DBConstant.uid,
                         DBConstant.dataRemark,
                         DBConstant.liveSpend,
                         DBConstant.localYear,
@@ -228,26 +228,26 @@ public class SpendImp extends BaseDaoImp {
         while (query.moveToNext()) {
             bean = new SpendBean();
             int id = query.getInt(query.getColumnIndex(DBConstant._id));
-//            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
+            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
             Double liveSpend = query.getDouble(query.getColumnIndex(DBConstant.liveSpend));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
             int localYear = query.getInt(query.getColumnIndex(DBConstant.localYear));
             int localMonth = query.getInt(query.getColumnIndex(DBConstant.localMonth));
             int localDay = query.getInt(query.getColumnIndex(DBConstant.localDay));
-//            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-//            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
+            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
+            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
 
-            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
-            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
+//            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
+//            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
             bean.set_id(id);
-//            bean.setUid(uid);
+            bean.setUid(uid);
             bean.setLiveSpend(liveSpend);
             bean.setDataRemark(dataRemark);
             bean.setLocalYear(localYear);
             bean.setLocalMonth(localMonth);
             bean.setLocalDay(localDay);
             bean.setUpdateTime( updateTime );
-            bean.setCreateTime( creatTime );
+            bean.setCreateTime( createTime );
             list.add(bean);
         }
         db.close();

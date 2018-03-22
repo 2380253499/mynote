@@ -169,6 +169,7 @@ public class LeftMenuFragment extends BaseFragment {
                 try {
                     if (!backupFileForTemp.exists()) {
                         subscriber.onNext(null);
+                        subscriber.onCompleted();
                         return;
                     }
                     if (!appDBFile.exists()) {
@@ -210,7 +211,7 @@ public class LeftMenuFragment extends BaseFragment {
                         //i <= memoList.size()-1
                         for (int i = 0; i < accountList.size(); i++) {
                             AccountBean bean = accountList.get(i);
-                            if(true||accountImp.selectTableCount(DBManager.T_Account_Note,bean.getUid())==0){
+                            if(accountImp.selectTableCount(DBManager.T_Account_Note,bean.getUid())==0){
                                 accountImp.addAccount(bean);
                             }
                             dataCountBean.setProgress(dataCountBean.getProgress()+1);
@@ -218,7 +219,7 @@ public class LeftMenuFragment extends BaseFragment {
                         }
                         for (int i = 0; i < memoList.size(); i++) {
                             MemoBean memoBean = memoList.get(i);
-                            if(true||memoImp.selectTableCount(DBManager.T_Memo_Note,memoBean.getUid())==0){
+                            if(memoImp.selectTableCount(DBManager.T_Memo_Note,memoBean.getUid())==0){
                                 memoImp.addMemo(memoBean);
                             }
                             dataCountBean.setProgress(dataCountBean.getProgress()+1);
@@ -227,7 +228,7 @@ public class LeftMenuFragment extends BaseFragment {
 
                         for (int i = 0; i < jokeList.size(); i++) {
                             JokeBean jokeBean = jokeList.get(i);
-                            if(true||jokeImp.selectTableCount(DBManager.T_Joke_Note,jokeBean.getUid())==0){
+                            if(jokeImp.selectTableCount(DBManager.T_Joke_Note,jokeBean.getUid())==0){
                                 jokeImp.addJoke(jokeBean);
                             }
                             dataCountBean.setProgress(dataCountBean.getProgress()+1);
@@ -235,7 +236,7 @@ public class LeftMenuFragment extends BaseFragment {
                         }
                         for (int i = 0; i < spendList.size(); i++) {
                             SpendBean spendBean = spendList.get(i);
-                            if(true||spendImp.selectTableCount(DBManager.T_Spend_Note,spendBean.getUid())==0){
+                            if(spendImp.selectTableCount(DBManager.T_Spend_Note,spendBean.getUid())==0){
                                 spendImp.addSpend(spendBean);
                             }
                             dataCountBean.setProgress(dataCountBean.getProgress()+1);
@@ -243,7 +244,7 @@ public class LeftMenuFragment extends BaseFragment {
                         }
                         for (int i = 0; i < secretList.size(); i++) {
                             SecretBean secretBean = secretList.get(i);
-                            if(true||secretImp.selectTableCount(DBManager.T_Secret_Note,secretBean.getUid())==0){
+                            if(secretImp.selectTableCount(DBManager.T_Secret_Note,secretBean.getUid())==0){
                                 secretImp.addSecret(secretBean);
                             }
                             dataCountBean.setProgress(dataCountBean.getProgress()+1);

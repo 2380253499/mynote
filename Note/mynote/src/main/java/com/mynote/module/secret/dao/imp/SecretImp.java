@@ -94,7 +94,7 @@ public class SecretImp extends BaseDaoImp {
         Cursor query = db.query(DBManager.T_Secret_Note,
                 new String[]{
                         DBConstant._id,
-//                        DBConstant.uid,
+                        DBConstant.uid,
                         DBConstant.dataRemark,
                         DBConstant.dataContent,
                         DBConstant.updateTime,
@@ -104,20 +104,20 @@ public class SecretImp extends BaseDaoImp {
         while (query.moveToNext()) {
             bean = new SecretBean();
             int id = query.getInt(query.getColumnIndex(DBConstant._id));
-//            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
+            String uid = query.getString(query.getColumnIndex(DBConstant.uid));
             String dataRemark = query.getString(query.getColumnIndex(DBConstant.dataRemark));
             String dataContent = query.getString(query.getColumnIndex(DBConstant.dataContent));
-//            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
-//            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
+            long updateTime = query.getLong(query.getColumnIndex(DBConstant.updateTime));
+            long createTime = query.getLong(query.getColumnIndex(DBConstant.createTime));
 
-            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
-            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
+//            long updateTime = string2Date(query.getString(query.getColumnIndex(DBConstant.updateTime)));
+//            long creatTime = string2Date(query.getString(query.getColumnIndex(DBConstant.createTime)));
             bean.set_id(id);
-//            bean.setUid(uid);
+            bean.setUid(uid);
             bean.setDataContent(dataContent);
             bean.setDataRemark(dataRemark);
             bean.setUpdateTime(updateTime);
-            bean.setCreateTime(creatTime);
+            bean.setCreateTime(createTime);
             list.add(bean);
         }
         db.close();
