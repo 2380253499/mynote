@@ -16,15 +16,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         >
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:paddingLeft="@dimen/asterisk_padding"
             android:text="消费说明"
             android:textSize="14sp"
+            android:gravity="center_vertical"
             />
 
         <com.github.customview.MyEditText
@@ -34,7 +37,6 @@
             android:layout_height="30dp"
             android:layout_marginLeft="@dimen/asterisk_padding"
             android:layout_marginRight="@dimen/asterisk_padding"
-            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLength="30"
             android:paddingLeft="5dp"
@@ -303,7 +305,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="5dp"
+        android:paddingLeft="6dp"
         >
         <include layout="@layout/item_create_time"  />
     </LinearLayout>
