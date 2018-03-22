@@ -162,8 +162,8 @@ public class MemoImp extends BaseDaoImp {
         values.put(DBConstant.dataContent,  bean.getDataContent() );
         if(TextUtils.isEmpty(bean.getUid())||"-1".equals(bean.getUid())){
             bean.setUid(System.nanoTime()+"");
-            values.put(DBConstant.uid, bean.getUid());
         }
+        values.put(DBConstant.uid, bean.getUid());
         if (bean.getCreateTime() != 0) {
             values.put(DBConstant.createTime, bean.getCreateTime() );
         }else{

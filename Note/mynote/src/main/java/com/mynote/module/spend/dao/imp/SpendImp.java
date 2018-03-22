@@ -290,8 +290,8 @@ public class SpendImp extends BaseDaoImp {
         values.put(DBConstant.liveSpend, bean.getLiveSpend());
         if(TextUtils.isEmpty(bean.getUid())||"-1".equals(bean.getUid())){
             bean.setUid(System.nanoTime()+"");
-            values.put(DBConstant.uid, bean.getUid());
         }
+        values.put(DBConstant.uid, bean.getUid());
         if (bean.getLocalYear() > 0) {
             values.put(DBConstant.localYear, bean.getLocalYear());
             values.put(DBConstant.localMonth, bean.getLocalMonth());
