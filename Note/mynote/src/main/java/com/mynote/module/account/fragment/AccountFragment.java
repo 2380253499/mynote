@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,11 +28,11 @@ import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
+import com.mynote.event.OptionEvent;
 import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.home.activity.AddDataActivity;
-import com.mynote.event.OptionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,11 +83,18 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                AccountBean accountBean = adapter.getList().get(position);
-                Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, GetDataEvent.accountIndex);
-                intent.putExtra(IntentParam.editAccount, accountBean);
-                STActivity(intent, AddDataActivity.class);
+                if(adapter.isEdit()){
+                    View childAt = rv_account.getChildAt(position);
+                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
+                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
+                    cb_check.setChecked(adapter.getList().get(position).isCheck());
+                }else{
+                    AccountBean accountBean = adapter.getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.accountIndex);
+                    intent.putExtra(IntentParam.editAccount, accountBean);
+                    STActivity(intent, AddDataActivity.class);
+                }
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {

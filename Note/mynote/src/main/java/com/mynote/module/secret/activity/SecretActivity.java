@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -103,12 +104,20 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                SecretBean secretBean = adapter.getList().get(position);
-                Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, GetDataEvent.secretIndex);
-                intent.putExtra(IntentParam.editSecretBean, secretBean);
-                STActivityForResult(intent, AddSecretActivity.class,1000);
-            }
+                if (adapter.isEdit()) {
+                    View childAt = rv_secret.getChildAt(position);
+                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
+                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
+                    cb_check.setChecked(adapter.getList().get(position).isCheck());
+                } else {
+                    SecretBean secretBean = adapter.getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.secretIndex);
+                    intent.putExtra(IntentParam.editSecretBean, secretBean);
+                    STActivityForResult(intent, AddSecretActivity.class,1000);
+
+                }
+              }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
             @Override

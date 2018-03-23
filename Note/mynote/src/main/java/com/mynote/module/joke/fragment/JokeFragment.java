@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,8 +28,8 @@ import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
-import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.event.OptionEvent;
+import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.joke.adapter.JokeAdapter;
 import com.mynote.module.joke.bean.JokeBean;
 import com.mynote.module.joke.dao.imp.JokeImp;
@@ -80,11 +81,18 @@ public class JokeFragment extends BaseFragment<JokeImp> {
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                JokeBean jokeBean = adapter.getList().get(position);
-                Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, GetDataEvent.jokeIndex);
-                intent.putExtra(IntentParam.editJokeBean, jokeBean);
-                STActivity(intent, AddDataActivity.class);
+                if (adapter.isEdit()) {
+                    View childAt = rv_joke.getChildAt(position);
+                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
+                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
+                    cb_check.setChecked(adapter.getList().get(position).isCheck());
+                } else {
+                    JokeBean jokeBean = adapter.getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.jokeIndex);
+                    intent.putExtra(IntentParam.editJokeBean, jokeBean);
+                    STActivity(intent, AddDataActivity.class);
+                }
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {

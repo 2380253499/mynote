@@ -12,16 +12,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.AES;
+import com.github.androidtools.AndroidUtils;
 import com.github.androidtools.ClickUtils;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.baseclass.rx.IOCallBack;
+import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.utils.FileUtils;
 import com.mynote.Constant;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.database.DBManager;
+import com.mynote.event.GetDataEvent;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 import com.mynote.module.gesture.activity.GestureUpdateActivity;
@@ -282,7 +285,9 @@ public class LeftMenuFragment extends BaseFragment {
                     });
                     dialog.create().show();
                 }else{
-
+                    int allDataCount = bean.getAllDataCount();
+                    int progress = bean.getProgress();
+                    showMsg(AndroidUtils.chengFa(AndroidUtils.chuFa(progress,allDataCount,2),100)+"%");
                 }
 
             }
@@ -290,6 +295,11 @@ public class LeftMenuFragment extends BaseFragment {
             public void onMyCompleted() {
                 super.onMyCompleted();
                 showMsg("导入成功");
+                RxBus.getInstance().post(new GetDataEvent(GetDataEvent.accountIndex));
+                RxBus.getInstance().post(new GetDataEvent(GetDataEvent.memoIndex));
+                RxBus.getInstance().post(new GetDataEvent(GetDataEvent.jokeIndex));
+                RxBus.getInstance().post(new GetDataEvent(GetDataEvent.spendIndex));
+                RxBus.getInstance().post(new GetDataEvent(GetDataEvent.secretIndex));
                 /*sendSelectDataBroadcast(BroFilter.addData_account,BroFilter.index_0);
                     sendSelectDataBroadcast(BroFilter.addData_memo,BroFilter.index_1);
                     sendSelectDataBroadcast(BroFilter.addData_joke,BroFilter.index_2);

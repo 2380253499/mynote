@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -80,11 +81,18 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                MemoBean memoBean = adapter.getList().get(position);
-                Intent intent=new Intent();
-                intent.putExtra(IntentParam.tabIndex, GetDataEvent.memoIndex);
-                intent.putExtra(IntentParam.editMemoBean, memoBean);
-                STActivity(intent, AddDataActivity.class);
+                if (adapter.isEdit()) {
+                    View childAt = rv_memo.getChildAt(position);
+                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
+                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
+                    cb_check.setChecked(adapter.getList().get(position).isCheck());
+                } else {
+                    MemoBean memoBean = adapter.getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.memoIndex);
+                    intent.putExtra(IntentParam.editMemoBean, memoBean);
+                    STActivity(intent, AddDataActivity.class);
+                }
             }
         });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
