@@ -140,16 +140,17 @@ public class AddMemoFragment extends BaseFragment<MemoImp>  {
 
     private void addMemo(MemoBean bean) {
         showLoading();
-        RXStart(pl_load,new IOCallBack<List<String>>() {
+        RXStart(pl_load,new IOCallBack< String >() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
-                mDaoImp.addMemo(bean);
-                subscriber.onNext(null);
+            public void call(Subscriber<? super  String > subscriber) {
+                long addMemo = mDaoImp.addMemo(bean);
+                subscriber.onNext(addMemo>0?"添加成功":"添加失败");
                 subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(List<String> list) {
+            public void onMyNext( String  msg) {
                 addDataSuccess=true;
+                showMsg(msg);
                 et_memo_reminder.setText(null);
                 et_memo_content.setText(null);
                 tv_memo_lengthprompt.setText("(0/3000)");

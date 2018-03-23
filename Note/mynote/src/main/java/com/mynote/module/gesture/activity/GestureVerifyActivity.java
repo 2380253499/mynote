@@ -64,7 +64,7 @@ public class GestureVerifyActivity extends BaseActivity {
 	//倒计时
 	private int countDown;
 	private final int countErrorNum = 4;
-	private final int countDownLength = 59;
+	private final int countDownLength = 60;
 	private Timer timer;
 	private TimerTask tt_task;
 
@@ -72,6 +72,8 @@ public class GestureVerifyActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		gesturePWD = SPUtils.getString(this, AppXml.gesturePWD,null);
+		errorNum=countErrorNum;
+		countDown=countDownLength;
 		super.onCreate(savedInstanceState);
 		if(gesturePWD==null){
 			Intent mIntent=new Intent();
@@ -168,7 +170,8 @@ public class GestureVerifyActivity extends BaseActivity {
 								if (countDown == 0) {
 									tv_verify_tip.setVisibility(View.INVISIBLE);
 									countDown = countDownLength;
-									errorNum = countErrorNum;
+									errorNum = 1;
+//									errorNum = countErrorNum;
 									fl_gesture_noClick.setVisibility(View.GONE);
 
 									tt_task.cancel();

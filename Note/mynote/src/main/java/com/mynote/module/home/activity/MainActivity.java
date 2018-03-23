@@ -159,7 +159,7 @@ public class MainActivity extends BaseActivity {
             public void onDismiss() {
                 AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
                 alphaAnimation.setDuration(300);//持续时间
-                view_backgroud.setAnimation(alphaAnimation);
+                view_backgroud.startAnimation(alphaAnimation);
                 view_backgroud.setVisibility(View.GONE);
             }
         });
@@ -167,7 +167,7 @@ public class MainActivity extends BaseActivity {
         mPopupwindow.showAsDropDown(toolbar, xoff,0);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
         alphaAnimation.setDuration(300);//持续时间
-        view_backgroud.setAnimation(alphaAnimation);
+        view_backgroud.startAnimation(alphaAnimation);
         view_backgroud.setVisibility(View.VISIBLE);
     }
 
@@ -185,6 +185,7 @@ public class MainActivity extends BaseActivity {
         };
     }
     public void showOperation(boolean isShow){
+
         rg_main.setVisibility(isShow?View.GONE:View.VISIBLE);
         ll_home_operation.setVisibility(isShow?View.VISIBLE:View.GONE);
         fab.setVisibility(isShow?View.GONE:View.VISIBLE);

@@ -20,8 +20,6 @@ import com.mynote.event.SaveDataEvent;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Subscriber;
@@ -156,15 +154,16 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
 
     private void addAccount(AccountBean bean) {
         showLoading();
-        RXStart(pl_load,new IOCallBack<List<String>>() {
+        RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
-                mDaoImp.addAccount(bean);
-                subscriber.onNext(null);
+            public void call(Subscriber<? super String> subscriber) {
+                long addAccount = mDaoImp.addAccount(bean);
+                subscriber.onNext(addAccount>0?"添加成功":"添加失败");
                 subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(List<String> list) {
+            public void onMyNext(String msg) {
+                showMsg(msg);
                 addDataSuccess=true;
                 et_addData_source.setText(null);
                 et_addData_user.setText(null);

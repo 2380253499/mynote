@@ -14,6 +14,7 @@
         android:resizeableActivity="true"
         android:theme="@style/AppTheme.NoActionBar">
         <!--<meta-data android:name="android.max_aspect" android:value="2.2" />-->
+
         <activity android:name=".module.gesture.activity.GestureVerifyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,7 +24,15 @@
         <activity android:name=".module.gesture.activity.GestureEditActivity"/>
         <activity android:name=".module.gesture.activity.GestureUpdateActivity"/>
         <activity android:name=".module.gesture.activity.SuperPassWordActivity"/>
-        <activity android:name=".module.home.activity.MainActivity" android:windowSoftInputMode="adjustNothing"/>
+
+        <activity android:name=".module.home.activity.MainActivity" android:windowSoftInputMode="adjustNothing">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".module.home.activity.AddDataActivity"/>
         <activity android:name=".module.home.activity.ImportDataActivity"/>
         <activity android:name=".module.secret.activity.SecretActivity" android:windowSoftInputMode="adjustNothing"/>

@@ -148,15 +148,16 @@ public class AddJokeFragment extends BaseFragment<JokeImp> {
 
     private void addJoke(JokeBean bean) {
         showLoading();
-        RXStart(pl_load,new IOCallBack<List<String>>() {
+        RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
-                mDaoImp.addJoke(bean);
-                subscriber.onNext(null);
+            public void call(Subscriber<? super String> subscriber) {
+                long addJoke = mDaoImp.addJoke(bean);
+                subscriber.onNext(addJoke>0?"添加成功":"添加失败");
                 subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(List<String> list) {
+            public void onMyNext(String msg) {
+                showMsg(msg);
                 addDataSuccess=true;
                 et_joke_remark.setText(null);
                 et_joke_content.setText(null);

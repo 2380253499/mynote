@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -52,8 +53,6 @@ public class SecretActivity extends BaseActivity<SecretImp> {
     FloatingActionButton fab_secret;
     @BindView(R.id.view_backgroud)
     View view_backgroud;
-    @BindView(R.id.ll_home_operation)
-    LinearLayout ll_home_operation;
 
     @BindView(R.id.ll_view)
     LinearLayout ll_view;
@@ -62,6 +61,15 @@ public class SecretActivity extends BaseActivity<SecretImp> {
 
     @BindView(R.id.rv_secret)
     RecyclerView rv_secret;
+
+    @BindView(R.id.ll_secret)
+    LinearLayout ll_secret;
+
+    @BindView(R.id.tv_secret_operation_delete)
+    TextView tv_secret_operation_delete;
+
+    @BindView(R.id.tv_secret_operation_complete)
+    TextView tv_secret_operation_complete;
 
     SecretAdapter adapter;
     private MyPopupwindow mPopupwindow,optionPopupwindow;
@@ -200,11 +208,15 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         mDialog.create().show();
     }
 
-    @OnClick({R.id.fab_secret,R.id.app_right_iv,R.id.tv_home_operation_delete,
-            R.id.tv_home_operation_complete})
+    @OnClick({R.id.fab_secret,R.id.app_right_iv,R.id.tv_secret_operation_delete,R.id.tv_secret_operation_complete})
     protected void onViewClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_home_operation_delete:
+            case R.id.tv_secret_operation_complete:
+                adapter.setEdit(false);
+                adapter.notifyDataSetChanged();
+                showOperation(false);
+                break;
+            case R.id.tv_secret_operation_delete:
                 if(isEmpty(adapter.getList())){
                     showMsg("暂无数据可删除");
                     return;
@@ -223,11 +235,6 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                     return;
                 }
                 promptForDelete(list);
-                break;
-            case R.id.tv_home_operation_complete:
-                adapter.setEdit(false);
-                adapter.notifyDataSetChanged();
-                showOperation(false);
                 break;
             case R.id.app_right_iv:
                 showSeting();
@@ -275,11 +282,17 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         optionPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+                alphaAnimation.setDuration(400);
+                view_backgroud.setAnimation(alphaAnimation);
                 view_backgroud.setVisibility(View.GONE);
             }
         });
         optionPopupwindow.setBackground(R.color.transparent);
         optionPopupwindow.showAsDropDown(toolbar, xoff,0);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+        alphaAnimation.setDuration(400);
+        view_backgroud.setAnimation(alphaAnimation);
         view_backgroud.setVisibility(View.VISIBLE);
     }
     @NonNull
@@ -308,6 +321,11 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                         case OptionEvent.flag_prepare_delete:
                             adapter.setEdit(true);
                             adapter.notifyDataSetChanged();
+                            showOperation(true);
+//                            TranslateAnimation translateAnimation = new TranslateAnimation(mContext,);
+//                            ll_secret.setAnimation(translateAnimation);
+//                            ll_secret.setAnimation(AnimationUtils.makeInChildBottomAnimation(mContext));
+//                            ll_secret.setVisibility(View.VISIBLE);
                             break;
 
                     }
@@ -316,8 +334,9 @@ public class SecretActivity extends BaseActivity<SecretImp> {
             }
         };
     }
+
     public void showOperation(boolean isShow){
-        ll_home_operation.setVisibility(isShow?View.VISIBLE:View.GONE);
+        ll_secret.setVisibility(isShow?View.VISIBLE:View.GONE);
         fab_secret.setVisibility(isShow?View.GONE:View.VISIBLE);
     }
     private void deleteData(List<Integer> list) {

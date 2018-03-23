@@ -166,15 +166,16 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
 
     private void addSpend(SpendBean bean) {
         showLoading();
-        RXStart(pl_load,new IOCallBack<List<String>>() {
+        RXStart(pl_load,new IOCallBack< String >() {
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
-                mDaoImp.addSpend(bean);
-                subscriber.onNext(null);
+            public void call(Subscriber<? super String > subscriber) {
+                long addSpend = mDaoImp.addSpend(bean);
+                subscriber.onNext(addSpend>0?"添加成功":"添加失败");
                 subscriber.onCompleted();
             }
             @Override
-            public void onMyNext(List<String> list) {
+            public void onMyNext(String msg) {
+                showMsg(msg);
                 addDataSuccess=true;
                 et_spend_remark.setText(null);
                 et_spend_amount.setText(null);
