@@ -37,11 +37,11 @@ public class MemoAdapter extends MyAdapter<MemoBean> {
     }
 
     @Override
-    public void bindData(LoadMoreViewHolder holder, int pos, MemoBean item) {
+    public void bindData(LoadMoreViewHolder holder, int position, MemoBean item) {
         int countLength = String.valueOf(getItemCount()-1).length();
-        int position=pos+1;
+        int number=position+1;
         StringBuffer stringBuffer=new StringBuffer();
-        for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
+        for (int i = 0; i < countLength-String.valueOf(number).length(); i++) {
             stringBuffer.append("0");
         }
         String dataAccountHTML=item.getDataContent();
@@ -66,7 +66,7 @@ public class MemoAdapter extends MyAdapter<MemoBean> {
             cb_check.setVisibility(View.GONE);
         }
 
-        holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position);
+        holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + number);
 
         TextView tv_account = holder.getTextView(R.id.tv_memo_content);
         TextView tv_source = holder.getTextView(R.id.tv_reminder);
