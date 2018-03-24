@@ -116,15 +116,15 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
 
 
     public <T> void RXStart(final IOCallBack<T> callBack) {
-        RXStart(null,callBack,false);
+        RXStart(null,false,callBack);
     }
     public <T> void RXStart(boolean hiddenLoading,final IOCallBack<T> callBack) {
-        RXStart(null,callBack,hiddenLoading);
+        RXStart(null,hiddenLoading,callBack);
     }
     public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
-        RXStart(progressLayout,callBack,false);
+        RXStart(progressLayout,false,callBack);
     }
-    public <T> void RXStart(ProgressLayout progressLayout, final IOCallBack<T> callBack,boolean hiddenLoading) {
+    public <T> void RXStart(ProgressLayout progressLayout,boolean hiddenLoading, final IOCallBack<T> callBack) {
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
             public void call(Subscriber<? super T> subscriber) {
                 callBack.call(subscriber);

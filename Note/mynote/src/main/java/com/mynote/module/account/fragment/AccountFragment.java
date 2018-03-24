@@ -1,7 +1,6 @@
 package com.mynote.module.account.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +22,6 @@ import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
-import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
@@ -32,7 +29,6 @@ import com.mynote.event.OptionEvent;
 import com.mynote.module.account.adapter.AccountAdapter;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
-import com.mynote.module.home.activity.AddDataActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,11 +76,14 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         });
         adapter=new AccountAdapter(mContext,R.layout.item_account,pageSize);
         adapter.setOnLoadMoreListener(this);
-        adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
+        /*adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if(adapter.isEdit()){
-                    View childAt = rv_account.getChildAt(position);
+
+                    int childCount = rv_account.getChildCount();
+                    View childAt = rv_account.getChildAt(position%childCount);
+
                     CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
                     adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
                     cb_check.setChecked(adapter.getList().get(position).isCheck());
@@ -96,7 +95,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     STActivity(intent, AddDataActivity.class);
                 }
             }
-        });
+        });*/
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
@@ -105,7 +104,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                 mPopupwindow.showAsDropDown(view, PhoneUtils.getPhoneWidth(getActivity()) / 2 - PhoneUtils.dip2px(getActivity(),80), -PhoneUtils.dip2px(getActivity(), 80));
             }
         });
-        rv_account.setNestedScrollingEnabled(false);
+
         BaseDividerListItem dividerListItem=new BaseDividerListItem(mContext,2);
         rv_account.addItemDecoration(dividerListItem);
         rv_account.setLayoutManager(new LinearLayoutManager(mContext));
@@ -293,7 +292,9 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        deleteData(accountBean.get_id());
+                        List<Integer>list=new ArrayList<>();
+                        list.add(accountBean.get_id());
+                        deleteData(list);
                     }
                 });
                 mDialog.create().show();
@@ -309,6 +310,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                 for (int i = 0; i < list.size(); i++) {
                     mDaoImp.deleteAccount(list.get(i));
                 }
+
                 subscriber.onNext("删除成功");
                 subscriber.onCompleted();
             }
@@ -325,30 +327,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
             }
         });
     }
-    private void deleteData(int id) {
-        showLoading();
-        RXStart(new IOCallBack<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                mDaoImp.deleteAccount(id);
-                dataCount = mDaoImp.selectAccountCount();
-                subscriber.onNext("删除成功");
-                subscriber.onCompleted();
-            }
-            @Override
-            public void onMyNext(String s) {
-                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.accountIndex));
-                showMsg(s);
-                adapter.getList().remove(accountBean.getAdapterIndex());
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onMyError(Throwable e) {
-                super.onMyError(e);
-                showMsg("删除失败");
-            }
-        });
-    }
+
 
 
 }

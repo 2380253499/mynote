@@ -1,6 +1,8 @@
 package com.mynote.module.account.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
@@ -11,9 +13,13 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.baseclass.adapter.LoadMoreViewHolder;
+import com.github.baseclass.utils.ActUtils;
+import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.MyAdapter;
+import com.mynote.event.GetDataEvent;
 import com.mynote.module.account.bean.AccountBean;
+import com.mynote.module.home.activity.AddDataActivity;
 
 /**
  * Created by Administrator on 2018/2/2.
@@ -31,11 +37,11 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
     }
 
     @Override
-    public void bindData(LoadMoreViewHolder holder, int pos, AccountBean item) {
+    public void bindData(LoadMoreViewHolder holder, int position, AccountBean item) {
         int countLength = String.valueOf(getItemCount()-1).length();
-        int position=pos+1;
+        int number=position+1;
         StringBuffer stringBuffer=new StringBuffer();
-        for (int i = 0; i < countLength-String.valueOf(position).length(); i++) {
+        for (int i = 0; i < countLength-String.valueOf(number).length(); i++) {
             stringBuffer.append("0");
         }
         String dataAccountHTML=item.getDataAccount();
@@ -60,13 +66,30 @@ public class AccountAdapter extends MyAdapter<AccountBean> {
             cb_check.setVisibility(View.GONE);
         }
 
-        holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + position);
+        holder.setText(R.id.tv_data_id, stringBuffer.toString() + "" + number);
 
         TextView tv_source = holder.getTextView(R.id.tv_source);
         TextView tv_account = holder.getTextView(R.id.tv_account);
 
         tv_source.setText(Html.fromHtml(dataSourceHTML==null?"":dataSourceHTML));
         tv_account.setText(Html.fromHtml(dataAccountHTML));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEdit()){
+                    getList().get(position).setCheck(!getList().get(position).isCheck());
+                    cb_check.setChecked(getList().get(position).isCheck());
+                }else{
+                    AccountBean accountBean = getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.accountIndex);
+                    intent.putExtra(IntentParam.editAccount, accountBean);
+//                    ((Activity)mContext).STActivity(intent, AddDataActivity.class);
+                    ActUtils.STActivity((Activity)mContext,intent, AddDataActivity.class);
+                }
+            }
+        });
 
     }
     public void setSearchInfo(String info) {

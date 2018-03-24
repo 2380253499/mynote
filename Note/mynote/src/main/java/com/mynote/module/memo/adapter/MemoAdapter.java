@@ -1,6 +1,8 @@
 package com.mynote.module.memo.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
@@ -11,8 +13,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.baseclass.adapter.LoadMoreViewHolder;
+import com.github.baseclass.utils.ActUtils;
+import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.MyAdapter;
+import com.mynote.event.GetDataEvent;
+import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.memo.bean.MemoBean;
 
 /**
@@ -67,6 +73,23 @@ public class MemoAdapter extends MyAdapter<MemoBean> {
 
         tv_source.setText(Html.fromHtml(dataSourceHTML==null?"":dataSourceHTML));
         tv_account.setText(Html.fromHtml(dataAccountHTML));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isEdit()) {
+                    getList().get(position).setCheck(!getList().get(position).isCheck());
+                    cb_check.setChecked(getList().get(position).isCheck());
+                } else {
+                    MemoBean memoBean = getList().get(position);
+                    Intent intent=new Intent();
+                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.memoIndex);
+                    intent.putExtra(IntentParam.editMemoBean, memoBean);
+//                    STActivity(intent, AddDataActivity.class);
+                    ActUtils.STActivity((Activity)mContext,intent, AddDataActivity.class);
+                }
+            }
+        });
 
     }
     public void setSearchInfo(String info) {

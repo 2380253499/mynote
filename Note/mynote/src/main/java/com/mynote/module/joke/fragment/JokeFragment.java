@@ -1,7 +1,6 @@
 package com.mynote.module.joke.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,12 +22,10 @@ import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
-import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
-import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.joke.adapter.JokeAdapter;
 import com.mynote.module.joke.bean.JokeBean;
 import com.mynote.module.joke.dao.imp.JokeImp;
@@ -78,23 +74,6 @@ public class JokeFragment extends BaseFragment<JokeImp> {
         });
         adapter=new JokeAdapter(mContext,R.layout.item_joke,pageSize);
         adapter.setOnLoadMoreListener(this);
-        adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (adapter.isEdit()) {
-                    View childAt = rv_joke.getChildAt(position);
-                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
-                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
-                    cb_check.setChecked(adapter.getList().get(position).isCheck());
-                } else {
-                    JokeBean jokeBean = adapter.getList().get(position);
-                    Intent intent=new Intent();
-                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.jokeIndex);
-                    intent.putExtra(IntentParam.editJokeBean, jokeBean);
-                    STActivity(intent, AddDataActivity.class);
-                }
-            }
-        });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
@@ -278,7 +257,9 @@ public class JokeFragment extends BaseFragment<JokeImp> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        deleteData(jokeBean.get_id());
+                        List<Integer>list=new ArrayList<>();
+                        list.add(jokeBean.get_id());
+                        deleteData(list);
                     }
                 });
                 mDialog.create().show();
@@ -310,30 +291,7 @@ public class JokeFragment extends BaseFragment<JokeImp> {
             }
         });
     }
-    private void deleteData(int id) {
-        showLoading();
-        RXStart(new IOCallBack<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                mDaoImp.deleteJoke(id);
-                dataCount = mDaoImp.selectJokeCount();
-                subscriber.onNext("删除成功");
-                subscriber.onCompleted();
-            }
-            @Override
-            public void onMyNext(String s) {
-                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.jokeIndex));
-                showMsg(s);
-                adapter.getList().remove(jokeBean.getAdapterIndex());
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onMyError(Throwable e) {
-                super.onMyError(e);
-                showMsg("删除失败");
-            }
-        });
-    }
+
 
 
 

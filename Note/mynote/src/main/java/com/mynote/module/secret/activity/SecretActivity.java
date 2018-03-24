@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -23,15 +22,12 @@ import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.BaseDividerListItem;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
-import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
 import com.mynote.database.DBManager;
-import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.secret.adapter.SecretAdapter;
 import com.mynote.module.secret.bean.SecretBean;
@@ -101,24 +97,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         });
         adapter=new SecretAdapter(mContext,R.layout.item_secret,pageSize);
         adapter.setOnLoadMoreListener(this);
-        adapter.setClickListener(new LoadMoreAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (adapter.isEdit()) {
-                    View childAt = rv_secret.getChildAt(position);
-                    CheckBox cb_check = (CheckBox) childAt.findViewById(R.id.cb_check);
-                    adapter.getList().get(position).setCheck(!adapter.getList().get(position).isCheck());
-                    cb_check.setChecked(adapter.getList().get(position).isCheck());
-                } else {
-                    SecretBean secretBean = adapter.getList().get(position);
-                    Intent intent=new Intent();
-                    intent.putExtra(IntentParam.tabIndex, GetDataEvent.secretIndex);
-                    intent.putExtra(IntentParam.editSecretBean, secretBean);
-                    STActivityForResult(intent, AddSecretActivity.class,1000);
 
-                }
-              }
-        });
         adapter.setLongClickListener(new LoadMoreAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
@@ -273,7 +252,9 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        deleteData(secretBean.get_id());
+                        List<Integer>list=new ArrayList<>();
+                        list.add(secretBean.get_id());
+                        deleteData(list);
                     }
                 });
                 mDialog.create().show();
@@ -372,30 +353,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
             }
         });
     }
-    private void deleteData(int id) {
-        showLoading();
-        RXStart(new IOCallBack<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                mDaoImp.deleteSecret(id);
-                dataCount = mDaoImp.selectSecretCount();
-                subscriber.onNext("删除成功");
-                subscriber.onCompleted();
-            }
-            @Override
-            public void onMyNext(String s) {
-                RxBus.getInstance().post(new OptionEvent(OptionEvent.flag_get_data_count,GetDataEvent.secretIndex));
-                showMsg(s);
-                adapter.getList().remove(secretBean.getAdapterIndex());
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onMyError(Throwable e) {
-                super.onMyError(e);
-                showMsg("删除失败");
-            }
-        });
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
