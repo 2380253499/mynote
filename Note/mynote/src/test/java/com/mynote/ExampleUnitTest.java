@@ -49,6 +49,17 @@ public class ExampleUnitTest {
         return diffDays;
     }
     @Test
+    public void sddadf() throws Exception {
+        Lunar lunar2=new Lunar();
+        lunar2.lunarYear=2018;
+        lunar2.lunarMonth=7;
+        lunar2.lunarDay=22;
+        LunarSolar lunarSolar = new LunarSolar();
+        Solar new_solar = lunarSolar.LunarToSolar(lunar2);
+        System.out.println("new_lunar:"+lunar2.toString());
+        System.out.println("new_solar:"+new_solar.toString());
+    }
+    @Test
     public void sadf() throws Exception {
 /*        Solar solar = new Solar();
         solar.solarYear = 2001;

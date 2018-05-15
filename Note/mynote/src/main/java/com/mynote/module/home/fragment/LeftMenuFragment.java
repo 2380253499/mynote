@@ -31,6 +31,7 @@ import com.mynote.module.gesture.activity.GestureUpdateActivity;
 import com.mynote.module.home.bean.DataCountBean;
 import com.mynote.module.joke.bean.JokeBean;
 import com.mynote.module.joke.dao.imp.JokeImp;
+import com.mynote.module.leftmenu.activity.BirthdayActivity;
 import com.mynote.module.memo.bean.MemoBean;
 import com.mynote.module.memo.dao.imp.MemoImp;
 import com.mynote.module.secret.activity.SecretActivity;
@@ -147,6 +148,9 @@ public class LeftMenuFragment extends BaseFragment {
                                 }
                             });
                             exportDialog.create().show();
+                            break;
+                        case R.id.menu_birthday:
+                            STActivity(BirthdayActivity.class);
                             break;
                     }
                 }

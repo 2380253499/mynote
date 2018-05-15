@@ -37,6 +37,8 @@
         <activity android:name=".module.home.activity.ImportDataActivity"/>
         <activity android:name=".module.secret.activity.SecretActivity" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".module.secret.activity.AddSecretActivity"/>
+        <activity android:name=".module.leftmenu.activity.BirthdayActivity"/>
+        <activity android:name=".module.leftmenu.activity.AddBirthdayActivity"/>
     </application>
 
 </manifest>

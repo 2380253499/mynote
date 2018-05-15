@@ -26,7 +26,6 @@ public class DBConstant {
     public static final String peopleYear="peopleYear";
     public static final String peopleMonth="peopleMonth";
     public static final String peopleDay="peopleDay";
-    public static final String distanceDay="distanceDay";
     public static final String tiXing="tiXing";
     /**
      * "dataSource,         --账号所属平台或者来源"
@@ -109,7 +108,6 @@ public class DBConstant {
             peopleYear +" NTEXT," +
             peopleMonth +" NTEXT," +
             peopleDay +" NTEXT," +
-            distanceDay +" NTEXT," +
             tiXing +" varchar," +
             updateTime  +" NTEXT NOT NULL," +
             createTime +" NTEXT NOT NULL  )";

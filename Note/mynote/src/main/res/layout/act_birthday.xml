@@ -1,74 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/background_f2"
+              android:orientation="vertical"
     >
-<include layout="@layout/app_title"/>
+
+    <include layout="@layout/app_title"/>
+
     <com.library.base.ProgressLayout
         android:id="@id/pl_load"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/background_f2"
+            android:scrollbars="none"
+            android:background="@color/white"
             >
-            <!--your view-->
-
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@color/white"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/background_f2"
+                android:orientation="vertical"
                 >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.8"
+                <!--your view-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="姓名"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="出生年月(农)"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="间隔(天)"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="生日(阳历)"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="提醒"
+                        />
+                </LinearLayout>
+
+                <com.library.base.view.MyRecyclerView
+                    android:id="@+id/rv_birthday"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="姓名"
-                    android:layout_marginRight="5dp"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="出生年月(农)"
-                    android:layout_marginRight="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="间隔(天)"
-                    android:ems="3"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="生日(阳历)"
-                    android:layout_marginRight="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="提醒"
-                    />
+                    android:layout_marginTop="2px"
+                    >
+                </com.library.base.view.MyRecyclerView>
             </LinearLayout>
-            <com.library.base.view.MyRecyclerView
-                android:id="@+id/rv_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2px"
-                >
-            </com.library.base.view.MyRecyclerView>
-        </LinearLayout>
+        </HorizontalScrollView>
     </com.library.base.ProgressLayout>
 </LinearLayout>

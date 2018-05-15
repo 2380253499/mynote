@@ -81,7 +81,9 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
         }
         return mDaoImp;
     }
-
+    public void Log(String log){
+        Log.i("===",log);
+    }
     @Override
     protected void setClickListener() {
         super.setClickListener();
@@ -167,7 +169,7 @@ public abstract class BaseActivity<I extends BaseDaoImp> extends MyBaseActivity 
     public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
         RXStart(progressLayout,callBack,false);
     }
-    public <T> void RXStart(ProgressLayout progressLayout, final IOCallBack<T> callBack,boolean hiddenLoading) {
+    public <T> void RXStart(final ProgressLayout progressLayout, final IOCallBack<T> callBack,final boolean hiddenLoading) {
         Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
             public void call(Subscriber<? super T> subscriber) {
                 callBack.call(subscriber);

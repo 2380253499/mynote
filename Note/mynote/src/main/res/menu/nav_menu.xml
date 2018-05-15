@@ -16,8 +16,8 @@
                android:icon="@drawable/left_menu_export_data"
              >
          </item>
-         <item android:id="@+id/update_pwd1"
-               android:title="如果您有什么好的建议"
+         <item android:id="@+id/menu_birthday"
+               android:title="生日列表"
                android:icon="@drawable/left_menu_update_pwd"
              >
          </item>

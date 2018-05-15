@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @NonNull
-    private MyOnClickListener getSetListener(int flag) {
+    private MyOnClickListener getSetListener(final int flag) {
         return new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {

@@ -9,6 +9,7 @@ import com.mynote.R;
 import com.mynote.base.BaseActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/3/8.
@@ -23,6 +24,7 @@ public class BirthdayActivity extends BaseActivity {
     @Override
     protected int getContentView() {
         setAppTitle("生日列表");
+        setAppRightTitle("添加");
         return R.layout.act_birthday;
     }
 
@@ -45,8 +47,12 @@ public class BirthdayActivity extends BaseActivity {
 
     }
 
-    @Override
+    @OnClick({R.id.app_right_tv})
     protected void onViewClick(View v) {
-
+        switch (v.getId()){
+            case R.id.app_right_tv:
+                STActivity(AddBirthdayActivity.class);
+            break;
+        }
     }
 }
