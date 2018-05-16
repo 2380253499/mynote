@@ -18,13 +18,13 @@ import android.widget.RadioGroup;
 
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.rx.MySubscriber;
-import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyRadioButton;
+import com.github.rxbus.RxBus;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.base.EventCallback;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.account.fragment.AccountFragment;
 import com.mynote.module.joke.fragment.JokeFragment;
@@ -119,9 +119,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
+        getEvent(OptionEvent.class, new EventCallback<OptionEvent>() {
             @Override
-            public void onMyNext(OptionEvent event) {
+            public void accept(OptionEvent event) {
                 //获取数据量
                 if(event.flag==OptionEvent.flag_get_data_count){
                     int dataCount=0;

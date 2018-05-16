@@ -16,14 +16,14 @@ import android.widget.TextView;
 import com.github.androidtools.PhoneUtils;
 import com.github.baseclass.BaseDividerListItem;
 import com.github.baseclass.adapter.LoadMoreAdapter;
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.MySubscriber;
-import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
+import com.github.rxbus.RxBus;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
+import com.mynote.base.IOCallBack;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.account.adapter.AccountAdapter;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 public class AccountFragment extends BaseFragment<AccountImp> {
     @BindView(R.id.ll_view)
@@ -150,18 +150,18 @@ public class AccountFragment extends BaseFragment<AccountImp> {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
+        getEvent(GetDataEvent.class, new EventCallback<GetDataEvent>() {
             @Override
-            public void onMyNext(GetDataEvent event) {
+            public void accept(GetDataEvent event) {
                 if(event.index==GetDataEvent.accountIndex){
                     showLoading();
                     getData(1,false);
                 }
             }
         });
-        getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
+        getEvent(OptionEvent.class, new EventCallback<OptionEvent>() {
             @Override
-            public void onMyNext(OptionEvent event) {
+            public void accept(OptionEvent event) {
                 if(event.index==GetDataEvent.accountIndex){
                     //0创建时间排序
                     //1修改时间排序
@@ -234,7 +234,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         super.getData(page, isLoad);
         RXStart(pl_load,new IOCallBack<List<AccountBean>>() {
             @Override
-            public void call(Subscriber<? super List<AccountBean>> subscriber) {
+            public void call(FlowableEmitter<List<AccountBean>> subscriber) {
                /* for (int i = 0; i < 200; i++) {
                     AccountBean accountBean = new AccountBean();
                     accountBean.setDataAccount(i+"asfd"+new Random().nextInt(10)+20);
@@ -243,7 +243,7 @@ public class AccountFragment extends BaseFragment<AccountImp> {
                 dataCount = mDaoImp.selectAccountCount();
                 List<AccountBean> accountList = mDaoImp.selectAccount(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(accountList);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(List<AccountBean> list) {
@@ -306,13 +306,13 @@ public class AccountFragment extends BaseFragment<AccountImp> {
         showLoading();
         RXStart(true,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 for (int i = 0; i < list.size(); i++) {
                     mDaoImp.deleteAccount(list.get(i));
                 }
 
                 subscriber.onNext("删除成功");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String s) {

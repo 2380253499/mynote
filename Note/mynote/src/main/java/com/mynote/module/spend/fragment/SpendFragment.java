@@ -7,11 +7,11 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.MySubscriber;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
+import com.mynote.base.IOCallBack;
 import com.mynote.event.GetDataEvent;
 import com.mynote.module.home.activity.AddDataActivity;
 import com.mynote.module.spend.adapter.MySpendHolder;
@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 public class SpendFragment extends BaseFragment<SpendImp> {
     @BindView(R.id.ll_tree)
@@ -55,9 +55,9 @@ public class SpendFragment extends BaseFragment<SpendImp> {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
+        getEvent(GetDataEvent.class, new EventCallback<GetDataEvent>() {
             @Override
-            public void onMyNext(GetDataEvent event) {
+            public void accept(GetDataEvent event) {
                 if(event.index==GetDataEvent.spendIndex){
                     showLoading();
                     getData(1,false);
@@ -73,7 +73,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
         ll_tree.removeAllViews();//再次查询时清除旧视图
         RXStart(pl_load,new IOCallBack<TreeNode[]>() {
             @Override
-            public void call(Subscriber<? super TreeNode[]> subscriber) {
+            public void call(FlowableEmitter<TreeNode[]> subscriber) {
                 MySpendHolder.IconTreeItem nodeItem;
                 //根据年份分组获取年份以及每年的消费总数
                 List<SpendBean> yearList = mDaoImp.selectSpendGroupByYear();
@@ -92,7 +92,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                     yearArr[i] = yearNode;
                 }
                 subscriber.onNext(yearArr);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(TreeNode[] yearArr) {
@@ -142,7 +142,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                             showLoading();
                             RXStart(new IOCallBack<TreeNode>() {
                                 @Override
-                                public void call(Subscriber<? super TreeNode> subscriber) {
+                                public void call(FlowableEmitter<TreeNode> subscriber) {
                                     List<SpendBean> monthList = mDaoImp.selectSpendGroupByMonth(date);
                                     for (int j = 0; j < monthList.size(); j++) {
                                         SpendBean monthBean = monthList.get(j);
@@ -160,9 +160,8 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                                         subscriber.onNext(monthNode);
                                     }
                                     itemIsClicked.put(item.spendBean.getLocalYear(), true);
-                                    subscriber.onCompleted();
+                                    subscriber.onComplete();
                                 }
-
                                 @Override
                                 public void onMyNext(TreeNode treeNode) {
                                     node.getViewHolder().getTreeView().addNode(node, treeNode);
@@ -177,7 +176,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                             showLoading();
                             RXStart(new IOCallBack<TreeNode>() {
                                 @Override
-                                public void call(Subscriber<? super TreeNode> subscriber) {
+                                public void call(FlowableEmitter<TreeNode> subscriber) {
                                     List<SpendBean> dayList = mDaoImp.selectSpendGroupByDay(item.spendBean.getLocalYear(), item.spendBean.getLocalMonth());
                                     for (int k = 0; k < dayList.size(); k++) {
                                         SpendBean dayBean = dayList.get(k);
@@ -197,7 +196,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
 
                                     }
                                     itemIsClicked.put(Integer.parseInt(YMD), true);
-                                    subscriber.onCompleted();
+                                    subscriber.onComplete();
                                 }
 
                                 @Override
@@ -213,7 +212,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                             showLoading();
                             RXStart(new IOCallBack<TreeNode>() {
                                 @Override
-                                public void call(Subscriber<? super TreeNode> subscriber) {
+                                public void call(FlowableEmitter<TreeNode> subscriber) {
                                     List<SpendBean> hourList = mDaoImp.selectSpendByOneDay(item.spendBean.getLocalYear(), item.spendBean.getLocalMonth(), item.spendBean.getLocalDay());
                                     for (int l = 0; l < hourList.size(); l++) {
                                         SpendBean sBean = hourList.get(l);
@@ -232,7 +231,7 @@ public class SpendFragment extends BaseFragment<SpendImp> {
                                         subscriber.onNext(hourNode);
                                     }
                                     itemIsClicked.put(Integer.parseInt(YMD), true);
-                                    subscriber.onCompleted();
+                                    subscriber.onComplete();
                                 }
 
                                 @Override

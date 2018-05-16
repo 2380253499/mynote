@@ -21,12 +21,12 @@ import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.BaseDividerListItem;
 import com.github.baseclass.adapter.LoadMoreAdapter;
-import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.base.IOCallBack;
 import com.mynote.database.DBManager;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.secret.adapter.SecretAdapter;
@@ -38,7 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 /**
  * Created by Administrator on 2017/2/6.
@@ -149,7 +149,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         super.getData(page, isLoad);
         RXStart(pl_load,new IOCallBack<List<SecretBean>>() {
             @Override
-            public void call(Subscriber<? super List<SecretBean>> subscriber) {
+            public void call(FlowableEmitter<List<SecretBean>> subscriber) {
                /* for (int i = 0; i < 200; i++) {
                     SecretBean secretBean = new SecretBean();
                     secretBean.setDataContent(i+"secret"+new Random().nextInt(10)+20);
@@ -160,7 +160,7 @@ public class SecretActivity extends BaseActivity<SecretImp> {
                }
                 List<SecretBean> secretList = mDaoImp.selectSecret(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(secretList);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(List<SecretBean> list) {
@@ -333,12 +333,12 @@ public class SecretActivity extends BaseActivity<SecretImp> {
         showLoading();
         RXStart(true,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 for (int i = 0; i < list.size(); i++) {
                     mDaoImp.deleteSecret(list.get(i));
                 }
                 subscriber.onNext("删除成功");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String s) {

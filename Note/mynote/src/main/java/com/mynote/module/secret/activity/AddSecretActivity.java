@@ -9,20 +9,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyEditText;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.base.IOCallBack;
 import com.mynote.module.secret.bean.SecretBean;
 import com.mynote.module.secret.dao.imp.SecretImp;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 /**
  * Created by Administrator on 2017/2/6.
@@ -69,10 +67,10 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
         showLoading();
         RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long count = mDaoImp.updateSecret(bean);
                 subscriber.onNext(count>0?"修改成功":"修改失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {
@@ -86,10 +84,10 @@ public class AddSecretActivity extends BaseActivity<SecretImp> {
         showLoading();
         RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long addSecret = mDaoImp.addSecret(bean);
                 subscriber.onNext(addSecret>0?"添加成功":"添加失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {

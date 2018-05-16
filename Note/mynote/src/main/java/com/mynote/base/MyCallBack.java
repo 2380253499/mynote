@@ -158,7 +158,7 @@ public abstract class MyCallBack<T> implements Callback<ResponseObj<T>> {
             T result = (T) new BaseObj();
             ((BaseObj) result).setMsg(response.body().getErrMsg());
             onSuccess(result);
-//            onError(new ServerException("暂无数据"));
+//            onMyError(new ServerException("暂无数据"));
         }
         onCompelte();
         res = null;

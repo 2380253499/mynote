@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.RecyclerViewHolder;
-import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyCheckBox;
 import com.github.utils.FileUtils;
@@ -15,6 +14,7 @@ import com.library.base.view.MyRecyclerView;
 import com.mynote.Constant;
 import com.mynote.R;
 import com.mynote.base.BaseActivity;
+import com.mynote.base.IOCallBack;
 import com.mynote.database.DBManager;
 import com.mynote.module.account.bean.AccountBean;
 import com.mynote.module.account.dao.imp.AccountImp;
@@ -35,7 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 /**
  * Created by Administrator on 2018/2/26.
@@ -136,7 +136,7 @@ public class ImportDataActivity extends BaseActivity {
     private void importData() {
         RXStart(new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 File file = new File("/data/data/" + mContext.getPackageName() + "/databases");
                 File backupFileForTemp = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
                 File backupFileForDB = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".db");
@@ -212,7 +212,7 @@ public class ImportDataActivity extends BaseActivity {
                             backupFileForDB.renameTo(backupFileForTemp);
                         }
                     }
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (Exception e) {
                     if (backupFileForDB.exists()) {
                         backupFileForDB.renameTo(backupFileForTemp);

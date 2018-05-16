@@ -125,7 +125,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                                     .asObservable()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new MySubscriber<TreeNode>() {
+                                    .subscribe(new EventCallback<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode treeNode) {
                                             node.getViewHolder().getTreeView().addNode(node, treeNode);
@@ -171,7 +171,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                             }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .asObservable()
-                                    .subscribe(new MySubscriber<TreeNode>() {
+                                    .subscribe(new EventCallback<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode dayNode) {
                                             node.getViewHolder().getTreeView().addNode(node, dayNode);
@@ -215,7 +215,7 @@ public class SpendImp extends IPresenter<SpendCon.View> implements SpendCon.Pres
                             }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
 //                                    .asObservable()
-                                    .subscribe(new MySubscriber<TreeNode>() {
+                                    .subscribe(new EventCallback<TreeNode>() {
                                         @Override
                                         public void onMyNext(TreeNode hourNode) {
                                             node.getViewHolder().getTreeView().addNode(node, hourNode);

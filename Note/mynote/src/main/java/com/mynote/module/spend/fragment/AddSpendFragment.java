@@ -13,20 +13,22 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.StringUtils;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.MySubscriber;
-import com.github.baseclass.rx.RxBus;
 import com.github.customview.FlowLayout;
 import com.github.customview.MyEditText;
 import com.github.customview.MyTextView;
+import com.github.rxbus.RxBus;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
+import com.mynote.base.IOCallBack;
 import com.mynote.event.ClearDataEvent;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.SaveDataEvent;
@@ -35,11 +37,10 @@ import com.mynote.module.spend.dao.imp.SpendImp;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 /**
  * Created by Administrator on 2018/2/2.
@@ -93,9 +94,9 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(SaveDataEvent.class, new MySubscriber<SaveDataEvent>() {
+        getEvent(SaveDataEvent.class, new EventCallback<SaveDataEvent>() {
             @Override
-            public void onMyNext(SaveDataEvent event) {
+            public void accept(SaveDataEvent event) {
                 if(event.index== SaveDataEvent.spendIndex){
                     String content = et_spend_amount.getText().toString();
                     if (TextUtils.isEmpty(content)||content.trim().length()<=0) {
@@ -136,9 +137,9 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
                 }
             }
         });
-        getRxBusEvent(ClearDataEvent.class, new MySubscriber<ClearDataEvent>() {
+        getEvent(ClearDataEvent.class, new EventCallback<ClearDataEvent>() {
             @Override
-            public void onMyNext(ClearDataEvent event) {
+            public void accept(ClearDataEvent event) {
                 if(event.index== SaveDataEvent.spendIndex){
                     et_spend_remark.setText(null);
                     et_spend_amount.setText(null);
@@ -151,10 +152,10 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
         showLoading();
         RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long count = mDaoImp.updateSpend(bean);
                 subscriber.onNext(count>0?"修改成功":"修改失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {
@@ -164,14 +165,14 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
         });
     }
 
-    private void addSpend(SpendBean bean) {
+    private void addSpend(final SpendBean bean) {
         showLoading();
         RXStart(pl_load,new IOCallBack< String >() {
             @Override
-            public void call(Subscriber<? super String > subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long addSpend = mDaoImp.addSpend(bean);
                 subscriber.onNext(addSpend>0?"添加成功":"添加失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {
@@ -217,7 +218,7 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
 
     private void setView(String[] spendRemark) {
         for (int i = 0; i < spendRemark.length; i++) {
-            MyTextView textView = new MyTextView(getActivity());
+            final MyTextView textView = new MyTextView(getActivity());
             FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0,0,PhoneUtils.dip2px(mContext,15),PhoneUtils.dip2px(mContext,15));
             layoutParams.height=PhoneUtils.dip2px(mContext,28);
@@ -280,8 +281,8 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
         }
     }
     private void initPickTime() {
-        //时间选择器
-        pvTime = new TimePickerView(getActivity(), TimePickerView.Type.YEAR_MONTH_DAY);
+       /* //时间选择器
+        pvTime = new TimePickerBuilder(getActivity(), TimePickerView.Type.YEAR_MONTH_DAY);
         //控制时间范围
         Calendar calendar = Calendar.getInstance();
         pvTime.setRange(calendar.get(Calendar.YEAR) - 5, calendar.get(Calendar.YEAR));//要在setTime 之前才有效果哦
@@ -297,7 +298,23 @@ public class AddSpendFragment extends BaseFragment<SpendImp> {
                 spendDay = Integer.parseInt(DateUtils.dateToString(date, "dd"));
                 tv_spend_date.setText(DateUtils.dateToString(date));
             }
-        });
+        });*/
+
+        Calendar startTime= Calendar.getInstance();
+        startTime.setTime(new Date());
+        startTime.set(Calendar.YEAR,startTime.get(Calendar.YEAR) - 5);
+
+        Calendar endTime= Calendar.getInstance();
+        endTime.setTime(new Date());
+        pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                spendYear = Integer.parseInt(DateUtils.dateToString(date, "yyyy"));
+                spendMonth = Integer.parseInt(DateUtils.dateToString(date, "MM"));
+                spendDay = Integer.parseInt(DateUtils.dateToString(date, "dd"));
+                tv_spend_date.setText(DateUtils.dateToString(date));
+            }
+        }).setRangDate(startTime,endTime).setType(new boolean[]{true,true,true,false,false,false}).build();
 
     }
     @OnClick({R.id.tv_update_spend_date})

@@ -109,7 +109,7 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MySubscriber<String>() {
+                .subscribe(new EventCallback<String>() {
                     @Override
                     public void onMyNext(String obj) {
                         mView.hideLoading();
@@ -201,7 +201,7 @@ public class LeftMenuImp extends IPresenter<LeftMenuCon.View> implements LeftMen
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MySubscriber<String>() {
+                .subscribe(new EventCallback<String>() {
                     @Override
                     public void onMyNext(String obj) {
                         mView.hideLoading();

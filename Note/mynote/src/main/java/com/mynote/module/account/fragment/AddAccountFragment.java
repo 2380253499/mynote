@@ -8,12 +8,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.MySubscriber;
-import com.github.baseclass.rx.RxBus;
+import com.github.rxbus.RxBus;
 import com.mynote.IntentParam;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
+import com.mynote.base.IOCallBack;
 import com.mynote.event.ClearDataEvent;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.SaveDataEvent;
@@ -22,7 +22,7 @@ import com.mynote.module.account.dao.imp.AccountImp;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 /**
  * Created by Administrator on 2018/2/2.
@@ -89,9 +89,9 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(SaveDataEvent.class, new MySubscriber<SaveDataEvent>() {
+        getEvent(SaveDataEvent.class, new EventCallback<SaveDataEvent>() {
             @Override
-            public void onMyNext(SaveDataEvent event) {
+            public void accept(SaveDataEvent event) {
                 if(event.index== SaveDataEvent.accountIndex){
                     String userStr = et_addData_user.getText().toString().trim();
                     if (TextUtils.isEmpty(userStr)||userStr.trim().length()<=0) {
@@ -121,9 +121,9 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
                 }
             }
         });
-        getRxBusEvent(ClearDataEvent.class, new MySubscriber<ClearDataEvent>() {
+        getEvent(ClearDataEvent.class, new EventCallback<ClearDataEvent>() {
             @Override
-            public void onMyNext(ClearDataEvent event) {
+            public void accept(ClearDataEvent event) {
                 if(event.index== SaveDataEvent.accountIndex){
                     et_addData_source.setText(null);
                     et_addData_user.setText(null);
@@ -139,10 +139,10 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
         showLoading();
         RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long count = mDaoImp.updateAccount(bean);
                 subscriber.onNext(count>0?"修改成功":"修改失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {
@@ -156,10 +156,10 @@ public class AddAccountFragment extends BaseFragment<AccountImp>{
         showLoading();
         RXStart(pl_load,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 long addAccount = mDaoImp.addAccount(bean);
                 subscriber.onNext(addAccount>0?"添加成功":"添加失败");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String msg) {

@@ -11,21 +11,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.androidtools.DateUtils;
-import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.view.Loading;
+import com.github.rxbus.MyConsumer;
+import com.github.rxbus.MyDisposable;
+import com.github.rxbus.RxBus;
+import com.github.rxbus.rxjava.MyFlowableSubscriber;
+import com.github.rxbus.rxjava.Rx;
 import com.library.base.MyBaseFragment;
 import com.library.base.ProgressLayout;
 import com.mynote.Constant;
 
+import org.reactivestreams.Subscription;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.annotations.NonNull;
 
 /**
  * Created by Administrator on 2017/12/18.
@@ -37,7 +42,6 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
     protected String searchInfo;
     protected boolean isOrderByCreateTime;
     protected int dataCount;
-
     public int getDataCount() {
         return dataCount;
     }
@@ -114,50 +118,6 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
         return versionName;
     }
 
-
-    public <T> void RXStart(final IOCallBack<T> callBack) {
-        RXStart(null,false,callBack);
-    }
-    public <T> void RXStart(boolean hiddenLoading,final IOCallBack<T> callBack) {
-        RXStart(null,hiddenLoading,callBack);
-    }
-    public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
-        RXStart(progressLayout,false,callBack);
-    }
-    public <T> void RXStart(ProgressLayout progressLayout,boolean hiddenLoading, final IOCallBack<T> callBack) {
-        Subscription subscribe = Observable.create(new Observable.OnSubscribe<T>() {
-            public void call(Subscriber<? super T> subscriber) {
-                callBack.call(subscriber);
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<T>() {
-            public void onCompleted() {
-                if(progressLayout!=null){
-                    progressLayout.showContent();
-                }
-                if(!hiddenLoading){
-                    Loading.dismissLoading();
-                }
-                callBack.onMyCompleted();
-            }
-
-            public void onError(Throwable e) {
-                if(progressLayout!=null){
-                    progressLayout.showErrorText();
-                }
-                if(!hiddenLoading){
-                    Loading.dismissLoading();
-                }
-                callBack.onMyError(e);
-            }
-
-            public void onNext(T t) {
-                callBack.onMyNext(t);
-            }
-        });
-        this.addSubscription(subscribe);
-    }
-
-
     public void setCreateTime(LinearLayout ll_update_time, TextView tv_create_time,  TextView tv_update_time, boolean isEdit,BaseEntity entity){
         ll_update_time.setVisibility(isEdit? View.VISIBLE:View.GONE);
         if(isEdit){
@@ -168,4 +128,93 @@ public abstract class BaseFragment<I extends BaseDaoImp> extends MyBaseFragment 
         }
     }
 
+    /*******************************************Rx*************************************************/
+    protected Set eventSet,ioSet;
+
+    public <T> void RXStart(final IOCallBack<T> callBack) {
+        RXStart(null,false,callBack);
+    }
+    public <T> void RXStart(boolean hiddenLoading,final IOCallBack<T> callBack) {
+        RXStart(null,hiddenLoading,callBack);
+    }
+    public <T> void RXStart(ProgressLayout progressLayout,final IOCallBack<T> callBack) {
+        RXStart(progressLayout,false,callBack);
+    }
+    public <T> void RXStart(final ProgressLayout progressLayout,final boolean hiddenLoading, final IOCallBack<T> callBack) {
+        org.reactivestreams.Subscription start = Rx.start(new MyFlowableSubscriber<T>() {
+            @Override
+            public void subscribe(@NonNull FlowableEmitter<T> emitter) {
+                callBack.call(emitter);
+            }
+            @Override
+            public void onNext(T obj) {
+                callBack.onMyNext(obj);
+            }
+            @Override
+            public void onComplete() {
+                super.onComplete();
+                if(progressLayout!=null){
+                    progressLayout.showContent();
+                }
+                if(!hiddenLoading){
+                    Loading.dismissLoading();
+                }
+                callBack.onMyCompleted();
+            }
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if(progressLayout!=null){
+                    progressLayout.showErrorText();
+                }
+                if(!hiddenLoading){
+                    Loading.dismissLoading();
+                }
+                callBack.onMyError(t);
+            }
+        });
+        addSubscription(start);
+    }
+    public void addSubscription(MyDisposable disposable){
+        if(eventSet==null){
+            eventSet=new HashSet();
+        }
+        eventSet.add(disposable);
+    }
+    public void addSubscription(Subscription subscription){
+        if(ioSet==null){
+            ioSet=new HashSet();
+        }
+        ioSet.add(subscription);
+    }
+
+    public <T>void getEvent(Class<T> clazz,final EventCallback<T> callback){
+        MyDisposable event = RxBus.getInstance().getEvent(clazz, new MyConsumer<T>() {
+            @Override
+            public void onAccept(T event) {
+                callback.accept(event);
+            }
+        });
+        addSubscription(event);
+    }
+    public <T>void getEventReplay(Class<T> clazz,final EventCallback<T> callback){
+        MyDisposable event = RxBus.getInstance().getEventReplay(clazz, new MyConsumer<T>() {
+            @Override
+            public void onAccept(T event) {
+                callback.accept(event);
+            }
+        });
+        addSubscription(event);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(eventSet!=null){
+            RxBus.getInstance().dispose(eventSet);
+        }
+        if (ioSet != null) {
+            Rx.cancelSubscription(ioSet);
+        }
+    }
 }

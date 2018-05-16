@@ -16,14 +16,14 @@ import android.widget.TextView;
 import com.github.androidtools.PhoneUtils;
 import com.github.baseclass.BaseDividerListItem;
 import com.github.baseclass.adapter.LoadMoreAdapter;
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.MySubscriber;
-import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
 import com.github.baseclass.view.MyPopupwindow;
 import com.github.customview.MyEditText;
+import com.github.rxbus.RxBus;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
+import com.mynote.base.IOCallBack;
 import com.mynote.event.GetDataEvent;
 import com.mynote.event.OptionEvent;
 import com.mynote.module.memo.adapter.MemoAdapter;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 public class MemoFragment extends BaseFragment<MemoImp> {
     @BindView(R.id.ll_view)
@@ -123,18 +123,18 @@ public class MemoFragment extends BaseFragment<MemoImp> {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
+        getEvent(GetDataEvent.class, new EventCallback<GetDataEvent>() {
             @Override
-            public void onMyNext(GetDataEvent event) {
+            public void accept(GetDataEvent event) {
                 if(event.index==GetDataEvent.memoIndex){
                     showLoading();
                     getData(1,false);
                 }
             }
         });
-        getRxBusEvent(OptionEvent.class, new MySubscriber<OptionEvent>() {
+        getEvent(OptionEvent.class, new EventCallback<OptionEvent>() {
             @Override
-            public void onMyNext(OptionEvent event) {
+            public void accept(OptionEvent event) {
                 if(event.index==GetDataEvent.memoIndex){
                     //0创建时间排序
                     //1修改时间排序
@@ -207,7 +207,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         super.getData(page, isLoad);
         RXStart(pl_load,new IOCallBack<List<MemoBean>>() {
             @Override
-            public void call(Subscriber<? super List<MemoBean>> subscriber) {
+            public void call(FlowableEmitter<List<MemoBean>>  subscriber) {
                /* for (int i = 0; i < 200; i++) {
                     SecretBean memoBean = new SecretBean();
                     memoBean.setDataContent(i+"memo"+new Random().nextInt(10)+20);
@@ -216,7 +216,7 @@ public class MemoFragment extends BaseFragment<MemoImp> {
                 dataCount = mDaoImp.selectMemoCount();
                 List<MemoBean> memoList = mDaoImp.selectMemo(page, searchInfo, isOrderByCreateTime);
                 subscriber.onNext(memoList);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(List<MemoBean> list) {
@@ -270,13 +270,14 @@ public class MemoFragment extends BaseFragment<MemoImp> {
         showLoading();
         RXStart(true,new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 for (int i = 0; i < list.size(); i++) {
                     mDaoImp.deleteMemo(list.get(i));
                 }
                 subscriber.onNext("删除成功");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
+
             @Override
             public void onMyNext(String s) {
                 showMsg(s);

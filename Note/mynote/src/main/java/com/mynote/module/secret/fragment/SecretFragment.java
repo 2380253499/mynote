@@ -3,9 +3,9 @@ package com.mynote.module.secret.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.github.baseclass.rx.MySubscriber;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.EventCallback;
 import com.mynote.event.GetDataEvent;
 import com.mynote.module.secret.dao.imp.SecretImp;
 
@@ -36,9 +36,9 @@ public class SecretFragment extends BaseFragment<SecretImp> {
     @Override
     protected void initRxBus() {
         super.initRxBus();
-        getRxBusEvent(GetDataEvent.class, new MySubscriber<GetDataEvent>() {
+        getEvent(GetDataEvent.class, new EventCallback<GetDataEvent>() {
             @Override
-            public void onMyNext(GetDataEvent event) {
+            public void accept(GetDataEvent event) {
                 if(event.index==GetDataEvent.secretIndex){
                     showLoading();
                     getData(1,false);

@@ -16,13 +16,13 @@ import com.github.androidtools.AndroidUtils;
 import com.github.androidtools.ClickUtils;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.PhoneUtils;
-import com.github.baseclass.rx.IOCallBack;
-import com.github.baseclass.rx.RxBus;
 import com.github.baseclass.view.MyDialog;
+import com.github.rxbus.RxBus;
 import com.github.utils.FileUtils;
 import com.mynote.Constant;
 import com.mynote.R;
 import com.mynote.base.BaseFragment;
+import com.mynote.base.IOCallBack;
 import com.mynote.database.DBManager;
 import com.mynote.event.GetDataEvent;
 import com.mynote.module.account.bean.AccountBean;
@@ -47,7 +47,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Subscriber;
+import io.reactivex.FlowableEmitter;
 
 public class LeftMenuFragment extends BaseFragment {
     @BindView(R.id.nav_container)
@@ -168,7 +168,7 @@ public class LeftMenuFragment extends BaseFragment {
         showLoading();
         RXStart(new IOCallBack<DataCountBean>() {
             @Override
-            public void call(Subscriber<? super DataCountBean> subscriber) {
+            public void call(FlowableEmitter<DataCountBean> subscriber) {
                 File file = new File("/data/data/" + mContext.getPackageName() + "/databases");
                 File backupFileForTemp = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
                 File backupFileForDB = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".db");
@@ -176,7 +176,7 @@ public class LeftMenuFragment extends BaseFragment {
                 try {
                     if (!backupFileForTemp.exists()) {
                         subscriber.onNext(null);
-                        subscriber.onCompleted();
+                        subscriber.onComplete();
                         return;
                     }
                     if (!appDBFile.exists()) {
@@ -262,7 +262,7 @@ public class LeftMenuFragment extends BaseFragment {
                             backupFileForDB.renameTo(backupFileForTemp);
                         }
                     }
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (Exception e) {
                     if (backupFileForDB.exists()) {
                         backupFileForDB.renameTo(backupFileForTemp);
@@ -270,6 +270,8 @@ public class LeftMenuFragment extends BaseFragment {
                     subscriber.onError(e);
                 }
             }
+
+
             @Override
             public void onMyNext(DataCountBean bean) {
                 if(bean==null){
@@ -322,7 +324,7 @@ public class LeftMenuFragment extends BaseFragment {
         showLoading();
         RXStart(new IOCallBack<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(FlowableEmitter<String> subscriber) {
                 File exportFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName);
                 File exportFileName = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+Constant.rootFileName+"/" + DBManager.getNewInstance(mContext).getDBName() + ".temp");
                 File dbFile = new File("/data/data/" + mContext.getPackageName() + "/databases/" + DBManager.getNewInstance(mContext).getDBName());
@@ -334,7 +336,7 @@ public class LeftMenuFragment extends BaseFragment {
                 } else {
                     subscriber.onNext(null);
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
             @Override
             public void onMyNext(String s) {

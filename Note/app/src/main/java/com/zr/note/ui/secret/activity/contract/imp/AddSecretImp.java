@@ -30,7 +30,7 @@ public class AddSecretImp extends IPresenter<AddSecretContract.View> implements 
                 subscriber.onNext(result);
                 subscriber.onCompleted();
             }
-        }).compose(RxUtils.appSchedulers()).subscribe(new MySubscriber<Long>() {
+        }).compose(RxUtils.appSchedulers()).subscribe(new EventCallback<Long>() {
             @Override
             public void onMyNext(Long result) {
                 if(result>0){
