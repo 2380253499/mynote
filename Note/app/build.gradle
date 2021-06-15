@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 android {
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
 
     defaultConfig {
         applicationId "com.zr.note"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -54,9 +54,9 @@ dependencies {
     compile 'joda-time:joda-time:2.9.4'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:design:27.+'
+    compile 'com.android.support:support-v4:27.+'
+    compile 'com.android.support:design:27.+'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //圆形图片控件
@@ -76,7 +76,7 @@ dependencies {
 //    compile 'com.bigkoo:pickerview:2.1.1'
 //    compile project(':customview')
     compile 'com.github:customview:1.0.9'
-    compile 'com.github:retrofitutil:1.0.4'
+//    compile 'com.github:retrofitutil:1.0.4'
     //内存检测
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
